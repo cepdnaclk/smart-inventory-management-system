@@ -2,7 +2,6 @@
 
 Smart Inventory Management System for Department MakerSpace Lab
 
-
 ## Team of Developers 
 - [Nuwan Jaliyagoda](http://github.com/NuwanJ)
 - [Tharmapalan Thanujan](http://github.com/thanujan96)
@@ -10,6 +9,8 @@ Smart Inventory Management System for Department MakerSpace Lab
 - [Thilini Madushani](http://github.com/Thilini98)
 
 ## Useful Commands and Instructions
+
+You need to install Wamp server and run it before following commands.
 
 #### Install Dependencies
 ```
