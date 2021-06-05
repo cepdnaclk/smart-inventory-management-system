@@ -5,6 +5,7 @@ Smart Inventory Management System for Department MakerSpace Lab
 
 ## Team of Developers
 - [Nuwan Jaliyagoda](http://github.com/NuwanJ)
+- [Tharmapalan Thanujan](http://github.com/thanujan96)
 - [Madhushan Ramalingam](https://github.com/DrMadhushan)
 - [Thilini Madushani](http://github.com/Thilini98)
 
