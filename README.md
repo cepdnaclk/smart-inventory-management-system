@@ -11,6 +11,7 @@ Smart Inventory Management System for Department MakerSpace Lab
 ## Useful Commands and Instructions
 
 You need to install Wamp server and run it before following commands.
+Please make sure you already created database user account.
 
 #### Install Dependencies
 ```
