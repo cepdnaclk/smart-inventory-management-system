@@ -1,8 +1,12 @@
-## Smart Inventory Management System
+# Smart Inventory Management System
 
 Smart Inventory Management System for Department MakerSpace Lab
 
-### Artisan Commands and Instructions
+
+## Team of Developers
+- [Nuwan Jaliyagoda](http://github.com/NuwanJ)
+
+## Useful Commands and Instructions
 
 #### Install Dependencies
 ```
