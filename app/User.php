@@ -9,7 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
 use Laratrust\Traits\LaratrustUserTrait;
 
-class User extends Authenticatable implements MustVerifyEmail
+// class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use LaratrustUserTrait;
     use Notifiable;
@@ -59,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
         static::created(function ($user) {
             // Send an email - TODO: Need to prepare the formatting
-            Mail::to($user->email)->send(new NewUserWelcome($user->email, $user->email));
+            // Mail::to($user->email)->send(new NewUserWelcome($user->email, $user->email));
         });
     }
 
