@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
-use App\Policies\ProfilePolicy;
-use App\StudentProfile;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
+/**
+ * Class AuthServiceProvider.
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -15,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-
+        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -27,6 +28,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Implicitly grant "Admin" role all permissions
+        // This works in the app by using gate-related functions like auth()->user->can() and @can()
+        Gate::before(function ($user) {
+            return $user->hasAllAccess() ? true : null;
+        });
+
+        // Learn when to use this instead: https://docs.spatie.be/laravel-permission/v3/basic-usage/super-admin/#gate-after
+//        Gate::after(function ($user) {
+//            return $user->hasAllAccess();
+//        });
     }
 }
