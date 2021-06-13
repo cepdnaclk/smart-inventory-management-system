@@ -135,8 +135,7 @@ class UserController extends Controller
             dd([Storage::exists($imagePath), $imagePath ]);
             if (Storage::exists($imagePath) && $user->avatar != '/storage/profile/MtpyrBaoXds78Rs13ZwOaSSkPFo5cl4IC7dHH3U8.jpeg') {
             Storage::delete($imagePath);
-
-        }*/
+            }*/
 
             $imagePath = "/storage/" . request('avatar')->store('profile', 'public');
             $image = Image::make(public_path($imagePath))->fit(360, 360);
