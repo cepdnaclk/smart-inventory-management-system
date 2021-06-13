@@ -11,8 +11,6 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-    require('bootstrap4-toggle');   // https://gitbrent.github.io/bootstrap4-toggle/
-
 } catch (e) {}
 
 /**
