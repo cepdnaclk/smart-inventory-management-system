@@ -8,6 +8,8 @@ Smart Inventory Management System for Department MakerSpace Lab
 - [Madhushan Ramalingam](https://github.com/DrMadhushan)
 - [Thilini Madushani](http://github.com/Thilini98)
 
+This is old 
+
 ## Useful Commands and Instructions
 
 You need to install Wamp server and run it before following commands.
