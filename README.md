@@ -1,3 +1,5 @@
+[![Build](https://github.com/cepdnaclk/smart-inventory-management-system/actions/workflows/laravel.yml/badge.svg)](https://github.com/cepdnaclk/smart-inventory-management-system/actions/workflows/laravel.yml)
+
 # Smart Inventory Management System
 
 Smart Inventory Management System for Department MakerSpace Lab
