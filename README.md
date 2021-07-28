@@ -1,21 +1,46 @@
+[![Build](https://github.com/cepdnaclk/smart-inventory-management-system/actions/workflows/laravel.yml/badge.svg)](https://github.com/cepdnaclk/smart-inventory-management-system/actions/workflows/laravel.yml)
+
 # Smart Inventory Management System
 
 Smart Inventory Management System for Department MakerSpace Lab
 
+### Demo Credentials
+
+**Admin:** admin@admin.com  
+**Password:** admin_user
+
+**User:** user@user.com  
+**Password:** regular_user
+
+### Introduction
+
+Laravel Boilerplate provides you with a massive head start on any size web application. Out of the box it has features like a backend built on CoreUI with Spatie/Permission authorization. It has a frontend scaffold built on Bootstrap 4. Other features such as Two Factor Authentication, User/Role management, searchable/sortable tables built on my [Laravel Livewire tables plugin](https://github.com/rappasoft/laravel-livewire-tables), user impersonation, timezone support, multi-lingual support with 20+ built in languages, demo mode, and much more.
+
+[Click here for the official documentation](http://laravel-boilerplate.com)
 
 ## Team of Developers
 - [Nuwan Jaliyagoda](http://github.com/NuwanJ)
+- [Tharmapalan Thanujan](http://github.com/thanujan96)
+- [Madhushan Ramalingam](https://github.com/DrMadhushan)
+- [Thilini Madushani](http://github.com/Thilini98)
+
 
 ## Useful Commands and Instructions
+
+You need to install Wamp server and run it before following commands.
+Please make sure you already created database user account.
 
 #### Install Dependencies
 ```
 // Install PHP dependencies
 composer install
 
+// Update PHP dependencies
+composer update
+
 // Install Node dependencies (development mode)
 npm install
-npm run development
+npm run dev
 ```
 
 #### Prepare for the first run
@@ -76,5 +101,8 @@ php artisan make:mail -m
 
 // Commandline interface for Database Operations
 php artisan tinker
+
+// Run the unit tests
+php artisan test
 
 ```
