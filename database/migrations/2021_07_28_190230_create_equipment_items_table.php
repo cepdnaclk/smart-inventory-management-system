@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Schema;
 class CreateEquipmentItemsTable extends Migration
 {
     /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    * Run the migrations.
+    *
+    * @return void
+    */
     public function up()
     {
         Schema::create('equipment_items', function (Blueprint $table) {
@@ -32,17 +32,19 @@ class CreateEquipmentItemsTable extends Migration
             $table->float("weight")->nullable()->default(0);
 
             $table->boolean("isElectrical")->default(false);
-            $table->foreignId('equipment_type_id')->constrained()->nullable();
-
             $table->timestamps();
+        });
+
+        Schema::table('equipment_items', function($table) {
+            $table->foreignId('equipment_type_id')->constrained()->nullable();
         });
     }
 
     /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    * Reverse the migrations.
+    *
+    * @return void
+    */
     public function down()
     {
         Schema::dropIfExists('equipment_items');

@@ -10,7 +10,6 @@ Route::redirect('/equipments', '/admin/equipments/items', 301);
 
 // Equipment Items -------------------------------------------------------------
 
-
 // Index
 Route::get('equipments/items', [EquipmentItemController::class, 'index'])
 ->name('equipments.items.index')
@@ -68,7 +67,6 @@ Route::get('equipments/items/delete/{equipmentItem}', [EquipmentItemController::
 
 // Destroy
 Route::delete('equipments/items/{equipmentItem}', [EquipmentTypesController::class, 'destroy']);
-
 
 
 // Equipment Types -------------------------------------------------------------
