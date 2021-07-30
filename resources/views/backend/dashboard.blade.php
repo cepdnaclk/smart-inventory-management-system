@@ -9,7 +9,14 @@
         </x-slot>
 
         <x-slot name="body">
-            @lang('Welcome to the Dashboard')
+            <h3>Pages</h3>
+
+            <ul>
+                <li>
+                    <a href="/admin/equipments">Equipments</a>
+                </li>
+            </ul>
+
         </x-slot>
     </x-backend.card>
 
