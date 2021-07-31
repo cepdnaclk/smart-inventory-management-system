@@ -11,7 +11,7 @@ class EquipmentTypesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -22,7 +22,7 @@ class EquipmentTypesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -32,19 +32,34 @@ class EquipmentTypesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = request()->validate([
+                'title' => 'string|required',
+                'subtitle' => 'string|nullable',
+                'description' => 'string|nullable',
+                'thumb' => 'nullable'
+            ]);
+
+            // TODO: Implement to store the thumb image
+            $type = new EquipmentTypes($data);
+            $type->save();
+            return redirect()->route('admin.equipments.types.index')->with('Success', 'EquipmentType was created !');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\EquipmentTypes  $equipmentTypes
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\EquipmentTypes $equipmentType
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(EquipmentTypes $equipmentType)
     {
@@ -54,32 +69,46 @@ class EquipmentTypesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\EquipmentTypes  $equipmentTypes
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\EquipmentTypes $equipmentType
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(EquipmentTypes $equipmentType)
     {
-//        dd($equipmentTypes);
         return view('backend.equipments.types.edit', compact('equipmentType'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\EquipmentTypes  $equipmentTypes
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\EquipmentTypes $equipmentType
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, EquipmentTypes $equipmentTypes)
+    public function update(Request $request, EquipmentTypes $equipmentType)
     {
-        //
+        try {
+            $data = request()->validate([
+                'title' => 'string|required',
+                'subtitle' => 'string|nullable',
+                'description' => 'string|nullable',
+                'thumb' => 'nullable'
+            ]);
+
+            // TODO: Implement to store/update the thumb image
+
+            $equipmentType->update($data);
+            return redirect()->route('admin.equipments.types.index')->with('Success', 'EquipmentType was updated !');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
     }
 
     /**
      * Confirm to delete the specified resource from storage.
      *
-     * @param  \App\Models\EquipmentTypes  $equipmentTypes
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\EquipmentTypes $equipmentType
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function delete(EquipmentTypes $equipmentType)
     {
@@ -89,11 +118,18 @@ class EquipmentTypesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\EquipmentTypes  $equipmentTypes
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\EquipmentTypes $equipmentType
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(EquipmentTypes $equipmentTypes)
+    public function destroy(EquipmentTypes $equipmentType)
     {
-        //
+        try {
+            $equipmentType->delete();
+            return redirect()->route('admin.equipments.types.index')->with('Success', 'EquipmentType was deleted !');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
+
     }
 }
