@@ -3,7 +3,7 @@
 @section('title', __('Equipment Types'))
 
 @section('breadcrumb-links')
-    @include('backend.equipments.includes.breadcrumb-links')
+    @include('backend.equipment.includes.breadcrumb-links')
 @endsection
 
 @section('content')
@@ -13,15 +13,15 @@
                 Equipment Types
             </x-slot>
 
-            @if ($logged_in_user->hasAllAccess())
-                <x-slot name="headerActions">
-                    <x-utils.link
-                            icon="c-icon cil-plus"
-                            class="card-header-action"
-                            :href="route('admin.equipments.types.create')"
-                            :text="__('Create Equipment Type')"></x-utils.link>
-                </x-slot>
-            @endif
+            {{--            @if ($logged_in_user->hasAllAccess())--}}
+            <x-slot name="headerActions">
+                <x-utils.link
+                        icon="c-icon cil-plus"
+                        class="card-header-action"
+                        :href="route('admin.equipment.types.create')"
+                        :text="__('Create Equipment Type')"></x-utils.link>
+            </x-slot>
+            {{--            @endif--}}
 
             <x-slot name="body">
 
@@ -44,7 +44,7 @@
                             <th>&nbsp;</th>
                         </tr>
 
-                        @foreach($equipmentTypes as $equipmentType)
+                        @foreach($EquipmentType as $equipmentType)
                             <tr>
                                 <td>{{ $equipmentType->title  }}</td>
                                 <td>{{ $equipmentType->subtitle ?? 'N/A' }}</td>
@@ -53,14 +53,14 @@
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.equipments.types.show', $equipmentType)}}"
+                                            <a href="{{ route('admin.equipment.types.show', $equipmentType)}}"
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
-                                            <a href="{{ route('admin.equipments.types.edit', $equipmentType)}}"
+                                            <a href="{{ route('admin.equipment.types.edit', $equipmentType)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.equipments.types.delete', $equipmentType)}}"
+                                            <a href="{{ route('admin.equipment.types.delete', $equipmentType)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
                                                                                 title="Delete"></i>
                                             </a>
@@ -71,7 +71,7 @@
                             </tr>
                         @endforeach
                     </table>
-                    {{ $equipmentTypes->links() }}
+                    {{ $EquipmentType->links() }}
                 </div>
             </x-slot>
         </x-backend.card>

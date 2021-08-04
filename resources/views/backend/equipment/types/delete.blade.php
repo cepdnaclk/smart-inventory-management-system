@@ -3,7 +3,7 @@
 @section('title', __('Equipment Types'))
 
 @section('breadcrumb-links')
-    @include('backend.equipments.includes.breadcrumb-links')
+    @include('backend.equipment.includes.breadcrumb-links')
 @endsection
 
 @section('content')
@@ -19,9 +19,9 @@
                 </p>
 
                 <div class="d-flex">
-                    {!! Form::open(['url' => route('admin.equipments.types.destroy', compact('equipmentType') ), 'method' => 'delete', 'class' => 'container']) !!}
+                    {!! Form::open(['url' => route('admin.equipment.types.destroy', compact('equipmentType') ), 'method' => 'delete', 'class' => 'container']) !!}
 
-                    <a href="{{ route('admin.equipments.types.index') }}" class="btn btn-light mr-2">Back</a>
+                    <a href="{{ route('admin.equipment.types.index') }}" class="btn btn-light mr-2">Back</a>
                     {!! Form::submit('Delete', ['class'=>'btn btn-danger']) !!}
 
                     {!! Form::close() !!}

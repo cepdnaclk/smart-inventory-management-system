@@ -3,12 +3,12 @@
 @section('title', __('Equipment Types'))
 
 @section('breadcrumb-links')
-    @include('backend.equipments.includes.breadcrumb-links')
+    @include('backend.equipment.includes.breadcrumb-links')
 @endsection
 
 @section('content')
     <div>
-        {!! Form::open(['url' => route('admin.equipments.types.update', compact('equipmentType')), 'method' => 'put', 'class' => 'container']) !!}
+        {!! Form::open(['url' => route('admin.equipment.types.update', compact('equipmentType')), 'method' => 'put', 'class' => 'container']) !!}
         {!! Form::token(); !!}
 
         <x-backend.card>

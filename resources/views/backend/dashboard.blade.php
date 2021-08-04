@@ -9,11 +9,10 @@
         </x-slot>
 
         <x-slot name="body">
-            <h3>Pages</h3>
 
-            <ul>
+            <ul class="large">
                 <li>
-                    <a href="/admin/equipments">Equipments</a>
+                    <a href="{{ route('admin.equipment.index') }}">equipment</a>
                 </li>
             </ul>
 

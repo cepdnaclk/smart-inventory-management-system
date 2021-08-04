@@ -78,18 +78,18 @@
                         href="#"
                         icon="c-sidebar-nav-icon cil-list"
                         class="c-sidebar-nav-dropdown-toggle"
-                        :text="__('Equipments')"></x-utils.link>
+                        :text="__('equipment')"></x-utils.link>
 
                 <ul class="c-sidebar-nav-dropdown-items">
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
-                                :href="route('admin.equipments.items.index')"
+                                :href="route('admin.equipment.items.index')"
                                 class="c-sidebar-nav-link"
                                 :text="__('Items')"></x-utils.link>
                     </li>
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
-                                :href="route('admin.equipments.types.index')"
+                                :href="route('admin.equipment.types.index')"
                                 class="c-sidebar-nav-link"
                                 :text="__('Types')"></x-utils.link>
                     </li>

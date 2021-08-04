@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\EquipmentTypes;
+use App\Models\EquipmentType;
 use Illuminate\Http\Request;
 
-class EquipmentTypesController extends Controller
+class EquipmentTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class EquipmentTypesController extends Controller
      */
     public function index()
     {
-        $equipmentTypes = EquipmentTypes::paginate(12);
-        return view('backend.equipments.types.index', compact('equipmentTypes'));
+        $EquipmentType = EquipmentType::paginate(12);
+        return view('backend.equipment.types.index', compact('EquipmentType'));
     }
 
     /**
@@ -26,7 +26,7 @@ class EquipmentTypesController extends Controller
      */
     public function create()
     {
-        return view('backend.equipments.types.create');
+        return view('backend.equipment.types.create');
     }
 
     /**
@@ -37,18 +37,18 @@ class EquipmentTypesController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $data = request()->validate([
-                'title' => 'string|required',
-                'subtitle' => 'string|nullable',
-                'description' => 'string|nullable',
-                'thumb' => 'nullable'
-            ]);
+        $data = request()->validate([
+            'title' => 'string|required',
+            'subtitle' => 'string|nullable',
+            'description' => 'string|nullable',
+            'thumb' => 'nullable'
+        ]);
 
+        try {
             // TODO: Implement to store the thumb image
-            $type = new EquipmentTypes($data);
+            $type = new EquipmentType($data);
             $type->save();
-            return redirect()->route('admin.equipments.types.index')->with('Success', 'EquipmentType was created !');
+            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was created !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -58,46 +58,46 @@ class EquipmentTypesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\EquipmentTypes $equipmentType
+     * @param \App\Models\EquipmentType $equipmentType
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(EquipmentTypes $equipmentType)
+    public function show(EquipmentType $equipmentType)
     {
-        return view('backend.equipments.types.show', compact('equipmentType'));
+        return view('backend.equipment.types.show', compact('equipmentType'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\EquipmentTypes $equipmentType
+     * @param \App\Models\EquipmentType $equipmentType
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(EquipmentTypes $equipmentType)
+    public function edit(EquipmentType $equipmentType)
     {
-        return view('backend.equipments.types.edit', compact('equipmentType'));
+        return view('backend.equipment.types.edit', compact('equipmentType'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\EquipmentTypes $equipmentType
+     * @param \App\Models\EquipmentType $equipmentType
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, EquipmentTypes $equipmentType)
+    public function update(Request $request, EquipmentType $equipmentType)
     {
-        try {
-            $data = request()->validate([
-                'title' => 'string|required',
-                'subtitle' => 'string|nullable',
-                'description' => 'string|nullable',
-                'thumb' => 'nullable'
-            ]);
+        $data = request()->validate([
+            'title' => 'string|required',
+            'subtitle' => 'string|nullable',
+            'description' => 'string|nullable',
+            'thumb' => 'nullable'
+        ]);
 
+        try {
             // TODO: Implement to store/update the thumb image
 
             $equipmentType->update($data);
-            return redirect()->route('admin.equipments.types.index')->with('Success', 'EquipmentType was updated !');
+            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was updated !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -107,29 +107,28 @@ class EquipmentTypesController extends Controller
     /**
      * Confirm to delete the specified resource from storage.
      *
-     * @param \App\Models\EquipmentTypes $equipmentType
+     * @param \App\Models\EquipmentType $equipmentType
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function delete(EquipmentTypes $equipmentType)
+    public function delete(EquipmentType $equipmentType)
     {
-        return view('backend.equipments.types.delete', compact('equipmentType'));
+        return view('backend.equipment.types.delete', compact('equipmentType'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\EquipmentTypes $equipmentType
+     * @param \App\Models\EquipmentType $equipmentType
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(EquipmentTypes $equipmentType)
+    public function destroy(EquipmentType $equipmentType)
     {
         try {
             $equipmentType->delete();
-            return redirect()->route('admin.equipments.types.index')->with('Success', 'EquipmentType was deleted !');
+            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was deleted !');
 
         } catch (\Exception $ex) {
             return abort(500);
         }
-
     }
 }

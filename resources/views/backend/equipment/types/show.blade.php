@@ -3,7 +3,7 @@
 @section('title', __('Equipment Types'))
 
 @section('breadcrumb-links')
-    @include('backend.equipments.includes.breadcrumb-links')
+    @include('backend.equipment.includes.breadcrumb-links')
 @endsection
 
 @section('content')
@@ -14,14 +14,17 @@
             </x-slot>
 
             <x-slot name="body">
-
                 <table class="table">
+                    <tr>
+                        <td>Code (to be updated)</td>
+                        <td>{{ $equipmentType->id }}</td>
+                    </tr>
                     <tr>
                         <td>Title</td>
                         <td>{{ $equipmentType->title }}</td>
                     </tr>
                     <tr>
-                        <td>Subitle</td>
+                        <td>Subtitle</td>
                         <td>{{ $equipmentType->subtitle }}</td>
                     </tr>
                     <tr>
