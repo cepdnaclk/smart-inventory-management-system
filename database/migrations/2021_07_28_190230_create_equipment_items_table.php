@@ -42,6 +42,7 @@ class CreateEquipmentItemsTable extends Migration
         });
 
        Schema::table('equipment_items', function($table) {
+           $table->bigInteger('equipment_type_id')->nullable();
            $table->foreign('equipment_type_id')
                ->nullable()
                ->references('id')
