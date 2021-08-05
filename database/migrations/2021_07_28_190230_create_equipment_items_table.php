@@ -38,15 +38,13 @@ class CreateEquipmentItemsTable extends Migration
             $table->string('thumb')->nullable();
             $table->timestamps();
 
-            $table->bigInteger('equipment_type_id')->nullable();
+            $table->bigInteger('equipment_type_id');
+            $table->foreign('equipment_items')
+                ->references('id')
+                ->on('equipment_types')
+                ->onDelete('cascade');
         });
 
-       Schema::table('equipment_items', function($table) {
-           // $table->foreign('equipment_type_id')
-           //     ->nullable()
-           //     ->references('id')
-           //     ->on('equipment_types');
-       });
     }
 
     /**
