@@ -14,14 +14,27 @@
             </x-slot>
 
             <x-slot name="body">
+                <div class="container pb-2 d-inline-flex">
+                    <div class="d-flex">
+                        <h4>{{ $equipmentType->title }}</h4>
+                    </div>
+                    <div class="d-flex px-0 mt-0 mb-0 ml-auto">
+                        <div class="btn-group" role="group" aria-label="Modify Buttons">
+                            <a href="{{ route('admin.equipment.types.edit', $equipmentType)}}"
+                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                            </a>
+                            <a href="{{ route('admin.equipment.types.delete', $equipmentType)}}"
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                                                                title="Delete"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <table class="table">
                     <tr>
                         <td>Code (to be updated)</td>
                         <td>{{ $equipmentType->id }}</td>
-                    </tr>
-                    <tr>
-                        <td>Title</td>
-                        <td>{{ $equipmentType->title }}</td>
                     </tr>
                     <tr>
                         <td>Subtitle</td>
@@ -33,7 +46,14 @@
                     </tr>
                     <tr>
                         <td>Thumbnail</td>
-                        <td>{{ $equipmentType->thumb }}</td>
+                        <td>
+                            @if( $equipmentType->thumb != null )
+                                <img src="{{ $equipmentType->thumbURL() }}" alt="{{ $equipmentType->title }}"
+                                     class="img img-thumbnail">
+                            @else
+                                <span>[Not Available]</span>
+                            @endif
+                        </td>
                     </tr>
                 </table>
             </x-slot>

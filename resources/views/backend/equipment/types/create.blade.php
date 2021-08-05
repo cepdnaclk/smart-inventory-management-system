@@ -8,8 +8,12 @@
 
 @section('content')
 <div>
-    {!! Form::open(['url' => route('admin.equipment.types.store'), 'method' => 'post', 'class' => 'container']) !!}
-    {!! Form::token(); !!}
+    {!! Form::open(['url' => route('admin.equipment.types.store'),
+        'method' => 'post',
+        'class' => 'container',
+        'files'=>true,
+        'enctype'=>'multipart/form-data'
+    ]) !!}
 
     <x-backend.card>
         <x-slot name="header">
@@ -61,12 +65,11 @@
                 {!! Form::label('thumb', 'Thumbnail', ['class' => 'col-md-2 col-form-label']) !!}
 
                 <div class="col-md-10">
-                    {!! Form::file('thumb');  !!}
+                    {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square image)
+                    @error('thumb')
+                    <strong>{{ $message }}</strong>
+                    @enderror
                 </div>
-
-                @error('thumb')
-                <strong>{{ $message }}</strong>
-                @enderror
             </div>
 
         </x-slot>

@@ -40,7 +40,6 @@
                             <th>Title</th>
                             <th>Subtitle</th>
                             <th>Description</th>
-                            <th>Thumbnail</th>
                             <th>&nbsp;</th>
                         </tr>
 
@@ -49,7 +48,6 @@
                                 <td>{{ $equipmentType->title  }}</td>
                                 <td>{{ $equipmentType->subtitle ?? 'N/A' }}</td>
                                 <td>{{ $equipmentType->description  }}</td>
-                                <td>{{ $equipmentType->thumb ?? 'N/A' }}</td>
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">

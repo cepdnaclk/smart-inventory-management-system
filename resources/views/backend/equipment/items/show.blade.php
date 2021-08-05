@@ -19,11 +19,7 @@
                         <h4>{{ $equipmentItem->title }}</h4>
                     </div>
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="{{ route('admin.equipment.items.show', $equipmentItem)}}"
-                               class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
-                            </a>
-
+                        <div class="btn-group" role="group" aria-label="Modify Buttons">
                             <a href="{{ route('admin.equipment.items.edit', $equipmentItem)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>

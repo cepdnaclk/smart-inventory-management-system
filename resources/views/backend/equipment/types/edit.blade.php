@@ -9,12 +9,12 @@
 @section('content')
     <div>
         {!! Form::open(['url' => route('admin.equipment.types.update',
-                    compact('equipmentType')),
-                    'method' => 'put',
-                    'class' => 'container',
-                    'files'=>true,
-                    'enctype'=>'multipart/form-data'
-        ]) !!}
+                   compact('equipmentType')),
+                   'method' => 'put',
+                   'class' => 'container',
+                   'files'=>true,
+                   'enctype'=>'multipart/form-data'
+       ]) !!}
 
         <x-backend.card>
             <x-slot name="header">
@@ -61,19 +61,19 @@
                     @enderror
                 </div>
 
-                <!-- Thumbnail -->
+                <!-- Thumbnail Image -->
                 <div class="form-group row">
                     {!! Form::label('thumb', 'Thumbnail', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::file('thumb');  !!}
+                        <img src="{{ $equipmentType->thumbURL() }}" alt="" width="64">
+                        {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
+                        image)
+                        @error('thumb')
+                        <strong>{{ $message }}</strong>
+                        @enderror
                     </div>
-
-                    @error('thumb')
-                    <strong>{{ $message }}</strong>
-                    @enderror
                 </div>
-
             </x-slot>
 
             <x-slot name="footer">
