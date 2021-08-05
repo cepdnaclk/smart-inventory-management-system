@@ -17,4 +17,10 @@ class EquipmentItem extends Model
         // return $this->belongsTo(EquipmentType::class, 'equipment_type_id', 'id');
     }
 
+    public function thumbURL(){
+
+        if($this->thumb != null) return '/img/equipment_items/'.$this->thumb;
+        return null;
+    }
+
 }

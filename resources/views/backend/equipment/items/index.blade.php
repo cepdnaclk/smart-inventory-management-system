@@ -38,11 +38,11 @@
                     <table class="table table-striped">
                         <tr>
                             <th>Title</th>
-                            <th>Brand</th>
+                            <th>Product Code<br/>and Brand</th>
                             <th>Electronic</th>
                             <th>Category</th>
                             <th>Price (LKR)</th>
-                            <th>Dimensions (WxLxH) in cm</th>
+                            <th>Dimensions(cm)<br/>W x L x H</th>
                             <th>Weight (g)</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -50,9 +50,13 @@
                         @foreach($equipment as $eq)
                             <tr>
                                 <td>{{ $eq->title  }}</td>
-                                <td>{{ $eq->brand }}</td>
+                                <td>{{ $eq->productCode ?? 'N/A' }} ({{ $eq->brand ?? 'N/A' }})</td>
                                 <td>{{ ($eq->isElectrical == 1) ? 'Yes' : 'No' }}</td>
-                                <td>{{ $eq->equipment_type()->title }}</td>
+                                <td>
+                                    <a href="{{ route('admin.equipment.types.show', $eq->equipment_type()) }}">
+                                        {{ $eq->equipment_type()->title }}
+                                    </a>
+                                </td>
                                 <td>{{ $eq->price }}</td>
                                 <td>{{ $eq->width }} x {{ $eq->height }} x {{ $eq->length }}</td>
                                 <td>{{ $eq->weight }}</td>
@@ -78,6 +82,7 @@
                             </tr>
                         @endforeach
                     </table>
+
                     {{ $equipment->links() }}
                 </div>
             </x-slot>

@@ -14,18 +14,38 @@
             </x-slot>
 
             <x-slot name="body">
+                <div class="container pb-2 d-inline-flex">
+                    <div class="d-flex">
+                        <h4>{{ $equipmentItem->title }}</h4>
+                    </div>
+                    <div class="d-flex px-0 mt-0 mb-0 ml-auto">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="{{ route('admin.equipment.items.show', $equipmentItem)}}"
+                               class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
+                            </a>
+
+                            <a href="{{ route('admin.equipment.items.edit', $equipmentItem)}}"
+                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                            </a>
+                            <a href="{{ route('admin.equipment.items.delete', $equipmentItem)}}"
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                                                                title="Delete"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <table class="table">
                     <tr>
                         <td>Code (to be updated)</td>
                         <td>{{ $equipmentItem->id }}</td>
                     </tr>
                     <tr>
-                        <td>Title</td>
-                        <td>{{ $equipmentItem->title }}</td>
-                    </tr>
-                    <tr>
                         <td>Brand</td>
                         <td>{{ $equipmentItem->brand }}</td>
+                    </tr>
+                    <tr>
+                        <td>Product Code</td>
+                        <td>{{ $equipmentItem->productCode }}</td>
                     </tr>
                     <tr>
                         <td>Price</td>
@@ -33,17 +53,29 @@
                     </tr>
                     <tr>
                         <td>Power Rating</td>
-                        <td>{{ $equipmentItem->powerRating." W"  ?? 'N/A'  }}</td>
+                        <td>
+                            @if( $equipmentItem->powerRating != null )
+                                {{ $equipmentItem->powerRating." W"}}
+                            @else
+                                <span>[Not Available]</span>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
-                        <td>Dimensions (WxLxH) in cm</td>
+                        <td>Dimensions (cm) (WxLxH)</td>
                         <td>{{ $equipmentItem->width }} x {{ $equipmentItem->height }} x {{ $equipmentItem->length }}
                             cm
                         </td>
                     </tr>
                     <tr>
                         <td>Weight (g)</td>
-                        <td>{{ $equipmentItem->weight }} g</td>
+                        <td>
+                            @if( $equipmentItem->weight != null )
+                                {{ $equipmentItem->weight." g"}}
+                            @else
+                                <span>[Not Available]</span>
+                            @endif
+                        </td>
                     </tr>
 
                     <tr>
@@ -58,6 +90,18 @@
                     <tr>
                         <td>Usage Instructions</td>
                         <td>{!! str_replace("\n", "<br>", $equipmentItem->instructions) !!}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Thumbnail</td>
+                        <td>
+                            @if( $equipmentItem->thumb != null )
+                                <img src="{{ $equipmentItem->thumbURL() }}" alt="{{ $equipmentItem->title }}"
+                                     class="img img-thumbnail">
+                            @else
+                                <span>[Not Available]</span>
+                            @endif
+                        </td>
                     </tr>
 
                 </table>

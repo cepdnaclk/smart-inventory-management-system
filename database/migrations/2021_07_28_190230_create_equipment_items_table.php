@@ -18,7 +18,9 @@ class CreateEquipmentItemsTable extends Migration
             $table->char("code", 8)->default('');
 
             $table->string("title");
-            $table->char("brand", 32)->nullable();
+            $table->string("brand")->nullable();
+            $table->string("productCode")->nullable();
+
             $table->text("specifications")->nullable();
             $table->text("description")->nullable();
             $table->text("instructions")->nullable();

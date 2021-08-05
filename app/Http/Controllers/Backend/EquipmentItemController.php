@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\EquipmentItem;
 use App\Models\EquipmentType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class EquipmentItemController extends Controller
 {
@@ -42,6 +45,7 @@ class EquipmentItemController extends Controller
         $data = request()->validate([
             'title' => 'string|required',
             'brand' => 'string|nullable',
+            'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
 
             'specifications' => 'string|nullable',
@@ -57,13 +61,19 @@ class EquipmentItemController extends Controller
             'height' => 'numeric|nullable',
             'weight' => 'numeric|nullable',
 
-            'thumb' => 'nullable'
+            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
         ]);
 
         try {
-            // TODO: Implement to store the thumb image
+            if ($request->thumb != null) {
+                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_items");
+            }
 
             $type = new EquipmentItem($data);
+
+            // Update checkbox condition
+            $type->isElectrical = ($request->isElectrical != null);
+
             $type->save();
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was created !');
 
@@ -105,16 +115,18 @@ class EquipmentItemController extends Controller
      */
     public function update(Request $request, EquipmentItem $equipmentItem)
     {
+//         dd($request->request);
         $data = request()->validate([
             'title' => 'string|required',
             'brand' => 'string|nullable',
+            'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
 
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
 
-            // 'isElectrical' => 'accepted',
+            'isElectrical' => 'nullable',
             'powerRating' => 'numeric|nullable',
             'price' => 'numeric|nullable',
 
@@ -123,11 +135,16 @@ class EquipmentItemController extends Controller
             'height' => 'numeric|nullable',
             'weight' => 'numeric|nullable',
 
-            'thumb' => 'nullable'
+            'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         try {
-            // TODO: Implement to store the thumb image
+            if ($request->thumb != null) {
+                $data['thumb'] = $this->uploadThumb($equipmentItem->thumbURL(), $request->thumb, "equipment_items");
+            }
+
+            // Update checkbox condition
+            $equipmentItem->isElectrical = ($request->isElectrical != null);
 
             $equipmentItem->update($data);
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was updated !');
@@ -159,11 +176,39 @@ class EquipmentItemController extends Controller
     public function destroy(EquipmentItem $equipmentItem)
     {
         try {
+            // Delete the thumbnail form the file system
+            $this->deleteThumb($equipmentItem->thumbURL());
+
             $equipmentItem->delete();
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
 
         } catch (\Exception $ex) {
+            dd($ex);
             return abort(500);
         }
+    }
+
+    private function deleteThumb($currentURL)
+    {
+        if ($currentURL != null) {
+            $oldImage = public_path($currentURL);
+            if (File::exists($oldImage)) unlink($oldImage);
+        }
+    }
+
+    // Private function to handle thumb images
+    private function uploadThumb($currentURL, $newImage, $folder)
+    {
+
+        // Delete the existing image
+        $this->deleteThumb($currentURL);
+
+        $imageName = time() . '.' . $newImage->extension();
+        $newImage->move(public_path('img/equipment_items'), $imageName);
+        $imagePath = "/img/$folder/" . $imageName;
+        $image = Image::make(public_path($imagePath))->fit(360, 360);
+        $image->save();
+
+        return $imageName;
     }
 }

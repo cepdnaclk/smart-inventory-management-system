@@ -8,8 +8,13 @@
 
 @section('content')
     <div>
-        {!! Form::open(['url' => route('admin.equipment.types.update', compact('equipmentType')), 'method' => 'put', 'class' => 'container']) !!}
-        {!! Form::token(); !!}
+        {!! Form::open(['url' => route('admin.equipment.types.update',
+                    compact('equipmentType')),
+                    'method' => 'put',
+                    'class' => 'container',
+                    'files'=>true,
+                    'enctype'=>'multipart/form-data'
+        ]) !!}
 
         <x-backend.card>
             <x-slot name="header">

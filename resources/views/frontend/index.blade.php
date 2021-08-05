@@ -100,8 +100,8 @@
         </div><!--title-->
 
         <div class="links">
-            <a href="http://laravel-boilerplate.com" target="_blank"><i class="fa fa-book"></i> @lang('Docs')</a>
-            <a href="https://github.com/rappasoft/laravel-boilerplate" target="_blank"><i class="fab fa-github"></i>
+{{--            <a href="http://laravel-boilerplate.com" target="_blank"><i class="fa fa-book"></i> @lang('Docs')</a>--}}
+            <a href="https://github.com/cepdnaclk/smart-inventory-management-system" target="_blank"><i class="fab fa-github"></i>
                 GitHub</a>
         </div><!--links-->
     </div><!--content-->
