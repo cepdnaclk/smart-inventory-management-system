@@ -37,12 +37,12 @@ class CreateEquipmentItemsTable extends Migration
 
             $table->string('thumb')->nullable();
             $table->timestamps();
-            
+
             $table->bigInteger('equipment_type_id')->nullable();
         });
 
        Schema::table('equipment_items', function($table) {
-           $table->bigInteger('equipment_type_id')->nullable();
+           // $table->bigInteger('equipment_type_id')->nullable();
            $table->foreign('equipment_type_id')
                ->nullable()
                ->references('id')
