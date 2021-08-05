@@ -36,8 +36,9 @@ class CreateEquipmentItemsTable extends Migration
             $table->float("weight")->nullable()->default(0);
 
             $table->string('thumb')->nullable();
-            // $table->bigInteger('equipment_type_id')->nullable();
             $table->timestamps();
+            
+            $table->bigInteger('equipment_type_id')->nullable();
         });
 
        Schema::table('equipment_items', function($table) {
