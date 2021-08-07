@@ -32,8 +32,18 @@
                 </div>
                 <table class="table">
                     <tr>
-                        <td>Code (to be updated)</td>
-                        <td>{{ $equipmentItem->id }}</td>
+                        <td>Code (to be finalized)</td>
+                        <td>{{ $equipmentItem->inventoryCode() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td>
+                            @if($equipmentItem->equipment_type() != null)
+                                <a href="{{ route('admin.equipment.types.show', $equipmentItem->equipment_type) }}">
+                                    {{ $equipmentItem->equipment_type['title'] }}
+                                </a>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td>Brand</td>
@@ -45,7 +55,13 @@
                     </tr>
                     <tr>
                         <td>Price</td>
-                        <td>{{ $equipmentItem->price ?? 'N/A' }}</td>
+                        <td>
+                            @if($equipmentItem->price != null)
+                                Rs. {{ $equipmentItem->price }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td>Power Rating</td>

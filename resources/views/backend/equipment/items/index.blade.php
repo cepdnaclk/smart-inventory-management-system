@@ -53,9 +53,11 @@
                                 <td>{{ $eq->productCode ?? 'N/A' }} ({{ $eq->brand ?? 'N/A' }})</td>
                                 <td>{{ ($eq->isElectrical == 1) ? 'Yes' : 'No' }}</td>
                                 <td>
-                                    <a href="{{ route('admin.equipment.types.show', $eq->equipment_type()) }}">
-                                        {{ $eq->equipment_type()->title }}
+                                    @if($eq->equipment_type() != null)
+                                    <a href="{{ route('admin.equipment.types.show', $eq->equipment_type) }}">
+                                        {{ $eq->equipment_type['title'] }}
                                     </a>
+                                    @endif
                                 </td>
                                 <td>{{ $eq->price }}</td>
                                 <td>{{ $eq->width }} x {{ $eq->height }} x {{ $eq->length }}</td>

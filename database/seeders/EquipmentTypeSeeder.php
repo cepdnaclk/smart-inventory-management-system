@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\DB;
 class EquipmentTypeSeeder extends Seeder
 {
     protected $data = [
-        array('id' => '1','title' => 'Hand Tools','subtitle' => NULL,'description' => 'Nonelectrical tools that used to make physical changes to objects.','thumb' => NULL,'created_at' => '2021-08-04 15:23:56','updated_at' => '2021-08-04 15:25:03'),
-        array('id' => '2','title' => 'Power Tools','subtitle' => NULL,'description' => 'Electrical tools and machines that used to make physical changes to objects.','thumb' => NULL,'created_at' => '2021-08-04 15:24:54','updated_at' => '2021-08-04 15:24:54'),
-        array('id' => '3','title' => 'Safety Equipment','subtitle' => NULL,'description' => 'Wearable equipment which are used for the protection of life and to avoid injuries.','thumb' => NULL,'created_at' => '2021-08-04 15:27:16','updated_at' => '2021-08-04 15:27:16'),
-        array('id' => '4','title' => 'Soldering Tools','subtitle' => NULL,'description' => 'Tools that are related to soldering','thumb' => NULL,'created_at' => '2021-08-04 16:10:20','updated_at' => '2021-08-04 16:10:20'),
-        array('id' => '5','title' => 'Measuring Instruments','subtitle' => 'Physical Measurements','description' => 'Tools that are used to take measurements','thumb' => NULL,'created_at' => '2021-08-04 16:11:20','updated_at' => '2021-08-04 16:11:35'),
-        array('id' => '6','title' => 'Prototyping Machines','subtitle' => NULL,'description' => 'Machines that are used to fabricate things','thumb' => NULL,'created_at' => '2021-08-04 16:12:45','updated_at' => '2021-08-04 16:12:45')
+        array('id' => '11','title' => 'Hand Tools','subtitle' => NULL,'description' => 'Nonelectrical tools that used to make physical changes to objects.','thumb' => NULL,'created_at' => '2021-08-04 15:23:56','updated_at' => '2021-08-04 15:25:03'),
+        array('id' => '12','title' => 'Power Tools','subtitle' => NULL,'description' => 'Electrical tools and machines that used to make physical changes to objects.','thumb' => NULL,'created_at' => '2021-08-04 15:24:54','updated_at' => '2021-08-04 15:24:54'),
+        array('id' => '13','title' => 'Safety Equipment','subtitle' => NULL,'description' => 'Wearable equipment which are used for the protection of life and to avoid injuries.','thumb' => NULL,'created_at' => '2021-08-04 15:27:16','updated_at' => '2021-08-04 15:27:16'),
+        array('id' => '14','title' => 'Soldering Tools','subtitle' => NULL,'description' => 'Tools that are related to soldering','thumb' => NULL,'created_at' => '2021-08-04 16:10:20','updated_at' => '2021-08-04 16:10:20'),
+        array('id' => '15','title' => 'Measuring Instruments','subtitle' => 'Physical Measurements','description' => 'Tools that are used to take measurements','thumb' => NULL,'created_at' => '2021-08-04 16:11:20','updated_at' => '2021-08-04 16:11:35'),
+        array('id' => '16','title' => 'Prototyping Machines','subtitle' => NULL,'description' => 'Machines that are used to fabricate things','thumb' => NULL,'created_at' => '2021-08-04 16:12:45','updated_at' => '2021-08-04 16:12:45')
     ];
 
     /**

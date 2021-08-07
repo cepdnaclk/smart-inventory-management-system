@@ -33,8 +33,8 @@
 
                 <table class="table">
                     <tr>
-                        <td>Code (to be updated)</td>
-                        <td>{{ $equipmentType->id }}</td>
+                        <td>Code (to be finalized)</td>
+                        <td>{{ $equipmentType->inventoryCode() }}</td>
                     </tr>
                     <tr>
                         <td>Subtitle</td>

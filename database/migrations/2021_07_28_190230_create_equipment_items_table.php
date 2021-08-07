@@ -14,7 +14,7 @@ class CreateEquipmentItemsTable extends Migration
     public function up()
     {
         Schema::create('equipment_items', function (Blueprint $table) {
-            $table->id();
+            $table->id()->startingValue(1000);;
             $table->char("code", 8)->default('');
 
             $table->string("title");

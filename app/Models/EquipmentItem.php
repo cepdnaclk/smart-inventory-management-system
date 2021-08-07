@@ -8,18 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class EquipmentItem extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
+    // Link the Equipment Type table
     public function equipment_type()
     {
-        // TODO: Not a recommended method, need to use belongsTo
-        return EquipmentType::find(1)->where('id', $this->equipment_type_id)->first();
-        // return $this->belongsTo(EquipmentType::class, 'equipment_type_id', 'id');
+        if ($this->equipment_type_id != null) return $this->belongsTo(EquipmentType::class, 'equipment_type_id', 'id');
+        return null;
     }
 
-    public function thumbURL(){
+    public function inventoryCode(){
+        return  $this->equipment_type->inventoryCode()."/".$this->id;
+    }
 
-        if($this->thumb != null) return '/img/equipment_items/'.$this->thumb;
+    // Return the relative URL of the thumbnail
+    public function thumbURL()
+    {
+        if ($this->thumb != null) return '/img/equipment_items/' . $this->thumb;
         return null;
     }
 
