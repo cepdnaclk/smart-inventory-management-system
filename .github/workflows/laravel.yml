@@ -33,4 +33,4 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: |
-        php artisan test
+        php artisan test --colors --debug
