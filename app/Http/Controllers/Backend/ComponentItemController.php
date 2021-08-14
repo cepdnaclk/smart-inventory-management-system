@@ -30,7 +30,7 @@ class ComponentItemController extends Controller
      */
     public function create()
     {
-        $types = ComponentType::pluck('title', 'id');
+        $types = ComponentType::pluck('name', 'id');
         return view('backend.component.items.create', compact('types'));
     }
 
