@@ -28,11 +28,11 @@ class CreateComponentItemsTable extends Migration
             $table->float("price")->nullable(); // in LKR
 
             // Physical size in terms of appearance [small, medium, large] kind of
-            $table->string("size")->nullable()->default('');
+            $table->enum('size', ['very small', 'small', 'regular', 'large', 'very large']);
 
             // Thought to have type and family as a property rather than having different tables
-            $table->string("type")->nullable()->default('');
-            $table->string("family")->nullable()->default('');
+            $table->string("type")->nullable();
+            $table->string("family")->nullable();
 
             $table->string('thumb')->nullable();
             $table->timestamps();
