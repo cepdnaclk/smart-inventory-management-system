@@ -184,6 +184,18 @@
                     </div>
                 </div>
 
+                <!-- Count -->
+                <div class="form-group row">
+                    {!! Form::label('quantity', 'Quantity', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4">
+                        {!! Form::number('quantity', '0', ['class'=>'form-control']) !!}
+                        @error('quantity')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
                 <!-- Thumbnail Image -->
                 <div class="form-group row">
                     {!! Form::label('thumb', 'Thumbnail', ['class' => 'col-md-2 col-form-label']) !!}
