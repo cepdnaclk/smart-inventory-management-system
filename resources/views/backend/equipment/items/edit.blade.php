@@ -142,18 +142,18 @@
                     </div>
                     <div class="col-md-3 form-group mb-2">
                         <div class="container row">
-                            {!! Form::label('length', 'Length (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('length', $equipmentItem->length, ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('length')
+                            {!! Form::label('height', 'Height (cm)', ['class' => 'form-label']) !!}<br/>
+                            {!! Form::number('height', $equipmentItem->height, ['class'=>'form-control', 'step' => '0.1']) !!}
+                            @error('height')
                             <strong>{{ $message }}</strong>
                             @enderror
                         </div>
                     </div>
                     <div class="col-md-3 form-group mb-2">
                         <div class="container row">
-                            {!! Form::label('height', 'Height (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('height', $equipmentItem->height, ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('height')
+                            {!! Form::label('length', 'Length (cm)', ['class' => 'form-label']) !!}<br/>
+                            {!! Form::number('length', $equipmentItem->length, ['class'=>'form-control', 'step' => '0.1']) !!}
+                            @error('length')
                             <strong>{{ $message }}</strong>
                             @enderror
                         </div>
