@@ -9,44 +9,48 @@
                 <h3>Category: {{ $equipmentType->title }}</h3>
 
                 @if($equipmentType->children()->count() != 0)
-                    <h4>Sub Categories</h4>
+                    <div class="container pt-2">Sub-Categories</div>
                     <div class="container pt-2">
-                        <ul>
-                            @foreach($equipmentType->children() as $category)
-                                <li>
-                                    <a href="{{ route('frontend.equipment.category', $category) }}">{{ $category->title }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
+                        @foreach($equipmentType->children() as $category)
+                            <a class="btn btn-secondary byn-200 mx-1"
+                               href="{{ route('frontend.equipment.category', $category) }}">{{ $category->title }}</a>
+                        @endforeach
+                        <hr/>
                     </div>
                 @else
                     {{-- No sub categories available--}}
                 @endif
 
                 @if($items->count() != 0)
-                    <h4>Items</h4>
                     <div class="container pt-2">
-                        <ul class="list-unstyled">
+                        <div class="row equal">
                             @foreach($items as $item)
-                                <li>
-                                    <img class="img-thumbnail" style="width: 84px;" src="{{ $item->thumbURL() }}" alt="{{ $item->title }}"/>
-                                    <a href="{{ route('frontend.equipment.item', $item) }}">{{ $item->title }}</a>
-                                </li>
+                                <div class="col-2 p-1 d-flex">
+                                    <div class="m-1 text-center card">
+                                        <a class="text-decoration-none"
+                                           href="{{ route('frontend.equipment.item', $item) }}">
+                                            <img class="img-fluid p-2 mx-auto" src="{{ $item->thumbURL() }}"
+                                                 alt="{{ $item->title }}"/>
+                                            <div class="p-1">
+                                                {{ $item->title }}
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
                             @endforeach
-                        </ul>
+                        </div>
+
+                        <div class="container pt-4">
+                            {{ $items->links() }}
+                        </div>
+
+                        @elseif ($items->count() == 0 && $equipmentType->children()->count() == 0)
+                            <p>No items listed under this category yet</p>
+                        @else
+                            {{-- No items available--}}
+                        @endif
+
                     </div>
-
-                    <div class="container pt-4">
-                        {{ $items->links() }}
-                    </div>
-
-                @elseif ($items->count() == 0 && $equipmentType->children()->count() == 0)
-                    <p>No items listed under this category yet</p>
-                @else
-                    {{-- No items available--}}
-                @endif
-
             </div>
         </div>
-    </div>
 @endsection
