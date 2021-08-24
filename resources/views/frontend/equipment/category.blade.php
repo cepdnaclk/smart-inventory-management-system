@@ -26,9 +26,11 @@
                 @if($items->count() != 0)
                     <h4>Items</h4>
                     <div class="container pt-2">
-                        <ul>
+                        <ul class="list-unstyled">
                             @foreach($items as $item)
-                                <li><a href="{{ route('frontend.equipment.item', $item) }}">{{ $item->title }}</a>
+                                <li>
+                                    <img class="img-thumbnail" style="width: 84px;" src="{{ $item->thumbURL() }}" alt="{{ $item->title }}"/>
+                                    <a href="{{ route('frontend.equipment.item', $item) }}">{{ $item->title }}</a>
                                 </li>
                             @endforeach
                         </ul>
