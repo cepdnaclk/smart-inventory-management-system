@@ -21,7 +21,7 @@ class EquipmentTypeSeeder extends Seeder
         array('id' => '21', 'code' => '', 'parent_id' => '11', 'title' => 'Clamps', 'subtitle' => NULL, 'description' => 'A brace, band, or clasp for strengthening or holding things together', 'thumb' => '1629008372.jpg', 'created_at' => '2021-08-15 06:19:33', 'updated_at' => '2021-08-15 06:19:33'),
         array('id' => '22', 'code' => '', 'parent_id' => '11', 'title' => 'Cutters and Saws', 'subtitle' => NULL, 'description' => 'Used to cut or separate the workpiece', 'thumb' => '1629008575.jpg', 'created_at' => '2021-08-15 06:22:55', 'updated_at' => '2021-08-15 07:33:08'),
         array('id' => '23', 'code' => '', 'parent_id' => '11', 'title' => 'Hammers', 'subtitle' => NULL, 'description' => 'Hammer is a standard hand tool that is mostly used for striking objects', 'thumb' => '1629008659.jpg', 'created_at' => '2021-08-15 06:24:19', 'updated_at' => '2021-08-15 06:24:19'),
-        array('id' => '24', 'code' => '', 'parent_id' => '11', 'title' => 'Sockets', 'subtitle' => NULL, 'description' => NULL, 'thumb' => NULL, 'created_at' => '2021-08-17 11:26:40', 'updated_at' => '2021-08-17 11:26:40'),
+        array('id' => '24', 'code' => '', 'parent_id' => '11', 'title' => 'Quarter Inch Sockets', 'subtitle' => NULL, 'description' => NULL, 'thumb' => NULL, 'created_at' => '2021-08-17 11:26:40', 'updated_at' => '2021-08-17 11:26:40'),
         array('id' => '25', 'code' => '', 'parent_id' => '11', 'title' => 'Files', 'subtitle' => NULL, 'description' => 'A file is a tool used to remove fine amounts of material from a workpiece', 'thumb' => '1629630206.jpg', 'created_at' => '2021-08-22 11:03:26', 'updated_at' => '2021-08-22 11:03:26')
     ];
 
