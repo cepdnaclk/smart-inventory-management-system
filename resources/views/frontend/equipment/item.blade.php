@@ -1,103 +1,129 @@
 @extends('frontend.layouts.app')
 
-@section('title', __('Terms & Conditions'))
+@section('title', ($equipmentItem->title))
+
+@push('after-styles')
+    <style>
+        td {
+        padding: 1px 12px 1px 0;
+        }
+    </style>
+@endpush
 
 @section('content')
     <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <h3>Item: {{ $equipmentItem->title }}</h3>
+        <div class="row">
+            <div class="col-md-4 col-sm-12 col-12 d-flex mb-4">
+                @if( $equipmentItem->thumb != null )
+                    <img src="{{ $equipmentItem->thumbURL() }}"
+                         alt="{{ $equipmentItem->title }}"
+                         class="img img-thumbnail img-fluid p-3 mx-auto">
+                @else
+                    {{-- TODO: Add a default image --}}
+                    <span>[Not Available]</span>
+                @endif
 
+            </div>
+            <div class="col-md-8 col-sm-12 col-12 mb-4">
+                <h3>{{ $equipmentItem->title }} <br>
+                    <small class="text-muted">
+                        {{ $equipmentItem->inventoryCode() }}
+                        <hr>
+                    </small>
+                </h3>
 
-                <table class="table">
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>
-                            @if( $equipmentItem->thumb != null )
-                                <img src="{{ $equipmentItem->thumbURL() }}" alt="{{ $equipmentItem->title }}"
-                                     class="img img-thumbnail">
-                            @else
-                                <span>[Not Available]</span>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Code (to be finalized)</td>
-                        <td>{{ $equipmentItem->inventoryCode() }}</td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td>
-                            @if($equipmentItem->equipment_type() != null)
+                <div>
+                    <table>
+                        <tr>
+                            <td>Category</td>
+                            <td>
+                                : @if($equipmentItem->equipment_type->parent() != null)
+                                    <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type->parent() ) }}">
+                                        {{ $equipmentItem->equipment_type->parent()->title }}
+                                    </a> &gt;
+                                @endif
+
                                 <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type) }}">
                                     {{ $equipmentItem->equipment_type['title'] }}
                                 </a>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Brand</td>
-                        <td>{{ $equipmentItem->brand }}</td>
-                    </tr>
-                    <tr>
-                        <td>Product Code</td>
-                        <td>{{ $equipmentItem->productCode }}</td>
-                    </tr>
-                    <tr>
-                        <td>Price</td>
-                        <td>
-                            @if($equipmentItem->price != null)
-                                Rs. {{ $equipmentItem->price }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Quantity</td>
-                        <td>{{ $equipmentItem->quantity }}</td>
-                    </tr>
-                    <tr>
-                        <td>Power Rating</td>
-                        <td>
-                            @if( $equipmentItem->powerRating != null )
-                                {{ $equipmentItem->powerRating." W"}}
-                            @else
-                                <span>[Not Available]</span>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Dimensions (cm) (WxLxH)</td>
-                        <td>{{ $equipmentItem->width }} x {{ $equipmentItem->height }} x {{ $equipmentItem->length }}
-                            cm
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Weight (g)</td>
-                        <td>
-                            @if( $equipmentItem->weight != null )
-                                {{ $equipmentItem->weight." g"}}
-                            @else
-                                <span>[Not Available]</span>
-                            @endif
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td>Specifications</td>
-                        <td>{!! str_replace("\n", "<br>", $equipmentItem->specifications) !!}</td>
+                        <tr>
+                            <td>Product Code</td>
+                            <td>
+                                : <b>{{ $equipmentItem->productCode }}({{ $equipmentItem->brand }})</b>
+                            </td>
+                        </tr>
 
-                    </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td>{!! str_replace("\n", "<br>", $equipmentItem->description) !!}</td>
-                    </tr>
-                    <tr>
-                        <td>Usage Instructions</td>
-                        <td>{!! str_replace("\n", "<br>", $equipmentItem->instructions) !!}</td>
-                    </tr>
-                </table>
+                        <tr>
+                            <td>Available Quantity</td>
+                            <td>
+                                : <b>{{ $equipmentItem->quantity }}</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Dimensions</td>
+                            <td>
+                                : <b>
+                                    @if( $equipmentItem->width!=0 && $equipmentItem->height!=0 && $equipmentItem->length!=0)
+                                        {{ $equipmentItem->width }} x {{ $equipmentItem->height }}
+                                        x {{ $equipmentItem->length }} cm <br>
+                                    @else
+                                        <span>[Not Available]</span> <br>
+                                    @endif
+                                </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Weight</td>
+                            <td>
+                                : <b>
+                                    @if( $equipmentItem->weight != null )
+                                        {{ $equipmentItem->weight." g"}}
+                                    @else
+                                        <span>[Not Available]</span>
+                                    @endif
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                @if($equipmentItem->isElectrical && $equipmentItem->powerRating != null)
+                    <div class="pt-3">
+                        Power Rating: {{ $equipmentItem->powerRating." W"}}
+                    </div>
+                @endif
+
+                @if($equipmentItem->description !== null)
+                    <div class="pt-3">
+                        <u>Description</u>
+                        <div class="pl-3">
+                            {!! str_replace("\n", "<br>", $equipmentItem->description) !!}
+                        </div>
+                    </div>
+                @endif
+
+                @if($equipmentItem->specifications !== null)
+                    <div class="pt-3">
+                        <u>Specifications</u>
+                        <div class="pl-3">
+                            {!! str_replace("\n", "<br>", $equipmentItem->specifications) !!}
+                        </div>
+                    </div>
+                @endif
+
+
+                @if($equipmentItem->instructions !== null)
+                    <div class="pt-3">
+                        <u>Usage Instructions</u>
+                        <div class="pl-3">
+                            {!! str_replace("\n", "<br>", $equipmentItem->instructions) !!}
+                        </div>
+                    </div>
+                @endif
+
             </div>
         </div>
     </div>
