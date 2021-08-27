@@ -67,12 +67,12 @@ class ComponentTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\ComponentType $componentType
+     * @param \App\Models\ComponentType $componenttype
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
       */
     public function show(ComponentType $componentType)
     {
-        return view('backend.component.types.show', compact('componentType'));
+        return view('backend.component.types.show', compact("componentType"));
     }
 
     /**

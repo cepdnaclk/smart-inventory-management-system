@@ -63,52 +63,27 @@
                             @endif
                         </td>
                     </tr>
+                    
                     <tr>
-                        <td>Power Rating</td>
-                        <td>
-                            @if( $equipmentItem->powerRating != null )
-                                {{ $equipmentItem->powerRating." W"}}
-                            @else
-                                <span>[Not Available]</span>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Dimensions (cm) (WxLxH)</td>
-                        <td>{{ $equipmentItem->width }} x {{ $equipmentItem->height }} x {{ $equipmentItem->length }}
-                            cm
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Weight (g)</td>
-                        <td>
-                            @if( $equipmentItem->weight != null )
-                                {{ $equipmentItem->weight." g"}}
-                            @else
-                                <span>[Not Available]</span>
-                            @endif
+                        <td>Size </td>
+                        <td>{{ $componentItem->size }} 
                         </td>
                     </tr>
 
-                    <tr>
-                        <td>Specifications</td>
-                        <td>{!! str_replace("\n", "<br>", $equipmentItem->specifications) !!}</td>
-
-                    </tr>
                     <tr>
                         <td>Description</td>
-                        <td>{!! str_replace("\n", "<br>", $equipmentItem->description) !!}</td>
+                        <td>{!! str_replace("\n", "<br>", $componentItem->description) !!}</td>
                     </tr>
                     <tr>
                         <td>Usage Instructions</td>
-                        <td>{!! str_replace("\n", "<br>", $equipmentItem->instructions) !!}</td>
+                        <td>{!! str_replace("\n", "<br>", $componentItem->instructions) !!}</td>
                     </tr>
 
                     <tr>
                         <td>Thumbnail</td>
                         <td>
-                            @if( $equipmentItem->thumb != null )
-                                <img src="{{ $equipmentItem->thumbURL() }}" alt="{{ $equipmentItem->title }}"
+                            @if( $componentItem->thumb != null )
+                                <img src="{{ $componentItem->thumbURL() }}" alt="{{ $componentItem->title }}"
                                      class="img img-thumbnail">
                             @else
                                 <span>[Not Available]</span>

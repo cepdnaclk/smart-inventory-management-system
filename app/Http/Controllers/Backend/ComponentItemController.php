@@ -88,7 +88,7 @@ class ComponentItemController extends Controller
      */
     public function show(ComponentItem $componentItem)
     {
-        return view('backend.component.items.show', compact('componentItem'));
+        return view('backend.component.items.show', compact("componentItem"));
     }
 
     /**

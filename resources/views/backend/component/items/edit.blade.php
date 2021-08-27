@@ -68,28 +68,7 @@
                     </div>
                 </div>
 
-                <!-- Is Electrical -->
-                <div class="form-group row">
-                    {!! Form::label('isElectrical', 'Electrical Item', ['class' => 'col-md-2 form-check-label']) !!}
-
-                    <div class="col-md-4 form-check">
-                        <input type="checkbox" name="isElectrical" value="1"
-                               class="form-check-input0" {{$componentItem->isElectrical === '1' ? 'checked' :''}} />
-                        @error('isElectrical')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-
-                    <!-- Power Rating -->
-                    {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::number('powerRating', $componentItem->powerRating, ['class'=>'form-control']) !!}
-                        @error('powerRating')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
+                
 
                 <!-- Description -->
                 <div class="form-group row">
@@ -129,50 +108,16 @@
 
                 <!-- Dimensions -->
                 <div class="form-group row">
-                    {!! Form::label('dimensions', 'Dimensions', ['class' => 'col-sm-2 form-label']) !!}
+                    {!! Form::label('size', 'Size', ['class' => 'col-sm-2 form-label']) !!}
 
-                    <div class="col-md-3 form-group mb-2">
-                        <div class="container row">
-                            {!! Form::label('width', 'Width (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('width', $componentItem->width, ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('width')
-                            <strong>{{ $message }}</strong>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-3 form-group mb-2">
-                        <div class="container row">
-                            {!! Form::label('length', 'Length (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('length', $componentItem->length, ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('length')
-                            <strong>{{ $message }}</strong>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-3 form-group mb-2">
-                        <div class="container row">
-                            {!! Form::label('height', 'Height (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('height', $componentItem->height, ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('height')
-                            <strong>{{ $message }}</strong>
-                            @enderror
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Weight -->
-                <div class="form-group row">
-                    {!! Form::label('weight', 'Weight (g)', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::number('weight', $componentItem->weight, ['class'=>'form-control', 'step' => '0.1']) !!}
-                        @error('weight')
+                    <div class="col-md-10">
+                        {!! Form::select('size',['very small'=>'very small', 'small'=> 'small', 'medium'=> 'medium','regular'=>'regular', 'large'=>'large','very large'=> 'very large'] ,$componentItem->size) !!}
+                        @error('size')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
                 </div>
-
+                    
                 <!-- Price -->
                 <div class="form-group row">
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}

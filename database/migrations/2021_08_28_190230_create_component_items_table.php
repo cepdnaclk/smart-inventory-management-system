@@ -22,6 +22,7 @@ class CreateComponentItemsTable extends Migration
             $table->string("productCode")->nullable();
 
             $table->text("specifications")->nullable();
+            $table->text("instructions")->nullable();
             $table->text("description")->nullable();
 
             $table->boolean("isAvailable")->default(false);
