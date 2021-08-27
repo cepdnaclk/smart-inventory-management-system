@@ -176,7 +176,7 @@ class ComponentItemController extends Controller
             return redirect()->route('admin.component.items.index')->with('Success', 'Component was deleted !');
 
         } catch (\Exception $ex) {
-            dd($ex);
+
             return abort(500);
         }
     }

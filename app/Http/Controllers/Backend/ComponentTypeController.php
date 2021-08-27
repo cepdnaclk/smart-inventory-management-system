@@ -139,7 +139,7 @@ class ComponentTypeController extends Controller
             // Delete the thumbnail form the file system
             $this->deleteThumb($componentType->thumbUrl());
             $componentType->delete();
-            return redirect()->route('admin.component.tyeps.index')->with('Success', 'ComponentType was deleted !');
+            return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was deleted !');
         
         } catch (\Exception $ex) {
             return abort(500);
