@@ -31,18 +31,18 @@ class CreateComponentItemsTable extends Migration
             $table->enum('size', ['very small', 'small', 'regular', 'large', 'very large']);
 
             // Thought to have type and family as a property rather than having different tables
-            $table->string("type")->nullable();
-            $table->string("family")->nullable();
+            // $table->string("type")->nullable();
+            // $table->string("family")->nullable();
 
             $table->string('thumb')->nullable();
             $table->timestamps();
 
-            /*$table->foreignId('component_type_id')
+            $table->foreignId('component_type_id')
                 ->constrained()
                 ->references('id')
                 ->onDelete('cascade')
                 ->on('component_types');
-                */
+                
         });
     }
 

@@ -9,7 +9,11 @@ class ComponentItemSeeder extends Seeder
 {
     protected $data = [
         array(
-            'id' => '1001', 'code' => '', 'name' => 'ARDUINO UNO REV3', 'brand' => 'Arduino', 'productCode' => 'DEV101', 'specifications' => 'ATMega328p Microcontroller', 
+            'id' => '1001',
+            'code' => '', 
+            'name' => 'ARDUINO UNO REV3', 
+            'brand' => 'Arduino', 
+            'productCode' => 'DEV101', 'specifications' => 'ATMega328p Microcontroller', 
             'description' => 'The Arduino Uno is an open-source microcontroller board based on the Microchip ATmega328P microcontroller and developed by Arduino.cc.[2][3] The board is equipped with sets of digital and analog input/output (I/O) pins that may be interfaced to various expansion boards (shields) and other circuits.', 
             'isAvailable' => '1', 'price' => '1200.00', 'type' => 'Development-Board', 'family' => 'Complex-Electronics', 'size' => 'medium', 
             'thumb' => 'comit1001.jpg'
