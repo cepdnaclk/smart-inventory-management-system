@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComponentTypeTable extends Migration
+class CreateComponentTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateComponentTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('{_component_type}', function (Blueprint $table) {
-            $table->id();
+        Schema::create('component_types', function (Blueprint $table) {
+            $table->id()->startingValue(1000);
             $table->char("code", 8)->default('');
 
             $table->string("title");

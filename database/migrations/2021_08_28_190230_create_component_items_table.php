@@ -44,6 +44,7 @@ class CreateComponentItemsTable extends Migration
                 ->on('component_types');
                 
         });
+        
     }
 
     /**
