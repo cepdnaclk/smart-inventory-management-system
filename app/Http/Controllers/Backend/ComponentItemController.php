@@ -112,9 +112,9 @@ class ComponentItemController extends Controller
      */
     public function update(Request $request, ComponentItem $componentItem)
     {
-//         dd($request->request);
+        
         $data = request()->validate([
-            'name' => 'string|required',
+            'title' => 'string|required',
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
             'component_type_id' => 'numeric|required',

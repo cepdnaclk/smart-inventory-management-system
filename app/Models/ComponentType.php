@@ -9,7 +9,7 @@ class ComponentType extends Model
 {
     use HasFactory;
 
-    protected $gurded = [];
+    protected $guarded = [];  
 
     // A  Unique ID assigned by the inventory management system
     public function inventoryCode(){

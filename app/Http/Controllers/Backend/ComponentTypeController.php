@@ -51,7 +51,7 @@ class ComponentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "component_types");
             }
 
             $type = new ComponentType($data);
