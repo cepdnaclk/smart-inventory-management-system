@@ -44,13 +44,14 @@ class ComponentItemController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'name' => 'string|required',
+            'title' => 'string|required',
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
-            // 'component_type_id' => 'numeric|required',
+            'component_type_id' => 'numeric|required',
 
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
+            'instructions' => 'string|nullable',
 
             'isAvailable' => 'nullable',
             'price' => 'numeric|nullable',
@@ -121,6 +122,8 @@ class ComponentItemController extends Controller
 
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
+            'instructions' => 'string|nullable',
+
 
             'isAvailable' => 'nullable',
             'price' => 'numeric|nullable',
