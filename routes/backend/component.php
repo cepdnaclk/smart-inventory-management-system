@@ -5,7 +5,7 @@ use Tabuna\Breadcrumbs\Trail;
 
 Route::get('/component', function () {
     return view('backend.component.index');
-})->name('component.name');
+})->name('component.index');
 
 
 //component Items --------------------------------------------------------------------

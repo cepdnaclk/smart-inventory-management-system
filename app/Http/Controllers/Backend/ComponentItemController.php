@@ -17,10 +17,11 @@ class ComponentItemController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
+
     public function index()
     {
-        $component = ComponentItem::paginate(12);
-        return view('backend.component.items.index', compact('component'));
+        $components = ComponentItem::paginate(12);
+        return view("backend.component.items.index", compact('components'));
     }
 
     /**
@@ -30,7 +31,7 @@ class ComponentItemController extends Controller
      */
     public function create()
     {
-        $types = ComponentType::pluck('name', 'id');
+        $types = ComponentType::pluck('title', 'id');
         return view('backend.component.items.create', compact('types'));
     }
 

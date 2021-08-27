@@ -11,7 +11,7 @@ class ComponentItemSeeder extends Seeder
         array(
             'id' => '1001',
             'code' => '', 
-            'name' => 'ARDUINO UNO REV3', 
+            'title' => 'ARDUINO UNO REV3', 
             'brand' => 'Arduino', 
             'productCode' => 'DEV101', 'specifications' => 'ATMega328p Microcontroller', 
             'description' => 'The Arduino Uno is an open-source microcontroller board based on the Microchip ATmega328P microcontroller and developed by Arduino.cc.[2][3] The board is equipped with sets of digital and analog input/output (I/O) pins that may be interfaced to various expansion boards (shields) and other circuits.', 
@@ -26,7 +26,7 @@ class ComponentItemSeeder extends Seeder
         array(
             'id' => '1002', 
             'code' => '', 
-            'name' => 'UA741CP Operational Amplifier', 
+            'title' => 'UA741CP Operational Amplifier', 
             'brand' => NULL, 
             'productCode' => 'ICOA101', 
             'specifications' => 'UA741CP OpAmp 1MHz', 

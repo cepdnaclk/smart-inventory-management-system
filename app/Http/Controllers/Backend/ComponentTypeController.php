@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\EquipmentType;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ComponentType;
@@ -53,7 +53,7 @@ class ComponentTypeController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_types");
             }
 
-            $type = new EquipmentType($data);
+            $type = new ComponentType($data);
             $type->save();
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was created !');
 
