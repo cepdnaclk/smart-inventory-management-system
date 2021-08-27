@@ -1,29 +1,29 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment Types'))
+@section('title', __('Component Types'))
 
 @section('breadcrumb-links')
-    @include('backend.equipment.includes.breadcrumb-links')
+    @include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Equipment Types : Show {{ $equipmentType->title  }}
+                Component Types : Show {{ $componentType->title  }}
             </x-slot>
 
             <x-slot name="body">
                 <div class="container pb-2 d-inline-flex">
                     <div class="d-flex">
-                        <h4>{{ $equipmentType->title }}</h4>
+                        <h4>{{ $componentType->title }}</h4>
                     </div>
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
                         <div class="btn-group" role="group" aria-label="Modify Buttons">
-                            <a href="{{ route('admin.equipment.types.edit', $equipmentType)}}"
+                            <a href="{{ route('admin.component.types.edit', $componentType)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
-                            <a href="{{ route('admin.equipment.types.delete', $equipmentType)}}"
+                            <a href="{{ route('admin.component.types.delete', $componentType)}}"
                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
                                                                 title="Delete"></i>
                             </a>
@@ -34,21 +34,21 @@
                 <table class="table">
                     <tr>
                         <td>Code (to be finalized)</td>
-                        <td>{{ $equipmentType->inventoryCode() }}</td>
+                        <td>{{ $componentType->inventoryCode() }}</td>
                     </tr>
                     <tr>
                         <td>Subtitle</td>
-                        <td>{{ $equipmentType->subtitle }}</td>
+                        <td>{{ $componentType->subtitle }}</td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td>{{ $equipmentType->description }}</td>
+                        <td>{{ $componentType->description }}</td>
                     </tr>
                     <tr>
                         <td>Thumbnail</td>
                         <td>
-                            @if( $equipmentType->thumb != null )
-                                <img src="{{ $equipmentType->thumbURL() }}" alt="{{ $equipmentType->title }}"
+                            @if( $componentType->thumb != null )
+                                <img src="{{ $componentType->thumbURL() }}" alt="{{ $componentType->title }}"
                                      class="img img-thumbnail">
                             @else
                                 <span>[Not Available]</span>

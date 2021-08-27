@@ -19,8 +19,9 @@ class ComponentTypeController extends Controller
      */
     public function index()
     {
-        $componentType = ComponentType::paginate(12);
-        return view('backend.component.types.index',compact('ComponentType'));
+        $componenttypes = ComponentType::paginate(12);
+        
+        return view('backend.component.types.index',compact('componenttypes'));
     }
 
     /**

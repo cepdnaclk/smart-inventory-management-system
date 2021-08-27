@@ -1,14 +1,14 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment Types'))
+@section('title', __('Component Types'))
 
 @section('breadcrumb-links')
-@include('backend.equipment.includes.breadcrumb-links')
+@include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
 <div>
-    {!! Form::open(['url' => route('admin.equipment.types.store'),
+    {!! Form::open(['url' => route('admin.component.types.store'),
         'method' => 'post',
         'class' => 'container',
         'files'=>true,
@@ -17,7 +17,7 @@
 
     <x-backend.card>
         <x-slot name="header">
-            Equipment Types : Create
+            Component Types : Create
         </x-slot>
 
         <x-slot name="body">
