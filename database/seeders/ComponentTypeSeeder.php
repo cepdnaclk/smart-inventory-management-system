@@ -9,20 +9,24 @@ class ComponentTypeSeeder extends Seeder
 {
     protected $data = [
         array(
-            'id' => '2004',
+            'id' => '11',
             'code' => '', 
             'title' => 'Development boards', 
             'subtitle' => '', 
-            'description' => 'These boards incorporate the target microcontroller with usually additional memory, input-output ports, some LEDs, some switches, programmer, and some other peripheral interfaces such as UART, I2C, SPI, etc.', 
-            'thumb' => 'comit1001.jpg'
+            'description' => 'These boards incorporate the target microcontroller with additional memory,  and some other peripheral interfaces.', 
+            'thumb' => 'comit1001.jpg',
+            'created_at' => '2021-07-04 15:20:56',
+            'updated_at' => '2021-07-04 15:21:03'
         ),
         array(
-            'id' => '2005',
+            'id' => '12',
             'code' => '', 
             'title' => 'Integreated circuits', 
             'subtitle' => 'ICs', 
             'description' => 'an assembly of electronic components with miniature devices built up on a semiconductor substrate', 
-            'thumb' => 'comit1002.jpg'
+            'thumb' => 'comit1002.jpg',
+            'created_at' => '2021-07-04 15:22:56',
+            'updated_at' => '2021-07-04 15:23:03'
         ),
     ];
 

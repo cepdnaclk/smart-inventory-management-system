@@ -14,7 +14,7 @@ class CreateComponentTypesTable extends Migration
     public function up()
     {
         Schema::create('component_types', function (Blueprint $table) {
-            $table->id()->startingValue(1000);
+            $table->id()->startingValue(10);
             $table->char("code", 8)->default('');
 
             $table->string("title");
