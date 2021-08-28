@@ -19,7 +19,7 @@ class EquipmentItemController extends Controller
      */
     public function index()
     {
-        $equipment = EquipmentItem::paginate(12);
+        $equipment = EquipmentItem::orderBy('id', 'desc')->paginate(16);
         return view('backend.equipment.items.index', compact('equipment'));
     }
 
