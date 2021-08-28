@@ -40,22 +40,22 @@
                             <th>Title</th>
                             <th>Product Code<br/>and Brand</th>
                             <th>Category</th>
-                            <th>Price (LKR)</th>
+                            {{-- <th>Price (LKR)</th>--}}
                             <th>Size</th>
                             <th>&nbsp;</th>
                         </tr>
-                        
+
                         @foreach($components as $cm)
-                            
+
                             <tr>
                                 <td>{{ $cm->title  }}</td>
                                 <td>{{ $cm->productCode ?? 'N/A' }} ({{ $cm->brand ?? 'N/A' }})</td>
-                
+
                                 <td>
                                     @if($cm->component_type() != null)
-                                    <a href="{{ route('admin.component.types.show', $cm->component_type) }}">
-                                        {{ $cm->component_type['title'] }}
-                                    </a>
+                                        <a href="{{ route('admin.component.types.show', $cm->component_type) }}">
+                                            {{ $cm->component_type['title'] }}
+                                        </a>
                                     @endif
                                 </td>
                                 <td>{{ $cm->size }}</td>
