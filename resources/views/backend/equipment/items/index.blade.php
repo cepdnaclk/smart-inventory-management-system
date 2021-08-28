@@ -39,19 +39,19 @@
                         <tr>
                             <th>Title</th>
                             <th>Product Code<br/>and Brand</th>
-                            <th>Quantity</th>
+                            <th>Electronic</th>
                             <th>Category</th>
                             <th>Price (LKR)</th>
                             <th>Dimensions(cm)<br/>W x L x H</th>
                             <th>Weight (g)</th>
                             <th>&nbsp;</th>
                         </tr>
-                        
+
                         @foreach($equipment as $eq)
                             <tr>
                                 <td>{{ $eq->title  }}</td>
                                 <td>{{ $eq->productCode ?? 'N/A' }} ({{ $eq->brand ?? 'N/A' }})</td>
-                                <td>{{ $eq->quantity }}</td>
+                                <td>{{ ($eq->isElectrical == 1) ? 'Yes' : 'No' }}</td>
                                 <td>
                                     @if($eq->equipment_type() != null)
                                     <a href="{{ route('admin.equipment.types.show', $eq->equipment_type) }}">

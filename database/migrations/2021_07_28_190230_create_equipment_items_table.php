@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Schema;
 class CreateEquipmentItemsTable extends Migration
 {
     /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    * Run the migrations.
+    *
+    * @return void
+    */
     public function up()
     {
         Schema::create('equipment_items', function (Blueprint $table) {
@@ -18,11 +18,8 @@ class CreateEquipmentItemsTable extends Migration
             $table->char("code", 8)->default('');
 
             $table->string("title");
-
             $table->string("brand")->nullable();
             $table->string("productCode")->nullable();
-
-            $table->integer("quantity")->default(0); // Number of copies available
 
             $table->text("specifications")->nullable();
             $table->text("description")->nullable();
@@ -33,10 +30,10 @@ class CreateEquipmentItemsTable extends Migration
             $table->float("price")->nullable(); // in LKR
 
             // Dimensions and Physical Properties
-            $table->float("width")->nullable();
-            $table->float("length")->nullable();
-            $table->float("height")->nullable();
-            $table->float("weight")->nullable();
+            $table->float("width")->nullable()->default(0);
+            $table->float("length")->nullable()->default(0);
+            $table->float("height")->nullable()->default(0);
+            $table->float("weight")->nullable()->default(0);
 
             $table->string('thumb')->nullable();
             $table->timestamps();
@@ -50,10 +47,10 @@ class CreateEquipmentItemsTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    * Reverse the migrations.
+    *
+    * @return void
+    */
     public function down()
     {
         Schema::dropIfExists('equipment_items');

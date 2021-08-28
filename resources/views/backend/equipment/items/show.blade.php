@@ -64,10 +64,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Quantity</td>
-                        <td>{{ $equipmentItem->quantity }}</td>
-                    </tr>
-                    <tr>
                         <td>Power Rating</td>
                         <td>
                             @if( $equipmentItem->powerRating != null )

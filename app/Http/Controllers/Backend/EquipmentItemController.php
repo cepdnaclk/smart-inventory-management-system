@@ -55,7 +55,6 @@ class EquipmentItemController extends Controller
             // 'isElectrical' => 'accepted',
             'powerRating' => 'numeric|nullable',
             'price' => 'numeric|nullable',
-            'quantity' => 'numeric',
 
             'width' => 'numeric|nullable',
             'length' => 'numeric|nullable',
@@ -130,7 +129,6 @@ class EquipmentItemController extends Controller
             'isElectrical' => 'nullable',
             'powerRating' => 'numeric|nullable',
             'price' => 'numeric|nullable',
-            'quantity' => 'numeric',
 
             'width' => 'numeric|nullable',
             'length' => 'numeric|nullable',
@@ -206,7 +204,7 @@ class EquipmentItemController extends Controller
         $this->deleteThumb($currentURL);
 
         $imageName = time() . '.' . $newImage->extension();
-        $newImage->move(public_path('img/' . $folder), $imageName);
+        $newImage->move(public_path('img/'.$folder), $imageName);
         $imagePath = "/img/$folder/" . $imageName;
         $image = Image::make(public_path($imagePath))->fit(360, 360);
         $image->save();

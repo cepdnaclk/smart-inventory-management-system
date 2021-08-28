@@ -10,7 +10,7 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Equipment Types : Delete | {{ $equipmentType->title  }}
+                Equipment Types : Delete {{ $equipmentType->title  }}
             </x-slot>
 
             <x-slot name="body">

@@ -37,18 +37,6 @@
                         <td>{{ $equipmentType->inventoryCode() }}</td>
                     </tr>
                     <tr>
-                        <td>Parent Category</td>
-                        <td>
-                            @if( $equipmentType->parent() !== null)
-                                <a href="{{ route('admin.equipment.types.show', $equipmentType->parent()->id) }}">
-                                    {{ $equipmentType->parent()->title }}
-                                </a>
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
                         <td>Subtitle</td>
                         <td>{{ $equipmentType->subtitle }}</td>
                     </tr>

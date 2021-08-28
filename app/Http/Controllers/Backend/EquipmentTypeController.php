@@ -18,8 +18,8 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
-        $equipmentTypes = EquipmentType::paginate(12);
-        return view('backend.equipment.types.index', compact('equipmentTypes'));
+        $EquipmentType = EquipmentType::paginate(12);
+        return view('backend.equipment.types.index', compact('EquipmentType'));
     }
 
     /**
@@ -29,8 +29,7 @@ class EquipmentTypeController extends Controller
      */
     public function create()
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.types.create', compact('types'));
+        return view('backend.equipment.types.create');
     }
 
     /**
@@ -43,7 +42,6 @@ class EquipmentTypeController extends Controller
     {
         $data = request()->validate([
             'title' => 'string|required',
-            'parent_id' => 'integer|nullable', // TODO: Validate properly
             'subtitle' => 'string|nullable',
             'description' => 'string|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
@@ -83,8 +81,7 @@ class EquipmentTypeController extends Controller
      */
     public function edit(EquipmentType $equipmentType)
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.types.edit', compact('equipmentType', 'types'));
+        return view('backend.equipment.types.edit', compact('equipmentType'));
     }
 
     /**
@@ -98,7 +95,6 @@ class EquipmentTypeController extends Controller
     {
         $data = request()->validate([
             'title' => 'string|required',
-            'parent_id' => 'integer|nullable', // TODO: Validate properly
             'subtitle' => 'string|nullable',
             'description' => 'string|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
@@ -164,7 +160,7 @@ class EquipmentTypeController extends Controller
         $this->deleteThumb($currentURL);
 
         $imageName = time() . '.' . $newImage->extension();
-        $newImage->move(public_path('img/' . $folder), $imageName);
+        $newImage->move(public_path('img/'.$folder), $imageName);
         $imagePath = "/img/$folder/" . $imageName;
         $image = Image::make(public_path($imagePath))->fit(360, 360);
         $image->save();

@@ -30,8 +30,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(EquipmentTypeSeeder::class);
         $this->call(EquipmentItemSeeder::class);
-        $this->call(ComponentTypeSeeder::class);
-        $this->call(ComponentItemSeeder::class);
 
         Model::reguard();
     }

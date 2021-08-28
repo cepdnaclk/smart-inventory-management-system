@@ -34,18 +34,6 @@
                 @enderror
             </div>
 
-            <!-- Parent Category -->
-            <div class="form-group row">
-                {!! Form::label('parent_id', 'Parent Category', ['class' => 'col-md-2 col-form-label']) !!}
-
-                <div class="col-md-4">
-                    {!! Form::select('parent_id', $types, null, ['class'=>'form-control', 'required'=>false, 'placeholder' => '']) !!}
-                    @error('parent_id')
-                    <strong>{{ $message }}</strong>
-                    @enderror
-                </div>
-            </div>
-
             <!-- Subtitle -->
             <div class="form-group row">
                 {!! Form::label('subtitle', 'Subtitle of the type', ['class' => 'col-md-2 col-form-label']) !!}
@@ -61,10 +49,10 @@
 
             <!-- Description -->
             <div class="form-group row">
-                {!! Form::label('description', 'Description', ['class' => 'col-md-2 col-form-label']) !!}
+                {!! Form::label('description', 'Description*', ['class' => 'col-md-2 col-form-label']) !!}
 
                 <div class="col-md-10">
-                    {!! Form::textarea('description', '', ['class'=>'form-control', 'rows'=>3, 'required'=>false ]) !!}
+                    {!! Form::textarea('description', '', ['class'=>'form-control', 'rows'=>3, 'required'=>true ]) !!}
                 </div>
 
                 @error('description')
