@@ -1,15 +1,15 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment Types'))
+@section('title', __('Component Types'))
 
 @section('breadcrumb-links')
-    @include('backend.equipment.includes.breadcrumb-links')
+    @include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
     <div>
-        {!! Form::open(['url' => route('admin.equipment.types.update',
-                   compact('equipmentType')),
+        {!! Form::open(['url' => route('admin.component.types.update',
+                   compact('componentType')),
                    'method' => 'put',
                    'class' => 'container',
                    'files'=>true,
@@ -18,7 +18,7 @@
 
         <x-backend.card>
             <x-slot name="header">
-                Equipment Types : Edit {{ $equipmentType->title }}
+                Component Types : Edit {{ $componentType->title }}
             </x-slot>
 
             <x-slot name="body">
@@ -27,7 +27,7 @@
                     {!! Form::label('title', 'Title of the type*', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::text('title', $equipmentType->title, ['class'=>'form-control', 'required'=>true ]) !!}
+                        {!! Form::text('title', $componentType->title, ['class'=>'form-control', 'required'=>true ]) !!}
                     </div>
 
                     @error('title')
@@ -35,24 +35,12 @@
                     @enderror
                 </div>
 
-                <!-- Parent Category -->
-                <div class="form-group row">
-                    {!! Form::label('parent_id', 'Parent Category', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::select('parent_id', $types, $equipmentType->parent_id, ['class'=>'form-control', 'required'=>false, 'placeholder' => '']) !!}
-                        @error('parent_id')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
                 <!-- Subtitle -->
                 <div class="form-group row">
                     {!! Form::label('subtitle', 'Subtitle of the type', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::text('subtitle', $equipmentType->subtitle, ['class'=>'form-control']) !!}
+                        {!! Form::text('subtitle', $componentType->subtitle, ['class'=>'form-control']) !!}
                     </div>
 
                     @error('subtitle')
@@ -62,10 +50,10 @@
 
                 <!-- Description -->
                 <div class="form-group row">
-                    {!! Form::label('description', 'Description', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('description', 'Description*', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::textarea('description', $equipmentType->description, ['class'=>'form-control', 'rows'=>3, 'required'=>false ]) !!}
+                        {!! Form::textarea('description', $componentType->description, ['class'=>'form-control', 'rows'=>3, 'required'=>true ]) !!}
                     </div>
 
                     @error('description')
@@ -78,7 +66,7 @@
                     {!! Form::label('thumb', 'Thumbnail', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        <img src="{{ $equipmentType->thumbURL() }}" alt="" width="64">
+                        <img src="{{ $componentType->thumbURL() }}" alt="" width="64">
                         {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
                         image)
                         @error('thumb')

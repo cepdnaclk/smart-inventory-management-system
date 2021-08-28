@@ -1,14 +1,14 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment Types'))
+@section('title', __('Component Types'))
 
 @section('breadcrumb-links')
-@include('backend.equipment.includes.breadcrumb-links')
+@include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
 <div>
-    {!! Form::open(['url' => route('admin.equipment.types.store'),
+    {!! Form::open(['url' => route('admin.component.types.store'),
         'method' => 'post',
         'class' => 'container',
         'files'=>true,
@@ -17,7 +17,7 @@
 
     <x-backend.card>
         <x-slot name="header">
-            Equipment Types : Create
+            Component Types : Create
         </x-slot>
 
         <x-slot name="body">
@@ -32,18 +32,6 @@
                 @error('title')
                 <strong>{{ $message }}</strong>
                 @enderror
-            </div>
-
-            <!-- Parent Category -->
-            <div class="form-group row">
-                {!! Form::label('parent_id', 'Parent Category', ['class' => 'col-md-2 col-form-label']) !!}
-
-                <div class="col-md-4">
-                    {!! Form::select('parent_id', $types, null, ['class'=>'form-control', 'required'=>false, 'placeholder' => '']) !!}
-                    @error('parent_id')
-                    <strong>{{ $message }}</strong>
-                    @enderror
-                </div>
             </div>
 
             <!-- Subtitle -->
@@ -61,10 +49,10 @@
 
             <!-- Description -->
             <div class="form-group row">
-                {!! Form::label('description', 'Description', ['class' => 'col-md-2 col-form-label']) !!}
+                {!! Form::label('description', 'Description*', ['class' => 'col-md-2 col-form-label']) !!}
 
                 <div class="col-md-10">
-                    {!! Form::textarea('description', '', ['class'=>'form-control', 'rows'=>3, 'required'=>false ]) !!}
+                    {!! Form::textarea('description', '', ['class'=>'form-control', 'rows'=>3, 'required'=>true ]) !!}
                 </div>
 
                 @error('description')

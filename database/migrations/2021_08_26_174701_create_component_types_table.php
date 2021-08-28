@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEquipmentTypesTable extends Migration
+class CreateComponentTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateEquipmentTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('equipment_types', function (Blueprint $table) {
+        Schema::create('component_types', function (Blueprint $table) {
             $table->id()->startingValue(10);
             $table->char("code", 8)->default('');
-            $table->integer("parent_id")->nullable();
 
             $table->string("title");
             $table->string("subtitle")->nullable();
-            $table->text("description")->nullable();
-            $table->string('thumb')->nullable();
+            $table->string("description")->nullable();
 
+            $table->string("thumb")->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ class CreateEquipmentTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('equipment_types');
+        Schema::dropIfExists('{_component_type}');
     }
 }

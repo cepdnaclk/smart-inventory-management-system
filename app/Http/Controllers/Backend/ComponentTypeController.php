@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\EquipmentType;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\ComponentType;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
-class EquipmentTypeController extends Controller
+class ComponentTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +19,9 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
-        $equipmentTypes = EquipmentType::paginate(12);
-        return view('backend.equipment.types.index', compact('equipmentTypes'));
+        $componenttypes = ComponentType::paginate(12);
+        
+        return view('backend.component.types.index',compact('componenttypes'));
     }
 
     /**
@@ -29,21 +31,19 @@ class EquipmentTypeController extends Controller
      */
     public function create()
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.types.create', compact('types'));
+        return view('backend.component.types.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|void
      */
     public function store(Request $request)
     {
         $data = request()->validate([
             'title' => 'string|required',
-            'parent_id' => 'integer|nullable', // TODO: Validate properly
             'subtitle' => 'string|nullable',
             'description' => 'string|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
@@ -51,12 +51,12 @@ class EquipmentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "component_types");
             }
 
-            $type = new EquipmentType($data);
+            $type = new ComponentType($data);
             $type->save();
-            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was created !');
+            return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was created !');
 
         } catch (\Exception $ex) {
             dd($ex);
@@ -67,38 +67,36 @@ class EquipmentTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param \App\Models\ComponentType $componenttype
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function show(EquipmentType $equipmentType)
+      */
+    public function show(ComponentType $componentType)
     {
-        return view('backend.equipment.types.show', compact('equipmentType'));
+        return view('backend.component.types.show', compact("componentType"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param \App\Models\ComponentType $componentType
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(EquipmentType $equipmentType)
+    public function edit(ComponentType $componentType)
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.types.edit', compact('equipmentType', 'types'));
+        return view('backend.component.types.edit', compact('componentType'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\EquipmentType $equipmentType
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EquipmentType $equipmentType)
+    public function update(Request $request, ComponentType $componentType)
     {
         $data = request()->validate([
             'title' => 'string|required',
-            'parent_id' => 'integer|nullable', // TODO: Validate properly
             'subtitle' => 'string|nullable',
             'description' => 'string|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
@@ -106,11 +104,11 @@ class EquipmentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentType->thumbURL(), $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb($componentType->thumbURL(), $request->thumb, "component_types");
             }
 
-            $equipmentType->update($data);
-            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was updated !');
+            $componentType->update($data);
+            return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was updated !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -120,34 +118,40 @@ class EquipmentTypeController extends Controller
     /**
      * Confirm to delete the specified resource from storage.
      *
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param \App\Models\ComponentType $componentType
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function delete(EquipmentType $equipmentType)
+    public function delete(ComponentType $componentType)
     {
-        return view('backend.equipment.types.delete', compact('equipmentType'));
+        return view('backend.component.types.delete', compact('componentType'));
     }
+
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param \App\Models\CompoenentType $componentType
      * @return \Illuminate\Http\RedirectResponse|void
      */
-    public function destroy(EquipmentType $equipmentType)
+    public function destroy(ComponentType $componentType)
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentType->thumbURL());
-
-            $equipmentType->delete();
-            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was deleted !');
-
+            $this->deleteThumb($componentType->thumbUrl());
+            $componentType->delete();
+            return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was deleted !');
+        
         } catch (\Exception $ex) {
             return abort(500);
         }
     }
 
+    /**
+     * Remove the specified thumb from storage.
+     *
+     * @param Url $url
+     * @return void
+     */
     private function deleteThumb($currentURL)
     {
         if ($currentURL != null) {
@@ -155,20 +159,31 @@ class EquipmentTypeController extends Controller
             if (File::exists($oldImage)) unlink($oldImage);
         }
     }
+     /**
+     * upload the specified thumb to storage.
+     *
+     * @param String $url
+     * @param Intervention\Image\Facades\Image $newImage
+     * @param String $folder
+     * 
+     * @return void
+     */
 
-    // Private function to handle thumb images
-    private function uploadThumb($currentURL, $newImage, $folder)
-    {
+     // Private function to handle thumb images
+     private function uploadThumb($currentURL, $newImage, $folder)
+     {
+ 
+         // Delete the existing image
+         $this->deleteThumb($currentURL);
+ 
+         $imageName = time() . '.' . $newImage->extension();
+         $newImage->move(public_path('img/'.$folder), $imageName);
+         $imagePath = "/img/$folder/" . $imageName;
+         $image = Image::make(public_path($imagePath))->fit(360, 360);
+         $image->save();
+ 
+         return $imageName;
+     }
 
-        // Delete the existing image
-        $this->deleteThumb($currentURL);
 
-        $imageName = time() . '.' . $newImage->extension();
-        $newImage->move(public_path('img/' . $folder), $imageName);
-        $imagePath = "/img/$folder/" . $imageName;
-        $image = Image::make(public_path($imagePath))->fit(360, 360);
-        $image->save();
-
-        return $imageName;
-    }
 }

@@ -1,14 +1,14 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment'))
+@section('title', __('Component'))
 
 @section('breadcrumb-links')
-    @include('backend.equipment.includes.breadcrumb-links')
+    @include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
     <div>
-        {!! Form::open(['url' => route('admin.equipment.items.store'),
+        {!! Form::open(['url' => route('admin.component.items.store'),
             'method' => 'post',
             'class' => 'container',
             'files'=>true,
@@ -17,7 +17,7 @@
 
         <x-backend.card>
             <x-slot name="header">
-                Equipment : Create
+                Component : Create
             </x-slot>
 
             <x-slot name="body">
@@ -35,11 +35,11 @@
 
                 <!-- Category -->
                 <div class="form-group row">
-                    {!! Form::label('equipment_type_id', 'Category*', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('component_type_id', 'Category*', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
-                        {!! Form::select('equipment_type_id', $types, null, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
-                        @error('equipment_type_id')
+                        {!! Form::select('component_type_id', $types, null, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
+                        @error('component_type_id')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
@@ -68,27 +68,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <!-- Is Electrical -->
-                    {!! Form::label('isElectrical', 'Electrical Item', ['class' => 'col-md-2 form-check-label']) !!}
-
-                    <div class="col-md-4 form-check">
-                        {!! Form::checkbox('isElectrical', '1', ['class'=>'form-check-input']) !!}
-                        @error('isElectrical')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-
-                    <!-- Power Rating -->
-                    {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::number('powerRating', '', ['class'=>'form-control']) !!}
-                        @error('powerRating')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
+                
 
                 <!-- Description -->
                 <div class="form-group row">
@@ -126,70 +106,27 @@
                     </div>
                 </div>
 
-                <!-- Dimensions -->
-                <div class="form-group row">
-                    {!! Form::label('dimensions', 'Dimensions', ['class' => 'col-sm-2 form-label']) !!}
+               <!-- Dimensions -->
+               <div class="form-group row">
+                    {!! Form::label('size', 'Size', ['class' => 'col-sm-2 form-label']) !!}
 
-                    <div class="col-md-3 form-group mb-2">
-                        <div class="container row">
-                            {!! Form::label('width', 'Width (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('width', '', ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('width')
-                            <strong>{{ $message }}</strong>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-3 form-group mb-2">
-                        <div class="container row">
-                            {!! Form::label('height', 'Height (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('height', '', ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('height')
-                            <strong>{{ $message }}</strong>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-3 form-group mb-2">
-                        <div class="container row">
-                            {!! Form::label('length', 'Length (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('length', '', ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('length')
-                            <strong>{{ $message }}</strong>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Weight -->
-                <div class="form-group row">
-                    {!! Form::label('weight', 'Weight (g)', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::number('weight', '', ['class'=>'form-control', 'step' => '0.1']) !!}
-                        @error('weight')
+                    <div class="col-md-10">
+                        {!! Form::select('size',['very small'=>'very small', 'small'=> 'small', 'medium'=> 'medium','regular'=>'regular', 'large'=>'large','very large'=> 'very large'] ,'very small') !!}
+                        @error('size')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
                 </div>
+
+               
 
                 <!-- Price -->
                 <div class="form-group row">
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
-                        {!! Form::number('price', '0', ['class'=>'form-control']) !!}
+                        {!! Form::number('price', '', ['class'=>'form-control']) !!}
                         @error('price')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Count -->
-                <div class="form-group row">
-                    {!! Form::label('quantity', 'Quantity', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::number('quantity', '1', ['class'=>'form-control']) !!}
-                        @error('quantity')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
