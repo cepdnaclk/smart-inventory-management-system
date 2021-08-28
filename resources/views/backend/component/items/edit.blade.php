@@ -68,7 +68,6 @@
                     </div>
                 </div>
 
-                
 
                 <!-- Description -->
                 <div class="form-group row">
@@ -111,13 +110,13 @@
                     {!! Form::label('size', 'Size', ['class' => 'col-sm-2 form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::select('size',['very small'=>'very small', 'small'=> 'small', 'medium'=> 'medium','regular'=>'regular', 'large'=>'large','very large'=> 'very large'] ,$componentItem->size) !!}
+                        {!! Form::select('size', ['very small'=>'very small', 'small'=> 'small', 'medium'=> 'medium','regular'=>'regular', 'large'=>'large','very large'=> 'very large'], $componentItem->size, ['class'=>'form-control']) !!}
                         @error('size')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
                 </div>
-                    
+
                 <!-- Price -->
                 <div class="form-group row">
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
