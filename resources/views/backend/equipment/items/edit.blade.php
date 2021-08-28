@@ -142,18 +142,18 @@
                     </div>
                     <div class="col-md-3 form-group mb-2">
                         <div class="container row">
-                            {!! Form::label('length', 'Length (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('length', $equipmentItem->length, ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('length')
+                            {!! Form::label('height', 'Height (cm)', ['class' => 'form-label']) !!}<br/>
+                            {!! Form::number('height', $equipmentItem->height, ['class'=>'form-control', 'step' => '0.1']) !!}
+                            @error('height')
                             <strong>{{ $message }}</strong>
                             @enderror
                         </div>
                     </div>
                     <div class="col-md-3 form-group mb-2">
                         <div class="container row">
-                            {!! Form::label('height', 'Height (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('height', $equipmentItem->height, ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('height')
+                            {!! Form::label('length', 'Length (cm)', ['class' => 'form-label']) !!}<br/>
+                            {!! Form::number('length', $equipmentItem->length, ['class'=>'form-control', 'step' => '0.1']) !!}
+                            @error('length')
                             <strong>{{ $message }}</strong>
                             @enderror
                         </div>
@@ -180,6 +180,18 @@
                     <div class="col-md-4">
                         {!! Form::number('price', $equipmentItem->price, ['class'=>'form-control']) !!}
                         @error('price')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Quantity -->
+                <div class="form-group row">
+                    {!! Form::label('quantity', 'Quantity', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4">
+                        {!! Form::number('quantity', $equipmentItem->quantity, ['class'=>'form-control']) !!}
+                        @error('quantity')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
