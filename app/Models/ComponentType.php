@@ -22,4 +22,13 @@ class ComponentType extends Model
         if ($this->thumb != null) return '/img/component_types/' . $this->thumb;
         return null;
     }
+
+    // Return the parent item of the current type or null
+    public function parent()
+    {
+        if ($this->parent_id !== null) return ComponentType::find($this->parent_id);
+        return null;
+    }
+
+    
 }

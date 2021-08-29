@@ -16,7 +16,7 @@ class CreateComponentTypesTable extends Migration
         Schema::create('component_types', function (Blueprint $table) {
             $table->id()->startingValue(10);
             $table->char("code", 8)->default('');
-
+            $table->integer("parent_id")->nullable();
             $table->string("title");
             $table->string("subtitle")->nullable();
             $table->string("description")->nullable();
