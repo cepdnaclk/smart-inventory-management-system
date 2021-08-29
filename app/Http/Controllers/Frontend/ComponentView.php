@@ -12,8 +12,8 @@ class ComponentView extends Controller
     // Home Page
     public function index()
     {
-        $eqTypes = ComponentType::all();
-        return view('frontend.component.index', compact('eqTypes'));
+        $componentType = ComponentType::all();
+        return view('frontend.component.index', compact('componentType'));
     }
 
     // component Category Page
