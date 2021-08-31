@@ -113,8 +113,6 @@
                     </div>
                 </div>
             </div>
-
         </x-slot>
     </x-backend.card>
-
 @endsection
