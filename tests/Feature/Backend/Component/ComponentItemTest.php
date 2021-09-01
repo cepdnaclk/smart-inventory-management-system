@@ -96,6 +96,7 @@ class ComponentItemTest extends TestCase
         $component = ComponentItem::factory()->create();
 
         $component->title = 'New Component Title';
+        
         $response = $this->put("/admin/component/items/{$component->id}", $component->toArray());
 
         $this->assertDatabaseHas('component_items', [
