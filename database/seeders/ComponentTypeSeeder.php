@@ -15,7 +15,7 @@ class ComponentTypeSeeder extends Seeder
             'parent_id' => NULL, 
             'subtitle' => '', 
             'description' => ' ', 
-            'thumb' => 'comit1001.jpg',
+            'thumb' => 'comit1002.jpg',
             'created_at' => '2021-07-04 15:20:56',
             'updated_at' => '2021-07-04 15:21:03'
         ),
@@ -27,7 +27,7 @@ class ComponentTypeSeeder extends Seeder
             'parent_id' => NULL, 
             'subtitle' => '', 
             'description' => ' ', 
-            'thumb' => 'comit1001.jpg',
+            'thumb' => 'comit1002.jpg',
             'created_at' => '2021-07-04 15:20:56',
             'updated_at' => '2021-07-04 15:21:03'
         ),
@@ -39,7 +39,7 @@ class ComponentTypeSeeder extends Seeder
             'parent_id' => NULL, 
             'subtitle' => '', 
             'description' => ' ', 
-            'thumb' => 'comit1001.jpg',
+            'thumb' => 'comit1002.jpg',
             'created_at' => '2021-07-04 15:20:56',
             'updated_at' => '2021-07-04 15:21:03'
         ),
@@ -51,7 +51,7 @@ class ComponentTypeSeeder extends Seeder
             'parent_id' => NULL, 
             'subtitle' => '', 
             'description' => ' ', 
-            'thumb' => 'comit1001.jpg',
+            'thumb' => 'comit1002.jpg',
             'created_at' => '2021-07-04 15:20:56',
             'updated_at' => '2021-07-04 15:21:03'
         ),
@@ -63,7 +63,7 @@ class ComponentTypeSeeder extends Seeder
             'parent_id' => NULL, 
             'subtitle' => '', 
             'description' => ' ', 
-            'thumb' => 'comit1001.jpg',
+            'thumb' => 'comit1002.jpg',
             'created_at' => '2021-07-04 15:20:56',
             'updated_at' => '2021-07-04 15:21:03'
         ),
@@ -75,7 +75,7 @@ class ComponentTypeSeeder extends Seeder
             'title' => 'Development boards', 
             'subtitle' => '', 
             'description' => 'These boards incorporate the target microcontroller with additional memory,  and some other peripheral interfaces.', 
-            'thumb' => 'comit1001.jpg',
+            'thumb' => 'comit1002.jpg',
             'created_at' => '2021-07-04 15:20:56',
             'updated_at' => '2021-07-04 15:21:03'
         ),
