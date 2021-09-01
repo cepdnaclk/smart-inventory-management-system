@@ -132,6 +132,18 @@
                     </div>
                 </div>
 
+                <!-- Price -->
+                <div class="form-group row">
+                    {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4">
+                        {!! Form::number('price', '', ['class'=>'form-control']) !!}
+                        @error('price')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
                 <!-- Thumbnail Image -->
                 <div class="form-group row">
                     {!! Form::label('thumb', 'Thumbnail', ['class' => 'col-md-2 col-form-label']) !!}
