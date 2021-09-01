@@ -63,6 +63,11 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <td>Quantity </td>
+                        <td>{{ $componentItem->quantity }} 
+                        </td>
+                    </tr>
                     
                     <tr>
                         <td>Size </td>
@@ -77,6 +82,26 @@
                     <tr>
                         <td>Usage Instructions</td>
                         <td>{!! str_replace("\n", "<br>", $componentItem->instructions) !!}</td>
+                    </tr>
+                    <tr>
+                        <td>Is It Available ? </td>
+                        <td>
+                            {{ @if($componentItem->size)
+                                        <span>YES</span>
+                                @else 
+                                    <span class="text-danger">NO</span>
+                            }} 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Is It Electrical? ? </td>
+                        <td>
+                            {{ @if($componentItem->size)
+                                        <span>YES</span>
+                                @else 
+                                    <span class="text-danger">NO</span>
+                            }} 
+                        </td>
                     </tr>
 
                     <tr>
