@@ -110,6 +110,7 @@ class ComponentTypeController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($componentType->thumbURL(), $request->thumb, "component_types");
             }
+            
 
             $componentType->update($data);
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was updated !');

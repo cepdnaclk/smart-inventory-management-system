@@ -27,9 +27,9 @@ class CreateComponentItemsTable extends Migration
             $table->text("instructions")->nullable();
             
 
-            $table->boolean("isAvailable")->default(true);
-            $table->boolean("isElectrical")->default(true);
-            $table->float("powerRating")->nullable(); ;
+            $table->boolean("isAvailable")->nullable();;
+            $table->boolean("isElectrical")->nullable();;
+            $table->float("powerRating")->nullable() ;
             $table->float("price")->nullable(); // in LKR
             $table->string('thumb')->nullable();
 

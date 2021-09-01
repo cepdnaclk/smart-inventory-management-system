@@ -146,7 +146,7 @@
                     {!! Form::label('Available?', '', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4 d-flex align-items-center">
-                        {!!Form::checkbox('isAvailable',$componentItem->isAvailable,  true); !!}
+                        {!!Form::checkbox('isAvailable',1,  ($componentItem->isAvailable)?true:false); !!}
                         @error('isAvailable')
                         <strong>{{ $message }}</strong>
                         @enderror
@@ -155,11 +155,10 @@
 
                 <!-- Is Electrical -->
                 <div class="form-group row">
-                    {!! Form::label('isElectrical', 'Electrical Item', ['class' => 'col-md-2 form-check-label']) !!}
+                    {!! Form::label('isElectrical', 'Electrical?', ['class' => 'col-md-2 form-check-label']) !!}
 
-                    <div class="col-md-4 form-check">
-                        <input type="checkbox" name="isElectrical" value="1"
-                               class="form-check-input0" {{$componentItem->isElectrical === '1' ? 'checked' :''}} />
+                    <div class="col-md-4 d-flex align-items-center">
+                        {!!Form::checkbox('isElectrical',1,  ($componentItem->isElectrical)?true:false); !!}
                         @error('isElectrical')
                         <strong>{{ $message }}</strong>
                         @enderror

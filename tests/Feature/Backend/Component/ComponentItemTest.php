@@ -68,7 +68,7 @@ class ComponentItemTest extends TestCase
         $this->loginAsAdmin();
         $response = $this->post('/admin/component/items', [
             
-            'title' => 'UA741CP Operational Amplifier', 
+            'title' => 'Sample Component', 
             'brand' => NULL, 
             'productCode' => 'ICOA101', 
             'specifications' => 'UA741CP OpAmp 1MHz', 
