@@ -19,8 +19,8 @@ class ComponentItemSeeder extends Seeder
             'isAvailable' => '1', 
             'price' => '1200.00',  
             'size' => 'medium', 
-            'thumb' => 'comit1001.jpg',
-            'component_type_id' => '11',
+            'thumb' => 'comit1002.jpg',
+            'component_type_id' => '16',
             'created_at' => '2021-08-04 15:23:56',
             'updated_at' => '2021-08-04 15:25:03'
         ),
@@ -37,7 +37,7 @@ class ComponentItemSeeder extends Seeder
             'price' => '80.00',  
             'size' => 'small', 
             'thumb' => 'comit1002.jpg',
-            'component_type_id' => '12',
+            'component_type_id' => '17',
             'created_at' => '2021-08-04 15:26:56','updated_at' => '2021-08-04 15:27:03',
             
         )
