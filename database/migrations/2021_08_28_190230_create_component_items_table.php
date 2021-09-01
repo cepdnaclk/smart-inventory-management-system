@@ -20,22 +20,26 @@ class CreateComponentItemsTable extends Migration
             $table->string("title");
             $table->string("brand")->nullable();
             $table->string("productCode")->nullable();
+            $table->integer("quantity")->nullable();
 
             $table->text("specifications")->nullable();
-            $table->text("instructions")->nullable();
             $table->text("description")->nullable();
+            $table->text("instructions")->nullable();
+            
 
-            $table->boolean("isAvailable")->default(false);
+            $table->boolean("isAvailable")->nullable();;
+            $table->boolean("isElectrical")->nullable();;
+            $table->float("powerRating")->nullable() ;
             $table->float("price")->nullable(); // in LKR
+            $table->string('thumb')->nullable();
 
             // Physical size in terms of appearance [small, medium, large] kind of
+            //!tendable
             $table->enum('size', ['very small', 'small',  'medium','regular', 'large', 'very large']);
 
-            // Thought to have type and family as a property rather than having different tables
-            // $table->string("type")->nullable();
-            // $table->string("family")->nullable();
 
-            $table->string('thumb')->nullable();
+
+            
             $table->timestamps();
 
             $table->foreignId('component_type_id')

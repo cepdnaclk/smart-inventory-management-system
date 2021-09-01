@@ -48,6 +48,23 @@
                     @enderror
                 </div>
 
+
+                  <!-- Parent Category -->
+                  <div class="form-group row">
+                    {!! Form::label('parent_id', 'Parent Category', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4">
+                        {!! Form::select('parent_id', $types, $componentType->parent_id, ['class'=>'form-control', 'required'=>false, 'placeholder' => '']) !!}
+                        @error('parent_id')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
+                
+
+                
+
                 <!-- Description -->
                 <div class="form-group row">
                     {!! Form::label('description', 'Description*', ['class' => 'col-md-2 col-form-label']) !!}
@@ -67,8 +84,7 @@
 
                     <div class="col-md-10">
                         <img src="{{ $componentType->thumbURL() }}" alt="" width="64">
-                        {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
-                        image)
+                        {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square image)
                         @error('thumb')
                         <strong>{{ $message }}</strong>
                         @enderror
