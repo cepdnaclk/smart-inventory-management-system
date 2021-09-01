@@ -105,6 +105,17 @@
                     </tr>
 
                     <tr>
+                        <td>Power Rating</td>
+                        <td>
+                            @if( $equipmentItem->powerRating != null )
+                                {{ $equipmentItem->powerRating." W"}}
+                            @else
+                                <span>[Not Available]</span>
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
                         <td>Thumbnail</td>
                         <td>
                             @if( $componentItem->thumb != null )

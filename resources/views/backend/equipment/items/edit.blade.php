@@ -33,18 +33,19 @@
                         @enderror
                     </div>
                 </div>
-
-                <!-- Category -->
+                <!-- Parent Category -->
                 <div class="form-group row">
-                    {!! Form::label('equipment_type_id', 'Category*', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('parent_id', 'Parent Category', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
-                        {!! Form::select('equipment_type_id', $types, $equipmentItem->equipment_type_id, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
-                        @error('equipment_type_id')
+                        {!! Form::select('parent_id', $types, $equipmentType->parent_id, ['class'=>'form-control', 'required'=>false, 'placeholder' => '']) !!}
+                        @error('parent_id')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
                 </div>
+
+
 
                 <div class="form-group row">
                     <!-- Brand -->

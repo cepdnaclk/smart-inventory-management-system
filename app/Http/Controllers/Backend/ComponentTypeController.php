@@ -31,7 +31,8 @@ class ComponentTypeController extends Controller
      */
     public function create()
     {
-        return view('backend.component.types.create');
+        $types = ComponentType::pluck('title', 'id');
+        return view('backend.component.types.create', compact('types'));
     }
 
     /**

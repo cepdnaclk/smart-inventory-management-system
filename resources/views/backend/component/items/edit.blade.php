@@ -153,13 +153,24 @@
                     </div>
                 </div>
 
-                <!-- isElectrical -->
+                <!-- Is Electrical -->
                 <div class="form-group row">
-                    {!! Form::label('Electrical?', '', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('isElectrical', 'Electrical Item', ['class' => 'col-md-2 form-check-label']) !!}
 
-                    <div class="col-md-4 d-flex align-items-center">
-                        {!!Form::checkbox('isElectrical',$componentItem->isElectrical,  true); !!}
+                    <div class="col-md-4 form-check">
+                        <input type="checkbox" name="isElectrical" value="1"
+                               class="form-check-input0" {{$equipmentItem->isElectrical === '1' ? 'checked' :''}} />
                         @error('isElectrical')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+
+                    <!-- Power Rating -->
+                    {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4">
+                        {!! Form::number('powerRating', $equipmentItem->powerRating, ['class'=>'form-control']) !!}
+                        @error('powerRating')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
