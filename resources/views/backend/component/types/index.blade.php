@@ -38,7 +38,8 @@
                     <table class="table table-striped">
                         <tr>
                             <th>Title</th>
-                            <th>Subtitle</th>
+                            <th>Parent Category</th>
+                            {{-- <th>Subtitle</th> --}}
                             <th>Description</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -46,7 +47,16 @@
                         @foreach($componenttypes as $type)
                             <tr>
                                 <td>{{ $type->title  }}</td>
-                                <td>{{ $type->subtitle ?? 'N/A' }}</td>
+                                <td>
+                                    @if( $type->parent() !== null)
+                                        <a href="{{ route('admin.component.types.show', $type->parent()->id) }}">
+                                            {{ $type->parent()->title }}
+                                        </a>
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+                                {{-- <td>{{ $type->subtitle ?? 'N/A' }}</td> --}}
                                 <td>{{ $type->description  }}</td>
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
