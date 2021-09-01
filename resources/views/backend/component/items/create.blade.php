@@ -132,13 +132,25 @@
                     </div>
                 </div>
 
-                <!-- Price -->
+                <!-- isavailable -->
                 <div class="form-group row">
-                    {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('Available?', '', ['class' => 'col-md-2 col-form-label']) !!}
 
-                    <div class="col-md-4">
-                        {!! Form::number('price', '', ['class'=>'form-control']) !!}
-                        @error('price')
+                    <div class="col-md-4 d-flex align-items-center">
+                        {!!Form::checkbox('isAvailable','',  true); !!}
+                        @error('isAvailable')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- isElectrical -->
+                <div class="form-group row">
+                    {!! Form::label('Electrical?', '', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4 d-flex align-items-center">
+                        {!!Form::checkbox('isElectrical','',  true); !!}
+                        @error('isElectrical')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
@@ -148,7 +160,7 @@
                 <div class="form-group row">
                     {!! Form::label('thumb', 'Thumbnail', ['class' => 'col-md-2 col-form-label']) !!}
 
-                    <div class="col-md-10">
+                    <div class="col-md-10 ">
                         {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square image)
                         @error('thumb')
                         <strong>{{ $message }}</strong>
