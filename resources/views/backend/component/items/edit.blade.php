@@ -159,7 +159,7 @@
 
                     <div class="col-md-4 form-check">
                         <input type="checkbox" name="isElectrical" value="1"
-                               class="form-check-input0" {{$equipmentItem->isElectrical === '1' ? 'checked' :''}} />
+                               class="form-check-input0" {{$componentItem->isElectrical === '1' ? 'checked' :''}} />
                         @error('isElectrical')
                         <strong>{{ $message }}</strong>
                         @enderror
@@ -169,7 +169,7 @@
                     {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
-                        {!! Form::number('powerRating', $equipmentItem->powerRating, ['class'=>'form-control']) !!}
+                        {!! Form::number('powerRating', $componentItem->powerRating, ['class'=>'form-control']) !!}
                         @error('powerRating')
                         <strong>{{ $message }}</strong>
                         @enderror
