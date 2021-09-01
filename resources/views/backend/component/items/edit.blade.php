@@ -117,6 +117,18 @@
                     </div>
                 </div>
 
+                 <!-- Quantity -->
+               <div class="form-group row">
+                {!! Form::label('quantity', 'Quantity (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
+
+                <div class="col-md-4">
+                    {!! Form::number('quantity', $componentItem->quantity, ['class'=>'form-control']) !!}
+                    @error('quantity')
+                    <strong>{{ $message }}</strong>
+                    @enderror
+                </div>
+            </div>
+
                 <!-- Price -->
                 <div class="form-group row">
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
@@ -124,6 +136,30 @@
                     <div class="col-md-4">
                         {!! Form::number('price', $componentItem->price, ['class'=>'form-control']) !!}
                         @error('price')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- isavailable -->
+                <div class="form-group row">
+                    {!! Form::label('Available?', '', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4 d-flex align-items-center">
+                        {!!Form::checkbox('isAvailable',$componentItem->isAvailable,  true); !!}
+                        @error('isAvailable')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- isElectrical -->
+                <div class="form-group row">
+                    {!! Form::label('Electrical?', '', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4 d-flex align-items-center">
+                        {!!Form::checkbox('isElectrical',$componentItem->isElectrical,  true); !!}
+                        @error('isElectrical')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
