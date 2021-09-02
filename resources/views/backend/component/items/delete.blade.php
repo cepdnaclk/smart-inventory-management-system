@@ -1,27 +1,27 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment Types'))
+@section('title', __('Component'))
 
 @section('breadcrumb-links')
-    @include('backend.equipment.includes.breadcrumb-links')
+    @include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Equipment Types : Delete | {{ $equipmentType->title  }}
+                Component : Delete | {{ $componentItem->title  }}
             </x-slot>
 
             <x-slot name="body">
                 <p>Are you sure you want to delete
-                    <strong><i>{{ $equipmentType->title  }}</i></strong> ?
+                    <strong><i>{{ $componentItem->title  }}</i></strong> ?
                 </p>
 
                 <div class="d-flex">
-                    {!! Form::open(['url' => route('admin.equipment.types.destroy', compact('equipmentType') ), 'method' => 'delete', 'class' => 'container']) !!}
+                    {!! Form::open(['url' => route('admin.component.items.destroy', compact('componentItem') ), 'method' => 'delete', 'class' => 'container']) !!}
 
-                    <a href="{{ route('admin.equipment.types.index') }}" class="btn btn-light mr-2">Back</a>
+                    <a href="{{ route('admin.component.items.index') }}" class="btn btn-light mr-2">Back</a>
                     {!! Form::submit('Delete', ['class'=>'btn btn-danger']) !!}
 
                     {!! Form::close() !!}
