@@ -59,7 +59,6 @@ class EquipmentTypeController extends Controller
             return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was created !');
 
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500, "Error 222");
         }
     }

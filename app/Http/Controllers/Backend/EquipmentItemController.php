@@ -19,7 +19,7 @@ class EquipmentItemController extends Controller
      */
     public function index()
     {
-        $equipment = EquipmentItem::paginate(12);
+        $equipment = EquipmentItem::orderBy('id', 'desc')->paginate(16);
         return view('backend.equipment.items.index', compact('equipment'));
     }
 
@@ -79,7 +79,6 @@ class EquipmentItemController extends Controller
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was created !');
 
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500);
         }
     }
@@ -152,7 +151,6 @@ class EquipmentItemController extends Controller
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was updated !');
 
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500);
         }
     }

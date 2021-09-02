@@ -14,8 +14,9 @@
             </x-slot>
 
             <x-slot name="body">
-                <a class="btn btn-secondary btn-150" href="{{ route('admin.equipment.items.index') }}">Items</a>
-                <a class="btn btn-secondary btn-150" href="{{ route('admin.equipment.types.index') }}">Types</a>
+                <a class="btn btn-secondary btn-150 mb-2" href="{{ route('admin.equipment.items.index') }}">Items</a>
+                <br/>
+                <a class="btn btn-secondary btn-150 mb-2" href="{{ route('admin.equipment.types.index') }}">Types</a>
             </x-slot>
         </x-backend.card>
     </div>

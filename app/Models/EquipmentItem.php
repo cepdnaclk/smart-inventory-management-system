@@ -18,8 +18,9 @@ class EquipmentItem extends Model
         return null;
     }
 
-    public function inventoryCode(){
-        return  $this->equipment_type->inventoryCode()."/".$this->id;
+    public function inventoryCode()
+    {
+        return $this->equipment_type->inventoryCode() . "/" . $this->id;
     }
 
     // Return the relative URL of the thumbnail
