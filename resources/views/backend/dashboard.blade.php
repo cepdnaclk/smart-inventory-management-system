@@ -73,42 +73,44 @@
         </x-slot>
 
         <x-slot name="body">
-            <h3>Under Construction</h3>
-            <ul class="large list-unstyled pt-5 d-inline-flex ">
-                <li class="px-2">
-                    <a class="btn btn-lg btn-primary" href="{{ route('admin.equipment.index') }}">Equipment</a>
-                </li>
-                <li class="px-2">
-                    <a class="btn btn-lg btn-primary" href="{{ route('admin.component.index') }}">Component</a>
-                </li>
-            </ul>
-
+            <div class="container">
+                <div class="row">
                     <div class="col-md-3">
-                        <a class="text-decoration-none" href="{{ route('admin.equipment.types.index') }}">
-                            <div class="card-counter danger">
-                                <span class="count-numbers">{{ $equipmentTypeCount }}</span>
-                                <span class="count-name">Equipment Types</span>
+                        <a class="text-decoration-none" href="{{ route('admin.equipment.items.index') }}">
+                            <div class="card-counter primary">
+                                <span class="count-numbers">{{ $equipmentCount }}</span>
+                                <span class="count-name">Equipment ({{ $equipmentTypeCount }} types)</span>
                             </div>
                         </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.component.items.index') }}">
+                            <div class="card-counter danger">
+                                <span class="count-numbers">{{ $componentCount }}</span>
+                                <span class="count-name">Components ({{ $componentTypeCount }} types)</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        @if ($logged_in_user->hasAllAccess())
+                            <a class="text-decoration-none" href="{{ route('admin.auth.user.index') }}">
+                                @endif
+                                <div class="card-counter success">
+                                    <span class="count-numbers">{{ $userCount }}</span>
+                                    <span class="count-name">Users</span>
+                                </div>
+                                @if ($logged_in_user->hasAllAccess())</a> @endif
                     </div>
 
                     <div class="col-md-3">
                         <a class="text-decoration-none" href="#">
-                            <div class="card-counter success">
-                                <span class="count-numbers">0</span>
-                                <span class="count-name">Components</span>
+                            <div class="card-counter info">
+                                <span class="count-numbers">###</span>
+                                <span class="count-name">##############</span>
                             </div>
                         </a>
-                    </div>
-
-                    <div class="col-md-3">
-                        @if ($logged_in_user->hasAllAccess())<a class="text-decoration-none"
-                                                                href="{{ route('admin.auth.user.index') }}">@endif
-                            <div class="card-counter info">
-                                <span class="count-numbers">{{ $userCount }}</span>
-                                <span class="count-name">Users</span>
-                            </div>
-                            @if ($logged_in_user->hasAllAccess())</a> @endif
                     </div>
                 </div>
             </div>
