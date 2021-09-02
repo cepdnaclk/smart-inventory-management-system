@@ -148,18 +148,18 @@ return [
 
     'default_location' => [
         'ip' => '127.0.0.0',
-        'iso_code' => 'US',
-        'country' => 'United States',
-        'city' => 'New Haven',
-        'state' => 'CT',
-        'state_name' => 'Connecticut',
-        'postal_code' => '06510',
-        'lat' => 41.31,
-        'lon' => -72.92,
-        'timezone' => 'America/New_York',
+        'iso_code' => 'LKA',
+        'country' => 'Sri Lanka',
+        'city' => 'Peradeniya',
+        'state' => 'CP',
+        'state_name' => 'Central',
+        'postal_code' => '20400',
+        'lat' => 6.9271,
+        'lon' => 79.8612,
+        'timezone' => 'Asia/Colombo',
         'continent' => 'NA',
         'default' => true,
-        'currency' => 'USD',
+        'currency' => 'LKR',
     ],
 
 ];
