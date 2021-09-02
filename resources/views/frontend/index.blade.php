@@ -104,6 +104,7 @@
             <a href="https://github.com/cepdnaclk/smart-inventory-management-system" target="_blank"><i class="fab fa-github"></i>
                 GitHub</a>
             <a href="/components">Components</a>
+            <a href="/equipment">Equipment</a>
 
         </div><!--links-->
     </div><!--content-->
