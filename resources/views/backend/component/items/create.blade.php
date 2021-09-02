@@ -118,17 +118,7 @@
                     </div>
                 </div>
 
-               <!-- Quantity -->
-               <div class="form-group row">
-                {!! Form::label('quantity', 'Quantity (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
-
-                <div class="col-md-4">
-                    {!! Form::number('quantity', '', ['class'=>'form-control']) !!}
-                    @error('quantity')
-                    <strong>{{ $message }}</strong>
-                    @enderror
-                </div>
-            </div>
+               
 
                 <!-- Price -->
                 <div class="form-group row">
@@ -142,47 +132,11 @@
                     </div>
                 </div>
 
-                <!-- isavailable -->
-                <div class="form-group row">
-                    {!! Form::label('Available?', '', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4 d-flex align-items-center">
-                        {!!Form::checkbox('isAvailable','',  true); !!}
-                        @error('isAvailable')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <!-- Is Electrical -->
-                    {!! Form::label('isElectrical', 'Electrical Item', ['class' => 'col-md-2 form-check-label']) !!}
-
-                    <div class="col-md-4 form-check">
-                        {!! Form::checkbox('isElectrical', '1', ['class'=>'form-check-input']) !!}
-                        @error('isElectrical')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-
-                    <!-- Power Rating -->
-                    {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::number('powerRating', '', ['class'=>'form-control']) !!}
-                        @error('powerRating')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-
-
                 <!-- Thumbnail Image -->
                 <div class="form-group row">
                     {!! Form::label('thumb', 'Thumbnail', ['class' => 'col-md-2 col-form-label']) !!}
 
-                    <div class="col-md-10 ">
+                    <div class="col-md-10">
                         {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square image)
                         @error('thumb')
                         <strong>{{ $message }}</strong>
