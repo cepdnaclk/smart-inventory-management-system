@@ -11,5 +11,29 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.setPublicPath('public')
+    .setResourceRoot('../') // Turns assets paths in css relative to css file
+    .vue()
+    .sass('resources/sass/frontend/app.scss', 'css/frontend.css')
+    .sass('resources/sass/backend/app.scss', 'css/backend.css')
+    .js('resources/js/frontend/app.js', 'js/frontend.js')
+    .js('resources/js/backend/app.js', 'js/backend.js')
+    .extract([
+        'alpinejs',
+        'jquery',
+        'bootstrap',
+        'popper.js',
+        'axios',
+        'sweetalert2',
+        'lodash'
+    ])
+    .sourceMaps();
+
+if (mix.inProduction()) {
+    mix.version();
+} else {
+    // Uses inline source-maps on development
+    mix.webpackConfig({
+        devtool: 'inline-source-map'
+    });
+}

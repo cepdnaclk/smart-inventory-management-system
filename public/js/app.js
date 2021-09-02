@@ -49746,8 +49746,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 __webpack_require__(/*! C:\project\smart-inventory-management-system\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! C:\project\smart-inventory-management-system\resources\sass\app.scss */"./resources/sass/app.scss");
+=======
+__webpack_require__(/*! C:\ProjectCE\smart-inventory-management-system\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\ProjectCE\smart-inventory-management-system\resources\sass\app.scss */"./resources/sass/app.scss");
+>>>>>>> ce0cdd777b877b2209d36d762ffb478910673e02
 
 
 /***/ })
