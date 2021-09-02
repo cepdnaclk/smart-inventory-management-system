@@ -33,11 +33,11 @@ class ComponentItemFactory extends Factory
             'isAvailable' => '1',
             'isElectrical' => '1',
             'powerRating' => rand(100, 1000),
-            'price' => rand(0, 1000),
+            'price' => rand(100, 1000),
             'size' => $this->faker->randomElement(['very small', 'small',  'medium','regular', 'large', 'very large']),
             'thumb' => NULL,
             'component_type_id' => $this->faker->randomElement(['11','12'])
-            
+
         ];
     }
 }

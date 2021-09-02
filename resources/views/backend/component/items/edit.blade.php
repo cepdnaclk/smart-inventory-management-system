@@ -106,6 +106,7 @@
                 </div>
 
                 <!-- Dimensions -->
+                <!-- TODO: Review this -->
                 <div class="form-group row">
                     {!! Form::label('size', 'Size', ['class' => 'col-sm-2 form-label']) !!}
 
@@ -117,17 +118,17 @@
                     </div>
                 </div>
 
-                 <!-- Quantity -->
-               <div class="form-group row">
-                {!! Form::label('quantity', 'Quantity (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
+                <!-- Quantity -->
+                <div class="form-group row">
+                    {!! Form::label('quantity', 'Quantity', ['class' => 'col-md-2 col-form-label']) !!}
 
-                <div class="col-md-4">
-                    {!! Form::number('quantity', $componentItem->quantity, ['class'=>'form-control']) !!}
-                    @error('quantity')
-                    <strong>{{ $message }}</strong>
-                    @enderror
+                    <div class="col-md-4">
+                        {!! Form::number('quantity', $componentItem->quantity, ['class'=>'form-control']) !!}
+                        @error('quantity')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
                 </div>
-            </div>
 
                 <!-- Price -->
                 <div class="form-group row">

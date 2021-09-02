@@ -24,8 +24,8 @@ class ComponentTypeFactory extends Factory
         return [
             'code' => '',
             'parent_id' => NULL,
-            'title' => $this->faker->title(),
-            'subtitle' => $this->faker->title(),
+            'title' => $this->faker->name(),
+            'subtitle' => $this->faker->name(),
             'description' => $this->faker->paragraph(),
             'thumb' => NULL
         ];

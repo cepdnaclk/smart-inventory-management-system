@@ -1,23 +1,24 @@
 <?php
+
 use App\Http\Controllers\Frontend\ComponentView;
 use App\Models\ComponentItem;
 use App\Models\ComponentType;
 use Tabuna\Breadcrumbs\Trail;
 
 
-Route::prefix('component')->group(function () {
+Route::prefix('components')->group(function () {
     Route::get('/', [ComponentView::class, 'index'])
         ->name('component.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->parent('frontend.index')
-                ->push(__('component'), route('frontend.component.index'));
+                ->push(__('Components'), route('frontend.component.index'));
         });
 
     Route::get('/category/{componentType}', [ComponentView::class, 'viewCategory'])
         ->name('component.category')
         ->breadcrumbs(function (Trail $trail, ComponentType $componentType) {
             $trail->parent('frontend.index')
-                ->push(__('component'), route('frontend.component.index'));
+                ->push(__('Components'), route('frontend.component.index'));
 
             if ($componentType->parent() != null) {
                 // Only look upto two parents for now
@@ -30,18 +31,14 @@ Route::prefix('component')->group(function () {
                 $trail->push($componentType->parent()->title, route('frontend.component.category',
                     $componentType->parent()));
             }
-
             $trail->push($componentType->title);
-
-
         });
 
     Route::get('/item/{componentItem}', [ComponentView::class, 'viewItem'])
         ->name('component.item')
         ->breadcrumbs(function (Trail $trail, ComponentItem $componentItem) {
             $trail->parent('frontend.index')
-                ->push(__('components'), route('frontend.component.index'));
-
+                ->push(__('Components'), route('frontend.component.index'));
 
             if ($componentItem->component_type() != null) {
                 // Only look upto one parents for now

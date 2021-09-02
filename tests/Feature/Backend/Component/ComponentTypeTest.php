@@ -18,14 +18,14 @@ class ComponentTypeTest extends TestCase
     public function an_admin_can_access_the_list_component_type_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/component/types/')->assertOk();
+        $this->get('/admin/components/types/')->assertOk();
     }
 
     /** @test */
     public function an_admin_can_access_the_create_component_type_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/component/types/create')->assertOk();
+        $this->get('/admin/components/types/create')->assertOk();
     }
 
     /** @test */
@@ -33,7 +33,7 @@ class ComponentTypeTest extends TestCase
     {
         $this->loginAsAdmin();
         $componentType = ComponentType::factory()->create();
-        $this->get('/admin/component/types/' . $componentType->id)->assertOk();
+        $this->get('/admin/components/types/' . $componentType->id)->assertOk();
     }
 
     /** @test */
@@ -41,14 +41,14 @@ class ComponentTypeTest extends TestCase
     {
         $this->loginAsAdmin();
         $componentType = ComponentType::factory()->create();
-        $this->get('/admin/component/types/delete/' . $componentType->id)->assertOk();
+        $this->get('/admin/components/types/delete/' . $componentType->id)->assertOk();
     }
 
     /** @test */
     public function create_component_type_requires_validation()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/component/types/');
+        $response = $this->post('/admin/components/types/');
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -57,7 +57,7 @@ class ComponentTypeTest extends TestCase
     {
         $this->loginAsAdmin();
         $componentType = ComponentType::factory()->create();
-        $response = $this->put("/admin/component/types/{$componentType->id}", []);
+        $response = $this->put("/admin/components/types/{$componentType->id}", []);
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -66,11 +66,11 @@ class ComponentTypeTest extends TestCase
     {
         $this->loginAsAdmin();
 
-        $response = $this->post('/admin/component/types', [
-            'title' => 'Sample Component Type', 
-            'parent_id' => NULL, 
-            'subtitle' => '', 
-            'description' => ' ', 
+        $response = $this->post('/admin/components/types', [
+            'title' => 'Sample Component Type',
+            'parent_id' => NULL,
+            'subtitle' => '',
+            'description' => ' ',
             'thumb' => NULL,
         ]);
 
@@ -88,7 +88,7 @@ class ComponentTypeTest extends TestCase
         $componentType = ComponentType::factory()->create();
 
         $componentType->title = 'New Component Type Title';
-        $response = $this->put("/admin/component/types/{$componentType->id}", $componentType->toArray());
+        $response = $this->put("/admin/components/types/{$componentType->id}", $componentType->toArray());
 
         $this->assertDatabaseHas('component_types', [
             'title' => 'New Component Type Title',
@@ -100,7 +100,7 @@ class ComponentTypeTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $componentType = ComponentType::factory()->create();
-        $this->delete('/admin/component/types/' . $componentType->id);
+        $this->delete('/admin/components/types/' . $componentType->id);
         $this->assertDatabaseMissing('component_types', ['id' => $componentType->id]);
     }
 
@@ -108,7 +108,7 @@ class ComponentTypeTest extends TestCase
     public function unauthorized_user_cannot_delete_component_type_item()
     {
         $componentType = ComponentType::factory()->create();
-        $response = $this->delete('/admin/component/types/' . $componentType->id);
+        $response = $this->delete('/admin/components/types/' . $componentType->id);
         $response->assertStatus(302);
     }
 

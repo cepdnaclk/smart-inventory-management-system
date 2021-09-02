@@ -72,14 +72,13 @@ class ComponentItemController extends Controller
 
             // Update checkbox condition
             // Update checkbox condition
-            $type->isAvailable  = ($request->isAvailable != null);
-            $type->isElectrical  = ($request->isElectrical != null);
+            $type->isAvailable = ($request->isAvailable != null);
+            $type->isElectrical = ($request->isElectrical != null);
 
             $type->save();
             return redirect()->route('admin.component.items.index')->with('Success', 'component was created !');
 
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500);
         }
     }
@@ -116,7 +115,7 @@ class ComponentItemController extends Controller
      */
     public function update(Request $request, ComponentItem $componentItem)
     {
-        
+
         $data = request()->validate([
             'title' => 'string|required',
             'brand' => 'string|nullable',
@@ -144,15 +143,14 @@ class ComponentItemController extends Controller
             // dd($request);
 
             // Update checkbox condition
-            $componentItem['isAvailable'] = isSet($request->isAvailable)?1:0;
-            $componentItem['isElectrical'] = isSet($request->isElectrical)?1:0;
-            
+            $componentItem['isAvailable'] = isset($request->isAvailable) ? 1 : 0;
+            $componentItem['isElectrical'] = isset($request->isElectrical) ? 1 : 0;
+
             $componentItem->update($data);
-            
+
             return redirect()->route('admin.component.items.index')->with('Success', 'Component was updated !');
 
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500);
         }
     }
@@ -185,7 +183,6 @@ class ComponentItemController extends Controller
             return redirect()->route('admin.component.items.index')->with('Success', 'Component was deleted !');
 
         } catch (\Exception $ex) {
-
             return abort(500);
         }
     }
@@ -201,12 +198,11 @@ class ComponentItemController extends Controller
     // Private function to handle thumb images
     private function uploadThumb($currentURL, $newImage, $folder)
     {
-
         // Delete the existing image
         $this->deleteThumb($currentURL);
 
         $imageName = time() . '.' . $newImage->extension();
-        $newImage->move(public_path('img/'.$folder), $imageName);
+        $newImage->move(public_path('img/' . $folder), $imageName);
         $imagePath = "/img/$folder/" . $imageName;
         $image = Image::make(public_path($imagePath))->fit(360, 360);
         $image->save();

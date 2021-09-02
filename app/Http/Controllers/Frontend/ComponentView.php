@@ -20,7 +20,6 @@ class ComponentView extends Controller
     public function viewCategory(ComponentType $componentType)
     {
         $items = $componentType->hasMany(ComponentItem::class)->paginate(12);;
-        // ->paginate(16);
         return view('frontend.component.category', compact('items', 'componentType'));
     }
 

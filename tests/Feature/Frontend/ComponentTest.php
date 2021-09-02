@@ -17,19 +17,19 @@ class ComponentTest extends TestCase
     /** @test */
     public function anyone_can_access_component_home()
     {
-        $this->get('/component')->assertOk();
+        $this->get('/components')->assertOk();
     }
 
     /** @test */
     public function anyone_can_access_component_category(){
         $componentType = ComponentType::factory()->create();
-        $this->get('/component/category/' . $componentType->id)->assertOk();
+        $this->get('/components/category/' . $componentType->id)->assertOk();
     }
 
     /** @test */
     public function anyone_can_access_component_item(){
         $component = ComponentItem::factory()->create();
-        $this->get('/component/item/' . $component->id)->assertOk();
+        $this->get('/components/item/' . $component->id)->assertOk();
     }
 
 }

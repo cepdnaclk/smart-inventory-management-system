@@ -19,9 +19,8 @@ class ComponentTypeController extends Controller
      */
     public function index()
     {
-        $componenttypes = ComponentType::paginate(12);
-        
-        return view('backend.component.types.index',compact('componenttypes'));
+        $componentTypes = ComponentType::paginate(12);
+        return view('backend.component.types.index', compact('componentTypes'));
     }
 
     /**
@@ -38,7 +37,7 @@ class ComponentTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|void
      */
     public function store(Request $request)
@@ -71,7 +70,7 @@ class ComponentTypeController extends Controller
      *
      * @param \App\Models\ComponentType $componenttype
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-      */
+     */
     public function show(ComponentType $componentType)
     {
         return view('backend.component.types.show', compact("componentType"));
@@ -86,15 +85,15 @@ class ComponentTypeController extends Controller
     public function edit(ComponentType $componentType)
     {
         $types = ComponentType::pluck('title', 'id');
-        return view('backend.component.types.edit', compact('componentType','types'));
+        return view('backend.component.types.edit', compact('componentType', 'types'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, ComponentType $componentType)
     {
@@ -110,7 +109,6 @@ class ComponentTypeController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($componentType->thumbURL(), $request->thumb, "component_types");
             }
-            
 
             $componentType->update($data);
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was updated !');
@@ -145,7 +143,7 @@ class ComponentTypeController extends Controller
             $this->deleteThumb($componentType->thumbUrl());
             $componentType->delete();
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was deleted !');
-        
+
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -164,31 +162,31 @@ class ComponentTypeController extends Controller
             if (File::exists($oldImage)) unlink($oldImage);
         }
     }
-     /**
+    /**
      * upload the specified thumb to storage.
      *
      * @param String $url
      * @param Intervention\Image\Facades\Image $newImage
      * @param String $folder
-     * 
-     * @return void
+     *
+     * @return string
      */
 
-     // Private function to handle thumb images
-     private function uploadThumb($currentURL, $newImage, $folder)
-     {
- 
-         // Delete the existing image
-         $this->deleteThumb($currentURL);
- 
-         $imageName = time() . '.' . $newImage->extension();
-         $newImage->move(public_path('img/'.$folder), $imageName);
-         $imagePath = "/img/$folder/" . $imageName;
-         $image = Image::make(public_path($imagePath))->fit(360, 360);
-         $image->save();
- 
-         return $imageName;
-     }
+    // Private function to handle thumb images
+    private function uploadThumb($currentURL, $newImage, $folder)
+    {
+
+        // Delete the existing image
+        $this->deleteThumb($currentURL);
+
+        $imageName = time() . '.' . $newImage->extension();
+        $newImage->move(public_path('img/' . $folder), $imageName);
+        $imagePath = "/img/$folder/" . $imageName;
+        $image = Image::make(public_path($imagePath))->fit(360, 360);
+        $image->save();
+
+        return $imageName;
+    }
 
 
 }
