@@ -37,18 +37,6 @@
                         <td>{{ $componentType->inventoryCode() }}</td>
                     </tr>
                     <tr>
-                        <td>Parent Category</td>
-                        <td>
-                            @if( $componentType->parent() !== null)
-                                <a href="{{ route('admin.component.types.show', $componentType->parent()->id) }}">
-                                    {{ $componentType->parent()->title }}
-                                </a>
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
                         <td>Subtitle</td>
                         <td>{{ $componentType->subtitle }}</td>
                     </tr>

@@ -54,10 +54,9 @@ class ComponentItemController extends Controller
             'instructions' => 'string|nullable',
 
             'isAvailable' => 'nullable',
-            'isElectrical' => 'nullable',
-            'powerRating' => 'numeric|nullable',
-            'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
+            'type' => 'string|nullable',
+            'family' => 'string|nullable',
             'size' => 'string|nullable',   // [small, medium, large]
 
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -71,9 +70,7 @@ class ComponentItemController extends Controller
             $type = new ComponentItem($data);
 
             // Update checkbox condition
-            // Update checkbox condition
-            $type->isAvailable  = ($request->isAvailable != null);
-            $type->isElectrical  = ($request->isElectrical != null);
+            //$type->isElectrical = ($request->isElectrical != null);
 
             $type->save();
             return redirect()->route('admin.component.items.index')->with('Success', 'component was created !');
@@ -127,11 +124,11 @@ class ComponentItemController extends Controller
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
 
-            'isAvailable' => 'boolean|nullable',
-            'isElectrical' => 'boolean|nullable',
-            'powerRating' => 'numeric|nullable',
-            'quantity' => 'numeric|nullable',
+
+            'isAvailable' => 'nullable',
             'price' => 'numeric|nullable',
+            'type' => 'string|nullable',
+            'family' => 'string|nullable',
             'size' => 'string|nullable',   // [small, medium, large]
 
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -141,14 +138,11 @@ class ComponentItemController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($componentItem->thumbURL(), $request->thumb, "component_items");
             }
-            // dd($request);
 
             // Update checkbox condition
-            $componentItem['isAvailable'] = isSet($request->isAvailable)?1:0;
-            $componentItem['isElectrical'] = isSet($request->isElectrical)?1:0;
-            
+            $componentItem->isAvailable = ($request->isAvailable != null);
+
             $componentItem->update($data);
-            
             return redirect()->route('admin.component.items.index')->with('Success', 'Component was updated !');
 
         } catch (\Exception $ex) {

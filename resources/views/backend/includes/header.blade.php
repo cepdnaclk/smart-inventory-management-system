@@ -49,6 +49,12 @@
                     </strong>
                 </div>
 
+                <x-utils.link class="dropdown-item" href="{{ route('frontend.user.dashboard' )}}" icon="c-icon mr-2 cil-gear">
+                    <x-slot name="text">
+                        User Dashboard
+                    </x-slot>
+                </x-utils.link>
+
                 <x-utils.link class="dropdown-item" href="{{ route('frontend.user.account' )}}" icon="c-icon mr-2 cil-gear">
                     <x-slot name="text">
                         Profile
