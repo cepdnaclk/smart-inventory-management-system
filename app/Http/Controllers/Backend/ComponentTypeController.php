@@ -31,7 +31,8 @@ class ComponentTypeController extends Controller
      */
     public function create()
     {
-        return view('backend.component.types.create');
+        $types = ComponentType::pluck('title', 'id');
+        return view('backend.component.types.create', compact('types'));
     }
 
     /**
@@ -44,6 +45,7 @@ class ComponentTypeController extends Controller
     {
         $data = request()->validate([
             'title' => 'string|required',
+            'parent_id' => 'integer|nullable', // TODO: Validate properly
             'subtitle' => 'string|nullable',
             'description' => 'string|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
@@ -83,7 +85,8 @@ class ComponentTypeController extends Controller
      */
     public function edit(ComponentType $componentType)
     {
-        return view('backend.component.types.edit', compact('componentType'));
+        $types = ComponentType::pluck('title', 'id');
+        return view('backend.component.types.edit', compact('componentType','types'));
     }
 
     /**
@@ -97,6 +100,7 @@ class ComponentTypeController extends Controller
     {
         $data = request()->validate([
             'title' => 'string|required',
+            'parent_id' => 'integer|nullable', // TODO: Validate properly
             'subtitle' => 'string|nullable',
             'description' => 'string|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
@@ -106,6 +110,7 @@ class ComponentTypeController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($componentType->thumbURL(), $request->thumb, "component_types");
             }
+            
 
             $componentType->update($data);
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was updated !');

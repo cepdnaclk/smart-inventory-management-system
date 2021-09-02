@@ -117,6 +117,18 @@
                     </div>
                 </div>
 
+                 <!-- Quantity -->
+               <div class="form-group row">
+                {!! Form::label('quantity', 'Quantity (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
+
+                <div class="col-md-4">
+                    {!! Form::number('quantity', $componentItem->quantity, ['class'=>'form-control']) !!}
+                    @error('quantity')
+                    <strong>{{ $message }}</strong>
+                    @enderror
+                </div>
+            </div>
+
                 <!-- Price -->
                 <div class="form-group row">
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
@@ -124,6 +136,40 @@
                     <div class="col-md-4">
                         {!! Form::number('price', $componentItem->price, ['class'=>'form-control']) !!}
                         @error('price')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- isavailable -->
+                <div class="form-group row">
+                    {!! Form::label('Available?', '', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4 d-flex align-items-center">
+                        {!!Form::checkbox('isAvailable',1,  ($componentItem->isAvailable)?true:false); !!}
+                        @error('isAvailable')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Is Electrical -->
+                <div class="form-group row">
+                    {!! Form::label('isElectrical', 'Electrical?', ['class' => 'col-md-2 form-check-label']) !!}
+
+                    <div class="col-md-4 d-flex align-items-center">
+                        {!!Form::checkbox('isElectrical',1,  ($componentItem->isElectrical)?true:false); !!}
+                        @error('isElectrical')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+
+                    <!-- Power Rating -->
+                    {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4">
+                        {!! Form::number('powerRating', $componentItem->powerRating, ['class'=>'form-control']) !!}
+                        @error('powerRating')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
