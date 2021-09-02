@@ -3,24 +3,25 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\EquipmentItem;
-use App\Models\EquipmentType;
+use App\Models\ComponentItem;
+use App\Models\ComponentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
-class EquipmentItemController extends Controller
+class ComponentItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
+
     public function index()
     {
-        $equipment = EquipmentItem::orderBy('id', 'desc')->paginate(16);
-        return view('backend.equipment.items.index', compact('equipment'));
+        $components = ComponentItem::paginate(12);
+        return view("backend.component.items.index", compact('components'));
     }
 
     /**
@@ -30,8 +31,8 @@ class EquipmentItemController extends Controller
      */
     public function create()
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.items.create', compact('types'));
+        $types = ComponentType::pluck('title', 'id');
+        return view('backend.component.items.create', compact('types'));
     }
 
     /**
@@ -46,37 +47,33 @@ class EquipmentItemController extends Controller
             'title' => 'string|required',
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
-            'equipment_type_id' => 'numeric|required',
+            'component_type_id' => 'numeric|required',
 
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
 
-            // 'isElectrical' => 'accepted',
-            'powerRating' => 'numeric|nullable',
+            'isAvailable' => 'nullable',
             'price' => 'numeric|nullable',
-            'quantity' => 'numeric',
+            'type' => 'string|nullable',
+            'family' => 'string|nullable',
+            'size' => 'string|nullable',   // [small, medium, large]
 
-            'width' => 'numeric|nullable',
-            'length' => 'numeric|nullable',
-            'height' => 'numeric|nullable',
-            'weight' => 'numeric|nullable',
-
-            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
+            'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_items");
+                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "component_items");
             }
 
-            $type = new EquipmentItem($data);
+            $type = new ComponentItem($data);
 
             // Update checkbox condition
-            $type->isElectrical = ($request->isElectrical != null);
+            //$type->isElectrical = ($request->isElectrical != null);
 
             $type->save();
-            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was created !');
+            return redirect()->route('admin.component.items.index')->with('Success', 'component was created !');
 
         } catch (\Exception $ex) {
             dd($ex);
@@ -87,69 +84,66 @@ class EquipmentItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\EquipmentItem $equipmentItem
+     * @param \App\Models\ComponentItem $componentItem
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(EquipmentItem $equipmentItem)
+    public function show(ComponentItem $componentItem)
     {
-        return view('backend.equipment.items.show', compact('equipmentItem'));
+        return view('backend.component.items.show', compact("componentItem"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\EquipmentItem $equipmentItem
+     * @param \App\Models\ComponentItem $componentItem
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(EquipmentItem $equipmentItem)
+    public function edit(ComponentItem $componentItem)
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.items.edit', compact('types', 'equipmentItem'));
+        $types = ComponentType::pluck('title', 'id');
+        return view('backend.component.items.edit', compact('types', 'componentItem'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\EquipmentItem $equipmentItem
+     * @param \App\Models\ComponentItem $componentItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EquipmentItem $equipmentItem)
+    public function update(Request $request, ComponentItem $componentItem)
     {
-//         dd($request->request);
+        
         $data = request()->validate([
             'title' => 'string|required',
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
-            'equipment_type_id' => 'numeric|required',
+            'component_type_id' => 'numeric|required',
 
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
 
-            'isElectrical' => 'nullable',
-            'powerRating' => 'numeric|nullable',
-            'price' => 'numeric|nullable',
-            'quantity' => 'numeric',
 
-            'width' => 'numeric|nullable',
-            'length' => 'numeric|nullable',
-            'height' => 'numeric|nullable',
-            'weight' => 'numeric|nullable',
+            'isAvailable' => 'nullable',
+            'price' => 'numeric|nullable',
+            'type' => 'string|nullable',
+            'family' => 'string|nullable',
+            'size' => 'string|nullable',   // [small, medium, large]
 
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentItem->thumbURL(), $request->thumb, "equipment_items");
+                $data['thumb'] = $this->uploadThumb($componentItem->thumbURL(), $request->thumb, "component_items");
             }
 
             // Update checkbox condition
-            $equipmentItem->isElectrical = ($request->isElectrical != null);
+            $componentItem->isAvailable = ($request->isAvailable != null);
 
-            $equipmentItem->update($data);
-            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was updated !');
+            $componentItem->update($data);
+            return redirect()->route('admin.component.items.index')->with('Success', 'Component was updated !');
 
         } catch (\Exception $ex) {
             dd($ex);
@@ -160,32 +154,32 @@ class EquipmentItemController extends Controller
     /**
      * Confirm to delete the specified resource from storage.
      *
-     * @param \App\Models\EquipmentItem $equipmentItem
+     * @param \App\Models\ComponentItem $componentItem
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function delete(EquipmentItem $equipmentItem)
+    public function delete(ComponentItem $componentItem)
     {
-        return view('backend.equipment.items.delete', compact('equipmentItem'));
+        return view('backend.component.items.delete', compact('componentItem'));
     }
 
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\EquipmentItem $equipmentItem
+     * @param \App\Models\ComponentItem $componentItem
      * @return \Illuminate\Http\RedirectResponse|null
      */
-    public function destroy(EquipmentItem $equipmentItem)
+    public function destroy(ComponentItem $componentItem)
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentItem->thumbURL());
+            $this->deleteThumb($componentItem->thumbURL());
 
-            $equipmentItem->delete();
-            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
+            $componentItem->delete();
+            return redirect()->route('admin.component.items.index')->with('Success', 'Component was deleted !');
 
         } catch (\Exception $ex) {
-            dd($ex);
+
             return abort(500);
         }
     }
@@ -206,7 +200,7 @@ class EquipmentItemController extends Controller
         $this->deleteThumb($currentURL);
 
         $imageName = time() . '.' . $newImage->extension();
-        $newImage->move(public_path('img/' . $folder), $imageName);
+        $newImage->move(public_path('img/'.$folder), $imageName);
         $imagePath = "/img/$folder/" . $imageName;
         $image = Image::make(public_path($imagePath))->fit(360, 360);
         $image->save();
