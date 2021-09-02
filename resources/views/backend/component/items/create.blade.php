@@ -68,7 +68,6 @@
                     </div>
                 </div>
 
-                
 
                 <!-- Description -->
                 <div class="form-group row">
@@ -106,29 +105,30 @@
                     </div>
                 </div>
 
-               <!-- Dimensions -->
-               <div class="form-group row">
+                <!-- Dimensions -->
+                <!-- TODO: Review this -->
+                <div class="form-group row">
                     {!! Form::label('size', 'Size', ['class' => 'col-sm-2 form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::select('size',['very small'=>'very small', 'small'=> 'small', 'medium'=> 'medium','regular'=>'regular', 'large'=>'large','very large'=> 'very large'] ,'very small') !!}
+                        {!! Form::select('size',['very small'=>'very small', 'small'=> 'small', 'medium'=> 'medium','regular'=>'regular', 'large'=>'large','very large'=> 'very large'] ,'very small', ['class'=>'form-control']) !!}
                         @error('size')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
                 </div>
 
-               <!-- Quantity -->
-               <div class="form-group row">
-                {!! Form::label('quantity', 'Quantity (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
+                <!-- Quantity -->
+                <div class="form-group row">
+                    {!! Form::label('quantity', 'Quantity', ['class' => 'col-md-2 col-form-label']) !!}
 
-                <div class="col-md-4">
-                    {!! Form::number('quantity', '', ['class'=>'form-control']) !!}
-                    @error('quantity')
-                    <strong>{{ $message }}</strong>
-                    @enderror
+                    <div class="col-md-4">
+                        {!! Form::number('quantity', '', ['class'=>'form-control']) !!}
+                        @error('quantity')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
                 </div>
-            </div>
 
                 <!-- Price -->
                 <div class="form-group row">
@@ -142,7 +142,7 @@
                     </div>
                 </div>
 
-                <!-- isavailable -->
+                <!-- isAvailable -->
                 <div class="form-group row">
                     {!! Form::label('Available?', '', ['class' => 'col-md-2 col-form-label']) !!}
 
@@ -156,9 +156,9 @@
 
                 <div class="form-group row">
                     <!-- Is Electrical -->
-                    {!! Form::label('isElectrical', 'Electrical Item', ['class' => 'col-md-2 form-check-label']) !!}
+                    {!! Form::label('isElectrical', 'Electrical?', ['class' => 'col-md-2 form-check-label']) !!}
 
-                    <div class="col-md-4 form-check">
+                    <div class="col-md-4 d-flex align-items-center">
                         {!! Form::checkbox('isElectrical', '1', ['class'=>'form-check-input']) !!}
                         @error('isElectrical')
                         <strong>{{ $message }}</strong>
@@ -176,14 +176,13 @@
                     </div>
                 </div>
 
-
-
                 <!-- Thumbnail Image -->
                 <div class="form-group row">
                     {!! Form::label('thumb', 'Thumbnail', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10 ">
-                        {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square image)
+                        {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
+                        image)
                         @error('thumb')
                         <strong>{{ $message }}</strong>
                         @enderror

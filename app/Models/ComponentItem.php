@@ -18,8 +18,9 @@ class ComponentItem extends Model
         return null;
     }
 
-    public function inventoryCode(){
-        return  $this->component_type->inventoryCode()."/".$this->id;
+    public function inventoryCode()
+    {
+        return $this->component_type->inventoryCode() . "/" . $this->id;
     }
 
     // Return the relative URL of the thumbnail
