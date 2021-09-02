@@ -73,16 +73,15 @@
         </x-slot>
 
         <x-slot name="body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <a class="text-decoration-none" href="{{ route('admin.equipment.items.index') }}">
-                            <div class="card-counter primary">
-                                <span class="count-numbers">{{ $equipmentCount }}</span>
-                                <span class="count-name">Equipment</span>
-                            </div>
-                        </a>
-                    </div>
+            <h3>Under Construction</h3>
+            <ul class="large list-unstyled pt-5 d-inline-flex ">
+                <li class="px-2">
+                    <a class="btn btn-lg btn-primary" href="{{ route('admin.equipment.index') }}">Equipment</a>
+                </li>
+                <li class="px-2">
+                    <a class="btn btn-lg btn-primary" href="{{ route('admin.component.index') }}">Component</a>
+                </li>
+            </ul>
 
                     <div class="col-md-3">
                         <a class="text-decoration-none" href="{{ route('admin.equipment.types.index') }}">

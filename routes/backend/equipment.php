@@ -6,9 +6,13 @@ use Tabuna\Breadcrumbs\Trail;
 
 // Route::redirect('/equipment', '/admin/equipment/items', 301);
 
-Route::get('/equipment', function(){
+Route::get('/equipment', function () {
     return view('backend.equipment.index');
-})->name('equipment.index');
+})->name('equipment.index')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->push(__('Home'), route('admin.dashboard'))
+            ->push(__('Equipment'), route('admin.equipment.index'));
+    });
 
 // Equipment Items -------------------------------------------------------------
 
@@ -72,7 +76,6 @@ Route::get('equipment/items/delete/{equipmentItem}', [EquipmentItemController::c
 // Destroy
 Route::delete('equipment/items/{equipmentItem}', [EquipmentItemController::class, 'destroy'])
     ->name('equipment.items.destroy');
-
 
 
 // Equipment Types -------------------------------------------------------------

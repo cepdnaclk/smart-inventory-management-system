@@ -54,9 +54,9 @@
                                 <td>{{ $eq->quantity }}</td>
                                 <td>
                                     @if($eq->equipment_type() != null)
-                                    <a href="{{ route('admin.equipment.types.show', $eq->equipment_type) }}">
-                                        {{ $eq->equipment_type['title'] }}
-                                    </a>
+                                        <a href="{{ route('admin.equipment.types.show', $eq->equipment_type) }}">
+                                            {{ $eq->equipment_type['title'] }}
+                                        </a>
                                     @endif
                                 </td>
                                 <td>{{ $eq->price }}</td>
