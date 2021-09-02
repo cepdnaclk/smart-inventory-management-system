@@ -1,27 +1,27 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment'))
+@section('title', __('Component Types'))
 
 @section('breadcrumb-links')
-    @include('backend.equipment.includes.breadcrumb-links')
+    @include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Equipment
+                Component Types
             </x-slot>
 
-            @if ($logged_in_user->hasAllAccess())
-                <x-slot name="headerActions">
-                    <x-utils.link
-                            icon="c-icon cil-plus"
-                            class="card-header-action"
-                            :href="route('admin.equipment.items.create')"
-                            :text="__('Create Equipment')"></x-utils.link>
-                </x-slot>
-            @endif
+            {{--            @if ($logged_in_user->hasAllAccess())--}}
+            <x-slot name="headerActions">
+                <x-utils.link
+                        icon="c-icon cil-plus"
+                        class="card-header-action"
+                        :href="route('admin.component.types.create')"
+                        :text="__('Create Component Type')"></x-utils.link>
+            </x-slot>
+            {{--            @endif--}}
 
             <x-slot name="body">
 
@@ -38,42 +38,37 @@
                     <table class="table table-striped">
                         <tr>
                             <th>Title</th>
-                            <th>Product Code<br/>and Brand</th>
-                            <th>Quantity</th>
-                            <th>Category</th>
-                            <th>Price (LKR)</th>
-                            <th>Dimensions(cm)<br/>W x L x H</th>
-                            <th>Weight (g)</th>
+                            <th>Parent Category</th>
+                            {{-- <th>Subtitle</th> --}}
+                            <th>Description</th>
                             <th>&nbsp;</th>
                         </tr>
-                        
-                        @foreach($equipment as $eq)
+
+                        @foreach($componenttypes as $type)
                             <tr>
-                                <td>{{ $eq->title  }}</td>
-                                <td>{{ $eq->productCode ?? 'N/A' }} ({{ $eq->brand ?? 'N/A' }})</td>
-                                <td>{{ $eq->quantity }}</td>
+                                <td>{{ $type->title  }}</td>
                                 <td>
-                                    @if($eq->equipment_type() != null)
-                                    <a href="{{ route('admin.equipment.types.show', $eq->equipment_type) }}">
-                                        {{ $eq->equipment_type['title'] }}
-                                    </a>
+                                    @if( $type->parent() !== null)
+                                        <a href="{{ route('admin.component.types.show', $type->parent()->id) }}">
+                                            {{ $type->parent()->title }}
+                                        </a>
+                                    @else
+                                        N/A
                                     @endif
                                 </td>
-                                <td>{{ $eq->price }}</td>
-                                <td>{{ $eq->width }} x {{ $eq->height }} x {{ $eq->length }}</td>
-                                <td>{{ $eq->weight }}</td>
-
+                                {{-- <td>{{ $type->subtitle ?? 'N/A' }}</td> --}}
+                                <td>{{ $type->description  }}</td>
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.equipment.items.show', $eq)}}"
+                                            <a href="{{ route('admin.component.types.show', $type)}}"
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
-                                            <a href="{{ route('admin.equipment.items.edit', $eq)}}"
+                                            <a href="{{ route('admin.component.types.edit', $type)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.equipment.items.delete', $eq)}}"
+                                            <a href="{{ route('admin.component.types.delete', $type)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
                                                                                 title="Delete"></i>
                                             </a>
@@ -84,8 +79,7 @@
                             </tr>
                         @endforeach
                     </table>
-
-                    {{ $equipment->links() }}
+                    {{ $componenttypes->links() }}
                 </div>
             </x-slot>
         </x-backend.card>
