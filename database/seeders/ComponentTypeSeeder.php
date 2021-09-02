@@ -33,6 +33,5 @@ class ComponentTypeSeeder extends Seeder
             }
             $this->command->info('Inserted ' . count($this->data) . ' records to component_types table');
         }
-
     }
 }

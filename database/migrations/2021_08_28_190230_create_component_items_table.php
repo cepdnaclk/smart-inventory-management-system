@@ -36,10 +36,6 @@ class CreateComponentItemsTable extends Migration
             // Physical size in terms of appearance [small, medium, large] kind of
             //!tendable
             $table->enum('size', ['very small', 'small',  'medium','regular', 'large', 'very large']);
-
-
-
-            
             $table->timestamps();
 
             $table->foreignId('component_type_id')

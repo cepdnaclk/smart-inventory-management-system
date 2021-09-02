@@ -71,7 +71,6 @@ class ComponentItemController extends Controller
             $type = new ComponentItem($data);
 
             // Update checkbox condition
-            // Update checkbox condition
             $type->isAvailable = ($request->isAvailable != null);
             $type->isElectrical = ($request->isElectrical != null);
 
@@ -115,7 +114,6 @@ class ComponentItemController extends Controller
      */
     public function update(Request $request, ComponentItem $componentItem)
     {
-
         $data = request()->validate([
             'title' => 'string|required',
             'brand' => 'string|nullable',
@@ -140,7 +138,6 @@ class ComponentItemController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($componentItem->thumbURL(), $request->thumb, "component_items");
             }
-            // dd($request);
 
             // Update checkbox condition
             $componentItem['isAvailable'] = isset($request->isAvailable) ? 1 : 0;

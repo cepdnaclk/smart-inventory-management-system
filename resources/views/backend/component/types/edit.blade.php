@@ -48,7 +48,6 @@
                     @enderror
                 </div>
 
-
                   <!-- Parent Category -->
                   <div class="form-group row">
                     {!! Form::label('parent_id', 'Parent Category', ['class' => 'col-md-2 col-form-label']) !!}
@@ -60,10 +59,6 @@
                         @enderror
                     </div>
                 </div>
-
-                
-
-                
 
                 <!-- Description -->
                 <div class="form-group row">

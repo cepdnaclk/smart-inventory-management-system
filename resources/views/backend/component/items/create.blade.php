@@ -68,7 +68,6 @@
                     </div>
                 </div>
 
-
                 <!-- Description -->
                 <div class="form-group row">
                     {!! Form::label('description', 'Description', ['class' => 'col-md-2 col-form-label']) !!}
@@ -129,7 +128,7 @@
                         @enderror
                     </div>
                 </div>
-
+                
                 <!-- Price -->
                 <div class="form-group row">
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
@@ -141,6 +140,7 @@
                         @enderror
                     </div>
                 </div>
+
 
                 <!-- isAvailable -->
                 <div class="form-group row">
@@ -183,6 +183,7 @@
                     <div class="col-md-10 ">
                         {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
                         image)
+
                         @error('thumb')
                         <strong>{{ $message }}</strong>
                         @enderror

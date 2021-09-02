@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Domains\Auth\Models\User;
+use App\Models\EquipmentItem;
+use App\Models\EquipmentType;
+
 /**
  * Class DashboardController.
  */
@@ -12,6 +16,10 @@ class DashboardController
      */
     public function index()
     {
-        return view('backend.dashboard');
+        $userCount =  User::all()->count();
+        $equipmentCount =  EquipmentItem::all()->count();
+        $equipmentTypeCount =  EquipmentType::all()->count();
+
+        return view('backend.dashboard', compact('userCount', 'equipmentCount', 'equipmentTypeCount'));
     }
 }

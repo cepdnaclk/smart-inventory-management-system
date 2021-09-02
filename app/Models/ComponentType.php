@@ -42,5 +42,4 @@ class ComponentType extends Model
     {
         return $this->hasMany(EquipmentItem::class)->get();
     }
-
 }

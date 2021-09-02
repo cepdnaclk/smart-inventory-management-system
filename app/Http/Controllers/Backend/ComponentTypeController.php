@@ -175,7 +175,6 @@ class ComponentTypeController extends Controller
     // Private function to handle thumb images
     private function uploadThumb($currentURL, $newImage, $folder)
     {
-
         // Delete the existing image
         $this->deleteThumb($currentURL);
 
@@ -187,6 +186,4 @@ class ComponentTypeController extends Controller
 
         return $imageName;
     }
-
-
 }

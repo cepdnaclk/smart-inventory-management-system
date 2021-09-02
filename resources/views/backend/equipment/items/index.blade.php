@@ -46,7 +46,7 @@
                             <th>Weight (g)</th>
                             <th>&nbsp;</th>
                         </tr>
-
+                        
                         @foreach($equipment as $eq)
                             <tr>
                                 <td>{{ $eq->title  }}</td>
