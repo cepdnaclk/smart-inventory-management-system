@@ -12,8 +12,10 @@ class EquipmentType extends Model
     protected $guarded = [];
 
     // A  Unique ID assigned by the inventory management system
-    public function inventoryCode(){
-        return "MS/EQ/".$this->id;
+    public function inventoryCode()
+    {
+        // TODO: Make a common standard for this
+        return "MS/EQ/" . $this->id;
     }
 
     // Return the relative URL of the thumbnail
@@ -21,5 +23,24 @@ class EquipmentType extends Model
     {
         if ($this->thumb != null) return '/img/equipment_types/' . $this->thumb;
         return null;
+    }
+
+    // Return the parent item of the current type or null
+    public function parent()
+    {
+        if ($this->parent_id !== null) return EquipmentType::find($this->parent_id);
+        return null;
+    }
+
+    // Return the children item types of this item type
+    public function children()
+    {
+        return EquipmentType::where('parent_id', $this->id)->get();
+    }
+
+    // Return the items listed under this item type
+    public function getItems()
+    {
+        return $this->hasMany(EquipmentItem::class)->get();
     }
 }

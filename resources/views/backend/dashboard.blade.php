@@ -2,6 +2,70 @@
 
 @section('title', __('Dashboard'))
 
+@push('after-styles')
+    <style>
+
+        .card-counter {
+            box-shadow: 2px 2px 10px #DADADA;
+            margin: 5px;
+            padding: 20px 10px;
+            background-color: #fff;
+            height: 100px;
+            border-radius: 5px;
+            transition: .3s linear all;
+        }
+
+        .card-counter:hover {
+            box-shadow: 4px 4px 20px #DADADA;
+            transition: .3s linear all;
+        }
+
+        .card-counter.primary {
+            background-color: #007bff;
+            color: #FFF;
+        }
+
+        .card-counter.danger {
+            background-color: #ef5350;
+            color: #FFF;
+        }
+
+        .card-counter.success {
+            background-color: #66bb6a;
+            color: #FFF;
+        }
+
+        .card-counter.info {
+            background-color: #26c6da;
+            color: #FFF;
+        }
+
+        .card-counter i {
+            font-size: 5em;
+            opacity: 0.2;
+        }
+
+        .card-counter .count-numbers {
+            position: absolute;
+            right: 35px;
+            top: 20px;
+            font-size: 32px;
+            display: block;
+        }
+
+        .card-counter .count-name {
+            position: absolute;
+            right: 35px;
+            top: 65px;
+            font-style: italic;
+            text-transform: capitalize;
+            opacity: 0.5;
+            display: block;
+            font-size: 18px;
+        }
+    </style>
+@endpush
+
 @section('content')
     <x-backend.card>
         <x-slot name="header">
@@ -9,14 +73,47 @@
         </x-slot>
 
         <x-slot name="body">
-            <h3>Under Construction</h3>
-            <ul class="large list-unstyled pt-5">
-                <li>
-                    <a class="btn btn-lg btn-primary" href="{{ route('admin.equipment.index') }}">Equipment</a>
-                </li>
-            </ul>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.equipment.items.index') }}">
+                            <div class="card-counter primary">
+                                <span class="count-numbers">{{ $equipmentCount }}</span>
+                                <span class="count-name">Equipment ({{ $equipmentTypeCount }} types)</span>
+                            </div>
+                        </a>
+                    </div>
 
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.component.items.index') }}">
+                            <div class="card-counter danger">
+                                <span class="count-numbers">{{ $componentCount }}</span>
+                                <span class="count-name">Components ({{ $componentTypeCount }} types)</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        @if ($logged_in_user->hasAllAccess())
+                            <a class="text-decoration-none" href="{{ route('admin.auth.user.index') }}">
+                                @endif
+                                <div class="card-counter success">
+                                    <span class="count-numbers">{{ $userCount }}</span>
+                                    <span class="count-name">Users</span>
+                                </div>
+                                @if ($logged_in_user->hasAllAccess())</a> @endif
+                    </div>
+
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="#">
+                            <div class="card-counter info">
+                                <span class="count-numbers">###</span>
+                                <span class="count-name">##############</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </x-slot>
     </x-backend.card>
-
 @endsection

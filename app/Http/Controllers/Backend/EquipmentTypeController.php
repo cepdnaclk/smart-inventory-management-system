@@ -18,8 +18,8 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
-        $EquipmentType = EquipmentType::paginate(12);
-        return view('backend.equipment.types.index', compact('EquipmentType'));
+        $equipmentTypes = EquipmentType::paginate(12);
+        return view('backend.equipment.types.index', compact('equipmentTypes'));
     }
 
     /**
@@ -29,7 +29,8 @@ class EquipmentTypeController extends Controller
      */
     public function create()
     {
-        return view('backend.equipment.types.create');
+        $types = EquipmentType::pluck('title', 'id');
+        return view('backend.equipment.types.create', compact('types'));
     }
 
     /**
@@ -42,6 +43,7 @@ class EquipmentTypeController extends Controller
     {
         $data = request()->validate([
             'title' => 'string|required',
+            'parent_id' => 'integer|nullable', // TODO: Validate properly
             'subtitle' => 'string|nullable',
             'description' => 'string|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
@@ -57,7 +59,6 @@ class EquipmentTypeController extends Controller
             return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was created !');
 
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500, "Error 222");
         }
     }
@@ -81,7 +82,8 @@ class EquipmentTypeController extends Controller
      */
     public function edit(EquipmentType $equipmentType)
     {
-        return view('backend.equipment.types.edit', compact('equipmentType'));
+        $types = EquipmentType::pluck('title', 'id');
+        return view('backend.equipment.types.edit', compact('equipmentType', 'types'));
     }
 
     /**
@@ -95,6 +97,7 @@ class EquipmentTypeController extends Controller
     {
         $data = request()->validate([
             'title' => 'string|required',
+            'parent_id' => 'integer|nullable', // TODO: Validate properly
             'subtitle' => 'string|nullable',
             'description' => 'string|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
@@ -160,7 +163,7 @@ class EquipmentTypeController extends Controller
         $this->deleteThumb($currentURL);
 
         $imageName = time() . '.' . $newImage->extension();
-        $newImage->move(public_path('img/'.$folder), $imageName);
+        $newImage->move(public_path('img/' . $folder), $imageName);
         $imagePath = "/img/$folder/" . $imageName;
         $image = Image::make(public_path($imagePath))->fit(360, 360);
         $image->save();

@@ -141,15 +141,6 @@
                     </div>
                     <div class="col-md-3 form-group mb-2">
                         <div class="container row">
-                            {!! Form::label('length', 'Length (cm)', ['class' => 'form-label']) !!}<br/>
-                            {!! Form::number('length', '', ['class'=>'form-control', 'step' => '0.1']) !!}
-                            @error('length')
-                            <strong>{{ $message }}</strong>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-3 form-group mb-2">
-                        <div class="container row">
                             {!! Form::label('height', 'Height (cm)', ['class' => 'form-label']) !!}<br/>
                             {!! Form::number('height', '', ['class'=>'form-control', 'step' => '0.1']) !!}
                             @error('height')
@@ -157,7 +148,15 @@
                             @enderror
                         </div>
                     </div>
-
+                    <div class="col-md-3 form-group mb-2">
+                        <div class="container row">
+                            {!! Form::label('length', 'Length (cm)', ['class' => 'form-label']) !!}<br/>
+                            {!! Form::number('length', '', ['class'=>'form-control', 'step' => '0.1']) !!}
+                            @error('length')
+                            <strong>{{ $message }}</strong>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Weight -->
@@ -177,8 +176,20 @@
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
-                        {!! Form::number('price', '', ['class'=>'form-control']) !!}
+                        {!! Form::number('price', '0', ['class'=>'form-control']) !!}
                         @error('price')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Count -->
+                <div class="form-group row">
+                    {!! Form::label('quantity', 'Quantity', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4">
+                        {!! Form::number('quantity', '1', ['class'=>'form-control']) !!}
+                        @error('quantity')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
@@ -189,7 +200,8 @@
                     {!! Form::label('thumb', 'Thumbnail', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square image)
+                        {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
+                        image)
                         @error('thumb')
                         <strong>{{ $message }}</strong>
                         @enderror
