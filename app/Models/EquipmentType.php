@@ -14,6 +14,7 @@ class EquipmentType extends Model
     // A  Unique ID assigned by the inventory management system
     public function inventoryCode()
     {
+        // TODO: Make a common standard for this
         return "MS/EQ/" . $this->id;
     }
 
@@ -29,5 +30,17 @@ class EquipmentType extends Model
     {
         if ($this->parent_id !== null) return EquipmentType::find($this->parent_id);
         return null;
+    }
+
+    // Return the children item types of this item type
+    public function children()
+    {
+        return EquipmentType::where('parent_id', $this->id)->get();
+    }
+
+    // Return the items listed under this item type
+    public function getItems()
+    {
+        return $this->hasMany(EquipmentItem::class)->get();
     }
 }

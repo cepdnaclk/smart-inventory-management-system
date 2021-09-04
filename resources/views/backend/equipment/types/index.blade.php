@@ -56,7 +56,7 @@
                                         N/A
                                     @endif
                                 </td>
-{{--                                <td>{{ $equipmentType->subtitle ?? 'N/A' }}</td>--}}
+                                {{--                                <td>{{ $equipmentType->subtitle ?? 'N/A' }}</td>--}}
                                 <td>{{ $equipmentType->description  }}</td>
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
