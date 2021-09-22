@@ -30,4 +30,9 @@ class ComponentItem extends Model
         return null;
     }
 
+    function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
+
 }
