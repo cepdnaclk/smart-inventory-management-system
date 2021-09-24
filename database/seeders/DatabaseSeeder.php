@@ -28,6 +28,11 @@ class DatabaseSeeder extends Seeder
         $this->call(AuthSeeder::class);
         $this->call(AnnouncementSeeder::class);
 
+        $this->call(EquipmentTypeSeeder::class);
+        $this->call(EquipmentItemSeeder::class);
+        $this->call(ComponentTypeSeeder::class);
+        $this->call(ComponentItemSeeder::class);
+
         Model::reguard();
     }
 }

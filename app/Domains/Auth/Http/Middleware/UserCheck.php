@@ -12,13 +12,14 @@ class UserCheck
 {
     /**
      * @param $request
-     * @param  Closure  $next
+     * @param Closure $next
      *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->isType(User::TYPE_USER)) {
+        // if ($request->user() && $request->user()->isType(User::TYPE_USER)) {
+        if ($request->user() != NULL) {
             return $next($request);
         }
 
