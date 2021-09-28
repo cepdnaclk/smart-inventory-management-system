@@ -30,7 +30,7 @@ class OrderController extends Controller
     public function create()
     {
          $types = ComponentItem::pluck('title', 'id');
-        return view('backend.equipment.types.create', compact('types'));
+        return view('backend.order.create', compact('types'));
     }
 
     /**
@@ -53,7 +53,7 @@ class OrderController extends Controller
             $data['user_id'] = $request->user()->id;;
             $order = new Order($data);
             $order->save();
-            return redirect()->route('admin.order.index')->with('Success', 'Order was created !');
+            return redirect()->route('admin.orders.index')->with('Success', 'Order was created !');
         } catch (\Exception $ex) {
             return abort(500, "Error 222");
         }
@@ -79,7 +79,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        return view('backend.order.edit', compact('order'));
     }
 
     /**
@@ -91,7 +91,23 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $data = request()->validate([
+            'ordered_date' => 'string|required',
+            'picked_date' => 'string|nullable', // TODO: Validate properly
+            'due_date_to_return' => 'string|required',
+            'returned_date' => 'string|nullable',
+            'status' => 'string|required',
+        ]);
+
+        try {
+            
+
+            $order->update($data);
+            return redirect()->route('admin.orders.index')->with('Success', 'Order was updated !');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
     }
 
     /**
