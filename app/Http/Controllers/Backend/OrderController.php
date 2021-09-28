@@ -57,6 +57,7 @@ class OrderController extends Controller
         } catch (\Exception $ex) {
             return abort(500, "Error 222");
         }
+
     }
 
     /**
@@ -67,7 +68,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return view('backend.order.show', compact('order'));
     }
 
     /**
