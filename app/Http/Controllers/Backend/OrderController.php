@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ComponentItem;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+         $types = ComponentItem::pluck('title', 'id');
+        return view('backend.equipment.types.create', compact('types'));
     }
 
     /**
@@ -39,7 +41,22 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+            'ordered_date' => 'string|required',
+            'picked_date' => 'string|nullable', // TODO: Validate properly
+            'due_date_to_return' => 'string|required',
+            'returned_date' => 'string|nullable',
+            'status' => 'string|required',
+        ]);
+
+        try {
+            $data['user_id'] = $request->user()->id;;
+            $order = new Order($data);
+            $order->save();
+            return redirect()->route('admin.order.index')->with('Success', 'Order was created !');
+        } catch (\Exception $ex) {
+            return abort(500, "Error 222");
+        }
     }
 
     /**
