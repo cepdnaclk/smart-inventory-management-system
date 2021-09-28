@@ -100,8 +100,6 @@ class OrderController extends Controller
         ]);
 
         try {
-            
-
             $order->update($data);
             return redirect()->route('admin.orders.index')->with('Success', 'Order was updated !');
 
@@ -111,6 +109,18 @@ class OrderController extends Controller
     }
 
     /**
+     * Confirm to delete the specified resource from storage.
+     *
+     * @param \App\Models\Order $order
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function delete(Order $order)
+    {
+        return view('backend.order.delete', compact('order'));
+    }
+
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Order  $order
@@ -118,6 +128,13 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        try {
+            
+            $order->delete();
+            return redirect()->route('admin.order.index')->with('Success', 'Order was deleted !');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
     }
 }
