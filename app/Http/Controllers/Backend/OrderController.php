@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -10,12 +11,15 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        $orders = Order::paginate(12);
+        return view('backend.order.index', compact('orders'));
+
     }
+    
 
     /**
      * Show the form for creating a new resource.

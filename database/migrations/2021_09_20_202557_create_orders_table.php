@@ -17,9 +17,9 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->date("ordered_date");
             $table->date("picked_date")->nullable();
-            $table->date("due_date_to_return");
+            $table->date("due_date_to_return")->nullable();
             $table->date("returned_date")->nullable();
-            $table->enum('status', ['progress', 'ready',  'pickedup']);
+            $table->enum('status', ['pending','progress', 'ready',  'pickedup']);
             $table->timestamps();
 
             $table->foreignId('user_id')
