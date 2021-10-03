@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\ComponentItem;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -29,7 +29,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-         $types = ComponentItem::pluck('title', 'id');
+         $types = Order::pluck('title', 'id');
         return view('backend.order.create', compact('types'));
     }
 
@@ -42,7 +42,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'ordered_date' => 'string|required',
+            
             'picked_date' => 'string|nullable', // TODO: Validate properly
             'due_date_to_return' => 'string|required',
             'returned_date' => 'string|nullable',
@@ -50,7 +50,8 @@ class OrderController extends Controller
         ]);
 
         try {
-            $data['user_id'] = $request->user()->id;;
+            $data['ordered_date'] = Carbon::now()->format('Y-m-d');
+            $data['user_id'] = $request->user()->id;
             $order = new Order($data);
             $order->save();
             return redirect()->route('admin.orders.index')->with('Success', 'Order was created !');

@@ -89,7 +89,23 @@
                                     @endif
                                 @endif
 
+                                <td>
+                                    <div class="d-flex px-0 mt-0 mb-0">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="{{ route('admin.orders.show', $order)}}"
+                                               class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
+                                            </a>
 
+                                            {{-- <a href="{{ route('admin.order.edit', $order)}}"
+                                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                                            </a>
+                                            <a href="{{ route('admin.order.delete', $order)}}"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                                                                                title="Delete"></i>
+                                            </a> --}}
+                                        </div>
+                                    </div>
+                                </td>
                                 
                                 
 
