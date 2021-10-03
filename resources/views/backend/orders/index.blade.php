@@ -96,13 +96,13 @@
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
-                                            {{-- <a href="{{ route('admin.order.edit', $order)}}"
+                                            <a href="{{ route('admin.orders.edit', $order)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.order.delete', $order)}}"
+                                            <a href="{{ route('admin.orders.delete', $order)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
                                                                                 title="Delete"></i>
-                                            </a> --}}
+                                            </a>
                                         </div>
                                     </div>
                                 </td>
