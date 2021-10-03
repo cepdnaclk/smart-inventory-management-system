@@ -10,7 +10,7 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Order : Show | {{ $order->user->name  }}
+                Orders : Show | {{ $order->id  }}
             </x-slot>
 
             <x-slot name="body">
@@ -31,38 +31,65 @@
                     </div>
                 </div>
                 <table class="table">
-                    
+                    <tr>
+                        <td>
+                            Ordered-Date
+                        </td>
+                        <td>
+                            {{$order->ordered_date}}
+                        </td>
+                    </tr>
                     <tr>
                         <td>Details</td>
                         <td>
+                            
                             @if($order->componentItems != null)
+                            <div class="">
                                 @foreach ($order->componentItems as $item)
-                                <td>
-                                    <a href="{{ route('admin.orders.show', $item->title) }}">
-                                        {{  $item->title }}
-                                    </a>
-                                </td>
-                                <td>
-                                    {{  $item->pivot->quantity }}
-                                </td>
+                                
+                                    <div class="d-flex align-items-center justify-content-between col-6">
+                                        <div>
+                                            <a href="{{ route('admin.orders.show', $item->title) }}">
+                                                {{  $item->title }}
+                                            </a>
+                                        </div>
+                                        <div>
+                                           {{  $item->pivot->quantity }}
+                                        </div>
+                                    </div>
+                                        
                                 @endforeach
+                            </div>
+
                                 
                             @endif
                         </td>
                     </tr>
                     <tr>
                         <td>Picked up date</td>
-                        <td>{{ $order->picked_data }}</td>
+                        @if ( $order->picked_date)
+                            <td>{{ $order->picked_date }}</td>
+                        @else
+                            <td> Not picked up </td>
+                        @endif
+                        
                     </tr>
                     <tr>
                         <td>Due date to return</td>
-                        <td>{{ $order->due_date_to_return }}</td>
+                        @if ( $order->due_date_to_return)
+                        <td>{{$order->due_date_to_return}} &nbsp; ({{$order->dueDays()}}  Days More!)</td>
+                        @else
+                            <td> Not Specified! </td>
+                        @endif
                     </tr>
                     <tr>
                         <td>Returned date</td>
-                        <td>
-                            {{$order->returned_date}}
-                        </td>
+
+                        @if ($order->returned_date)
+                            <td>{{$order->returned_date}} </td>
+                        @else
+                            <td> Not Returned Yet! </td>
+                        @endif
                     </tr>
                     <tr>
                         <td>status </td>
