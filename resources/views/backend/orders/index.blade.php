@@ -1,9 +1,9 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Order'))
+@section('title', __('Orders'))
 
 @section('breadcrumb-links')
-    @include('backend.order.includes.breadcrumb-links')
+    @include('backend.orders.includes.breadcrumb-links')
 @endsection
 
 @section('content')

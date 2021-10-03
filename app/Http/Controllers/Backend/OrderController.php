@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::paginate(12);
-        return view('backend.order.index', compact('orders'));
+        return view('backend.orders.index', compact('orders'));
 
     }
     
@@ -30,7 +30,7 @@ class OrderController extends Controller
     public function create()
     {
          $types = Order::pluck('title', 'id');
-        return view('backend.order.create', compact('types'));
+        return view('backend.orders.create', compact('types'));
     }
 
     /**
@@ -48,7 +48,6 @@ class OrderController extends Controller
             'returned_date' => 'string|nullable',
             'status' => 'string|required',
         ]);
-
         try {
             $data['ordered_date'] = Carbon::now()->format('Y-m-d');
             $data['user_id'] = $request->user()->id;
@@ -58,7 +57,6 @@ class OrderController extends Controller
         } catch (\Exception $ex) {
             return abort(500, "Error 222");
         }
-
     }
 
     /**
@@ -69,7 +67,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return view('backend.order.show', compact('order'));
+        return view('backend.orders.show', compact('order'));
     }
 
     /**
@@ -80,7 +78,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return view('backend.order.edit', compact('order'));
+        return view('backend.orders.edit', compact('order'));
     }
 
     /**
@@ -117,7 +115,7 @@ class OrderController extends Controller
      */
     public function delete(Order $order)
     {
-        return view('backend.order.delete', compact('order'));
+        return view('backend.orders.delete', compact('order'));
     }
 
 
@@ -132,7 +130,7 @@ class OrderController extends Controller
         try {
             
             $order->delete();
-            return redirect()->route('admin.order.index')->with('Success', 'Order was deleted !');
+            return redirect()->route('admin.orders.index')->with('Success', 'Order was deleted !');
 
         } catch (\Exception $ex) {
             return abort(500);
