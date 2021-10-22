@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,18 +16,17 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::all();
+        try {
+            return response()->json($orders,200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +36,25 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+            
+            'picked_date' => 'string|nullable', // TODO: Validate properly
+            'due_date_to_return' => 'string|required',
+            'returned_date' => 'string|nullable',
+            'status' => 'string|required',
+        ]);
+        try {
+            $data['ordered_date'] = Carbon::now()->format('Y-m-d');
+            $data['user_id'] = $request->user()->id;
+            $order = new Order($data);
+            $order->save();
+            return response()->json($order,200);
+
+        } catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
     }
 
     /**
@@ -46,19 +65,26 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        try 
+        {
+            $order = Order::find($id);
+            if($order!=null)
+            {
+                return response()->json($order,200);
+            }
+            else
+            {
+                return response()->json(["message"=>"Order is not found!"],404);
+            }
+        }
+        catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +95,27 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = request()->validate([
+            'ordered_date' => 'string|required',
+            'picked_date' => 'string|nullable', // TODO: Validate properly
+            'due_date_to_return' => 'string|required',
+            'returned_date' => 'string|nullable',
+            'status' => 'string|required',
+        ]);
+
+        try {
+            $order  = Order::find($id);
+            if($order ==null){
+                return response()->json(["message"=>"Order is not found!"],404);
+            }
+            $order->update($data);
+            return response()->json($order,200);
+
+        } catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
     }
 
     /**
@@ -80,6 +126,21 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $order = Order::find($id);
+            if($order==null){
+                return response()->json([
+                    "message"=>"Type is not found"
+                ],404);
+            }
+            
+            $order->delete();
+            return response()->json($order,200);
+
+        } catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
     }
 }
