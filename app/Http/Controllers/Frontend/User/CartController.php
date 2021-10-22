@@ -17,6 +17,14 @@ class CartController
      */
 
     public function index()
-    {}    
+    {
+        $componentItem = ComponentItem::all();
+        return view('frontend.user.products', compact('componentItem'));
+    }    
+
+    public function cart()
+    {
+        return view('frontend.user.cart');
+    }
 
 }
