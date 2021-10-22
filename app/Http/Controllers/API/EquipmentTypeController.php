@@ -110,14 +110,17 @@ class EquipmentTypeController extends Controller
         try {
             
 
-            $type = new EquipmentType($data);
-
+            $equipmentType  = EquipmentType::find($id);
+            if($equipmentType ==null){
+                return response()->json(["message"=>"Item not found!"],404);
+            }
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($type->thumbURL(), $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb($equipmentType->thumbURL(), $request->thumb, "equipment_items");
             }
 
-            $type->update($data);
-            return response()->json($type,200);
+
+            $equipmentType->update($data);
+            return response()->json($equipmentType,200);
 
         } catch (\Exception $ex) {
             return response()->json([
