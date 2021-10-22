@@ -27,4 +27,26 @@ class CartController
         return view('frontend.user.cart');
     }
 
+    public function addToCart($id)
+    {
+        $componentItem = ComponentItem::findOrFail($id);
+        $cart = session()->get('cart', []);
+
+        if(isset($cart[$id])) 
+        {
+            $cart[$id]['quantity']++;
+        } 
+        else 
+        {
+            $cart[$id] = [
+                "name" => $componentItem->title,
+                "quantity" => 1,                
+                "image" => $componentItem->image
+            ];
+        }          
+
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
+    }
+
 }
