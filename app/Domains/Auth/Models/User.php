@@ -30,14 +30,14 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         HasRoles,
         Impersonate,
         MustVerifyEmailTrait,
+        HasApiTokens,
         Notifiable,
         SoftDeletes,
         TwoFactorAuthentication,
         UserAttribute,
         UserMethod,
         UserRelationship,
-        UserScope,
-        HasApiTokens;
+        UserScope;
 
     public const TYPE_ADMIN = 'admin';
     public const TYPE_USER = 'user';

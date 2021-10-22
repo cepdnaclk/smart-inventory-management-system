@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Domains\Auth\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,15 +40,15 @@ class AuthenticationController extends Controller
             return $this->error('Credentials not match', 401);
         }
 
-        return $this->success([
-            'token' => auth()->user()->createToken('API Token')->plainTextToken
-        ]);
+        return [
+            'token' => auth('api')->user()->createToken('API Token')->plainTextToken
+        ];
     }
 
     // this method signs out users by removing tokens
     public function signout()
     {
-        auth()->user()->tokens()->delete();
+        auth('api')->user()->tokens()->delete();
 
         return [
             'message' => 'Tokens Revoked'
