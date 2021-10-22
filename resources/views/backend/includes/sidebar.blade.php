@@ -118,6 +118,35 @@
             </ul>
         </li>
 
+        <li class="c-sidebar-nav-dropdown">
+            <x-utils.link
+                    href="#"
+                    icon="c-sidebar-nav-icon cil-list"
+                    class="c-sidebar-nav-dropdown-toggle"
+                    :text="__('Job Requests')"></x-utils.link>
+
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.jobs.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Jobs')"></x-utils.link>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.machines.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Machines')"></x-utils.link>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.raw_materials.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Raw Materials')"></x-utils.link>
+                </li>
+            </ul>
+        </li>
+
         @if ($logged_in_user->hasAllAccess())
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
