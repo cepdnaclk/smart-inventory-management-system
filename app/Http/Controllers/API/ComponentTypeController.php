@@ -118,7 +118,7 @@ class ComponentTypeController extends Controller
             }
 
             $componentType->update($data);
-            return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was updated !');
+            return response()->json($componentType,200);
 
         } catch (\Exception $ex) {
             return response()->json([
