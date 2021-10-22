@@ -17,9 +17,9 @@ class EquipmentItemController extends Controller
      */
     public function index()
     {
-        $types = EquipmentItem::all();
+        $items = EquipmentItem::all();
         try {
-            return response()->json($types,200);
+            return response()->json($items,200);
         } catch (\Exception $ex) {
             return response()->json([
                 "message"=>$ex->getMessage()
@@ -65,13 +65,13 @@ class EquipmentItemController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_items");
             }
 
-            $type = new EquipmentItem($data);
+            $item = new EquipmentItem($data);
 
             // Update checkbox condition
-            $type->isElectrical = ($request->isElectrical != null);
+            $item->isElectrical = ($request->isElectrical != null);
 
-            $type->save();
-            return response()->json($type,200);
+            $item->save();
+            return response()->json($item,200);
 
         } catch (\Exception $ex) {
             return response()->json([
@@ -90,10 +90,10 @@ class EquipmentItemController extends Controller
     {
         try 
         {
-            $type = EquipmentItem::find($id);
-            if($type!=null)
+            $item = EquipmentItem::find($id);
+            if($item!=null)
             {
-                return response()->json($type,200);
+                return response()->json($item,200);
             }
             else
             {
