@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\EquipmentType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class EquipmentTypeController extends Controller
 {
@@ -14,18 +17,17 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = EquipmentType::all();
+        try {
+            return response()->json($types,200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +37,28 @@ class EquipmentTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+            'title' => 'string|required',
+            'parent_id' => 'integer|nullable', // TODO: Validate properly
+            'subtitle' => 'string|nullable',
+            'description' => 'string|nullable',
+            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        try {
+            if ($request->thumb != null) {
+                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_types");
+            }
+
+            $type = new EquipmentType($data);
+            $type->save();
+            return response()->json($type,200);
+
+        } catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
     }
 
     /**
@@ -46,19 +69,26 @@ class EquipmentTypeController extends Controller
      */
     public function show($id)
     {
-        //
+        try 
+        {
+            $type = EquipmentType::find($id);
+            if($type!=null)
+            {
+                return response()->json($type,200);
+            }
+            else
+            {
+                return response()->json(["message"=>"Type is not found!"],404);
+            }
+        }
+        catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +99,31 @@ class EquipmentTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = request()->validate([
+            'title' => 'string|required',
+            'parent_id' => 'integer|nullable', // TODO: Validate properly
+            'subtitle' => 'string|nullable',
+            'description' => 'string|nullable',
+            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        try {
+            
+
+            $type = new EquipmentType($data);
+
+            if ($request->thumb != null) {
+                $data['thumb'] = $this->uploadThumb($type->thumbURL(), $request->thumb, "equipment_types");
+            }
+
+            $type->update($data);
+            return response()->json($type,200);
+
+        } catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
     }
 
     /**
@@ -80,6 +134,46 @@ class EquipmentTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $equipmentType = EquipmentType::find($id);
+            if($equipmentType==null){
+                return response()->json([
+                    "message"=>"Type is not found"
+                ],404);
+            }
+            // Delete the thumbnail form the file system
+            $this->deleteThumb($equipmentType->thumbURL());
+
+            $equipmentType->delete();
+            return response()->json($equipmentType,200);
+
+        } catch (\Exception $ex) {
+            return response()->json([
+                "message"=>$ex->getMessage()
+            ],500);
+        }
+    }
+
+    private function deleteThumb($currentURL)
+    {
+        if ($currentURL != null) {
+            $oldImage = public_path($currentURL);
+            if (File::exists($oldImage)) unlink($oldImage);
+        }
+    }
+
+    // Private function to handle thumb images
+    private function uploadThumb($currentURL, $newImage, $folder)
+    {
+        // Delete the existing image
+        $this->deleteThumb($currentURL);
+
+        $imageName = time() . '.' . $newImage->extension();
+        $newImage->move(public_path('img/' . $folder), $imageName);
+        $imagePath = "/img/$folder/" . $imageName;
+        $image = Image::make(public_path($imagePath))->fit(360, 360);
+        $image->save();
+
+        return $imageName;
     }
 }
