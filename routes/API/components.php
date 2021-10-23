@@ -16,13 +16,13 @@ Route::get('/components', function () {
 
 //Index
 Route::get('components/items', [ComponentItemController::class, 'index']);
-// Show
+
 Route::get('components/items/{componentItem}', [ComponentItemController::class, 'show']);
 
-Route::group([ 'middleware' => 'admin'], function () {
+
+Route::group([ 'middleware' => ['auth:sanctum','role:'.config('boilerplate.access.role.admin')]], function () {
     // Store
     Route::post('components/items', [ComponentItemController::class, 'store']);
-
     // Update
     Route::put('components/items/{componentItem}', [ComponentItemController::class, 'update']);
 
@@ -41,7 +41,8 @@ Route::get('components/types', [ComponentTypeController::class, 'index']);
 Route::get('components/types/{componentType}', [ComponentTypeController::class, 'show']);
 
 
-Route::group([ 'middleware' => 'admin'], function () {
+Route::group([ 'middleware' => ['auth:sanctum','role:'.config('boilerplate.access.role.admin')]], function () {
+
         // Store
         Route::post('components/types/', [ComponentTypeController::class, 'store']);
 

@@ -18,7 +18,8 @@ Route::get('equipments/items', [EquipmentItemController::class, 'index']);
 // Show
 Route::get('equipments/items/{componentItem}', [EquipmentItemController::class, 'show']);
 
-Route::group([ 'middleware' => 'admin'], function () {
+Route::group([ 'middleware' => ['auth:sanctum','role:'.config('boilerplate.access.role.admin')]], function () {
+
     // Store
     Route::post('equipments/items', [EquipmentItemController::class, 'store']);
 
@@ -40,7 +41,8 @@ Route::get('equipments/types', [EquipmentType::class, 'index']);
 Route::get('equipments/types/{componentType}', [EquipmentType::class, 'show']);
 
 
-Route::group([ 'middleware' => 'admin'], function () {
+Route::group([ 'middleware' => ['auth:sanctum','role:'.config('boilerplate.access.role.admin')]], function () {
+
         // Store
         Route::post('equipments/types/', [EquipmentType::class, 'store']);
 

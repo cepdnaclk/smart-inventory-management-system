@@ -2,11 +2,18 @@
 
 //import controller
 use App\Http\Controllers\Api\Auth\AuthController;
-use Doctrine\DBAL\Driver\Middleware;
+use App\Http\Controllers\Api\Auth\OrderController;
+use App\Http\Controllers\Api\OrderController as ApiOrderController;
+
 
 Route::group(['prefix'=>'auth'], function () {
-	Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
+	Route::group(['prefix'=>'user','middleware'=>'auth:sanctum'],function(){
 		Route::get('/', [AuthController::class, 'getAuthenticatedUser']);
+		Route::get('/orders', [OrderController::class, 'index']);
+		Route::get('/orders/{orderId}', [OrderController::class, 'show']);
+		Route::post('/orders/{orderId}', [ApiOrderController::class, 'store']);
+		Route::put('/orders/{orderId}', [ApiOrderController::class, 'update']);
+		Route::delete('/orders/{orderId}', [ApiOrderController::class, 'delete']);
 	});
 	Route::post('/signup', [AuthController::class, 'signup']);
 	Route::post('/login', [AuthController::class, 'login']);
