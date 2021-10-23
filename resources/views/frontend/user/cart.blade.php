@@ -43,7 +43,16 @@
         <tr>
             <td colspan="5" class="text-right">
                 <a href="{{ route('frontend.user.products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
-                <button class="btn btn-success">Order</button>
+                <form action="{{route('frontend.user.place.order')}}" method="post">
+                    {{ csrf_field() }}
+                    @if(session('cart'))
+                        @foreach(session('cart') as $id => $details)
+                            <input type="hidden" name="product[]" value="{{$id}}">
+                            <input type="hidden" name="quantity[]" value="{{ $details['quantity'] }}">                
+                        @endforeach
+                    @endif                  
+                    <input type="submit" value="Place Order">
+                </form>
             </td>
         </tr>
     </tfoot>
