@@ -11,7 +11,7 @@ Route::group(['prefix'=>'auth'], function () {
 		Route::get('/', [AuthController::class, 'getAuthenticatedUser']);
 		Route::get('/orders', [OrderController::class, 'index']);
 		Route::get('/orders/{orderId}', [OrderController::class, 'show']);
-		Route::post('/orders/{orderId}', [ApiOrderController::class, 'store']);
+		Route::post('/orders', [ApiOrderController::class, 'store']);
 		Route::put('/orders/{orderId}', [ApiOrderController::class, 'update']);
 		Route::delete('/orders/{orderId}', [ApiOrderController::class, 'delete']);
 	});
