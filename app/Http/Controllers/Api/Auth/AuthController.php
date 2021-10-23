@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
-
+namespace App\Http\Controllers\Api\Auth;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
@@ -12,14 +11,14 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class AuthenticationController extends Controller
+class AuthController extends Controller
 {
 
     /*
 	 * Get authenticated user details
 	*/
 	public function getAuthenticatedUser(Request $request) {
-		return $request->user();
+		return auth('api')->user();
 	}
 
 
@@ -40,15 +39,15 @@ class AuthenticationController extends Controller
             'email' => $attr['email']
         ]);
 
-        return $this->success([
+        return response()->json([
             'token' => $user->createToken('tokens')->plainTextToken
-        ]);
+        ],200);
     }
     
     /*
      * Login a new user
      **/
-    public function signin(Request $request)
+    public function login(Request $request)
     {
         $attr = $request->validate([
             'email' => 'required|string|email|',
@@ -67,7 +66,7 @@ class AuthenticationController extends Controller
     /*
      * signout current user
      */
-    public function signout()
+    public function logout()
     {
         auth('api')->user()->tokens()->delete();
 

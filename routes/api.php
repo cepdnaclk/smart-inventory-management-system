@@ -4,7 +4,7 @@
  * API Routes
  */
 Route::group(['as' => 'api.'], function () {
-    includeRouteFiles(__DIR__.'/api/');
+    includeRouteFiles(__DIR__.'/API/');
 });
 
 
