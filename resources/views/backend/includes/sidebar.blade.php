@@ -118,6 +118,17 @@
             </ul>
         </li>
 
+        <li class="c-sidebar-nav-dropdown">
+                    
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link
+                            icon="c-sidebar-nav-icon cil-list"
+                                    :href="route('admin.orders.index')"
+                                    class="c-sidebar-nav-link"
+                                    :text="__('Orders')"></x-utils.link>
+                        </li>
+        </li>
+
         @if ($logged_in_user->hasAllAccess())
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
