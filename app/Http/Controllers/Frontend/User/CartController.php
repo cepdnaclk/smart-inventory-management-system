@@ -82,7 +82,7 @@ class CartController
     public function placeOrder(Request $request)
     {
         $date = Carbon::now();
-        $order_id = 500;
+        $order_id = 600;
         
             $order = new Order;
             $order->id = $order_id ;
