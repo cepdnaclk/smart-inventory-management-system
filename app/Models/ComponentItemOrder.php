@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model
+class ComponentItemOrder extends Model
+
 {
     use HasFactory;
-    protected $fillable = [
-        'name', 'code', 'description'
-    ];
+    protected $guarded = [];
 
 }
