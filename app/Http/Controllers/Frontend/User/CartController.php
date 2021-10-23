@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Frontend\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Http\Controllers\Controller;
 use App\Models\ComponentItem;
-
+use App\Models\Order;
+use App\Models\ComponentItemOrder;
 /**
  * Class CartController.
  */
@@ -73,5 +77,30 @@ class CartController
             session()->flash('success', 'Product removed successfully');
         }   
     }
+
+    public function placeOrder(Request $request)
+    {
+        $date = Carbon::now();
+        $order_id = 500;
+        
+            $order = new Order;
+            $order->id = $order_id ;
+            $order->ordered_date = $date->toDateString();
+            $order->status = "pending";            
+            $order->user_id =  Auth::user()->id;            
+            $order->save();
+
+        foreach($request->product as $item)
+        {
+            $componentItemOrder = new ComponentItemOrder;
+                    
+            $componentItemOrder->quantity = 10;
+            $componentItemOrder->component_item_id = $item;
+            $componentItemOrder->order_id =  $order_id;            
+            $componentItemOrder->save();
+        }
+                    
+        return $request->all();
+    }    
 
 }
