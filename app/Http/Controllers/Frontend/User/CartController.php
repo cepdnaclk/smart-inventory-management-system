@@ -44,7 +44,8 @@ class CartController
         {
             $cart[$id] = [
                 "name" => $componentItem->title,
-                "quantity" => 1,                
+                "quantity" => 1,  
+                "code" => $componentItem->id,              
                 "image" => $componentItem->image
             ];
         }          
