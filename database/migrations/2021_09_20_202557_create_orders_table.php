@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->date("picked_date")->nullable();
             $table->date("due_date_to_return")->nullable();
             $table->date("returned_date")->nullable();
+            $table->integer("otp")->nullable();
             $table->enum('status', ['pending','progress', 'ready',  'pickedup'])->default('pending');
             $table->timestamps();
 

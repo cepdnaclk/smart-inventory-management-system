@@ -180,4 +180,19 @@ class EquipmentTypeController extends Controller
 
         return $imageName;
     }
+
+    public function search(Request $request){
+        // Get the search value from the request
+        $term = $request->query('term');
+    
+        // search in the title and body columns from the posts table
+        $types = EquipmentType::query()
+            ->where('title', 'LIKE', "%{$term}%")
+            ->orWhere('subtitle', 'LIKE', "%{$term}%")
+            ->orWhere('description', 'LIKE', "%{$term}%")
+            ->get();
+    
+        // Return the search view with the resluts compacted
+        return $types;
+    }
 }

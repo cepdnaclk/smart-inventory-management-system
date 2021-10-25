@@ -18,8 +18,9 @@ class ComponentTypeController extends Controller
      */
     public function index()
     {
-        $types = ComponentType::all();
+        
         try {
+            $types = ComponentType::all();
             return response()->json($types,200);
         } catch (\Exception $ex) {
             return response()->json([
@@ -179,4 +180,20 @@ class ComponentTypeController extends Controller
 
         return $imageName;
     }
+
+    public function search(Request $request){
+        // Get the search value from the request
+        $term = $request->query('term');
+    
+        // search in the title and body columns from the posts table
+        $types = ComponentType::query()
+            ->where('title', 'LIKE', "%{$term}%")
+            ->orWhere('subtitle', 'LIKE', "%{$term}%")
+            ->orWhere('description', 'LIKE', "%{$term}%")
+            ->get();
+    
+        // Return the search view with the resluts compacted
+        return $types;
+    }
+    
 }
