@@ -17,7 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::with('componentItems')->get();
         try {
             return response()->json($orders,200);
         } catch (\Exception $ex) {
@@ -67,7 +67,7 @@ class OrderController extends Controller
     {
         try 
         {
-            $order = Order::find($id);
+            $order = Order::with('componentItems')->find($id);
             if($order!=null)
             {
                 return response()->json($order,200);
