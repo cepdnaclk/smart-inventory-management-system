@@ -42,7 +42,7 @@
         </tr>
         <tr>
             <td colspan="5" class="text-right">
-                <a href="{{ route('frontend.user.products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+                <a href="{{ route('frontend.user.products') }}" class="btn btn-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a>
                 <form action="{{route('frontend.user.place.order')}}" method="post">
                     {{ csrf_field() }}
                     @if(session('cart'))
