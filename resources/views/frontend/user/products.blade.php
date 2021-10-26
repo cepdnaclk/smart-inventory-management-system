@@ -15,7 +15,7 @@
                     <h6>{{ $product->id }}</h6>
                     <!--p>{{ $product->description }}</p-->
                     <p class="btn-holder">
-                        <a href="{{ route('frontend.user.addToCart', $product->id) }}" class="btn btn-default btn-block text-center" role="button">+ Add to cart</a> 
+                        <a href="{{ route('frontend.user.addToCart', $product->id) }}" class="btn btn-warning btn-block text-center" role="button">+ Add to cart</a> 
                     </p>
                 </div>
             </div>
