@@ -15,7 +15,7 @@
                         @lang('You are logged in!')
                         <br>
                         <div>
-                           <a href="{{ route('frontend.user.products') }}">Create a cart</a>     
+                           <a href="{{ route('frontend.user.products') }}">Explore the Products</a>     
                         </div>   
                     </x-slot>
                 </x-frontend.card>

@@ -11,11 +11,11 @@
             <div class="thumbnail">
                 <img src="{{ $product->image }}" alt="">
                 <div class="caption">
-                    <h4>{{ $product->title }}</h4>
-                    <h4>{{ $product->id }}</h4>
+                    <h6>{{ $product->title }}</h6>
+                    <h6>{{ $product->id }}</h6>
                     <!--p>{{ $product->description }}</p-->
                     <p class="btn-holder">
-                        <a href="{{ route('frontend.user.addToCart', $product->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to cart</a> 
+                        <a href="{{ route('frontend.user.addToCart', $product->id) }}" class="btn btn-default btn-block text-center" role="button">+ Add to cart</a> 
                     </p>
                 </div>
             </div>
