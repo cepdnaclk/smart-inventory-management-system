@@ -35,12 +35,12 @@
         <div class="col-lg-12 col-sm-12 col-12 main-section">
             <div class="dropdown">
                 <button type="button" class="btn btn-info" data-toggle="dropdown">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> <b>Cart</b> <span class="badge badge-pill badge-default"><b>{{ count((array) session('cart')) }}</b></span>
                 </button>
                 <div class="dropdown-menu">
                     <div class="row total-header-section">
                         <div class="col-lg-5 col-sm-5 col-5">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-default"><b>{{ count((array) session('cart')) }}</b></span>
                         </div>
                         @php $total = 0 @endphp
                         @foreach((array) session('cart') as $id => $details)
