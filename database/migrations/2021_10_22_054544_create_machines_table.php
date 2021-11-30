@@ -15,6 +15,21 @@ class CreateMachinesTable extends Migration
     {
         Schema::create('machines', function (Blueprint $table) {
             $table->id();
+            $table->char("code", 8)->default('');
+            $table->string("title");
+            $table->enum('type', ['CNC', '3D Printer', 'Laser Cutter']);
+
+            $table->float("build_width")->nullable();  // in mm
+            $table->float("build_length")->nullable();  // in mm
+            $table->float("build_height")->nullable();  // in mm
+
+            $table->float("power")->nullable();  // in Watts
+            $table->string('thumb')->nullable();
+
+            $table->text("specifications")->nullable();
+            $table->enum('status', ['AVAILABLE', 'NOT_AVAILABLE', 'CONDITIONALLY_AVAILABLE']);
+            $table->text("notes")->nullable();
+            $table->float("lifespan")->default(0);  // in hours
             $table->timestamps();
         });
     }
