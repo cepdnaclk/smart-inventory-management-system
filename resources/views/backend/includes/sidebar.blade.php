@@ -128,10 +128,18 @@
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.jobs.index')"
+                            :href="route('admin.jobs.supervisor.index')"
                             class="c-sidebar-nav-link"
-                            :text="__('Jobs')"></x-utils.link>
+                            :text="__('Jobs - Supervisor')"></x-utils.link>
                 </li>
+
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.jobs.techo.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Jobs - Technical Officer')"></x-utils.link>
+                </li>
+
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
                             :href="route('admin.machines.index')"

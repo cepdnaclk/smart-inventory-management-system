@@ -104,11 +104,24 @@
                                 @if ($logged_in_user->hasAllAccess())</a> @endif
                     </div>
 
+
+                </div>
+
+                <div class="row">
                     <div class="col-md-3">
-                        <a class="text-decoration-none" href="#">
+                        <a class="text-decoration-none" href="{{ route('admin.jobs.techo.index') }}">
                             <div class="card-counter info">
-                                <span class="count-numbers">###</span>
-                                <span class="count-name">##############</span>
+                                <span class="count-numbers">Fabrication</span>
+                                <span class="count-name">Technical Officer</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.jobs.supervisor.index') }}">
+                            <div class="card-counter info">
+                                <span class="count-numbers">Fabrication</span>
+                                <span class="count-name">Supervisor</span>
                             </div>
                         </a>
                     </div>
