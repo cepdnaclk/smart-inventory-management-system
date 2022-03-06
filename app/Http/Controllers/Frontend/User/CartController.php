@@ -81,27 +81,20 @@ class CartController
 
     public function placeOrder(Request $request)
     {
-        $date = Carbon::now();
-        $order_id = 600;
-        
-            $order = new Order;
-            $order->id = $order_id ;
-            $order->ordered_date = $date->toDateString();
-            $order->status = "pending";            
-            $order->user_id =  Auth::user()->id;            
-            $order->save();
+        $web = request()->validate([
+            'product' => 'required|array|min:1', // TODO: Validate properly
+            'quantity' => 'required|array|min:1'
+        ]);
 
-        foreach($request->product as $item)
-        {
-            $componentItemOrder = new ComponentItemOrder;
-                    
-            $componentItemOrder->quantity = 10;
-            $componentItemOrder->component_item_id = $item;
-            $componentItemOrder->order_id =  $order_id;            
-            $componentItemOrder->save();
+        $data['ordered_date'] = Carbon::now()->format('Y-m-d');
+        $data['user_id'] = $request->user()->id;
+        $order = new Order($data);
+        $order->save();
+
+        for ($i=0; $i < count($web['product']); $i++) { 
+            $order->componentItems()->attach($web['product'][$i],array('quantity'=>$request->quantity[$i]));
         }
-                    
-        return $request->all();
+        return response()->json($order,200);
     }    
 
 }
