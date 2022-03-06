@@ -14,7 +14,7 @@ class CreateComponentItemOrderTable extends Migration
     public function up()
     {
         Schema::create('component_item_order', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
 
             $table->timestamps();
 
@@ -48,3 +48,4 @@ class CreateComponentItemOrderTable extends Migration
         Schema::dropIfExists('component_item_order');
     }
 }
+
