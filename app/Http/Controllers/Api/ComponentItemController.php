@@ -213,4 +213,19 @@ class ComponentItemController extends Controller
 
         return $imageName;
     }
+    public function search(Request $request){
+        // Get the search value from the request
+        $term = $request->query('term');
+    
+        // search in the title and body columns from the posts table
+        $items = ComponentItem::query()
+            ->where('title', 'LIKE', "%{$term}%")
+            ->orWhere('description', 'LIKE', "%{$term}%")
+            ->orWhere('brand', 'LIKE', "%{$term}%")
+            ->orWhere('specifications', 'LIKE', "%{$term}%")
+            ->get();
+    
+        // Return the search view with the resluts compacted
+        return $items;
+    }
 }

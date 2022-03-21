@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\OrderController;
-Route::group([ 'middleware' => ['auth:sanctum','role:'.config('boilerplate.access.role.admin')]], function () {
+Route::group(['prefix'=>'admin', 'middleware' => ['auth:sanctum','role:'.config('boilerplate.access.role.admin')]], function () {
 
     // get order details
     Route::get('order', [OrderController::class, 'index']);

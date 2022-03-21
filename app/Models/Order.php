@@ -29,4 +29,15 @@ class Order extends Model
         $end =  Carbon::parse($this->due_date_to_return);
         return ($end->diffInDays($now));
     }
+
+    public function generateOtp(){
+        $otp = rand(1000,9999);
+        $this->otp = $otp;
+        $this->save();
+        return $otp;
+    }
+
+    public function checkOtp($otp){
+        return $otp==$this->otp;
+    }
 }
