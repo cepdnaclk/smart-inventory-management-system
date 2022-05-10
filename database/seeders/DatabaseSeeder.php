@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RawMaterials;
 use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EquipmentItemSeeder::class);
         $this->call(ComponentTypeSeeder::class);
         $this->call(ComponentItemSeeder::class);
+        $this->call(RawMaterialsSeeder::class);
 
         Model::reguard();
     }

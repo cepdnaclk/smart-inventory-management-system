@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RawMaterials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 
 class RawMaterialsController extends Controller
@@ -17,7 +18,7 @@ class RawMaterialsController extends Controller
      */
     public function index()
     {
-        $raw_materials = RawMaterials::all()->paginate(16);
+        $raw_materials = RawMaterials::paginate(16);
         return view('backend.raw_materials.index', compact('raw_materials'));
     }
 
@@ -28,7 +29,8 @@ class RawMaterialsController extends Controller
      */
     public function create()
     {
-        // return view('backend.raw_materials.create');
+        $availabilityOptions = RawMaterials::availabilityOptions();
+        return view('backend.raw_materials.create', compact('availabilityOptions'));
     }
 
     /**
@@ -42,13 +44,13 @@ class RawMaterialsController extends Controller
         $data = request()->validate([
             'code' => 'string|nullable|max:8',
             'title' => 'string|required',
-            'color' => 'string|required',
+            'color' => 'string|nullable',
             'description' => 'string|nullable',
             'specifications' => 'string|nullable',
             'quantity' => 'numeric|nullable',
             'unit' => 'string|nullable',
+            'availability' => Rule::in(['AVAILABLE','NOT_AVAILABLE','CONDITIONALLY_AVAILABLE']),
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
-//          'enum' => 'string'
             'notes' => 'string|nullable',
         ]);
 
@@ -98,18 +100,22 @@ class RawMaterialsController extends Controller
      */
     public function update(Request $request, RawMaterials $rawMaterials)
     {
+//        dd($request, $rawMaterials);
+
         $data = request()->validate([
             'code' => 'string|nullable|max:8',
             'title' => 'string|required',
-            'color' => 'string|required',
+            'color' => 'string|nullable',
             'description' => 'string|nullable',
             'specifications' => 'string|nullable',
             'quantity' => 'numeric|nullable',
             'unit' => 'string|nullable',
+            'availability' => Rule::in(['AVAILABLE','NOT_AVAILABLE','CONDITIONALLY_AVAILABLE']),
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
-//          'enum' => 'string'
             'notes' => 'string|nullable',
         ]);
+
+//        dd($data);
 
         try {
             if ($request->thumb != null) {
