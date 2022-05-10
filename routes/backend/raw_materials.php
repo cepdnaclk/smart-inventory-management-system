@@ -13,7 +13,7 @@ Route::get('raw_materials', [RawMaterialsController::class, 'index'])
 
 // Create
 Route::get('raw_materials/create', [RawMaterialsController::class, 'create'])
-    ->name('row_materials.create')
+    ->name('raw_materials.create')
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Raw Materials'), route('admin.raw_materials.index'))
@@ -21,12 +21,12 @@ Route::get('raw_materials/create', [RawMaterialsController::class, 'create'])
     });
 
 // Store
-Route::post('machines', [RawMaterialsController::class, 'store'])
-    ->name('row_materials.store');
+Route::post('raw_materials', [RawMaterialsController::class, 'store'])
+    ->name('raw_materials.store');
 
 // Show
 Route::get('raw_materials/{rawMaterials}', [RawMaterialsController::class, 'show'])
-    ->name('row_materials.show')
+    ->name('raw_materials.show')
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Raw Materials'), route('admin.raw_materials.index'))
@@ -35,7 +35,7 @@ Route::get('raw_materials/{rawMaterials}', [RawMaterialsController::class, 'show
 
 // Edit
 Route::get('raw_materials/edit/{rawMaterials}', [RawMaterialsController::class, 'edit'])
-    ->name('row_materials.edit')
+    ->name('raw_materials.edit')
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Raw Materials'), route('admin.raw_materials.index'))
@@ -45,11 +45,11 @@ Route::get('raw_materials/edit/{rawMaterials}', [RawMaterialsController::class, 
 
 // Update
 Route::put('raw_materials/{rawMaterials}', [RawMaterialsController::class, 'update'])
-    ->name('row_materials.update');
+    ->name('raw_materials.update');
 
 // Delete
 Route::get('raw_materials/delete/{rawMaterials}', [RawMaterialsController::class, 'delete'])
-    ->name('row_materials.delete')
+    ->name('raw_materials.delete')
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Raw Materials'), route('admin.raw_materials.index'))
@@ -58,4 +58,4 @@ Route::get('raw_materials/delete/{rawMaterials}', [RawMaterialsController::class
 
 // Destroy
 Route::delete('raw_materials/{rawMaterials}', [RawMaterialsController::class, 'destroy'])
-    ->name('row_materials.destroy');
+    ->name('raw_materials.destroy');

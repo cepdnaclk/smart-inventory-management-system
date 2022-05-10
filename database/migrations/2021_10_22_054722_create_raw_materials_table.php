@@ -17,7 +17,7 @@ class CreateRawMaterialsTable extends Migration
             $table->id();
             $table->char("code", 8)->default('');
             $table->string("title");
-            $table->string("color");
+            $table->string("color")->nullable();
             $table->text("description")->nullable();
             $table->text("specifications")->nullable();
             $table->float("quantity")->nullable();  // in units
