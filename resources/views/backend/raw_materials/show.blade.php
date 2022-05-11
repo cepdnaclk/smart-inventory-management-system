@@ -38,7 +38,7 @@
 
                     <tr>
                         <td>Color</td>
-                        <td>{{ $rawMaterials->color }}
+                        <td>{{ ($rawMaterials->color) ? $rawMaterials->color : "N/A" }}
                         </td>
                     </tr>
                     <tr>
@@ -59,7 +59,7 @@
 
                     <tr>
                         <td>Availability</td>
-                        <td>{{ $rawMaterials->availability }}</td>
+                        <td>{{ \App\Models\RawMaterials::availabilityOptions()[$rawMaterials->availability] }}</td>
                     </tr>
 
                     <tr>

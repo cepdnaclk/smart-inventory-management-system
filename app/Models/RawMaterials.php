@@ -13,7 +13,7 @@ class RawMaterials extends Model
 
     public function inventoryCode()
     {
-        return "RW/" . $this->id;
+        return sprintf("RW/%03d",$this->id);
     }
 
     // Return the relative URL of the thumbnail
@@ -23,6 +23,7 @@ class RawMaterials extends Model
         return null;
     }
 
+    // Raw material availability options
     public static function availabilityOptions()
     {
         return ['AVAILABLE' => 'Available', 'NOT_AVAILABLE' => 'Not Available', 'CONDITIONALLY_AVAILABLE' => 'Conditionally Available'];
