@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Machines;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 
 class MachinesController extends Controller
@@ -17,7 +18,7 @@ class MachinesController extends Controller
      */
     public function index()
     {
-        $machines = Machines::all()->paginate(16);
+        $machines = Machines:: paginate(16);
         return view('backend.machines.index', compact('machines'));
     }
 
@@ -28,7 +29,9 @@ class MachinesController extends Controller
      */
     public function create()
     {
-         return view('backend.machines.create');
+        $typeOptions = Machines::types();
+        $availabilityOptions = Machines::availabilityOptions();
+         return view('backend.machines.create', compact('typeOptions', 'availabilityOptions'));
     }
 
     /**
@@ -42,7 +45,15 @@ class MachinesController extends Controller
         $data = request()->validate([
             'code' => 'string|nullable|max:8',
             'title' => 'string|required',
-
+            'type' => Rule::in(['CNC', 'FDM_3D_PRINTER', 'LASER_CUTTER', 'PCB_MILL']),
+            'build_width' => 'numeric|nullable|min:0',
+            'build_length' => 'numeric|nullable|min:0',
+            'build_height' => 'numeric|nullable|min:0',
+            'power' => 'numeric|nullable|min:0',
+            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
+            'specifications' => 'string|nullable',
+            'status' => Rule::in(['AVAILABLE','NOT_AVAILABLE','CONDITIONALLY_AVAILABLE']),
+            'notes' => 'string|nullable',
         ]);
 
         try {
@@ -51,7 +62,6 @@ class MachinesController extends Controller
             }
 
             $machine = new Machines($data);
-
             $machine->save();
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was created !');
 
@@ -63,7 +73,7 @@ class MachinesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Machines  $machines
+     * @param  \App\Models\Machines  $machine
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(Machines $machines)
@@ -74,19 +84,21 @@ class MachinesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Machines  $machines
+     * @param  \App\Models\Machines  $machine
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Machines $machines)
     {
-        return view('backend.machines.edit', compact('machines'));
+        $typeOptions = Machines::types();
+        $availabilityOptions = Machines::availabilityOptions();
+        return view('backend.machines.edit', compact('machines', 'typeOptions', 'availabilityOptions'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Machines  $machines
+     * @param  \App\Models\Machines  $machine
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|void
      */
     public function update(Request $request, Machines $machines)
@@ -99,7 +111,7 @@ class MachinesController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($machines->thumbURL(), $request->thumb, "machines");
+                $data['thumb'] = $this->uploadThumb($machines->thumbURL(), $request->thumb, "machine");
             }
             $machines->update($data);
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was updated !');
@@ -116,7 +128,7 @@ class MachinesController extends Controller
      */
     public function delete(Machines $machines)
     {
-        return view('backend.machines.delete', compact('rawMaterials'));
+        return view('backend.machines.delete', compact('machines'));
     }
 
     /**
