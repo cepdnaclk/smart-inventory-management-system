@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Component'))
+@section('title', __('Raw Materails'))
 
 @section('breadcrumb-links')
     @include('backend.raw_materials.includes.breadcrumb-links')

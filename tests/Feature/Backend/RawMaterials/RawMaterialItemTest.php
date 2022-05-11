@@ -59,7 +59,7 @@ class RawMaterialItemTest extends TestCase
     }
 
     /** @test */
-    public function an_raw_material_can_be_created()
+    public function a_raw_material_can_be_created()
     {
         $this->loginAsAdmin();
         $response = $this->post('/admin/raw_materials', [
@@ -80,7 +80,7 @@ class RawMaterialItemTest extends TestCase
     }
 
     /** @test */
-    public function an_raw_material_can_be_updated()
+    public function a_raw_material_can_be_updated()
     {
 
         $this->actingAs(User::factory()->admin()->create());
