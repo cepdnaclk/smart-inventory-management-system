@@ -31,13 +31,13 @@ class MachinesController extends Controller
     {
         $typeOptions = Machines::types();
         $availabilityOptions = Machines::availabilityOptions();
-         return view('backend.machines.create', compact('typeOptions', 'availabilityOptions'));
+        return view('backend.machines.create', compact('typeOptions', 'availabilityOptions'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|void
      */
     public function store(Request $request)
@@ -52,7 +52,7 @@ class MachinesController extends Controller
             'power' => 'numeric|nullable|min:0',
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
             'specifications' => 'string|nullable',
-            'status' => Rule::in(['AVAILABLE','NOT_AVAILABLE','CONDITIONALLY_AVAILABLE']),
+            'status' => Rule::in(['AVAILABLE', 'NOT_AVAILABLE', 'CONDITIONALLY_AVAILABLE']),
             'notes' => 'string|nullable',
         ]);
 
@@ -73,7 +73,7 @@ class MachinesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Machines  $machine
+     * @param \App\Models\Machines $machine
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(Machines $machines)
@@ -84,7 +84,7 @@ class MachinesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Machines  $machine
+     * @param \App\Models\Machines $machine
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Machines $machines)
@@ -97,8 +97,8 @@ class MachinesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Machines  $machine
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Machines $machine
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|void
      */
     public function update(Request $request, Machines $machines)

@@ -34,27 +34,27 @@ class CreateJobRequestsTable extends Migration
                 ->references('id')
                 ->on('machines');
 
-            $table->foreignId('raw_materials')
+            $table->foreignId('material')
                 ->constrained()
                 ->references('id')
-                ->on('machines');
+                ->on('raw_materials');
 
             $table->enum("status",
                 ['PENDING', 'WAITING_SUPERVISOR_APPROVAL', 'WAITING_TO_APPROVAL', 'ON_REVISION',
                     'PENDING_FABRICATION', 'COMPLETED']);
 
-            $table->string('file')->nullable(); // zip file
+            $table->string('file'); // zip file
+            $table->string('thumb')->nullable(); // preview file
 
-            $table->timestamp('requested_time');
-            $table->timestamp('approved_time');
-            $table->timestamp('scheduled_time');
-            $table->timestamp('started_time');
-            $table->timestamp('completed_time');
-            $table->timestamp('finished_time');
+            $table->timestamp('requested_time')->nullable();
+            $table->timestamp('approved_time')->nullable();
+            $table->timestamp('scheduled_time')->nullable();
+            $table->timestamp('started_time')->nullable();
+            $table->timestamp('completed_time')->nullable();
+            $table->timestamp('finished_time')->nullable();
 
-            $table->float("material_usage")->nullable();  // in unit defined in the material
+            $table->float("material_usage")->nullable()->default(0);  // in unit defined in the material
             $table->integer('machine_time')->default(0);
-
 
             $table->timestamps();
 

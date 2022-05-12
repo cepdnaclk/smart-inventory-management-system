@@ -1,9 +1,8 @@
 @extends('backend.layouts.app')
 
-@section('title', __('component'))
+@section('title', __('Fabrications'))
 
 @section('breadcrumb-links')
-    @include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
@@ -17,6 +16,12 @@
                 <div class="container">
 
                     <ul>
+                        <li>
+                            <a class="text-decoration-none" href="{{ route('admin.jobs.create') }}">
+                                Fabrication - initiate a new Job
+                            </a>
+                        </li>
+
                         <li>
                             <a class="text-decoration-none" href="{{ route('admin.jobs.techo.index') }}">
                                 Fabrication - Technical Officer

@@ -13,6 +13,26 @@ Route::get('/jobs', function () {
             ->push(__('Fabrications'), route('admin.jobs.index'));
     });
 
+// Student Routes ---------------------------------------------------------------------------------
+
+// Create
+Route::get('/jobs/create', [JobRequestsController::class, 'create'])
+    ->name('jobs.create')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->push(__('Home'), route('admin.dashboard'))
+            ->push(__('Fabrications'), route('admin.jobs.index'))
+            ->push(__('Create'));
+    });
+
+// Store
+Route::post('/jobs', [JobRequestsController::class, 'store'])
+    ->name('jobs.store');
+
+
+
+
+
+
 // Supervisor Routes ----------------------------------------------------------------------------
 
 // Index

@@ -23,10 +23,16 @@ class PermissionRoleSeeder extends Seeder
         $this->disableForeignKeys();
 
         // Create Roles
-        Role::create([
+        $userRole = Role::create([
             'id' => 1,
             'type' => User::TYPE_ADMIN,
             'name' => 'Administrator',
+        ]);
+
+        $lecturerRole = Role::create([
+            'id' => 2,
+            'type' => User::TYPE_LECTURER,
+            'name' => 'Lecturer',
         ]);
 
         // Non Grouped Permissions
@@ -77,6 +83,26 @@ class PermissionRoleSeeder extends Seeder
                 'sort' => 6,
             ]),
         ]);
+
+        $lecturers = Permission::create([
+            'type' => User::TYPE_LECTURER,
+            'name' => 'lecturer.access',
+            'description' => 'All Lecturer Permissions',
+        ]);
+
+        $lecturers->children()->saveMany([
+            new Permission([
+                'type' => User::TYPE_LECTURER,
+                'name' => 'lecturer.access.jobs.all',
+                'description' => 'Access All',
+            ]),
+            new Permission([
+                'type' => User::TYPE_LECTURER,
+                'name' => 'lecturer.access.jobs.test',
+                'description' => 'Test',
+            ])
+        ]);
+
 
         // Assign Permissions to other Roles
         //

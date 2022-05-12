@@ -83,4 +83,14 @@ trait UserScope
     {
         return $query->where('type', $this::TYPE_USER);
     }
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopelecturers($query)
+    {
+        return $query->where('type', $this::TYPE_LECTURER);
+    }
 }
