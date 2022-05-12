@@ -32,6 +32,13 @@ trait UserMethod
     {
         return $this->type === self::TYPE_USER;
     }
+    /**
+     * @return mixed
+     */
+    public function isLecturer(): bool
+    {
+        return $this->type === self::TYPE_LECTURER;
+    }
 
     /**
      * @return mixed

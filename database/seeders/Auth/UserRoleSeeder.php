@@ -22,6 +22,9 @@ class UserRoleSeeder extends Seeder
 
         User::find(1)->assignRole(config('boilerplate.access.role.admin'));
 
+        // Assign permissions for the lecturer users
+        User::where('type', 'lecturer')->first()->assignRole('Lecturer');
+
         $this->enableForeignKeys();
     }
 }

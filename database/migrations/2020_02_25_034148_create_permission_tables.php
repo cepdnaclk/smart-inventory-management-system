@@ -19,7 +19,7 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['permissions'], function (Blueprint $table) use ($tableNames) {
             $table->bigIncrements('id');
-            $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER]);
+            $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER, User::TYPE_LECTURER]);
             $table->string('guard_name');
             $table->string('name');
             $table->string('description')->nullable();
@@ -35,7 +35,7 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER]);
+            $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER, User::TYPE_LECTURER]);
             $table->string('name');
             $table->string('guard_name');
             $table->timestamps();

@@ -3,6 +3,8 @@
         {{ __('Administrator') }}
     @elseif ($row->type === \App\Domains\Auth\Models\User::TYPE_USER)
         {{ __('User') }}
+    @elseif ($row->type === \App\Domains\Auth\Models\User::TYPE_LECTURER)
+        {{ __('Lecturer') }}
     @else
         N/A
     @endif

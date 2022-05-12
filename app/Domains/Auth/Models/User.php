@@ -39,6 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
 
     public const TYPE_ADMIN = 'admin';
     public const TYPE_USER = 'user';
+    public const TYPE_LECTURER = 'lecturer';
 
     /**
      * The attributes that are mass assignable.
@@ -156,5 +157,11 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     protected static function newFactory()
     {
         return UserFactory::new();
+    }
+
+
+    public static function lecturers()
+    {
+        return User::where('type', '=', 'lecturer')->get();
     }
 }
