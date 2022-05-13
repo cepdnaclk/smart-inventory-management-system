@@ -135,7 +135,7 @@
 
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.jobs.techo.index')"
+                            :href="route('admin.jobs.officer.index')"
                             class="c-sidebar-nav-link"
                             :text="__('Jobs - Technical Officer')"></x-utils.link>
                 </li>

@@ -109,7 +109,7 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <a class="text-decoration-none" href="{{ route('admin.jobs.techo.index') }}">
+                        <a class="text-decoration-none" href="{{ route('admin.jobs.officer.index') }}">
                             <div class="card-counter info">
                                 <span class="count-numbers">Fabrication</span>
                                 <span class="count-name">Technical Officer</span>

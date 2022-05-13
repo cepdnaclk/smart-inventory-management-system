@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\EquipmentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class EquipmentTypeController extends Controller
