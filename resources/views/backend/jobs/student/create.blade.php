@@ -8,7 +8,7 @@
 
 @section('content')
     <div>
-        {!! Form::open(['url' => route('admin.jobs.store'),
+        {!! Form::open(['url' => route('admin.jobs.student.store'),
             'method' => 'post',
             'class' => 'container',
             'files'=>true,

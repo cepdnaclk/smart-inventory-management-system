@@ -8,26 +8,24 @@ use App\Models\JobRequests;
 use App\Models\Machines;
 use App\Models\RawMaterials;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
 class JobRequestsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return view('backend.jobs.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function student_index()
+    {
+        $jobs = JobRequests:: paginate(16);
+        return view('backend.jobs.student.index', compact('jobs'));
+    }
+
+    public function student_create()
     {
         $machines = Machines::pluck('title', 'id');
         $materials = RawMaterials::pluck('title', 'id');
@@ -36,21 +34,12 @@ class JobRequestsController extends Controller
         foreach (User::lecturers() as $l) {
             $lecturers[$l->id] = $l->name;
         }
-//        dd($machines);
 
-        return view('backend.jobs.create', compact('machines', 'materials', 'lecturers'));
+        return view('backend.jobs.student.create', compact('machines', 'materials', 'lecturers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function student_store(Request $request)
     {
-        // dd($request);
-
         $data = request()->validate([
             'machine' => 'numeric|required',
             'material' => 'numeric|required',
@@ -65,7 +54,8 @@ class JobRequestsController extends Controller
                 $data['thumb'] = $this->uploadImage(null, $request->thumb, "jobs");
             }
             if ($request->file != null) {
-                $data['file'] = $this->uploadFile(null, $request->file, "jobs/file");
+                // TODO: Check the file upload process
+                $data['file'] = $this->uploadFile(null, $request->file, "jobs");
             }
 
             $jobReq = new JobRequests($data);
@@ -74,70 +64,62 @@ class JobRequestsController extends Controller
             $jobReq->student = $request->user()->id;
             $jobReq->save();
 
-            return redirect()->route('admin.jobs.index')->with('Success', 'A new job request was placed successfully !');
+            return redirect()->route('admin.jobs.student.index')->with('Success', 'A new job request was placed successfully !');
         } catch (\Exception $ex) {
-            dd($ex);
+            return abort(500);
+        }
+    }
 
+    public function student_show(JobRequests $jobRequests)
+    {
+        return view('backend.jobs.student.show', compact('jobRequests'));
+    }
+
+    public function student_delete(JobRequests $jobRequests)
+    {
+        return view('backend.jobs.student.delete', compact('jobRequests'));
+    }
+
+    public function student_destroy(JobRequests $jobRequests)
+    {
+        try {
+            // Delete the thumbnail form the file system
+            $this->deleteFile($jobRequests->thumbURL());
+            $this->deleteFile($jobRequests->fileURL());
+
+            $jobRequests->delete();
+            return redirect()->route('admin.jobs.student.index')->with('Success', 'Job request was deleted !');
+
+        } catch (\Exception $ex) {
             return abort(500);
         }
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function supervisor_store(Request $request)
     {
         dd($request);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function techo_store(Request $request)
+    public function officer_store(Request $request)
     {
         dd($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\JobRequests $jobRequests
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function supervisor_show(JobRequestsController $jobRequests)
     {
-        // return view('backend.jobs.supervisor.show', compact('jobRequests'));
         return view('backend.jobs.supervisor.show');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\JobRequests $jobRequests
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function techo_show(JobRequestsController $jobRequests)
     {
-        // return view('backend.jobs.supervisor.show', compact('jobRequests'));
         return view('backend.jobs.technical-officer.show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\JobRequests $jobRequests
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(JobRequests $jobRequests)
     {
-        //
+        dd($jobRequests);
     }
 
     /**
@@ -149,27 +131,18 @@ class JobRequestsController extends Controller
      */
     public function update(Request $request, JobRequests $jobRequests)
     {
-        //
+        dd($request);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\JobRequests $jobRequests
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(JobRequests $jobRequests)
-    {
-        //
-    }
 
+    // Support Functions
 
     private function deleteFile($currentURL)
     {
         if ($currentURL != null) {
-            $oldImage = public_path($currentURL);
-            if (File::exists($oldImage)) {
-                unlink($oldImage);
+            $file = public_path($currentURL);
+            if (File::exists($file)) {
+                unlink($file);
             }
         }
     }
@@ -194,11 +167,8 @@ class JobRequestsController extends Controller
     {
         // Delete the existing file
         $this->deleteFile($currentURL);
-
         $fileName = time() . '.' . $newFile->extension();
-        // $newFile->move(public_path($folder), $fileName);
-        $newFile->storeAs("uploads/" . $folder, $fileName);
-
+        $newFile->move(public_path('files/' . $folder), $fileName);
         return $fileName;
     }
 }

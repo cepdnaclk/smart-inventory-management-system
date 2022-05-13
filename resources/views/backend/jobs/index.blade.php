@@ -17,13 +17,13 @@
 
                     <ul>
                         <li>
-                            <a class="text-decoration-none" href="{{ route('admin.jobs.create') }}">
-                                Fabrication - initiate a new Job
+                            <a class="text-decoration-none" href="{{ route('admin.jobs.student.index') }}">
+                                Fabrication - Student
                             </a>
                         </li>
 
                         <li>
-                            <a class="text-decoration-none" href="{{ route('admin.jobs.techo.index') }}">
+                            <a class="text-decoration-none" href="{{ route('admin.jobs.officer.index') }}">
                                 Fabrication - Technical Officer
                             </a>
                         </li>
