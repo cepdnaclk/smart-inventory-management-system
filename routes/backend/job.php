@@ -21,7 +21,7 @@ Route::get('jobs/student/', [JobRequestsController::class, 'student_index'])
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Fabrications'), route('admin.jobs.index'))
-            ->push(__('Student'));
+            ->push(__('Requests'));
     });
 
 // Create
@@ -30,7 +30,7 @@ Route::get('jobs/student/create', [JobRequestsController::class, 'student_create
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Fabrications'), route('admin.jobs.index'))
-            ->push(__('Student'), route('admin.jobs.student.index'))
+            ->push(__('Requests'), route('admin.jobs.student.index'))
             ->push(__('Create'));
     });
 
@@ -44,8 +44,28 @@ Route::get('jobs/student/{jobRequests}/view/', [JobRequestsController::class, 's
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Fabrications'), route('admin.jobs.index'))
-            ->push(__('Student'), route('admin.jobs.student.index'))
+            ->push(__('Requests'), route('admin.jobs.student.index'))
             ->push(__('Show'));
+    });
+
+// Confirm
+Route::get('jobs/student/{jobRequests}/confirm/', [JobRequestsController::class, 'student_confirm'])
+    ->name('jobs.student.confirm')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->push(__('Home'), route('admin.dashboard'))
+            ->push(__('Fabrications'), route('admin.jobs.index'))
+            ->push(__('Requests'), route('admin.jobs.student.index'))
+            ->push(__('Confirm'));
+    });
+
+// Summary
+Route::get('jobs/student/{jobRequests}/summary/', [JobRequestsController::class, 'student_summary'])
+    ->name('jobs.student.summary')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->push(__('Home'), route('admin.dashboard'))
+            ->push(__('Fabrications'), route('admin.jobs.index'))
+            ->push(__('Requests'), route('admin.jobs.student.index'))
+            ->push(__('Summary'));
     });
 
 // Delete
@@ -54,7 +74,7 @@ Route::get('jobs/student/{jobRequests}/delete/', [JobRequestsController::class, 
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Fabrications'), route('admin.jobs.index'))
-            ->push(__('Student'), route('admin.jobs.student.index'))
+            ->push(__('Requests'), route('admin.jobs.student.index'))
             ->push(__('Delete'));
     });
 

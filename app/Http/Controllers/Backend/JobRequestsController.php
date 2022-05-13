@@ -54,18 +54,18 @@ class JobRequestsController extends Controller
                 $data['thumb'] = $this->uploadImage(null, $request->thumb, "jobs");
             }
             if ($request->file != null) {
-                // TODO: Check the file upload process
                 $data['file'] = $this->uploadFile(null, $request->file, "jobs");
             }
 
             $jobReq = new JobRequests($data);
-            $jobReq->status = 'WAITING_SUPERVISOR_APPROVAL';
+            $jobReq->status = 'PENDING';
             $jobReq->requested_time = date("Y-m-d h:i:s"); // 2022-05-12 12:17:17
             $jobReq->student = $request->user()->id;
             $jobReq->save();
 
-            return redirect()->route('admin.jobs.student.index')->with('Success', 'A new job request was placed successfully !');
+            return redirect()->route('admin.jobs.student.confirm', $jobReq);
         } catch (\Exception $ex) {
+//            dd($ex);
             return abort(500);
         }
     }
@@ -73,6 +73,34 @@ class JobRequestsController extends Controller
     public function student_show(JobRequests $jobRequests)
     {
         return view('backend.jobs.student.show', compact('jobRequests'));
+    }
+
+    public function student_confirm(JobRequests $jobRequests)
+    {
+        if($jobRequests->status == 'PENDING'){
+            return view('backend.jobs.student.confirm', compact('jobRequests'));
+        }else{
+            $id = $jobRequests->id;
+            return redirect()->route('admin.jobs.student.index')->with('Success', 'The fabrication request #'.$id.' already sent for the approval !');
+        }
+    }
+
+    public function student_summary(JobRequests $jobRequests)
+    {
+        try {
+            // Email to supervisor
+            // TODO: Implement this
+
+            // Change the status
+            $jobRequests->status = 'WAITING_SUPERVISOR_APPROVAL';
+            $jobRequests->save();
+            $id = $jobRequests->id;
+            return redirect()->route('admin.jobs.student.index')->with('Success', 'The fabrication request #'.$id.' was placed successfully !');
+
+        } catch (\Exception $ex) {
+            dd($ex);
+            return abort(500);
+        }
     }
 
     public function student_delete(JobRequests $jobRequests)

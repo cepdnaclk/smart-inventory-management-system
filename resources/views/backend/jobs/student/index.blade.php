@@ -37,6 +37,7 @@
                 <table class="table table-striped">
                     <tr>
                         <th>ID</th>
+                        <th>Status</th>
                         <th>Machine</th>
                         <th>Material</th>
                         <th>Supervisor</th>
@@ -46,7 +47,8 @@
                     @foreach($jobs as $job)
 
                         <tr>
-                            <td>{{ $job->id }}</td>
+                            <td>Job #{{ $job->id }}</td>
+                            <th>{{ \App\Models\JobRequests::job_status()[$job->status]  }}</th>
                             <td>
                                 @if($job->machine_info() != null)
                                 <a href="{{ route('admin.machines.show', $job->machine) }}" target="_blank">
@@ -66,16 +68,20 @@
                                 {{ $job->supervisor_info['name'] }}
                             @endif
                             </td>
-                            <td>
-                                <div class="d-flex px-0 mt-0 mb-0">
-                                    <div class="btn-group" role="group">
-                                        <a href="{{ route('admin.jobs.student.show', $job)}}"
-                                           class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
+
+                            <td class="d-flex justify-content-end">
+                                <div class="btn-group" role="group">
+                                    @if ($job->status == 'PENDING')
+                                        <a href="{{ route('admin.jobs.student.confirm', $job)}}"
+                                           class="btn btn-primary btn-xs"><i class="fa fa-check" title="Approal"></i>
                                         </a>
-                                        <a href="{{ route('admin.jobs.student.delete', $job)}}"
-                                           class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i>
-                                        </a>
-                                    </div>
+                                    @endif
+                                    <a href="{{ route('admin.jobs.student.show', $job)}}"
+                                       class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
+                                    </a>
+                                    <a href="{{ route('admin.jobs.student.delete', $job)}}"
+                                       class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i>
+                                    </a>
                                 </div>
                             </td>
 
