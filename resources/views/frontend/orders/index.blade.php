@@ -14,9 +14,12 @@
                 <tr>
                     <th>UserId</th>
                     <th>Ordered_Date</th>
-                  
-                   
-                    <th>Details</th>
+                    <th>Picked_date</th>
+                    <th>Due_date_to_return</th>
+                    <th>Returned_date</th>
+                    <th>OTP</th>
+                    <th>Status</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -24,10 +27,16 @@
     
 
                 <tr>
-                   
-                    <td><?=$user_id?></td>
-                    <td><?=$order_date?></td>
-                    <td></td>
+                   @foreach ($orders as $order )
+                   <td>{{$order->id}}</td>
+                   <td><{{$order->ordered_date}}</td>
+                   <td>{{$order->picked_date}}</td>
+                   <td>{{$order->due_date_to_return}}</td>
+                   <td>{{$order->returned_date}}</td>
+                   <td>{{$order->otp}}</td>
+                   <td>{{$order->status}}</td>
+                   @endforeach
+                  
                 </tr>
               
             </tbody>

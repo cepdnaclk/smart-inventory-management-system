@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
+use id;
 use index;
 use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\ComponentItem;
+use App\Domains\Auth\Models\User ;
 use App\Models\ComponentItemOrder;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -95,10 +97,11 @@ class CartController
         for ($i=0; $i < count($web['product']); $i++) { 
             $order->componentItems()->attach($web['product'][$i],array('quantity'=>$request->quantity[$i]));
         }
-        $user_id=$request->user()->id;
-        $order_date=$data['ordered_date'];
-       // $orders=Order::where('user_id',Auth::id())->get();
-    return view('frontend.orders.index',['user_id'=>$user_id,'order_date'=>$order_date]);
+    //    $user_id=$request->user()->id;
+       // $order_date=$data['ordered_date'];
+      $orders=Order::where('id',$request->user()->id)->get();
+   // return  Order::where('id',$request->user()->id)->get();;
+    return view('frontend.orders.index', compact('orders'));
      return response()->json($order,200);
     }    
 
