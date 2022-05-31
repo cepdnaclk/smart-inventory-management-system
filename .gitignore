@@ -31,5 +31,9 @@ npm-debug.log
 output.txt
 Thumbs.db
 yarn-error.log
+.idea/
+commands.txt
+composer.lock
 package-lock.json
 composer.lock
+
