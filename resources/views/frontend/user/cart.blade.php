@@ -37,12 +37,15 @@
         @endif
     </tbody>
     <tfoot>
-        <tr>
+        <tr >
+            <td> <a href="{{ route('frontend.user.products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+
             <td colspan="5" class="text-right"><h4><strong>Total Items : {{ $total }}</strong></h4></td>
+
         </tr>
         <tr>
             <td colspan="5" class="text-right">
-                <a href="{{ route('frontend.user.products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+                
                 <form action="{{route('frontend.user.place.order')}}" method="post">
                     {{ csrf_field() }}
                     @if(session('cart'))
@@ -50,8 +53,14 @@
                             <input type="hidden" name="product[]" value="{{$id}}">
                             <input type="hidden" name="quantity[]" value="{{ $details['quantity'] }}">                
                         @endforeach
-                    @endif                  
-                    <input type="submit" value="Place Order">
+                    @endif 
+                    <br> 
+                    
+                   
+                    <button class="btn btn-success" type="submit">
+                        Place Order
+                        </button>               
+                    
                 </form>
             </td>
         </tr>

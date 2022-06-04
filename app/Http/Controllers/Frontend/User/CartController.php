@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use id;
+use index;
 use Carbon\Carbon;
-use App\Http\Controllers\Controller;
-use App\Models\ComponentItem;
 use App\Models\Order;
+use Illuminate\Http\Request;
+use App\Models\ComponentItem;
+use App\Domains\Auth\Models\User ;
 use App\Models\ComponentItemOrder;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class CartController.
@@ -89,6 +92,14 @@ class CartController
         for ($i = 0; $i < count($web['product']); $i++) {
             $order->componentItems()->attach($web['product'][$i], array('quantity' => $request->quantity[$i]));
         }
-        return response()->json($order, 200);
-    }
+
+    //    $user_id=$request->user()->id;
+       // $order_date=$data['ordered_date'];
+      $orders=Order::where('id',$request->user()->id)->get();
+   // return  Order::where('id',$request->user()->id)->get();;
+    return view('frontend.orders.index', compact('orders'));
+     return response()->json($order,200);
+    }    
+
 }
+
