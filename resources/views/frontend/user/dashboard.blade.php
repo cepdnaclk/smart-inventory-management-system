@@ -14,9 +14,8 @@
                     <x-slot name="body">
                         @lang('You are logged in!')
                         <br>
-                        <br>
                         <div>
-                            <a href="{{ route('frontend.user.products') }}" class="btn btn-primary btn-block">Explore the Products</a>
+                           <a href="{{ route('frontend.user.products') }}">Create a cart</a>     
                         </div>   
                     </x-slot>
                 </x-frontend.card>

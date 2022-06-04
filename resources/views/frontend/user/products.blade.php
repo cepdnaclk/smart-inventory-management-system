@@ -11,8 +11,8 @@
             <div class="thumbnail">
                 <img src="{{ $product->image }}" alt="">
                 <div class="caption">
-                    <h6>{{ $product->title }}</h6>
-                    <h6>{{ $product->id }}</h6>
+                    <h4>{{ $product->title }}</h4>
+                    <h4>{{ $product->id }}</h4>
                     <!--p>{{ $product->description }}</p-->
                     <p class="btn-holder">
                         <a href="{{ route('frontend.user.addToCart', $product->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to cart</a> 
