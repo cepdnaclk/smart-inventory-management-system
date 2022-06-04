@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 namespace App\Http\Controllers\Frontend\User;
 
@@ -12,10 +12,11 @@ use App\Domains\Auth\Models\User ;
 use App\Models\ComponentItemOrder;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
 /**
  * Class CartController.
  */
-class CartController 
+class CartController
 {
     /**
      * Write code on Method
@@ -27,7 +28,7 @@ class CartController
     {
         $componentItem = ComponentItem::all();
         return view('frontend.user.products', compact('componentItem'));
-    }    
+    }
 
     public function cart()
     {
@@ -39,19 +40,16 @@ class CartController
         $componentItem = ComponentItem::findOrFail($id);
         $cart = session()->get('cart', []);
 
-        if(isset($cart[$id])) 
-        {
+        if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
-        } 
-        else 
-        {
+        } else {
             $cart[$id] = [
                 "name" => $componentItem->title,
-                "quantity" => 1,  
-                "code" => $componentItem->id,              
+                "quantity" => 1,
+                "code" => $componentItem->id,
                 "image" => $componentItem->image
             ];
-        }          
+        }
 
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
@@ -59,8 +57,7 @@ class CartController
 
     public function update(Request $request)
     {
-        if($request->id && $request->quantity)
-        {
+        if ($request->id && $request->quantity) {
             $cart = session()->get('cart');
             $cart[$request->id]["quantity"] = $request->quantity;
             session()->put('cart', $cart);
@@ -70,16 +67,14 @@ class CartController
 
     public function remove(Request $request)
     {
-        if($request->id)
-        {
+        if ($request->id) {
             $cart = session()->get('cart');
-            if(isset($cart[$request->id]))
-            {
+            if (isset($cart[$request->id])) {
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
             session()->flash('success', 'Product removed successfully');
-        }   
+        }
     }
 
     public function placeOrder(Request $request)
@@ -94,9 +89,10 @@ class CartController
         $order = new Order($data);
         $order->save();
 
-        for ($i=0; $i < count($web['product']); $i++) { 
-            $order->componentItems()->attach($web['product'][$i],array('quantity'=>$request->quantity[$i]));
+        for ($i = 0; $i < count($web['product']); $i++) {
+            $order->componentItems()->attach($web['product'][$i], array('quantity' => $request->quantity[$i]));
         }
+
     //    $user_id=$request->user()->id;
        // $order_date=$data['ordered_date'];
       $orders=Order::where('id',$request->user()->id)->get();
@@ -106,3 +102,4 @@ class CartController
     }    
 
 }
+
