@@ -38,6 +38,10 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
     Route::patch('update-cart', [CartController::class, 'update'])->name('update.cart');
     Route::post('place-order', [CartController::class, 'placeOrder'])->name('place.order');
     Route::get('my-order',[UserController::class,'index'])->name('placbe.order');
+    Route::get('show-my-order',[CartController::class,'showMyOrders'])->name('show.order')  ->breadcrumbs(function (Trail $trail) {
+        $trail->parent('frontend.index')
+            ->push(__('My Order'), route('frontend.user.account'));
+    });
              
     
 });
