@@ -105,7 +105,6 @@
                 GitHub</a>
             <a href="/components">Components</a>
             <a href="/equipment">Equipment</a>
-
         </div><!--links-->
     </div><!--content-->
 </div><!--app-->
