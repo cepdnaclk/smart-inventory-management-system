@@ -13,26 +13,26 @@ class ComponentItemController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $items = ComponentItem::all();
         try {
-            return response()->json($items,200);
+            return response()->json($items, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
-    
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -68,51 +68,45 @@ class ComponentItemController extends Controller
             $type->isElectrical = ($request->isElectrical != null);
 
             $type->save();
-            return response()->json($type,200);
+            return response()->json($type, 200);
 
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        try 
-        {
+        try {
             $item = ComponentItem::find($id);
-            if($item!=null)
-            {
-                return response()->json($item,200);
+            if ($item != null) {
+                return response()->json($item, 200);
+            } else {
+                return response()->json(["message" => "Item not found!"], 404);
             }
-            else
-            {
-                return response()->json(["message"=>"Item not found!"],404);
-            }
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
-        
+
     }
 
-   
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -138,12 +132,12 @@ class ComponentItemController extends Controller
 
         try {
             $componentItem = ComponentItem::find($id);
-            if($componentItem==null){
-                return response()->json(["message"=>"Item not found!"],404);
+            if ($componentItem == null) {
+                return response()->json(["message" => "Item not found!"], 404);
             }
 
             if ($request->thumb != null) {
-                
+
                 $data['thumb'] = $this->uploadThumb($componentItem->thumbURL(), $request->thumb, "component_items");
             }
 
@@ -153,40 +147,40 @@ class ComponentItemController extends Controller
 
             $componentItem->update($data);
 
-            return response()->json($componentItem,200);
+            return response()->json($componentItem, 200);
 
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         try {
             $componentItem = ComponentItem::find($id);
-            if($componentItem==null){
+            if ($componentItem == null) {
                 return response()->json([
-                    "message"=>"Item is not found"
-                ],404);
+                    "message" => "Item is not found"
+                ], 404);
             }
             // Delete the thumbnail form the file system
             $this->deleteThumb($componentItem->thumbURL());
 
             $componentItem->delete();
-            return response()->json($componentItem,200);
+            return response()->json($componentItem, 200);
 
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
@@ -213,10 +207,12 @@ class ComponentItemController extends Controller
 
         return $imageName;
     }
-    public function search(Request $request){
+
+    public function search(Request $request)
+    {
         // Get the search value from the request
         $term = $request->query('term');
-    
+
         // search in the title and body columns from the posts table
         $items = ComponentItem::query()
             ->where('title', 'LIKE', "%{$term}%")
@@ -224,8 +220,8 @@ class ComponentItemController extends Controller
             ->orWhere('brand', 'LIKE', "%{$term}%")
             ->orWhere('specifications', 'LIKE', "%{$term}%")
             ->get();
-    
-        // Return the search view with the resluts compacted
+
+        // Return the search view with the results compacted
         return $items;
     }
 }
