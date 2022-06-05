@@ -5,6 +5,7 @@
 /public/fonts
 /public/hot
 /public/storage
+/public/img
 /public/mix-manifest.json
 /storage/*.key
 /vendor
@@ -30,5 +31,9 @@ npm-debug.log
 output.txt
 Thumbs.db
 yarn-error.log
+.idea/
+commands.txt
+composer.lock
 package-lock.json
 composer.lock
+
