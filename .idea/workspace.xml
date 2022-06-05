@@ -21,10 +21,24 @@
   <component name="ChangeListManager">
     <list default="true" id="ef0aa575-db56-40a8-9e0c-6c7cab003ff2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.example " beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ComponentItemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ComponentItemController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ComponentTypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ComponentTypeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/EquipmentItemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/EquipmentItemController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/EquipmentTypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/EquipmentTypeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/OrderFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/OrderFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_08_28_190230_create_component_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_08_28_190230_create_component_items_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_09_20_202557_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_09_20_202557_create_orders_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_09_22_210808_create_component_item_order_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_09_22_210808_create_component_item_order_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Api/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Api/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Api/components.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Api/components.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Api/equipments.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Api/equipments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Api/order.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Api/order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/Api/search.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/Api/search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/frontend/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/frontend/user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthContollerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +247,15 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
   </component>
-  <component name="RunManager" selected="PHPUnit.ComponentItemTest">
+  <component name="RunManager" selected="PHPUnit.AuthControllerTest">
+    <configuration name="AuthControllerTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\Api\Auth\AuthControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="AuthControllerTest.test_show_validation_error_when_both_fields_empty" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\Api\Auth\AuthControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" method="test_show_validation_error_when_both_fields_empty" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="ComponentItemTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\Backend\Component\ComponentItemTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Backend/Component/ComponentItemTest.php" scope="Class" />
       <method v="2" />
@@ -244,6 +266,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PHPUnit.AuthControllerTest" />
+        <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_when_both_fields_empty" />
         <item itemvalue="PHPUnit.ComponentItemTest" />
       </list>
     </recent_temporary>
@@ -259,7 +283,7 @@
       <option name="presentableId" value="Default" />
       <updated>1654404784172</updated>
       <workItem from="1654404786140" duration="1208000" />
-      <workItem from="1654406035715" duration="2163000" />
+      <workItem from="1654406035715" duration="3663000" />
     </task>
     <servers />
   </component>
@@ -291,21 +315,29 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408285259" />
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1654408178097">
+    <state x="238" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1654409615846">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1654408178097">
+    <state x="238" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654409615846" />
+    <state width="1323" height="258" key="GridCell.Tab.0.bottom" timestamp="1654409696568">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1654408178097">
+    <state width="1323" height="258" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654409696568" />
+    <state width="1323" height="258" key="GridCell.Tab.0.center" timestamp="1654409696568">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1654408178097">
+    <state width="1323" height="258" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654409696568" />
+    <state width="1323" height="258" key="GridCell.Tab.0.left" timestamp="1654409696567">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
+    <state width="1323" height="258" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654409696567" />
+    <state width="1323" height="258" key="GridCell.Tab.0.right" timestamp="1654409696568">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="258" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654409696568" />
+    <state x="291" y="87" key="NewPhpClassDialog" timestamp="1654409759205">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="291" y="87" key="NewPhpClassDialog/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654409759205" />
   </component>
 </project>

@@ -24,7 +24,6 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            
             'ordered_date' =>  $this->faker->date(),
             'picked_date'=>NULL,
             'due_date_to_return' => $this->faker->date(),

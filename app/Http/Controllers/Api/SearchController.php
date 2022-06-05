@@ -14,7 +14,7 @@ class SearchController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return array
      * 
      */
     public function search(Request $request){
@@ -31,7 +31,7 @@ class SearchController extends Controller
                               ["Equipment Items"=>$eitems],
                               ["Equipment Types"=>$etypes]);
     
-        // Return the search view with the resluts compacted
+        // Return the search view with the results compacted
         return $result;
     }
     
