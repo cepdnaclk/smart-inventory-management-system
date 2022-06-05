@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\OrderController as ApiOrderController;
 
 Route::group(['prefix' => 'auth'], function () {
     Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
-        Route::get('/', [AuthController::class, 'getAuthenticatedUser']);
+        Route::get('/', [AuthController::class, 'getAuthenticatedUser'])->name('auth.user');
         Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/orders/{orderId}', [OrderController::class, 'show']);
         Route::get('/orders/{orderId}/otp', [OrderController::class, 'requestOtp']);
