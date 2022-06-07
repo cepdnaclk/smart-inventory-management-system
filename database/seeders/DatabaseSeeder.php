@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ComponentTypeSeeder::class);
         $this->call(ComponentItemSeeder::class);
         $this->call(ConsumableTypeSeeder::class);
+        $this->call(ConsumableItemSeeder::class);
 
         Model::reguard();
     }
