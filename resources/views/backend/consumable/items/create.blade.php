@@ -3,7 +3,7 @@
 @section('title', __('Consumable'))
 
 @section('breadcrumb-links')
-    @include('backend.Consumable.includes.breadcrumb-links')
+    @include('backend.consumable.includes.breadcrumb-links')
 @endsection
 
 @section('content')
