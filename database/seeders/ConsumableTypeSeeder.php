@@ -37,9 +37,8 @@ class ConsumableTypeSeeder extends Seeder
         array('id' => '37', 'parent_id' => NULL, 'code' => '', 'title' => 'Switches', 'subtitle' => '', 'description' => 'Various kinds of switches', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-07-04 15:20:56', 'updated_at' => '2021-07-04 15:21:03'),
         array('id' => '38', 'parent_id' => NULL, 'code' => '', 'title' => 'Ports', 'subtitle' => '', 'description' => 'USB ports etc..', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-07-04 15:20:56', 'updated_at' => '2021-07-04 15:21:03'),
         array('id' => '39', 'parent_id' => NULL, 'code' => '', 'title' => 'Trimmer Potentiometers', 'subtitle' => '', 'description' => 'Variable resistors / voltage dividers', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-07-04 15:20:56', 'updated_at' => '2021-07-04 15:21:03'),
-        array('id' => '40', 'parent_id' => NULL, 'code' => '', 'title' => 'Trimmer Potentiometers', 'subtitle' => '', 'description' => 'Variable resistors / voltage dividers', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-07-04 15:20:56', 'updated_at' => '2021-07-04 15:21:03'),
-        array('id' => '41', 'parent_id' => NULL, 'code' => '', 'title' => 'PCB Terminal', 'subtitle' => '', 'description' => 'Used to connect wires to dot board', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-07-04 15:20:56', 'updated_at' => '2021-07-04 15:21:03'),
-        array('id' => '42', 'parent_id' => NULL, 'code' => '', 'title' => 'Screw connectors', 'subtitle' => '', 'description' => 'Used to connect 2 or more wires together', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-07-04 15:20:56', 'updated_at' => '2021-07-04 15:21:03'),
+        array('id' => '40', 'parent_id' => NULL, 'code' => '', 'title' => 'PCB Terminal', 'subtitle' => '', 'description' => 'Used to connect wires to dot board', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-07-04 15:20:56', 'updated_at' => '2021-07-04 15:21:03'),
+        array('id' => '41', 'parent_id' => NULL, 'code' => '', 'title' => 'Screw connectors', 'subtitle' => '', 'description' => 'Used to connect 2 or more wires together', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-07-04 15:20:56', 'updated_at' => '2021-07-04 15:21:03'),
     ];
 
     /**

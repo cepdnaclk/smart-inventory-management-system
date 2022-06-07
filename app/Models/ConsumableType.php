@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ConsumableType extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     // A  Unique ID assigned by the inventory management system
+
     /**
      * @var mixed
      */
@@ -18,7 +20,7 @@ class ConsumableType extends Model
     public function inventoryCode()
     {
         // TODO: Make a common standard for this
-        return "MS/EQ/" . $this->id;
+        return "MS/CS/" . $this->id;
     }
 
     // Return the relative URL of the thumbnail
