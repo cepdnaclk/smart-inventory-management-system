@@ -26,7 +26,7 @@ class ConsumableItemFactory extends Factory
             'datasheetURL' => $this->faker->title(),
             'price' => rand(100, 1000),
             'thumb' => NULL,
-            'component_type_id' => $this->faker->randomElement(['11', '30'])
+            'consumable_type_id' => $this->faker->randomElement(['11', '30'])
         ];
     }
 }
