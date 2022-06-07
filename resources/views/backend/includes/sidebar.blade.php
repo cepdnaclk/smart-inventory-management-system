@@ -128,7 +128,7 @@
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.component.items.index')"
+                            :href="route('admin.consumable.items.index')"
                             class="c-sidebar-nav-link"
                             :text="__('Items')"></x-utils.link>
                 </li>
