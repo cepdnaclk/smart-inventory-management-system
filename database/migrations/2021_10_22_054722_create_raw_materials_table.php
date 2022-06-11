@@ -23,7 +23,7 @@ class CreateRawMaterialsTable extends Migration
             $table->float("quantity")->nullable();  // in units
             $table->string("unit")->nullable();
             $table->string('thumb')->nullable();
-            $table->enum('availability', ['AVAILABLE', 'NOT_AVAILABLE', 'CONDITIONALLY_AVAILABLE']);
+            $table->enum('availability', array_keys(\App\Models\RawMaterials::availabilityOptions()));
             $table->text("notes")->nullable();
             $table->timestamps();
         });

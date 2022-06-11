@@ -86,9 +86,8 @@ Route::delete('jobs/student/{jobRequests}/', [JobRequestsController::class, 'stu
 // Supervisor Routes ----------------------------------------------------------------------------
 
 // Index
-Route::get('/jobs/supervisor', function () {
-    return view('backend.jobs.supervisor.index');
-})->name('jobs.supervisor.index')
+Route::get('/jobs/supervisor',  [JobRequestsController::class, 'supervisor_index'])
+    ->name('jobs.supervisor.index')
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Fabrications'), route('admin.jobs.index'))
@@ -119,9 +118,8 @@ Route::post('/jobs/supervisor/{jobRequests}/revise/', [JobRequestsController::cl
 // Technical Officer Routes ----------------------------------------------------------------------------
 
 // Index
-Route::get('/jobs/officer', function () {
-    return view('backend.jobs.officer.index');
-})->name('jobs.officer.index')
+Route::get('/jobs/officer', [JobRequestsController::class, 'techOfficer_index'])
+    ->name('jobs.officer.index')
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Fabrications'), route('admin.jobs.index'))

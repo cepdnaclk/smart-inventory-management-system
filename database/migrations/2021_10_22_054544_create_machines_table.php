@@ -17,7 +17,7 @@ class CreateMachinesTable extends Migration
             $table->id();
             $table->char("code", 8)->default('');
             $table->string("title");
-            $table->enum('type', ['CNC', 'FDM_3D_PRINTER', 'LASER_CUTTER', 'PCB_MILL']);
+            $table->enum('type', array_keys(\App\Models\Machines::types()));
 
             $table->float("build_width")->nullable();  // in mm
             $table->float("build_length")->nullable();  // in mm
@@ -27,7 +27,7 @@ class CreateMachinesTable extends Migration
             $table->string('thumb')->nullable();
 
             $table->text("specifications")->nullable();
-            $table->enum('status', ['AVAILABLE', 'NOT_AVAILABLE', 'CONDITIONALLY_AVAILABLE']);
+            $table->enum('status', array_keys(\App\Models\Machines::availabilityOptions()));
             $table->text("notes")->nullable();
             $table->float("lifespan")->default(0);  // in minutes
             $table->timestamps();

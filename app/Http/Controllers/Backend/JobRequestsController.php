@@ -21,7 +21,7 @@ class JobRequestsController extends Controller
 
     public function student_index()
     {
-        $jobs = JobRequests:: paginate(16);
+        $jobs = JobRequests::paginate(16);
         return view('backend.jobs.student.index', compact('jobs'));
     }
 
@@ -77,11 +77,11 @@ class JobRequestsController extends Controller
 
     public function student_confirm(JobRequests $jobRequests)
     {
-        if($jobRequests->status == 'PENDING'){
+        if ($jobRequests->status == 'PENDING') {
             return view('backend.jobs.student.confirm', compact('jobRequests'));
-        }else{
+        } else {
             $id = $jobRequests->id;
-            return redirect()->route('admin.jobs.student.index')->with('Success', 'The fabrication request #'.$id.' already sent for the approval !');
+            return redirect()->route('admin.jobs.student.index')->with('Success', 'The fabrication request #' . $id . ' already sent for the approval !');
         }
     }
 
@@ -95,7 +95,7 @@ class JobRequestsController extends Controller
             $jobRequests->status = 'WAITING_SUPERVISOR_APPROVAL';
             $jobRequests->save();
             $id = $jobRequests->id;
-            return redirect()->route('admin.jobs.student.index')->with('Success', 'The fabrication request #'.$id.' was placed successfully !');
+            return redirect()->route('admin.jobs.student.index')->with('Success', 'The fabrication request #' . $id . ' was placed successfully !');
 
         } catch (\Exception $ex) {
             dd($ex);
@@ -123,6 +123,11 @@ class JobRequestsController extends Controller
         }
     }
 
+    public function supervisor_index()
+    {
+        $jobs = JobRequests::where('supervisor', \Auth::user()->id)->get();
+        return view('backend.jobs.supervisor.index', compact('jobs'));
+    }
 
     public function supervisor_store(Request $request)
     {
@@ -139,32 +144,22 @@ class JobRequestsController extends Controller
         return view('backend.jobs.supervisor.show');
     }
 
-    public function techo_show(JobRequestsController $jobRequests)
+
+    public function techOfficer_index()
+    {
+        $jobs = JobRequests::jobsForTechOfficer();
+        return view('backend.jobs.technical-officer.index', compact('jobs'));
+    }
+
+
+    public function techOfficer_show(JobRequestsController $jobRequests)
     {
         return view('backend.jobs.technical-officer.show');
     }
 
 
-    public function edit(JobRequests $jobRequests)
-    {
-        dd($jobRequests);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\JobRequests $jobRequests
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, JobRequests $jobRequests)
-    {
-        dd($request);
-    }
-
 
     // Support Functions
-
     private function deleteFile($currentURL)
     {
         if ($currentURL != null) {
