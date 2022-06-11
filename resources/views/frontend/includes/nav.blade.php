@@ -65,7 +65,7 @@
                         </x-utils.link>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            @if ($logged_in_user->isAdmin())
+                            @if ($logged_in_user->isAdmin() || $logged_in_user->isLecturer() || $logged_in_user->isTechnicalOfficer() || $logged_in_user->isMaintainer() )
                                 <x-utils.link
                                         :href="route('admin.dashboard')"
                                         :text="__('Admin Dashboard')"

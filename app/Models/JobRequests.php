@@ -19,7 +19,7 @@ class JobRequests extends Model
             'PENDING' => 'Pending',
             'WAITING_SUPERVISOR_APPROVAL' => 'Waiting for Supervisor Approval',
             'WAITING_TO_APPROVAL' => 'Waiting for Approval',
-            'ON_REVISION' => 'On Revision',
+            // 'ON_REVISION' => 'On Revision',
             'PENDING_FABRICATION' => 'Pending Fabrication',
             'COMPLETED' => 'Completed'
         ];
@@ -44,6 +44,19 @@ class JobRequests extends Model
         return null;
     }
 
+    public static function jobsForTechOfficer()
+    {
+        // Waiting for approval
+        $jobs_approval = JobRequests::where('status', 'WAITING_TO_APPROVAL')->get();
+
+        // Pending fabrication
+        $jobs_pending = JobRequests::where('status', 'PENDING_FABRICATION')->get();
+
+        // Completed
+        // $jobs_completed = JobRequests::where('status', 'COMPLETED')->get();
+
+        return $jobs_approval->merge($jobs_pending);
+    }
 
     // Return the relative URL of the thumbnail
     public function thumbURL()

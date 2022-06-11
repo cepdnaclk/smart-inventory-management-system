@@ -39,9 +39,7 @@ class CreateJobRequestsTable extends Migration
                 ->references('id')
                 ->on('raw_materials');
 
-            $table->enum("status",
-                ['PENDING', 'WAITING_SUPERVISOR_APPROVAL', 'WAITING_TO_APPROVAL', 'ON_REVISION',
-                    'PENDING_FABRICATION', 'COMPLETED']);
+            $table->enum("status", \App\Models\JobRequests::job_status());
 
             $table->string('file'); // zip file
             $table->string('thumb')->nullable(); // preview file

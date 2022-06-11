@@ -123,21 +123,28 @@
                     href="#"
                     icon="c-sidebar-nav-icon cil-list"
                     class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Job Requests')"></x-utils.link>
+                    :text="__('Fabrication Requests')"></x-utils.link>
 
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
+                            :href="route('admin.jobs.student.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Fabrication - Student')"></x-utils.link>
+                </li>
+
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
                             :href="route('admin.jobs.supervisor.index')"
                             class="c-sidebar-nav-link"
-                            :text="__('Jobs - Supervisor')"></x-utils.link>
+                            :text="__('Fabrication - Supervisor')"></x-utils.link>
                 </li>
 
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
                             :href="route('admin.jobs.officer.index')"
                             class="c-sidebar-nav-link"
-                            :text="__('Jobs - Technical Officer')"></x-utils.link>
+                            :text="__('Fabrication - Technical Officer')"></x-utils.link>
                 </li>
 
                 <li class="c-sidebar-nav-item">
