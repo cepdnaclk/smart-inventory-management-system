@@ -26,6 +26,8 @@
                                     <option value="{{ $model::TYPE_USER }}" {{ $user->type === $model::TYPE_USER ? 'selected' : '' }}>@lang('User')</option>
                                     <option value="{{ $model::TYPE_ADMIN }}" {{ $user->type === $model::TYPE_ADMIN ? 'selected' : '' }}>@lang('Administrator')</option>
                                     <option value="{{ $model::TYPE_LECTURER }}" {{ $user->type === $model::TYPE_LECTURER ? 'selected' : '' }}>@lang('Lecturer')</option>
+                                    <option value="{{ $model::TYPE_TECH_OFFICER }}" {{ $user->type === $model::TYPE_TECH_OFFICER ? 'selected' : '' }}>@lang('TechOfficer')</option>
+                                    <option value="{{ $model::TYPE_MAINTAINER }}" {{ $user->type === $model::TYPE_MAINTAINER ? 'selected' : '' }}>@lang('Maintainer')</option>
                                 </select>
                             </div>
                         </div><!--form-group-->

@@ -43,8 +43,26 @@ class UserSeeder extends Seeder
             $lecturer = User::create([
                 'type' => User::TYPE_LECTURER,
                 'name' => 'Lecturer User',
-                'email' => 'lecturer@example.com',
-                'password' => 'lecturer_user',
+                'email' => env('SEED_LECTURER_EMAIL', 'lecturer@example.com'),
+                'password' => env('SEED_LECTURER_PASSWORD', 'lecturer_user'),
+                'email_verified_at' => now(),
+                'active' => true,
+            ]);
+
+            $techOfficer = User::create([
+                'type' => User::TYPE_TECH_OFFICER,
+                'name' => 'Technical Officer User',
+                'email' => env('SEED_TECH_OFFICER_EMAIL', 'techofficer@example.com'),
+                'password' => env('SEED_TECH_OFFICER_PASSWORD', 'tech_officer_user'),
+                'email_verified_at' => now(),
+                'active' => true,
+            ]);
+
+            $maintainer = User::create([
+                'type' => User::TYPE_MAINTAINER,
+                'name' => 'Maintainer User',
+                'email' => env('SEED_MAINTAINER_EMAIL', 'maintainer@example.com'),
+                'password' => env('SEED_MAINTAINER_PASSWORD', 'maintainer_user'),
                 'email_verified_at' => now(),
                 'active' => true,
             ]);

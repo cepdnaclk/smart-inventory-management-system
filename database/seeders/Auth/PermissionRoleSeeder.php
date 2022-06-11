@@ -35,6 +35,18 @@ class PermissionRoleSeeder extends Seeder
             'name' => 'Lecturer',
         ]);
 
+        $techOfficer = Role::create([
+            'id' => 3,
+            'type' => User::TYPE_TECH_OFFICER,
+            'name' => 'Technical Officer',
+        ]);
+
+        $maintainer = Role::create([
+            'id' => 4,
+            'type' => User::TYPE_MAINTAINER,
+            'name' => 'Maintainer',
+        ]);
+
         // Non Grouped Permissions
         //
 
@@ -45,7 +57,6 @@ class PermissionRoleSeeder extends Seeder
             'name' => 'admin.access.user',
             'description' => 'All User Permissions',
         ]);
-
         $users->children()->saveMany([
             new Permission([
                 'type' => User::TYPE_ADMIN,
@@ -89,19 +100,39 @@ class PermissionRoleSeeder extends Seeder
             'name' => 'lecturer.access',
             'description' => 'All Lecturer Permissions',
         ]);
-
         $lecturers->children()->saveMany([
             new Permission([
                 'type' => User::TYPE_LECTURER,
-                'name' => 'lecturer.access.jobs.all',
+                'name' => 'lecturer.access.all',
                 'description' => 'Access All',
-            ]),
-            new Permission([
-                'type' => User::TYPE_LECTURER,
-                'name' => 'lecturer.access.jobs.test',
-                'description' => 'Test',
             ])
         ]);
+
+        $techOfficers = Permission::create([
+            'type' => User::TYPE_TECH_OFFICER,
+            'name' => 'techOfficer.access',
+            'description' => 'All Technical Officer Permissions',
+        ]);
+        // $techOfficers->children()->saveMany([
+        //     new Permission([
+        //         'type' => User::TYPE_TECH_OFFICER,
+        //         'name' => 'techofficer.access.all',
+        //         'description' => 'Access All',
+        //     ])
+        // ]);
+
+        $maintainers = Permission::create([
+            'type' => User::TYPE_MAINTAINER,
+            'name' => 'maintainer.access',
+            'description' => 'All Maintainer Permissions',
+        ]);
+        // $maintainer->children()->saveMany([
+        //     new Permission([
+        //         'type' => User::TYPE_MAINTAINER,
+        //         'name' => 'maintainer.access.all',
+        //         'description' => 'Access All',
+        //     ])
+        // ]);
 
 
         // Assign Permissions to other Roles

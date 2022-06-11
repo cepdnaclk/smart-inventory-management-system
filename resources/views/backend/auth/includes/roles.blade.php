@@ -13,5 +13,13 @@
         <div x-show="userType === '{{ $model::TYPE_LECTURER }}'">
             @include('backend.auth.includes.partials.role-type', ['type' => $model::TYPE_LECTURER])
         </div>
+
+        <div x-show="userType === '{{ $model::TYPE_TECH_OFFICER }}'">
+            @include('backend.auth.includes.partials.role-type', ['type' => $model::TYPE_TECH_OFFICER])
+        </div>
+
+        <div x-show="userType === '{{ $model::TYPE_MAINTAINER }}'">
+            @include('backend.auth.includes.partials.role-type', ['type' => $model::TYPE_MAINTAINER])
+        </div>
     </div>
 </div><!--form-group-->

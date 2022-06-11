@@ -19,7 +19,7 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['permissions'], function (Blueprint $table) use ($tableNames) {
             $table->bigIncrements('id');
-            $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER, User::TYPE_LECTURER]);
+            $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER, User::TYPE_LECTURER, User::TYPE_TECH_OFFICER, User::TYPE_MAINTAINER]);
             $table->string('guard_name');
             $table->string('name');
             $table->string('description')->nullable();
@@ -35,7 +35,7 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER, User::TYPE_LECTURER]);
+            $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER, User::TYPE_LECTURER, User::TYPE_TECH_OFFICER, User::TYPE_MAINTAINER]);
             $table->string('name');
             $table->string('guard_name');
             $table->timestamps();
@@ -54,7 +54,7 @@ class CreatePermissionTables extends Migration
                 ->onDelete('cascade');
 
             $table->primary(['permission_id', $columnNames['model_morph_key'], 'model_type'],
-                    'model_has_permissions_permission_model_type_primary');
+                'model_has_permissions_permission_model_type_primary');
         });
 
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames) {
@@ -70,7 +70,7 @@ class CreatePermissionTables extends Migration
                 ->onDelete('cascade');
 
             $table->primary(['role_id', $columnNames['model_morph_key'], 'model_type'],
-                    'model_has_roles_role_model_type_primary');
+                'model_has_roles_role_model_type_primary');
         });
 
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {

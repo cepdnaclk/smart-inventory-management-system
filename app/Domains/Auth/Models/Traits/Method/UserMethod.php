@@ -39,6 +39,20 @@ trait UserMethod
     {
         return $this->type === self::TYPE_LECTURER;
     }
+    /**
+     * @return mixed
+     */
+    public function isTechOfficer(): bool
+    {
+        return $this->type === self::TYPE_TECH_OFFICER;
+    }
+    /**
+     * @return mixed
+     */
+    public function isMaintainer(): bool
+    {
+        return $this->type === self::TYPE_MAINTAINER;
+    }
 
     /**
      * @return mixed

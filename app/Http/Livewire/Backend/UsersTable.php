@@ -75,6 +75,9 @@ class UsersTable extends DataTableComponent
                     '' => 'Any',
                     User::TYPE_ADMIN => 'Administrators',
                     User::TYPE_USER => 'Users',
+                    User::TYPE_LECTURER => 'Lecturers',
+                    User::TYPE_TECH_OFFICER => 'Technical Officers',
+                    User::TYPE_MAINTAINER => 'Maintainers',
                 ]),
             'active' => Filter::make('Active')
                 ->select([
@@ -97,8 +100,8 @@ class UsersTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('Type'))->sortable(),
             Column::make(__('Name'))->sortable(),
+            Column::make(__('Type'))->sortable(),
             Column::make(__('E-mail'), 'email')->sortable(),
             Column::make(__('Verified'), 'email_verified_at')->sortable(),
             // Column::make(__('2FA'), 'two_factor_auth_count')->sortable(),
