@@ -25,6 +25,8 @@
                                 <option value="{{ $model::TYPE_USER }}">@lang('User')</option>
                                 <option value="{{ $model::TYPE_ADMIN }}">@lang('Administrator')</option>
                                 <option value="{{ $model::TYPE_LECTURER }}">@lang('Lecturer')</option>
+                                <option value="{{ $model::TYPE_TECH_OFFICER }}">@lang('Technical Officer')</option>
+                                <option value="{{ $model::TYPE_MAINTAINER }}">@lang('Maintainer')</option>
                             </select>
                         </div>
                     </div><!--form-group-->

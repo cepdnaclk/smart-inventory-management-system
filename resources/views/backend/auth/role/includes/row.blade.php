@@ -5,6 +5,10 @@
         {{ __('User') }}
     @elseif ($row->type === \App\Domains\Auth\Models\User::TYPE_LECTURER)
         {{ __('Lecturer') }}
+    @elseif ($row->type === \App\Domains\Auth\Models\User::TYPE_TECH_OFFICER)
+        {{ __('Technical Officer') }}
+    @elseif ($row->type === \App\Domains\Auth\Models\User::TYPE_MAINTAINER)
+        {{ __('Maintainer') }}
     @else
         N/A
     @endif
