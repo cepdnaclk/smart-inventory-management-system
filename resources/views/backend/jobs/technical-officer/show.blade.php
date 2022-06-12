@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment'))
+@section('title', __('Job Requests - Technical Officer View'))
 
 @section('breadcrumb-links')
     @include('backend.equipment.includes.breadcrumb-links')

@@ -84,60 +84,63 @@ Route::delete('jobs/student/{jobRequests}/', [JobRequestsController::class, 'stu
 
 
 // Supervisor Routes ----------------------------------------------------------------------------
+Route::middleware(['role:Administrator|Lecturer'])->group(function () {
+    // Index.
+    Route::get('/jobs/supervisor', [JobRequestsController::class, 'supervisor_index'])
+        ->name('jobs.supervisor.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Fabrications'), route('admin.jobs.index'))
+                ->push(__('Supervisor'), route('admin.jobs.supervisor.index'));;
+        });
 
-// Index
-Route::get('/jobs/supervisor',  [JobRequestsController::class, 'supervisor_index'])
-    ->name('jobs.supervisor.index')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('admin.dashboard'))
-            ->push(__('Fabrications'), route('admin.jobs.index'))
-            ->push(__('Supervisor'), route('admin.jobs.supervisor.index'));;
-    });
+    // Show
+    Route::get('/jobs/supervisor/{jobRequests}/view/', [JobRequestsController::class, 'supervisor_show'])
+        ->name('jobs.supervisor.show')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Fabrications'), route('admin.jobs.index'))
+                ->push(__('Supervisor'), route('admin.jobs.supervisor.index'))
+                ->push(__('Show'));
+        });
 
-// Show
-Route::get('/jobs/supervisor/{jobRequests}/view/', [JobRequestsController::class, 'supervisor_show'])
-    ->name('jobs.supervisor.show')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('admin.dashboard'))
-            ->push(__('Fabrications'), route('admin.jobs.index'))
-            ->push(__('Supervisor'), route('admin.jobs.supervisor.index'))
-            ->push(__('Show'));
-    });
+    // Store the different types of updates
+    Route::post('/jobs/supervisor/{jobRequests}/approve/', [JobRequestsController::class, 'supervisor_approve'])
+        ->name('jobs.supervisor.approve');
 
-// Store the different types of updates
-Route::post('/jobs/supervisor/{jobRequests}/approve/', [JobRequestsController::class, 'supervisor_approve'])
-    ->name('jobs.supervisor.approve');
+    Route::post('/jobs/supervisor/{jobRequests}/reject/', [JobRequestsController::class, 'supervisor_reject'])
+        ->name('jobs.supervisor.reject');
 
-Route::post('/jobs/supervisor/{jobRequests}/reject/', [JobRequestsController::class, 'supervisor_reject'])
-    ->name('jobs.supervisor.reject');
-
-Route::post('/jobs/supervisor/{jobRequests}/revise/', [JobRequestsController::class, 'supervisor_revise'])
-    ->name('jobs.supervisor.revise');
-
+    Route::post('/jobs/supervisor/{jobRequests}/revise/', [JobRequestsController::class, 'supervisor_revise'])
+        ->name('jobs.supervisor.revise');
+});
 
 // Technical Officer Routes ----------------------------------------------------------------------------
 
-// Index
-Route::get('/jobs/officer', [JobRequestsController::class, 'techOfficer_index'])
-    ->name('jobs.officer.index')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('admin.dashboard'))
-            ->push(__('Fabrications'), route('admin.jobs.index'))
-            ->push(__('Technical Officer'), route('admin.jobs.officer.index'));;
-    });
+Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
+    // Index
+    Route::get('/jobs/officer', [JobRequestsController::class, 'techOfficer_index'])
+        ->name('jobs.officer.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Fabrications'), route('admin.jobs.index'))
+                ->push(__('Technical Officer'), route('admin.jobs.officer.index'));;
+        });
 
-// Show
-Route::get('/jobs/officer/{jobRequests}/view', [JobRequestsController::class, 'officer_show'])
-    ->name('jobs.officer.show')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('admin.dashboard'))
-            ->push(__('Fabrications'), route('admin.jobs.index'))
-            ->push(__('Technical Officer'), route('admin.jobs.officer.index'))
-            ->push(__('Show'));
-    });
+    // Show
+    Route::get('/jobs/officer/{jobRequests}/view', [JobRequestsController::class, 'officer_show'])
+        ->name('jobs.officer.show')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Fabrications'), route('admin.jobs.index'))
+                ->push(__('Technical Officer'), route('admin.jobs.officer.index'))
+                ->push(__('Show'));
+        });
 
-// Store
-Route::post('/jobs/officer/', [JobRequestsController::class, 'officer_store'])
-    ->name('jobs.officer.store');
+    // Store
+    Route::post('/jobs/officer/', [JobRequestsController::class, 'officer_store'])
+        ->name('jobs.officer.store');
+
+});
 
 ?>

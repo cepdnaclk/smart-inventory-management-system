@@ -32,6 +32,7 @@ trait UserMethod
     {
         return $this->type === self::TYPE_USER;
     }
+
     /**
      * @return mixed
      */
@@ -39,6 +40,7 @@ trait UserMethod
     {
         return $this->type === self::TYPE_LECTURER;
     }
+
     /**
      * @return mixed
      */
@@ -46,12 +48,26 @@ trait UserMethod
     {
         return $this->type === self::TYPE_TECH_OFFICER;
     }
+
     /**
      * @return mixed
      */
     public function isMaintainer(): bool
     {
         return $this->type === self::TYPE_MAINTAINER;
+    }
+
+    public function isAdminAccess(): bool
+    {
+        return ($this->isAdmin() || $this->isLecturer() || $this->isTechOfficer() || $this->isMaintainer());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function hasInventoryAccess(): bool
+    {
+        return ($this->isAdmin() || $this->isTechOfficer() || $this->isMaintainer());
     }
 
     /**
@@ -113,13 +129,13 @@ trait UserMethod
     }
 
     /**
-     * @param  bool  $size
+     * @param bool $size
      *
      * @return mixed|string
      * @throws \Creativeorange\Gravatar\Exceptions\InvalidEmailException
      */
     public function getAvatar($size = null)
     {
-        return 'https://gravatar.com/avatar/'.md5(strtolower(trim($this->email))).'?s='.config('boilerplate.avatar.size', $size).'&d=mp';
+        return 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=' . config('boilerplate.avatar.size', $size) . '&d=mp';
     }
 }
