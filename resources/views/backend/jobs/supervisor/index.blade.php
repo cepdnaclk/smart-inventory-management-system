@@ -1,9 +1,8 @@
 @extends('backend.layouts.app')
 
-@section('title', __('component'))
+@section('title', __('Job Requests - Supervisor View'))
 
 @section('breadcrumb-links')
-    @include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
