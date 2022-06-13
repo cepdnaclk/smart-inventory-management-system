@@ -104,6 +104,7 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
                 ->push(__('Show'));
         });
 
+
     // Store the different types of updates
     Route::post('/jobs/supervisor/{jobRequests}/approve/', [JobRequestsController::class, 'supervisor_approve'])
         ->name('jobs.supervisor.approve');

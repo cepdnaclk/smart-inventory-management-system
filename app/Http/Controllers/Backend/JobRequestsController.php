@@ -21,7 +21,10 @@ class JobRequestsController extends Controller
 
     public function student_index()
     {
-        $jobs = JobRequests::paginate(16);
+        // $jobs = JobRequests::paginate(16);
+        // return view('backend.jobs.student.index', compact('jobs'));
+
+        $jobs = JobRequests::where('student', \Auth::user()->id)->get()->reverse();
         return view('backend.jobs.student.index', compact('jobs'));
     }
 
@@ -98,7 +101,6 @@ class JobRequestsController extends Controller
             return redirect()->route('admin.jobs.student.index')->with('Success', 'The fabrication request #' . $id . ' was placed successfully !');
 
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500);
         }
     }
@@ -125,9 +127,15 @@ class JobRequestsController extends Controller
 
     public function supervisor_index()
     {
-        $jobs = JobRequests::where('supervisor', \Auth::user()->id)->get();
+        $jobs = JobRequests::where('supervisor', \Auth::user()->id)->get()->reverse();
         return view('backend.jobs.supervisor.index', compact('jobs'));
     }
+
+    public function supervisor_show(JobRequests $jobRequests)
+    {
+        return view('backend.jobs.supervisor.show', compact('jobRequests'));
+    }
+
 
     public function supervisor_store(Request $request)
     {
@@ -139,12 +147,6 @@ class JobRequestsController extends Controller
         dd($request);
     }
 
-    public function supervisor_show(JobRequestsController $jobRequests)
-    {
-        return view('backend.jobs.supervisor.show');
-    }
-
-
     public function techOfficer_index()
     {
         $jobs = JobRequests::jobsForTechOfficer();
@@ -154,9 +156,8 @@ class JobRequestsController extends Controller
 
     public function techOfficer_show(JobRequestsController $jobRequests)
     {
-        return view('backend.jobs.technical-officer.show');
+        return view('backend.jobs.technical-officer.show', compact('jobRequests'));
     }
-
 
 
     // Support Functions
