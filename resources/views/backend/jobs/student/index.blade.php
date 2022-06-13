@@ -34,7 +34,7 @@
                 @endif
 
                 <div class="container table-responsive pt-3">
-                    <table class="table table-striped">
+                    <table class="table table-striped align-middle">
                         <tr>
                             <th>ID</th>
                             <th>Status</th>
@@ -74,8 +74,7 @@
                                     <div class="btn-group" role="group">
                                         @if ($job->status == 'PENDING')
                                             <a href="{{ route('admin.jobs.student.confirm', $job)}}"
-                                               class="btn btn-primary btn-xs"><i class="fa fa-check"
-                                                                                 title="Approal"></i>
+                                               class="btn btn-primary btn-xs"><i class="fa fa-paper-plane" title="Send"></i>
                                             </a>
                                         @endif
                                         <a href="{{ route('admin.jobs.student.show', $job)}}"
@@ -91,7 +90,6 @@
                         @endforeach
                     </table>
 
-                    {{ $jobs->links() }}
                 </div>
             </x-slot>
         </x-backend.card>

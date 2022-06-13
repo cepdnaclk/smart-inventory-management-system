@@ -44,6 +44,12 @@ class JobRequests extends Model
         return null;
     }
 
+    public function student_info()
+    {
+        if ($this->student != null) return $this->belongsTo(User::class, 'student', 'id');
+        return null;
+    }
+
     public static function jobsForTechOfficer()
     {
         // Waiting for approval
