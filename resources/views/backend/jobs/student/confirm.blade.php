@@ -20,7 +20,7 @@
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
                         <div class="btn-group" role="group" aria-label="Modify Buttons">
                             <a href="{{ route('admin.jobs.student.summary', $jobRequests)}}"
-                               class="btn btn-primary btn-xs me-2"><i class="fa fa-trash-o" title="Delete"></i>
+                               class="btn btn-primary btn-xs me-2"><i class="fa fa-check" title="Approve"></i>
                                Confirm and Email to supervisor
                             </a>
 

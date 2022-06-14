@@ -104,23 +104,23 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
                 ->push(__('Show'));
         });
 
-
     // Store the different types of updates
-    Route::post('/jobs/supervisor/{jobRequests}/approve/', [JobRequestsController::class, 'supervisor_approve'])
+    Route::get('/jobs/supervisor/{jobRequests}/approve/', [JobRequestsController::class, 'supervisor_approve'])
         ->name('jobs.supervisor.approve');
 
-    Route::post('/jobs/supervisor/{jobRequests}/reject/', [JobRequestsController::class, 'supervisor_reject'])
+    Route::get('/jobs/supervisor/{jobRequests}/reject/', [JobRequestsController::class, 'supervisor_reject'])
         ->name('jobs.supervisor.reject');
 
-    Route::post('/jobs/supervisor/{jobRequests}/revise/', [JobRequestsController::class, 'supervisor_revise'])
-        ->name('jobs.supervisor.revise');
+//    Route::post('/jobs/supervisor/{jobRequests}/revise/', [JobRequestsController::class, 'supervisor_revise'])
+//        ->name('jobs.supervisor.revise');
+
 });
 
 // Technical Officer Routes ----------------------------------------------------------------------------
 
 Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
     // Index
-    Route::get('/jobs/officer', [JobRequestsController::class, 'techOfficer_index'])
+    Route::get('/jobs/officer', [JobRequestsController::class, 'officer_index'])
         ->name('jobs.officer.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
