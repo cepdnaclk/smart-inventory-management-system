@@ -125,6 +125,8 @@ class JobRequestsController extends Controller
         }
     }
 
+    // -----------------------------------------------------------------------------------------------
+
     public function supervisor_index()
     {
         $jobs = JobRequests::where('supervisor', \Auth::user()->id)->get()->reverse();
@@ -136,30 +138,60 @@ class JobRequestsController extends Controller
         return view('backend.jobs.supervisor.show', compact('jobRequests'));
     }
 
-
-    public function supervisor_store(Request $request)
+    public function supervisor_approve(JobRequests $jobRequests)
     {
-        dd($request);
+        dd('Approved');
+        // TODO: The logic to be implemented
+        // Send an email to the student
+        // Send an email to the TO
+        // Update the status into 'PENDING_FABRICATION'
+        // Update timestamp details
+        return redirect()->route('admin.jobs.supervisor.index');
     }
 
-    public function officer_store(Request $request)
+    public function supervisor_reject(JobRequests $jobRequests)
     {
-        dd($request);
+        dd('Rejected');
+        // TODO: The logic to be implemented
+        // Send an email to the student
+        // Update the status into 'NOT_APPROVED'
+        // Update timestamp details
+        return redirect()->route('admin.jobs.supervisor.index');
     }
 
-    public function techOfficer_index()
+    // -----------------------------------------------------------------------------------------------
+
+    public function officer_index()
     {
         $jobs = JobRequests::jobsForTechOfficer();
         return view('backend.jobs.technical-officer.index', compact('jobs'));
     }
 
-
-    public function techOfficer_show(JobRequestsController $jobRequests)
+    public function officer_show(JobRequestsController $jobRequests)
     {
         return view('backend.jobs.technical-officer.show', compact('jobRequests'));
     }
 
+    public function officer_store(JobRequestsController $jobRequests)
+    {
+        dd($jobRequests);
+        // TODO: To be implemented
+        // Store the additional parameters
+        // Send an Email to the student (about scheduled time and additional notes)
+        return redirect()->route('admin.jobs.officer.index');
+    }
 
+    public function officer_finish(JobRequestsController $jobRequests)
+    {
+        dd("Finished");
+        // TODO: Finish the job
+        // Send emails to Student and Lecturer about the finish notice
+        // Update machine timed, material usage, etc...
+        return redirect()->route('admin.jobs.officer.index');
+    }
+
+
+    // -----------------------------------------------------------------------------------------------
     // Support Functions
     private function deleteFile($currentURL)
     {

@@ -21,7 +21,17 @@
                         <h4>Job #{{ $jobRequests->id }}</h4>
                     </div>
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
-                        {{-- Buttons --}}
+                        <div class="btn-group" role="group" aria-label="Modify Buttons">
+                            <a href="{{ route('admin.jobs.supervisor.approve', $jobRequests)}}"
+                               class="btn btn-primary btn-xs me-2"><i class="fa fa-check" title="Approve"></i>
+                                Approve
+                            </a>
+
+                            <a href="{{ route('admin.jobs.supervisor.reject', $jobRequests)}}"
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i>
+                                Reject
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <table class="table">

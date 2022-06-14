@@ -21,7 +21,8 @@ class JobRequests extends Model
             'WAITING_TO_APPROVAL' => 'Waiting for Approval',
             // 'ON_REVISION' => 'On Revision',
             'PENDING_FABRICATION' => 'Pending Fabrication',
-            'COMPLETED' => 'Completed'
+            'COMPLETED' => 'Completed',
+            'NOT_APPROVED' => 'Not Approved'
         ];
     }
 
