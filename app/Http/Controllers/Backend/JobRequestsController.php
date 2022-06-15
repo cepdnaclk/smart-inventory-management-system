@@ -167,12 +167,17 @@ class JobRequestsController extends Controller
         return view('backend.jobs.technical-officer.index', compact('jobs'));
     }
 
-    public function officer_show(JobRequestsController $jobRequests)
+    public function officer_show(JobRequests $jobRequests)
     {
         return view('backend.jobs.technical-officer.show', compact('jobRequests'));
     }
 
-    public function officer_store(JobRequestsController $jobRequests)
+    public function officer_edit(JobRequests $jobRequests)
+    {
+        return view('backend.jobs.technical-officer.edit', compact('jobRequests'));
+    }
+
+    public function officer_update(JobRequests $jobRequests)
     {
         dd($jobRequests);
         // TODO: To be implemented
@@ -181,7 +186,7 @@ class JobRequestsController extends Controller
         return redirect()->route('admin.jobs.officer.index');
     }
 
-    public function officer_finish(JobRequestsController $jobRequests)
+    public function officer_finish(JobRequests $jobRequests)
     {
         dd("Finished");
         // TODO: Finish the job

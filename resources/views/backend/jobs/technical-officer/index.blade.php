@@ -62,17 +62,14 @@
 
                                 <td class="d-flex justify-content-end">
                                     <div class="btn-group" role="group">
-                                        @if ($job->status == 'PENDING')
-                                            <a href="{{ route('admin.jobs.student.confirm', $job)}}"
-                                               class="btn btn-primary btn-xs"><i class="fa fa-check"
-                                                                                 title="Approal"></i>
+                                        @if ($job->status == 'PENDING_FABRICATION')
+                                            <a href="{{ route('admin.jobs.officer.edit', $job)}}"
+                                               class="btn btn-primary btn-xs"><i class="fa fa-edit"
+                                                                                 title="Edit"></i>
                                             </a>
                                         @endif
-                                        <a href="{{ route('admin.jobs.student.show', $job)}}"
+                                        <a href="{{ route('admin.jobs.officer.show', $job)}}"
                                            class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
-                                        </a>
-                                        <a href="{{ route('admin.jobs.student.delete', $job)}}"
-                                           class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i>
                                         </a>
                                     </div>
                                 </td>
