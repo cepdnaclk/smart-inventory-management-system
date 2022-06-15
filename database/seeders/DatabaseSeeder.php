@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
         $this->call(EquipmentItemSeeder::class);
         $this->call(ComponentTypeSeeder::class);
         $this->call(ComponentItemSeeder::class);
+        $this->call(RawMaterialsSeeder::class);
+        $this->call(MachinesSeeder::class);
+        $this->call(JobRequestsSeeder::class);
 
         Model::reguard();
     }
