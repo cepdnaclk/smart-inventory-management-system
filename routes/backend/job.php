@@ -107,12 +107,12 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
     // Store the different types of updates
     Route::get('/jobs/supervisor/{jobRequests}/approve/', [JobRequestsController::class, 'supervisor_approve'])
         ->name('jobs.supervisor.approve');
-
     Route::get('/jobs/supervisor/{jobRequests}/reject/', [JobRequestsController::class, 'supervisor_reject'])
         ->name('jobs.supervisor.reject');
 
-//    Route::post('/jobs/supervisor/{jobRequests}/revise/', [JobRequestsController::class, 'supervisor_revise'])
-//        ->name('jobs.supervisor.revise');
+    // TODO: Implement this option
+    //Route::post('/jobs/supervisor/{jobRequests}/revise/', [JobRequestsController::class, 'supervisor_revise'])
+    //    ->name('jobs.supervisor.revise');
 
 });
 
@@ -138,9 +138,23 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
                 ->push(__('Show'));
         });
 
-    // Store
-    Route::post('/jobs/officer/', [JobRequestsController::class, 'officer_store'])
-        ->name('jobs.officer.store');
+    // Edit
+    Route::get('/jobs/officer/{jobRequests}/edit', [JobRequestsController::class, 'officer_edit'])
+        ->name('jobs.officer.edit')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Fabrications'), route('admin.jobs.index'))
+                ->push(__('Technical Officer'), route('admin.jobs.officer.index'))
+                ->push(__('Edit'));
+        });
+
+    // Update
+    Route::post('/jobs/officer/{jobRequests}/', [JobRequestsController::class, 'officer_update'])
+        ->name('jobs.officer.update');
+
+    // Finish
+    Route::post('/jobs/officer/{jobRequests}/finish', [JobRequestsController::class, 'officer_finish'])
+        ->name('jobs.officer.finish');
 
 });
 
