@@ -8,6 +8,7 @@ use App\Domains\Auth\Models\Traits\Relationship\UserRelationship;
 use App\Domains\Auth\Models\Traits\Scope\UserScope;
 use App\Domains\Auth\Notifications\Frontend\ResetPasswordNotification;
 use App\Domains\Auth\Notifications\Frontend\VerifyEmail;
+use App\Models\Order;
 use DarkGhostHunter\Laraguard\Contracts\TwoFactorAuthenticatable;
 use DarkGhostHunter\Laraguard\TwoFactorAuthentication;
 use Database\Factories\UserFactory;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -29,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         HasRoles,
         Impersonate,
         MustVerifyEmailTrait,
+        HasApiTokens,
         Notifiable,
         SoftDeletes,
         TwoFactorAuthentication,
@@ -177,6 +180,11 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     public static function maintainers()
     {
         return User::where('type', '=', self::TYPE_MAINTAINER)->get();
+    }
+  
+    // Orders
+    function orders(){
+        return $this->hasMany(Order::class);
     }
 
 }
