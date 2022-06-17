@@ -20,7 +20,6 @@ class CreateComponentItemOrderTable extends Migration
 
             $table->integer('quantity')->default(0);
 
-           
             $table->foreignId('component_item_id')
                 ->constrained()
                 ->references('id')
@@ -32,7 +31,6 @@ class CreateComponentItemOrderTable extends Migration
                 ->references('id')
                 ->onDelete('cascade')
                 ->on('orders');
-            
 
 
         });

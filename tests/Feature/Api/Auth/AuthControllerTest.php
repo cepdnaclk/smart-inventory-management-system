@@ -4,13 +4,12 @@ namespace Tests\Feature\Api\Auth;
 
 use App\Domains\Auth\Models\User ;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Laravel\Sanctum\Sanctum;
 
-use Tests\TestCase;
 use Notification;
+use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
 {
@@ -27,17 +26,15 @@ class AuthControllerTest extends TestCase
         // create a user
         User::factory()->create([
             'email' => 'johndoe@example.org',
-            'password' => Hash::make('testpassword')
+            'password' => Hash::make('testpassword'),
         ]);
-
     }
 
     public function test_show_validation_error_when_both_fields_empty()
     {
-
         $response = $this->json('POST', route('api.auth.login'), [
             'email' => '',
-            'password' => ''
+            'password' => '',
         ]);
 
         $response->assertStatus(422)
@@ -49,7 +46,7 @@ class AuthControllerTest extends TestCase
     {
         $response = $this->json('POST', route('api.auth.login'), [
             'email' => 'test@test.com',
-            'password' => 'abcdabcd'
+            'password' => 'abcdabcd',
         ]);
 
         $response->assertStatus(422)
@@ -59,7 +56,7 @@ class AuthControllerTest extends TestCase
     public function test_return_user_and_access_token_after_successful_login()
     {
         $response = $this->json('POST', route('api.auth.login'), [
-            'email' =>'johndoe@example.org',
+            'email' => 'johndoe@example.org',
             'password' => 'testpassword',
         ]);
 
@@ -69,7 +66,6 @@ class AuthControllerTest extends TestCase
 
     public function test_non_authenticated_user_cannot_get_user_details()
     {
-
         $response = $this->json('GET', route('api.auth.user'));
 
         $response->assertStatus(401)
@@ -79,7 +75,7 @@ class AuthControllerTest extends TestCase
     public function test_authenticated_user_can_get_user_details()
     {
         Sanctum::actingAs(
-            User::first(),
+            User::first()
         );
 
         $response = $this->json('GET', route('api.auth.user'));
@@ -93,13 +89,14 @@ class AuthControllerTest extends TestCase
         $response = $this->json('POST', route('api.auth.logout'), []);
 
         $response->assertStatus(401)
-            ->assertSee('Unauthenticated');;
+            ->assertSee('Unauthenticated');
+        ;
     }
 
     public function test_authenticated_user_can_logout()
     {
         Sanctum::actingAs(
-            User::first(),
+            User::first()
         );
 
         $response = $this->json('POST', route('api.auth.logout'), []);
@@ -138,7 +135,7 @@ class AuthControllerTest extends TestCase
             'token' => $token,
             'email' => $user->email,
             'password' => $new_password,
-            'password_confirmation' => $new_password
+            'password_confirmation' => $new_password,
         ]);
 
         $response->assertStatus(200)
