@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\EquipmentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class EquipmentTypeController extends Controller
@@ -18,8 +17,7 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
-        $equipmentTypes = EquipmentType::paginate(12);
-        
+        $equipmentTypes = EquipmentType::paginate(16);
         return view('backend.equipment.types.index', compact('equipmentTypes'));
     }
 
