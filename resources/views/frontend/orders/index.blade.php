@@ -9,8 +9,8 @@
     
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark"> 
                 <tr>
                     <th>Id</th>
                     <th>User</th>
