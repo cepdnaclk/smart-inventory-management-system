@@ -114,6 +114,27 @@
                         @endif
                     </div>
 
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.jobs.officer.index') }}">
+                            <div class="card-counter info">
+                                <span class="count-numbers">Fabrication</span>
+                                <span class="count-name">Technical Officer</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.jobs.supervisor.index') }}">
+                            <div class="card-counter info">
+                                <span class="count-numbers">Fabrication</span>
+                                <span class="count-name">Supervisor</span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </x-slot>
