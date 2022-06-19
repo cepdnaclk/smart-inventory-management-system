@@ -20,7 +20,7 @@ class CreateComponentItemsTable extends Migration
             $table->string("title");
             $table->string("brand")->nullable();
             $table->string("productCode")->nullable();
-            $table->integer("quantity")->nullable();
+            $table->integer("quantity")->nullable()->default(0);
 
             $table->text("specifications")->nullable();
             $table->text("description")->nullable();

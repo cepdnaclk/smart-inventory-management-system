@@ -31,7 +31,7 @@ class ComponentTypeSeeder extends Seeder
                 $this->command->info("Insert failed at record $index.");
                 return;
             }
-            $this->command->info('Inserted ' . count($this->data) . ' records to component_types table');
         }
+        $this->command->info('Inserted ' . count($this->data) . ' records to component_types table');
     }
 }
