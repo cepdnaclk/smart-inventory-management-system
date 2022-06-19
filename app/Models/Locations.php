@@ -12,7 +12,7 @@ class Locations extends Model
     /**
      * Get the parent location
      */
-    public function parent_location(){
-        return $this->hasOne(Locations::class,"parent_location");
+    public function get_parent_location(){
+        return $this->hasOne(Locations::class,"id","parent_location");
     }
 }
