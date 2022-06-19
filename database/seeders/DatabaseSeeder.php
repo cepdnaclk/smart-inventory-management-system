@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ConsumableType;
 use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
@@ -33,6 +34,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EquipmentItemSeeder::class);
         $this->call(ComponentTypeSeeder::class);
         $this->call(ComponentItemSeeder::class);
+        $this->call(ConsumableTypeSeeder::class);
+        $this->call(ConsumableItemSeeder::class);
         $this->call(RawMaterialsSeeder::class);
         $this->call(MachinesSeeder::class);
         $this->call(JobRequestsSeeder::class);
