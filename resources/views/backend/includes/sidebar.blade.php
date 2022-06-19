@@ -120,6 +120,53 @@
                     </li>
                 </ul>
             </li>
+            {{-- Components --}}
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link
+                        href="#"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-dropdown-toggle"
+                        :text="__('Components')"></x-utils.link>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.component.items.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Items')"></x-utils.link>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.component.types.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Types')"></x-utils.link>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- Search --}}
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link
+                        href="#"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-dropdown-toggle"
+                        :text="__('Search')"></x-utils.link>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.search.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Search all')"></x-utils.link>
+                    </li>
+{{--                    <li class="c-sidebar-nav-item">--}}
+{{--                        <x-utils.link--}}
+{{--                                :href="route('admin.component.types.index')"--}}
+{{--                                class="c-sidebar-nav-link"--}}
+{{--                                :text="__('Types')"></x-utils.link>--}}
+{{--                    </li>--}}
+                </ul>
+            </li>
         @endif
 
         {{-- Fabrication Requests --}}

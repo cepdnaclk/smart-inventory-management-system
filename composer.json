@@ -29,6 +29,7 @@
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-permission": "^3.11",
+        "spatie/laravel-searchable": "^1.11",
         "tabuna/breadcrumbs": "^2.2"
     },
     "require-dev": {
@@ -99,7 +100,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "treeware/plant": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
