@@ -32,7 +32,7 @@
 
                     {{ Form::open(array('route' => 'admin.search.results')) }}
                        {!! Form::text('keywords');  !!}
-                    {!! Form::submit('Click Me!') !!}
+                    {!! Form::submit('Search') !!}
                     {{ Form::close() }}
 
             </x-slot>
