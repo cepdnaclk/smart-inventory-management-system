@@ -120,8 +120,8 @@
                         <td>Thumbnail</td>
                         <td>
                             @if( $componentItem->thumb != null )
-                                <img src="{{ $componentItem->thumbURL() }}" alt="{{ $componentItem->title }}"
-                                     class="img img-thumbnail">
+                                <img src="{{ $componentItem->thumbURL() }}  " alt="{{ $componentItem->title }}"
+                                     class="img img-thumbnail"   >
                             @else
                                 <span>[Not Available]</span>
                             @endif

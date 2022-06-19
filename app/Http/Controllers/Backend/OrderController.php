@@ -47,6 +47,7 @@ class OrderController extends Controller
             'due_date_to_return' => 'string|required',
             'returned_date' => 'string|nullable',
             'status' => 'string|required',
+            
         ]);
         try {
             $data['ordered_date'] = Carbon::now()->format('Y-m-d');
