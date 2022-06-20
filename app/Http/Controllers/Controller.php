@@ -28,12 +28,15 @@ class Controller extends BaseController
     public function getLocationOfItem(Model $item)
     {
         $locations_array = array();
+//        find the item location id from the item_locations table
         $locationID = ItemLocations::where('item_id', $item->inventoryCode())->get();
         $flag = false;
         if ($locationID->count() > 0) {
             $locationID = $locationID[0]->location_id;
             $flag = true;
         }
+//        keep iterating to find the location tree
+//        etc.. makerspace lab > desk > drawer
         while ($flag) {
             $thisLocation = Locations::where('id', $locationID)->get()[0];
             array_push($locations_array, $thisLocation->location);
