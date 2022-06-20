@@ -9,7 +9,7 @@ class ItemLocationsSeeder extends Seeder
 {
     protected $data = [
 
-        array('id' => '0',  'location_id' => 0 , 'item_id' => "EQ/19/1023"),
+        array('id' => '0',  'location_id' => 2, 'item_id' => "EQ/19/1023"),
         array('id' => '1',  'location_id' => 1 , 'item_id' => "EQ/17/1038"),
     ];
 

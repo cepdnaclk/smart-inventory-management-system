@@ -32,6 +32,7 @@ class ComponentItem extends Model implements Searchable
         return null;
     }
 
+    // used to search
     public function getSearchResult(): SearchResult
     {
         $url = route('admin.search.index', $this->slug);

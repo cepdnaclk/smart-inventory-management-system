@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\ComponentItem;
+use App\Models\ConsumableItem;
+use App\Models\ConsumableType;
 use App\Models\EquipmentItem;
+use App\Models\ItemLocations;
 use App\Models\Machines;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
@@ -18,13 +21,17 @@ class SearchController extends Controller
     public function results(Request $request){
         $keywords = $request->keywords;
 
-        $searchResults = (new Search())
-            ->registerModel(ComponentItem::class,['title'])
-            ->registerModel(EquipmentItem::class,['title'])
-            ->registerModel(Machines::class,['title'])
-            ->search($keywords);
+        if (strlen($keywords) == 0){
+            return view('backend.search.index')->with('status', 'Search string is empty. Please type something');
+        }
 
-//        dd($searchResults);
+        $searchResults = (new Search())
+            ->registerModel(ComponentItem::class,['title','brand'])
+            ->registerModel(EquipmentItem::class,['title','brand'])
+            ->registerModel(Machines::class,['title','brand'])
+            ->registerModel(ConsumableItem::class,['title','brand'])
+//            TODO: add raw materials here
+            ->search($keywords);
 
         return view('backend.search.results',compact('searchResults','keywords'));
     }

@@ -2,10 +2,6 @@
 
 @section('title', __('Search'))
 
-@section('breadcrumb-links')
-    @include('backend.component.includes.breadcrumb-links')
-@endsection
-
 @section('content')
     <div>
         <x-backend.card>
@@ -27,6 +23,12 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
+                    </div>
+                @endif
+
+                @if (!empty($status))
+                    <div class="alert alert-danger" role="alert">
+                        {{ $status }}
                     </div>
                 @endif
 
