@@ -78,7 +78,8 @@ class MachinesController extends Controller
      */
     public function show(Machines $machines)
     {
-        return view('backend.machines.show', compact('machines'));
+        $locations_array = $this->getLocationOfItem($machines);
+        return view('backend.machines.show', compact('machines','locations_array'));
     }
 
     /**
