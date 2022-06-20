@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ComponentItem;
 use App\Models\ComponentType;
+use App\Models\ItemLocations;
+use App\Models\Locations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Torann\GeoIP\Location;
 
 class ComponentItemController extends Controller
 {
@@ -32,7 +35,8 @@ class ComponentItemController extends Controller
     public function create()
     {
         $types = ComponentType::pluck('title', 'id');
-        return view('backend.component.items.create', compact('types'));
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.component.items.create', compact('types','locations'));
     }
 
     /**
@@ -49,6 +53,7 @@ class ComponentItemController extends Controller
             'productCode' => 'string|nullable',
             'component_type_id' => 'numeric|required',
 
+            'location' => 'numeric|nullable',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -68,13 +73,26 @@ class ComponentItemController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "component_items");
             }
 
-            $type = new ComponentItem($data);
+            $filtered_data = $data;
+            unset($filtered_data['location']);
+            $type = new ComponentItem($filtered_data);
 
             // Update checkbox condition
             $type->isAvailable = ($request->isAvailable != null);
             $type->isElectrical = ($request->isElectrical != null);
 
+//            save first, otherwise the id is not there
             $type->save();
+
+            $data_for_location = [
+                'item_id' => $type->inventoryCode(),
+                'location_id' => $data['location']
+            ];
+            $location = new ItemLocations($data_for_location);
+
+
+            $location->save();
+//            dd($location);
             return redirect()->route('admin.component.items.index')->with('Success', 'component was created !');
 
         } catch (\Exception $ex) {
@@ -103,7 +121,10 @@ class ComponentItemController extends Controller
     public function edit(ComponentItem $componentItem)
     {
         $types = ComponentType::pluck('title', 'id');
-        return view('backend.component.items.edit', compact('types', 'componentItem'));
+        $this_item_location = ItemLocations::where('item_id',$componentItem->inventoryCode())->get()[0]['location_id'];
+//        dd($this_item_location);
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.component.items.edit', compact('types', 'componentItem','locations','this_item_location'));
     }
 
     /**
@@ -121,6 +142,7 @@ class ComponentItemController extends Controller
             'productCode' => 'string|nullable',
             'component_type_id' => 'numeric|required',
 
+            'location' => 'numeric|nullable',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -144,7 +166,16 @@ class ComponentItemController extends Controller
             $componentItem['isAvailable'] = isset($request->isAvailable) ? 1 : 0;
             $componentItem['isElectrical'] = isset($request->isElectrical) ? 1 : 0;
 
-            $componentItem->update($data);
+            $filtered_data = $data;
+            unset($filtered_data['location']);
+            $componentItem->update($filtered_data);
+
+            $this_item_location = ItemLocations::where('item_id',$componentItem->inventoryCode())->get()[0];
+            $new_location_data = [
+                'location_id' => $data['location']
+            ];
+            $this_item_location->update($new_location_data);
+
 
             return redirect()->route('admin.component.items.index')->with('Success', 'Component was updated !');
 
