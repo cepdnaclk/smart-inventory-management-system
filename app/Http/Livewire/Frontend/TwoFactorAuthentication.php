@@ -26,17 +26,17 @@ class TwoFactorAuthentication extends Component
             'code' => 'required|min:6',
         ]);
 
-        // if ($request->user()->confirmTwoFactorAuth($this->code)) {
+         if ($request->user()->confirmTwoFactorAuth($this->code)) {
             $this->resetErrorBag();
 
             session()->flash('flash_success', __('Two Factor Authentication Successfully Enabled'));
 
             return redirect()->route('frontend.auth.account.2fa.show');
-        // }
+        }
 
-        // $this->addError('code', __('Your authorization code was invalid. Please try again.'));
+       $this->addError('code', __('Your authorization code was invalid. Please try again.'));
 
-        // return false;
+         return false;
     }
 
     /**
