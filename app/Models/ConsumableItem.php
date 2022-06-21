@@ -10,7 +10,7 @@ class ConsumableItem extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    //comment here
     // Link the Component Type table
     public function consumable_type()
     {
