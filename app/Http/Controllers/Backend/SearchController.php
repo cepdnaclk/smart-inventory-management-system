@@ -9,6 +9,7 @@ use App\Models\ConsumableType;
 use App\Models\EquipmentItem;
 use App\Models\ItemLocations;
 use App\Models\Machines;
+use App\Models\RawMaterials;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 
@@ -30,6 +31,7 @@ class SearchController extends Controller
             ->registerModel(EquipmentItem::class,['title','brand'])
             ->registerModel(Machines::class,['title','brand'])
             ->registerModel(ConsumableItem::class,['title','brand'])
+            ->registerModel(RawMaterials::class,['title','description'])
 //            TODO: add raw materials here
             ->search($keywords);
 
