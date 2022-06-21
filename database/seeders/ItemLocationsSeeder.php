@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 class ItemLocationsSeeder extends Seeder
 {
     protected $data = [
-
         array('id' => '0',  'location_id' => 0, 'item_id' => 'EQ/17/1000'),
         array('id' => '1',  'location_id' => 1, 'item_id' => 'EQ/17/1001'),
         array('id' => '2',  'location_id' => 2, 'item_id' => 'EQ/17/1002'),
@@ -195,6 +194,13 @@ class ItemLocationsSeeder extends Seeder
         array('id' => '183',  'location_id' => 0, 'item_id' => 'MS/CS/38/1126'),
         array('id' => '184',  'location_id' => 1, 'item_id' => 'MS/CS/38/1127'),
         array('id' => '185',  'location_id' => 2, 'item_id' => 'MS/CS/39/1128'),
+        array('id' => '186',  'location_id' => 0, 'item_id' => 'RW/001'),
+        array('id' => '187',  'location_id' => 1, 'item_id' => 'RW/002'),
+        array('id' => '188',  'location_id' => 2, 'item_id' => 'RW/003'),
+        array('id' => '189',  'location_id' => 0, 'item_id' => 'RW/004'),
+        array('id' => '190',  'location_id' => 1, 'item_id' => 'RW/005'),
+        array('id' => '191',  'location_id' => 2, 'item_id' => 'RW/006'),
+        array('id' => '192',  'location_id' => 0, 'item_id' => 'RW/007'),
 
     ];
 

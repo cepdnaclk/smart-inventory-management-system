@@ -203,7 +203,15 @@ inventory_codes = """EQ/17/1000
                      MS/CS/38/1125
                      MS/CS/38/1126
                      MS/CS/38/1127
-                     MS/CS/39/1128"""
+                     MS/CS/39/1128
+                     RW/001
+                     RW/002
+                     RW/003
+                     RW/004
+                     RW/005
+                     RW/006
+                     RW/007
+"""
 
 location_id = 0
 id = 0

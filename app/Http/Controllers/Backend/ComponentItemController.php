@@ -209,6 +209,11 @@ class ComponentItemController extends Controller
             $this->deleteThumb($componentItem->thumbURL());
 
             $componentItem->delete();
+
+//            delete location entry
+            $this_item_location = ItemLocations::where('item_id',$componentItem->inventoryCode())->get()[0];
+            $this_item_location->delete();
+
             return redirect()->route('admin.component.items.index')->with('Success', 'Component was deleted !');
 
         } catch (\Exception $ex) {

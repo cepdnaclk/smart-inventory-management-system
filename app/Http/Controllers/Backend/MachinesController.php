@@ -174,6 +174,11 @@ class MachinesController extends Controller
             $this->deleteThumb($machines->thumbURL());
 
             $machines->delete();
+
+            //            delete location entry
+            $this_item_location = ItemLocations::where('item_id',$machines->inventoryCode())->get()[0];
+            $this_item_location->delete();
+
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was deleted !');
 
         } catch (\Exception $ex) {

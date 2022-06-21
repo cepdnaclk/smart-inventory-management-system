@@ -212,6 +212,11 @@ class EquipmentItemController extends Controller
             $this->deleteThumb($equipmentItem->thumbURL());
 
             $equipmentItem->delete();
+
+            //            delete location entry
+            $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get()[0];
+            $this_item_location->delete();
+
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
 
         } catch (\Exception $ex) {

@@ -181,6 +181,11 @@ class RawMaterialsController extends Controller
             $this->deleteThumb($rawMaterials->thumbURL());
 
             $rawMaterials->delete();
+
+            //            delete location entry
+            $this_item_location = ItemLocations::where('item_id',$rawMaterials->inventoryCode())->get()[0];
+            $this_item_location->delete();
+
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw material was deleted !');
 
         } catch (\Exception $ex) {
