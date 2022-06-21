@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ItemLocations;
+use App\Models\Locations;
 use App\Models\Machines;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -31,7 +33,8 @@ class MachinesController extends Controller
     {
         $typeOptions = Machines::types();
         $availabilityOptions = Machines::availabilityOptions();
-        return view('backend.machines.create', compact('typeOptions', 'availabilityOptions'));
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.machines.create', compact('typeOptions', 'availabilityOptions','locations'));
     }
 
     /**
@@ -46,6 +49,7 @@ class MachinesController extends Controller
             'code' => 'string|nullable|max:8',
             'title' => 'string|required',
             'type' => Rule::in(['CNC', 'FDM_3D_PRINTER', 'LASER_CUTTER', 'PCB_MILL']),
+            'location' => 'numeric',
             'build_width' => 'numeric|nullable|min:0',
             'build_length' => 'numeric|nullable|min:0',
             'build_height' => 'numeric|nullable|min:0',
@@ -61,8 +65,18 @@ class MachinesController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "machines");
             }
 
-            $machine = new Machines($data);
+            $filtered_data = $data;
+            unset($filtered_data['location']);
+            $machine = new Machines($filtered_data);
             $machine->save();
+            $data_for_location = [
+                'item_id' => $machine->inventoryCode(),
+                'location_id' => $data['location']
+            ];
+            $location = new ItemLocations($data_for_location);
+
+
+            $location->save();
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was created !');
 
         } catch (\Exception $ex) {
@@ -92,7 +106,10 @@ class MachinesController extends Controller
     {
         $typeOptions = Machines::types();
         $availabilityOptions = Machines::availabilityOptions();
-        return view('backend.machines.edit', compact('machines', 'typeOptions', 'availabilityOptions'));
+        $this_item_location = ItemLocations::where('item_id',$machines->inventoryCode())->get()[0]['location_id'];
+//        dd($this_item_location);
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.machines.edit', compact('machines', 'typeOptions', 'availabilityOptions','this_item_location','locations'));
     }
 
     /**
@@ -107,6 +124,7 @@ class MachinesController extends Controller
         $data = request()->validate([
             'code' => 'string|nullable|max:8',
             'title' => 'string|required',
+            'location' => 'numeric',
 
         ]);
 
@@ -114,7 +132,18 @@ class MachinesController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($machines->thumbURL(), $request->thumb, "machine");
             }
-            $machines->update($data);
+
+            $filtered_data = $data;
+            unset($filtered_data['location']);
+            $machines->update($filtered_data);
+
+
+            $this_item_location = ItemLocations::where('item_id',$machines->inventoryCode())->get()[0];
+            $new_location_data = [
+                'location_id' => $data['location']
+            ];
+            $this_item_location->update($new_location_data);
+
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was updated !');
 
         } catch (\Exception $ex) {
