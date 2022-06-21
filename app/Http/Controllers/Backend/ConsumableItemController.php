@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\ComponentType;
 use App\Models\ConsumableItem;
 use App\Models\ConsumableType;
+use App\Models\ItemLocations;
+use App\Models\Locations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -32,7 +34,8 @@ class ConsumableItemController extends Controller
     public function create()
     {
         $types = ConsumableType::pluck('title', 'id');
-        return view('backend.consumable.items.create', compact('types'));
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.consumable.items.create', compact('types','locations'));
     }
 
     /**
@@ -51,6 +54,7 @@ class ConsumableItemController extends Controller
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
+            'location' => 'numeric',
 
             'powerRating' => 'nullable',
             'formFactor' => 'nullable',
@@ -67,9 +71,20 @@ class ConsumableItemController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "consumable_items");
             }
 
-            $type = new ConsumableItem($data);
+            $filtered_data = $data;
+            unset($filtered_data['location']);
+            $consumableItem = new ConsumableItem($filtered_data);
+            $consumableItem->save();
 
-            $type->save();
+
+            $data_for_location = [
+                'item_id' => $consumableItem->inventoryCode(),
+                'location_id' => $data['location']
+            ];
+            $location = new ItemLocations($data_for_location);
+
+
+            $location->save();
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was created !');
 
         } catch (\Exception $ex) {
@@ -98,7 +113,10 @@ class ConsumableItemController extends Controller
     public function edit(ConsumableItem $consumableItem)
     {
         $types = ConsumableType::pluck('title', 'id');
-        return view('backend.consumable.items.edit', compact('types', 'consumableItem'));
+        $this_item_location = ItemLocations::where('item_id',$consumableItem->inventoryCode())->get()[0]['location_id'];
+//        dd($this_item_location);
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.consumable.items.edit', compact('types', 'consumableItem','locations','this_item_location'));
     }
 
     /**
@@ -118,6 +136,7 @@ class ConsumableItemController extends Controller
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
+            'location' => 'numeric',
 
             'powerRating' => 'nullable',
             'formFactor' => 'nullable',
@@ -135,7 +154,16 @@ class ConsumableItemController extends Controller
             }
 
 
-            $consumableItem->update($data);
+            $filtered_data = $data;
+            unset($filtered_data['location']);
+            $consumableItem->update($filtered_data);
+
+
+            $this_item_location = ItemLocations::where('item_id',$consumableItem->inventoryCode())->get()[0];
+            $new_location_data = [
+                'location_id' => $data['location']
+            ];
+            $this_item_location->update($new_location_data);
 
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was updated !');
 
