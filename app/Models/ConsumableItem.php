@@ -20,6 +20,7 @@ class ConsumableItem extends Model implements Searchable
         return null;
     }
 
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
         return $this->consumable_type->inventoryCode() . "/" . $this->id;
