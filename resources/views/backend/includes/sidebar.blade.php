@@ -157,14 +157,20 @@
                         <x-utils.link
                                 :href="route('admin.search.index')"
                                 class="c-sidebar-nav-link"
-                                :text="__('Search all')"></x-utils.link>
+                                :text="__('Search by item')"></x-utils.link>
                     </li>
-{{--                    <li class="c-sidebar-nav-item">--}}
-{{--                        <x-utils.link--}}
-{{--                                :href="route('admin.component.types.index')"--}}
-{{--                                class="c-sidebar-nav-link"--}}
-{{--                                :text="__('Types')"></x-utils.link>--}}
-{{--                    </li>--}}
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.search.reverse')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Search by location')"></x-utils.link>
+                    </li>
+                    {{--                    <li class="c-sidebar-nav-item">--}}
+                    {{--                        <x-utils.link--}}
+                    {{--                                :href="route('admin.component.types.index')"--}}
+                    {{--                                class="c-sidebar-nav-link"--}}
+                    {{--                                :text="__('Types')"></x-utils.link>--}}
+                    {{--                    </li>--}}
                 </ul>
             </li>
         @endif
@@ -219,7 +225,6 @@
                 @endif
             </ul>
         </li>
-
 
 
         @if ($logged_in_user->hasAllAccess())
