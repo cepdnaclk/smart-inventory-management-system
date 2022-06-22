@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Stations extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['stationName', 'description', 'thumb','capacity'];
 }
