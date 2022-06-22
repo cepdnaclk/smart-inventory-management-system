@@ -73,6 +73,7 @@ class ConsumableItemTest extends TestCase
             'description' => 'The 741 Op Amp IC is a monolithic integrated circuit, comprising of a general purpose Operational Amplifier.',
             'instructions' => 'NO INSTRUCTION AVAILABLE',
             'powerRating' => '12',
+            'location' => '2',
             'formFactor' => 'some form factor',
             'voltageRating' => '1234',
             'datasheetURL' => 'some url',
@@ -96,8 +97,9 @@ class ConsumableItemTest extends TestCase
         $consumable = ConsumableItem::factory()->create();
 
         $consumable->title = 'New consumable Title';
-
-        $response = $this->put("/admin/consumables/items/{$consumable->id}", $consumable->toArray());
+        $consumable_array = $consumable->toArray();
+        $consumable_array['location'] = 1;
+        $response = $this->put("/admin/consumables/items/{$consumable->id}",$consumable_array );
 
         $this->assertDatabaseHas('consumable_items', [
             'title' => 'New consumable Title',

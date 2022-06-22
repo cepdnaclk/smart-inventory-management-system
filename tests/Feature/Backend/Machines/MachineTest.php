@@ -67,6 +67,7 @@ class MachineTest extends TestCase
             'type' => array_rand(Machines::types()),
             'build_width' => 30,
             'build_length' => 40,
+            'location' => 1,
             'build_height' => 50,
             'power' => rand(30, 100),
             'thumb' => NULL,

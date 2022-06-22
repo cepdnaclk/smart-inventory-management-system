@@ -71,6 +71,7 @@ class EquipmentItemTest extends TestCase
             'brand' => 'Brand',
             'productCode' => '100-X',
             'quantity' => 1,
+            'location' => '2',
             'specifications' => NULL,
             'description' => 'Sample Description',
             'instructions' => 'Sample Instructions',
@@ -99,7 +100,9 @@ class EquipmentItemTest extends TestCase
         $equipment = EquipmentItem::factory()->create();
 
         $equipment->title = 'New Equipment Title';
-        $response = $this->put("/admin/equipment/items/{$equipment->id}", $equipment->toArray());
+        $equipment_array = $equipment->toArray();
+        $equipment_array['location'] = 1;
+        $response = $this->put("/admin/equipment/items/{$equipment->id}", $equipment_array);
 
         $this->assertDatabaseHas('equipment_items', [
             'title' => 'New Equipment Title',

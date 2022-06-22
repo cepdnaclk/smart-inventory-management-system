@@ -68,6 +68,7 @@ class RawMaterialItemTest extends TestCase
             'description' => 'Sample description',
             'specifications' => 'Not applicable',
             'quantity' => '10',
+            'location' => 1,
             'unit' => 'pcs',
             'availability' => 'AVAILABLE',
             'thumb' => NULL
@@ -86,7 +87,10 @@ class RawMaterialItemTest extends TestCase
         $this->actingAs(User::factory()->admin()->create());
         $raw_material = RawMaterials::factory()->create();
         $raw_material->title = 'New Raw Material Title';
-        $response = $this->put("/admin/raw_materials/{$raw_material->id}", $raw_material->toArray());
+        $raw_material_array = $raw_material->toArray();
+        $raw_material_array['location'] = 1;
+//        dd($raw_material_array);
+        $response = $this->put("/admin/raw_materials/{$raw_material->id}", $raw_material_array);
 
         $this->assertDatabaseHas('raw_materials', [
             'title' => 'New Raw Material Title',

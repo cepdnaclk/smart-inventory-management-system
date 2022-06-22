@@ -23,6 +23,7 @@ class SearchController extends Controller
         $keywords = $request->keywords;
 
         if (strlen($keywords) == 0){
+//            change the test along with this text
             return view('backend.search.index')->with('status', 'Search string is empty. Please type something');
         }
 

@@ -53,7 +53,7 @@ class ComponentItemController extends Controller
             'productCode' => 'string|nullable',
             'component_type_id' => 'numeric|required',
 
-            'location' => 'numeric|nullable',
+            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -142,7 +142,7 @@ class ComponentItemController extends Controller
             'productCode' => 'string|nullable',
             'component_type_id' => 'numeric|required',
 
-            'location' => 'numeric|nullable',
+            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',

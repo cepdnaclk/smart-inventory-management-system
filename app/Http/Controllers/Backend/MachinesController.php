@@ -49,7 +49,7 @@ class MachinesController extends Controller
             'code' => 'string|nullable|max:8',
             'title' => 'string|required',
             'type' => Rule::in(['CNC', 'FDM_3D_PRINTER', 'LASER_CUTTER', 'PCB_MILL']),
-            'location' => 'numeric',
+            'location' => 'numeric|required',
             'build_width' => 'numeric|nullable|min:0',
             'build_length' => 'numeric|nullable|min:0',
             'build_height' => 'numeric|nullable|min:0',
@@ -124,7 +124,7 @@ class MachinesController extends Controller
         $data = request()->validate([
             'code' => 'string|nullable|max:8',
             'title' => 'string|required',
-            'location' => 'numeric',
+            'location' => 'numeric|requried',
 
         ]);
 

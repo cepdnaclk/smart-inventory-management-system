@@ -54,7 +54,7 @@ class ConsumableItemController extends Controller
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
-            'location' => 'numeric',
+            'location' => 'numeric|required',
 
             'powerRating' => 'nullable',
             'formFactor' => 'nullable',
@@ -136,7 +136,7 @@ class ConsumableItemController extends Controller
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
-            'location' => 'numeric',
+            'location' => 'numeric|required',
 
             'powerRating' => 'nullable',
             'formFactor' => 'nullable',
