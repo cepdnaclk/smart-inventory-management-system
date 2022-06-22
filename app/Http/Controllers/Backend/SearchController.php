@@ -36,7 +36,6 @@ class SearchController extends Controller
             ->registerModel(Machines::class, ['title', 'brand'])
             ->registerModel(ConsumableItem::class, ['title', 'brand'])
             ->registerModel(RawMaterials::class, ['title', 'description'])
-//            TODO: add raw materials here
             ->search($keywords);
 
         return view('backend.search.results', compact('searchResults', 'keywords'));
@@ -67,20 +66,20 @@ class SearchController extends Controller
             $exploded = explode("/", $item_id);
             if ($exploded[0] == "EQ") {
                 $thisItem = EquipmentItem::where('id', end($exploded))->get();
-                array_push($allItems, $thisItem[0]);
+                $allItems[] = $thisItem[0];
             } elseif ($exploded[0] == "MC") {
                 $thisItem = Machines::where('id', end($exploded))->get();
-                array_push($allItems, $thisItem[0]);
+                $allItems[] = $thisItem[0];
             } elseif ($exploded[1] == "CS") {
                 $thisItem = ConsumableItem::where('id', end($exploded))->get();
-                array_push($allItems, $thisItem[0]);
+                $allItems[] = $thisItem[0];
             } elseif ($exploded[0] == "RW") {
                 $thisItem = RawMaterials::where('id', (int)end($exploded))->get();
 //                dd($thisItem);
-                array_push($allItems, $thisItem[0]);
+                $allItems[] = $thisItem[0];
             } elseif ($exploded[0] == "CM") {
                 $thisItem = ComponentItem::where('id', end($exploded))->get();
-                array_push($allItems, $thisItem[0]);
+                $allItems[] = $thisItem[0];
             }
         }
 //        dd($allItems);

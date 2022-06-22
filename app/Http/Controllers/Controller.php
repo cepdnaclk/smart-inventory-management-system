@@ -39,7 +39,7 @@ class Controller extends BaseController
 //        etc.. makerspace lab > desk > drawer
         while ($flag) {
             $thisLocation = Locations::where('id', $locationID)->get()[0];
-            array_push($locations_array, $thisLocation->location);
+            $locations_array[] = $thisLocation->location;
             $locationID = $thisLocation->parent_location;
 
             if ($locationID == null) break;
