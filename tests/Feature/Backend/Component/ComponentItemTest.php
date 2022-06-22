@@ -71,6 +71,7 @@ class ComponentItemTest extends TestCase
             'title' => 'Sample Component',
             'brand' => NULL,
             'productCode' => 'ICOA101',
+            'location'=>'1',
             'specifications' => 'UA741CP OpAmp 1MHz',
             'description' => 'The 741 Op Amp IC is a monolithic integrated circuit, comprising of a general purpose Operational Amplifier.',
             'instructions' => 'NO INSTRUCTION AVAILABLE',
@@ -96,8 +97,9 @@ class ComponentItemTest extends TestCase
         $component = ComponentItem::factory()->create();
 
         $component->title = 'New Component Title';
-
-        $response = $this->put("/admin/components/items/{$component->id}", $component->toArray());
+        $component_array =  $component->toArray();
+        $component_array['location'] = 2;
+        $response = $this->put("/admin/components/items/{$component->id}", $component_array);
 
         $this->assertDatabaseHas('component_items', [
             'title' => 'New Component Title',

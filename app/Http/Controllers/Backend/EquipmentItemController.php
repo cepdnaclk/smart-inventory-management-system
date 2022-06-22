@@ -52,7 +52,7 @@ class EquipmentItemController extends Controller
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
-            'location' => 'numeric',
+            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -144,7 +144,7 @@ class EquipmentItemController extends Controller
             'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
 
-            'location' => 'numeric',
+            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
