@@ -14,6 +14,14 @@ Route::prefix('equipment')->group(function () {
                 ->push(__('Equipment'), route('frontend.equipment.index'));
         });
 
+    Route::get('/all', [EquipmentView::class, 'index_all'])
+        ->name('equipment.index.all')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('frontend.index')
+                ->push(__('Equipment'),  route('frontend.equipment.index'))
+                ->push(__('All'), route('frontend.equipment.index.all'));
+        });
+
     Route::get('/category/{equipmentType}', [EquipmentView::class, 'viewCategory'])
         ->name('equipment.category')
         ->breadcrumbs(function (Trail $trail, EquipmentType $equipmentType) {

@@ -10,15 +10,28 @@
 
                 <div class="container">
                     <ul>
+                        {{--  Level 1 --}}
                         @foreach($eqTypes as $type)
                             @if( $type->parent() == null )
                                 <li>
                                     <a href="{{ route('frontend.equipment.category', $type) }}">{{ $type->title  }}</a>
                                     @if($type->children() != null)
                                         <ul>
+                                            {{--  Level 2 --}}
                                             @foreach($type->children() as $child)
                                                 <li>
                                                     <a href="{{ route('frontend.equipment.category', $child) }}">{{ $child->title }}</a>
+                                                    @if($child->children() != null)
+                                                        <ul>
+                                                            {{--  Level 3 --}}
+                                                            @foreach($child->children() as $child2)
+                                                                <li>
+                                                                    <a href="{{ route('frontend.equipment.category', $child2) }}">{{ $child2->title }}</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+
                                                 </li>
                                             @endforeach
                                         </ul>
