@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ComponentItem;
 use App\Models\ConsumableItem;
-use App\Models\ConsumableType;
 use App\Models\EquipmentItem;
 use App\Models\ItemLocations;
 use App\Models\Locations;
@@ -13,7 +12,6 @@ use App\Models\Machines;
 use App\Models\RawMaterials;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
-use Torann\GeoIP\Location;
 
 class SearchController extends Controller
 {
