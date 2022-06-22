@@ -10,8 +10,10 @@ class ReservationsSeeder extends Seeder
 
     protected $data = [
     
-        array('id' => '10', 'email' => 'admin@admin.com', 'start_date' => '2022-06-17 10:00:00', 'end_date' => '2022-06-17 11:00:00',  'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03')
-            
+        array('id' => '10', 'email' => 'admin@admin.com', 'start_date' => '2022-06-17 10:00:00', 'end_date' => '2022-06-17 11:00:00',  'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
+        array('id' => '11', 'email' => 'user@user.com', 'start_date' => '2022-06-18 10:00:00', 'end_date' => '2022-06-18 11:00:00',  'created_at' => '2022-06-10 15:23:56', 'updated_at' => '2022-06-10 15:25:03'),
+        
+          
     ];
     /**
      * Run the database seeds.
