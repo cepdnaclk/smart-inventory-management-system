@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MachinesSeeder::class);
         $this->call(JobRequestsSeeder::class);
 
+        $this->call(StationsSeeder::class);
         $this->call(ReservationsSeeder::class);
 
 
