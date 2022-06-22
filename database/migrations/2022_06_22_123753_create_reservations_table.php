@@ -23,17 +23,17 @@ class CreateReservationsTable extends Migration
             $table->string('email');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            // $table->foreignId('station_id')
-            //     ->constrained()
-            //     ->references('id')
-            //     ->onDelete('cascade')
-            //     ->on('stations');
+            $table->foreignId('station_id')
+                ->constrained()
+                ->references('id')
+                ->onDelete('cascade')
+                ->on('stations');
             $table->timestamps();
             
         });
 
         Schema::table('reservations', function($table) {
-            $table->foreign('email')->references('email')->on('users');
+            $table->foreign('email')->constrained()->references('email')->onDelete('cascade')->on('users');
         });
 
     }
