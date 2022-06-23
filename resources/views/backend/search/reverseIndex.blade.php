@@ -32,7 +32,7 @@
                     </div>
                 @endif
                 {{ Form::open(array('route' => 'admin.search.reverse.results')) }}
-                <div class="d-flex col-md-4 align-content-center">
+                <div class="d-flex col-md-6 align-content-center">
                     {!! Form::select('location', $locations, null, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
                     <span class="p-1">
                     {!! Form::submit('Search') !!}

@@ -39,10 +39,13 @@ class SearchController extends Controller
         return view('backend.search.results', compact('searchResults', 'keywords'));
     }
 
-    public function reverseSearch()
+    public function reverseSearchIndex()
     {
         $locations = Locations::pluck('location', 'id');
-//        dd($locations);
+        foreach ($locations as $key => $value) {
+            $full_location_path_array = $this->getFullLocationPathByLocationID($key);
+            $locations[$key] = implode(' > ', array_reverse($full_location_path_array));
+        }
         return view('backend.search.reverseIndex', compact('locations'));
     }
 
@@ -52,7 +55,8 @@ class SearchController extends Controller
 //        this function is going to very resource heavy I think
 //        TODO: optimize this. This will take a very long time if there are lots of items.
         $location = $request->location;
-        $locationName = Locations::where('id', $location)->get()[0]->location;
+        $full_location_path_array = $this->getFullLocationPathByLocationID($location);
+        $locationName = implode(' > ', array_reverse($full_location_path_array));
 
 
 //        get all the items with the corresponding location id
@@ -84,4 +88,5 @@ class SearchController extends Controller
 
         return view('backend.search.reverseResults', compact('allItems', 'locationName'));
     }
+
 }

@@ -19,8 +19,26 @@ class Controller extends BaseController
 
 
     /**
-     * Find the location of the item from the locations table.
-     * The model must implement the inventoryCode() method.
+     * Find the full location path by location ID.
+     * @param int $id
+     * @return array
+     */
+    public function getFullLocationPathByLocationID(int $id){
+        $locationID = $id;
+        $locations_array = array();
+        while (true) {
+            $thisLocation = Locations::where('id', $locationID)->get()[0];
+            $locations_array[] = $thisLocation->location;
+            $locationID = $thisLocation->parent_location;
+
+            if ($locationID == null) break;
+        }
+
+        return $locations_array;
+    }
+
+    /**
+     * Find the full location path by eloquent model
      *
      * @param Model $item
      * @return array
@@ -33,18 +51,10 @@ class Controller extends BaseController
         $flag = false;
         if ($locationID->count() > 0) {
             $locationID = $locationID[0]->location_id;
-            $flag = true;
+        } else {
+            return $locations_array;
         }
-//        keep iterating to find the location tree
-//        etc.. makerspace lab > desk > drawer
-        while ($flag) {
-            $thisLocation = Locations::where('id', $locationID)->get()[0];
-            $locations_array[] = $thisLocation->location;
-            $locationID = $thisLocation->parent_location;
-
-            if ($locationID == null) break;
-        }
-
-        return $locations_array;
+        return $this->getFullLocationPathByLocationID($locationID);
     }
+
 }

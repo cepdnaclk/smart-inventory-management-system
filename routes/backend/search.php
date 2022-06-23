@@ -18,7 +18,7 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Results'), route('admin.search.results'));
         });
 
-    Route::get('/reverseSearch', [SearchController::class, 'reverseSearch'])->name('search.reverse')
+    Route::get('/reverseSearch', [SearchController::class, 'reverseSearchIndex'])->name('search.reverse')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
                 ->push(__('Search'), route('admin.search.reverse'));
