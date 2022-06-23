@@ -1,10 +1,34 @@
 <?php
 
 use App\Http\Controllers\Backend\OrderController;
+use App\Models\Order;
 use Tabuna\Breadcrumbs\Trail;
 
 
+// Lecturer Order request  Routes ----------------------------------------------------------------------------
+Route::middleware(['role:Administrator|Lecturer'])->group(function () {
 
+
+
+
+ // index
+ Route::get('/orders/lecturer', [OrderController::class, 'lecturer_index'])
+ ->name('orders.lecturer.index')
+ ->breadcrumbs(function (Trail $trail) {
+     $trail->push(__('Home'), route('admin.dashboard'))
+         ->push(__('Requests'),);
+ });
+
+ // Show
+ Route::get('/orders/lecturer/{order}/view/', [OrderController::class, 'lecturer_show'])
+ ->name('orders.lecturer.show')
+ ->breadcrumbs(function (Trail $trail) {
+     $trail->push(__('Home'), route('admin.dashboard'))
+         ->push(__('Requests'), route('admin.orders.lecturer.index'))
+         ->push(__('Show'));
+ });
+
+});
 Route::get('/orders', [OrderController::class, 'index'])
 ->name('orders.index')
 ->breadcrumbs(function (Trail $trail) {
@@ -62,4 +86,11 @@ Route::get('orders/delete/{order}', [OrderController::class, 'delete'])
 Route::delete('orders/{order}', [OrderController::class, 'destroy'])
     ->name('orders.destroy');
 
+
+
+    // Lecturer  Routes ----------------------------------------------------------------------------
+
+
+  
+   
 

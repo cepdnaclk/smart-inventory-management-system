@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
+use App\Models\Order;
+use App\Models\OrderApproval;
+
 /**
  * Class DashboardController.
  */
@@ -12,6 +15,9 @@ class DashboardController
      */
     public function index()
     {
+      
+
+
         return view('frontend.user.dashboard');
     }
 }
