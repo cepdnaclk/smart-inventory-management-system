@@ -173,16 +173,36 @@
             </ul>
         </li>
 
-        <li class="c-sidebar-nav-dropdown">
-                    
-                        <li class="c-sidebar-nav-item">
-                            <x-utils.link
-                            icon="c-sidebar-nav-icon cil-list"
-                                    :href="route('admin.orders.index')"
-                                    class="c-sidebar-nav-link"
-                                    :text="__('Orders')"></x-utils.link>
-                        </li>
-        </li>
+      
+
+
+        @if ($logged_in_user->isLecturer()|| $logged_in_user->isAdmin())
+            {{-- Logs and Reports --}}
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link
+                        href="#"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-dropdown-toggle"
+                        :text="__('Orders')"></x-utils.link>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.orders.lecturer.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Request')"></x-utils.link>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                             
+                                class="c-sidebar-nav-link"
+                                :text="__('Accepted Oders')"></x-utils.link>
+                    </li>
+
+                 
+                </ul>
+            </li>
+        @endif
 
         @if ($logged_in_user->hasAllAccess())
             {{-- Logs and Reports --}}

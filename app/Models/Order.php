@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use App\Domains\Auth\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\OrderApproval;
+use App\Domains\Auth\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Order extends Model
 {
@@ -40,4 +42,8 @@ class Order extends Model
     public function checkOtp($otp){
         return $otp==$this->otp;
     }
+    public function orderApprovals(){
+        return $this->hasOne(OrderApproval::class);
+    }
+   
 }

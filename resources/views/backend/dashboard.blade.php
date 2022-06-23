@@ -40,6 +40,13 @@
             color: #FFF;
         }
 
+        .card-counter.request {
+            background-color: #581845;
+            color: #FFF;
+        }
+
+        
+
         .card-counter i {
             font-size: 5em;
             opacity: 0.2;
@@ -122,6 +129,15 @@
                             <div class="card-counter info">
                                 <span class="count-numbers">Fabrication</span>
                                 <span class="count-name">Supervisor</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.orders.lecturer.index') }}">
+                            <div class="card-counter request">
+                                <span class="count-numbers">18</span>
+                                <span class="count-name">Orders request</span>
                             </div>
                         </a>
                     </div>

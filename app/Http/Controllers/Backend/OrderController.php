@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Order;
 use Carbon\Carbon;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\OrderApproval;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -136,5 +138,21 @@ class OrderController extends Controller
         } catch (\Exception $ex) {
             return abort(500);
         }
+    }
+
+    public function lecturer_index()
+    {
+      
+        $id = auth()->user()->id;
+    
+        $orderApproval=OrderApproval::where('lecurer_id',$id)->where('is_approved_by_lecturer', '=', 0)->get();
+      //return response()->json($orderApproval, 200);
+      
+        return view('backend.orders.lecturer.index', compact('orderApproval'));
+    }
+
+
+    public function lecturer_show(Order $order){
+   return view('backend.orders.lecturer.show',compact('order'));
     }
 }
