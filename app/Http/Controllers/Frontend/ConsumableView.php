@@ -16,14 +16,14 @@ class ConsumableView extends Controller
         return view('frontend.consumable.index', compact('consumableTypes'));
     }
 
-    // component Category Page
+    // consumable Category Page
     public function viewCategory(ConsumableType $consumableType)
     {
         $items = $consumableType->hasMany(ConsumableItem::class)->paginate(24);;
         return view('frontend.consumable.category', compact('items', 'consumableType'));
     }
 
-    // component Item Page
+    // conusmable Item Page
     public function viewItem(ConsumableItem $consumableItem)
     {
         return view('frontend.consumable.item', compact('consumableItem'));
