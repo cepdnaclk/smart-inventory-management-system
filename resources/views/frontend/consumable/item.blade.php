@@ -62,19 +62,19 @@
                                 : <b>{{ $consumableItem->quantity }}</b>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Dimensions</td>
-                            <td>
-                                : <b>
-                                    @if( $consumableItem->width!=0 && $consumableItem->height!=0 && $consumableItem->length!=0)
-                                        {{ $consumableItem->width }} x {{ $consumableItem->height }}
-                                        x {{ $consumableItem->length }} cm <br>
-                                    @else
-                                        <span>[Not Available]</span> <br>
-                                    @endif
-                                </b>
-                            </td>
-                        </tr>
+{{--                        <tr>--}}
+{{--                            <td>Dimensions</td>--}}
+{{--                            <td>--}}
+{{--                                : <b>--}}
+{{--                                    @if( $consumableItem->width!=0 && $consumableItem->height!=0 && $consumableItem->length!=0)--}}
+{{--                                        {{ $consumableItem->width }} x {{ $consumableItem->height }}--}}
+{{--                                        x {{ $consumableItem->length }} cm <br>--}}
+{{--                                    @else--}}
+{{--                                        <span>[Not Available]</span> <br>--}}
+{{--                                    @endif--}}
+{{--                                </b>--}}
+{{--                            </td>--}}
+{{--                        </tr>--}}
                         <tr>
                             <td>Weight</td>
                             <td>
@@ -87,12 +87,42 @@
                                 </b>
                             </td>
                         </tr>
+                        <tr>
+                            <td>Datasheet URL</td>
+                            <td>
+                                : <b>
+                                    @if( $consumableItem->datasheetUrl != null )
+                                        <a href="{{ $consumableItem->datasheetUrl }}" target="_blank">
+                                            {{ $consumableItem->datasheetUrl }}
+                                    @else
+                                        <span>[Not Available]</span>
+                                    @endif
+                            </td>
+                        </tr>
                     </table>
                 </div>
 
-                @if($consumableItem->isElectrical && $consumableItem->powerRating != null)
+                @if($consumableItem->powerRating != null)
                     <div class="pt-3">
-                        Power Rating: {{ $consumableItem->powerRating." W"}}
+                        Power Rating: {{ $consumableItem->powerRating}}
+                    </div>
+                @endif
+
+                @if ($consumableItem->formFactor != null)
+                    <div class="pt-3">
+                        Form Factor: {{ $consumableItem->formFactor}}
+                    </div>
+                @endif
+
+                @if ($consumableItem->voltageRating != null)
+                    <div class="pt-3">
+                        Voltage Rating: {{ $consumableItem->voltageRating}}
+                    </div>
+                @endif
+
+                @if ($consumableItem->price != null)
+                    <div class="pt-3">
+                        Price: {{ "Rs. " . $consumableItem->price }}
                     </div>
                 @endif
 
