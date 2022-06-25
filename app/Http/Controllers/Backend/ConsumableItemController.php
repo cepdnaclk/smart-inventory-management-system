@@ -195,6 +195,10 @@ class ConsumableItemController extends Controller
             // Delete the thumbnail form the file system
             $this->deleteThumb($consumableItem->thumbURL());
 
+//            delete location entry
+            $this_item_location = ItemLocations::where('item_id',$consumableItem->inventoryCode())->get()[0];
+            $this_item_location->delete();
+
             $consumableItem->delete();
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
 

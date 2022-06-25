@@ -4,6 +4,7 @@ namespace Tests\Feature\Backend\Consumable;
 
 use App\Domains\Auth\Models\User;
 use App\Models\ConsumableItem;
+use App\Models\ItemLocations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -111,6 +112,13 @@ class ConsumableItemTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $consumable = ConsumableItem::factory()->create();
+
+//        create ItemLocations for this consumable
+        ItemLocations::factory()->create([
+            'item_id' => $consumable->inventoryCode(),
+            'location_id' => 1,
+        ]);
+
         $this->delete('/admin/consumables/items/' . $consumable->id);
         $this->assertDatabaseMissing('consumable_items', ['id' => $consumable->id]);
     }
