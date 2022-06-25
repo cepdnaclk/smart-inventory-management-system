@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EquipmentItemStation extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
 }
