@@ -4,9 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-//pivot table 
-
-class CreateStationEquipmentTable extends Migration
+class CreateEquipmentItemStationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,8 +15,8 @@ class CreateStationEquipmentTable extends Migration
     {
         Schema::create('equipment_item_stations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('equipment_item_id')->constrained();
-            $table->foreignId('stations_id')->constrained();
+            $table->foreignId('equipment_item_id')->constrained()->references('id')->on('equipment_items');
+            $table->foreignId('stations_id')->constrained()->references('id')->on('stations');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateStationEquipmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('station_equipment');
+        Schema::dropIfExists('equipment_item_stations');
     }
 }
