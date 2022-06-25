@@ -68,6 +68,11 @@
                         <td>{{ $consumableItem->quantity }}
                         </td>
                     </tr>
+                    <tr>
+                        <td>Form factor</td>
+                        <td>{{ $consumableItem->formFactor }}
+                        </td>
+                    </tr>
 
                     {{--                    <tr>--}}
                     {{--                        <td>Size</td>--}}
@@ -76,13 +81,13 @@
                     {{--                    </tr>--}}
 
                     <tr>
-                        <td>Description</td>
-                        <td>{!! str_replace("\n", "<br>", $consumableItem->description) !!}</td>
+                        <td>Specification</td>
+                        <td>{!! str_replace("\n", "<br>", $consumableItem->specifications) !!}</td>
                     </tr>
-                    <tr>
-                        <td>Usage Instructions</td>
-                        <td>{!! str_replace("\n", "<br>", $consumableItem->instructions) !!}</td>
-                    </tr>
+{{--                    <tr>--}}
+{{--                        <td>Usage Instructions</td>--}}
+{{--                        <td>{!! str_replace("\n", "<br>", $consumableItem->instructions) !!}</td>--}}
+{{--                    </tr>--}}
                     {{--                    <tr>--}}
                     {{--                        --}}{{-- !have to be changed --}}
                     {{--                        <td>Is It Available ?</td>--}}
@@ -105,16 +110,16 @@
                     {{--                        </td>--}}
                     {{--                    </tr>--}}
 
-                    <tr>
-                        <td>Power Rating</td>
-                        <td>
-                            @if( $consumableItem->powerRating != null )
-                                {{ $consumableItem->powerRating . " W"}}
-                            @else
-                                <span>[Not Available]</span>
-                            @endif
-                        </td>
-                    </tr>
+{{--                    <tr>--}}
+{{--                        <td>Power Rating</td>--}}
+{{--                        <td>--}}
+{{--                            @if( $consumableItem->powerRating != null )--}}
+{{--                                {{ $consumableItem->powerRating . " W"}}--}}
+{{--                            @else--}}
+{{--                                <span>[Not Available]</span>--}}
+{{--                            @endif--}}
+{{--                        </td>--}}
+{{--                    </tr>--}}
 
                     <tr>
                         <td>Thumbnail</td>

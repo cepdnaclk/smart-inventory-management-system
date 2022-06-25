@@ -49,12 +49,12 @@ class ConsumableItemController extends Controller
             'consumable_type_id' => 'numeric|required',
 
             'specifications' => 'string|nullable',
-            'description' => 'string|nullable',
-            'instructions' => 'string|nullable',
+//            'description' => 'string|nullable',
+//            'instructions' => 'string|nullable',
 
-            'powerRating' => 'nullable',
+//            'powerRating' => 'nullable',
             'formFactor' => 'nullable',
-            'voltageRating' => 'nullable',
+//            'voltageRating' => 'nullable',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
@@ -115,12 +115,12 @@ class ConsumableItemController extends Controller
             'consumable_type_id' => 'numeric|required',
 
             'specifications' => 'string|nullable',
-            'description' => 'string|nullable',
-            'instructions' => 'string|nullable',
+//            'description' => 'string|nullable',
+//            'instructions' => 'string|nullable',
 
-            'powerRating' => 'nullable',
+//            'powerRating' => 'nullable',
             'formFactor' => 'nullable',
-            'voltageRating' => 'nullable',
+//            'voltageRating' => 'nullable',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
