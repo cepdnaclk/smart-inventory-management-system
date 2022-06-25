@@ -10,4 +10,5 @@ class EquipmentItemStation extends Model
     use HasFactory;
 
     protected $guarded = [];
+
 }
