@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\ComponentType;
 use App\Models\ConsumableItem;
 use App\Models\ConsumableType;
 use App\Models\ItemLocations;
@@ -52,13 +51,13 @@ class ConsumableItemController extends Controller
             'consumable_type_id' => 'numeric|required',
 
             'specifications' => 'string|nullable',
-            'description' => 'string|nullable',
-            'instructions' => 'string|nullable',
+//            'description' => 'string|nullable',
+//            'instructions' => 'string|nullable',
             'location' => 'numeric|required',
 
-            'powerRating' => 'nullable',
+//            'powerRating' => 'nullable',
             'formFactor' => 'nullable',
-            'voltageRating' => 'nullable',
+//            'voltageRating' => 'nullable',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
@@ -134,13 +133,13 @@ class ConsumableItemController extends Controller
             'consumable_type_id' => 'numeric|required',
 
             'specifications' => 'string|nullable',
-            'description' => 'string|nullable',
-            'instructions' => 'string|nullable',
+//            'description' => 'string|nullable',
+//            'instructions' => 'string|nullable',
             'location' => 'numeric|required',
 
-            'powerRating' => 'nullable',
+//            'powerRating' => 'nullable',
             'formFactor' => 'nullable',
-            'voltageRating' => 'nullable',
+//            'voltageRating' => 'nullable',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
@@ -197,11 +196,6 @@ class ConsumableItemController extends Controller
             $this->deleteThumb($consumableItem->thumbURL());
 
             $consumableItem->delete();
-
-            //            delete location entry
-            $this_item_location = ItemLocations::where('item_id',$consumableItem->inventoryCode())->get()[0];
-            $this_item_location->delete();
-
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
 
         } catch (\Exception $ex) {

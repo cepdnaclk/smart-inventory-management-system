@@ -79,17 +79,17 @@
                 {{--                    </div>--}}
                 {{--                </div>--}}
 
-                <!-- Description -->
-                <div class="form-group row">
-                    {!! Form::label('description', 'Description', ['class' => 'col-md-2 col-form-label']) !!}
+{{--                <!-- Description -->--}}
+{{--                <div class="form-group row">--}}
+{{--                    {!! Form::label('description', 'Description', ['class' => 'col-md-2 col-form-label']) !!}--}}
 
-                    <div class="col-md-10">
-                        {!! Form::textarea('description', '', ['class'=>'form-control', 'rows'=>3 ]) !!}
-                        @error('description')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
+{{--                    <div class="col-md-10">--}}
+{{--                        {!! Form::textarea('description', '', ['class'=>'form-control', 'rows'=>3 ]) !!}--}}
+{{--                        @error('description')--}}
+{{--                        <strong>{{ $message }}</strong>--}}
+{{--                        @enderror--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 <!-- Specifications -->
                 <div class="form-group row">
@@ -103,17 +103,17 @@
                     </div>
                 </div>
 
-                <!-- Usage Instructions -->
-                <div class="form-group row">
-                    {!! Form::label('instructions', 'Usage Instructions', ['class' => 'col-md-2 col-form-label']) !!}
+{{--                <!-- Usage Instructions -->--}}
+{{--                <div class="form-group row">--}}
+{{--                    {!! Form::label('instructions', 'Usage Instructions', ['class' => 'col-md-2 col-form-label']) !!}--}}
 
-                    <div class="col-md-10">
-                        {!! Form::textarea('instructions', '', ['class'=>'form-control', 'rows'=>3 ]) !!}
-                        @error('instructions')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
+{{--                    <div class="col-md-10">--}}
+{{--                        {!! Form::textarea('instructions', '', ['class'=>'form-control', 'rows'=>3 ]) !!}--}}
+{{--                        @error('instructions')--}}
+{{--                        <strong>{{ $message }}</strong>--}}
+{{--                        @enderror--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 {{--                <!-- Dimensions -->--}}
                 {{--                <!-- TODO: Review this -->--}}
@@ -165,17 +165,17 @@
                 {{--                    </div>--}}
                 {{--                </div>--}}
 
-                <div class="form-group row">
-                    <!-- Power Rating -->
-                    {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}
+{{--                <div class="form-group row">--}}
+{{--                    <!-- Power Rating -->--}}
+{{--                    {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}--}}
 
-                    <div class="col-md-4">
-                        {!! Form::number('powerRating', '', ['class'=>'form-control']) !!}
-                        @error('powerRating')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
+{{--                    <div class="col-md-4">--}}
+{{--                        {!! Form::number('powerRating', '', ['class'=>'form-control']) !!}--}}
+{{--                        @error('powerRating')--}}
+{{--                        <strong>{{ $message }}</strong>--}}
+{{--                        @enderror--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 {{--                Form Factor--}}
                 <div class="form-group row">
                     {!! Form::label('formFactor', 'Form Factor', ['class' => 'col-md-2 col-form-label']) !!}
@@ -187,17 +187,28 @@
                         @enderror
                     </div>
                 </div>
-                {{--                Voltage rating--}}
+{{--                datasheetURL--}}
                 <div class="form-group row">
-                    {!! Form::label('voltageRating', 'Voltage rating', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('datasheetURL', 'Datasheet URL', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
-                        {!! Form::number('voltageRating', '', ['class'=>'form-control']) !!}
-                        @error('voltageRating')
+                        {!! Form::text('datasheetURL', '', ['class'=>'form-control']) !!}
+                        @error('datasheetURL')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
                 </div>
+{{--                --}}{{--                Voltage rating--}}
+{{--                <div class="form-group row">--}}
+{{--                    {!! Form::label('voltageRating', 'Voltage rating', ['class' => 'col-md-2 col-form-label']) !!}--}}
+
+{{--                    <div class="col-md-4">--}}
+{{--                        {!! Form::number('voltageRating', '', ['class'=>'form-control']) !!}--}}
+{{--                        @error('voltageRating')--}}
+{{--                        <strong>{{ $message }}</strong>--}}
+{{--                        @enderror--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 <!-- Thumbnail Image -->
                 <div class="form-group row">
