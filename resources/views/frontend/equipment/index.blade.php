@@ -10,6 +10,7 @@
 
                 <div class="container">
                     <ul>
+                        <li><a href="{{ route('frontend.equipment.index.all')  }}">All</a></li>
                         {{--  Level 1 --}}
                         @foreach($eqTypes as $type)
                             @if( $type->parent() == null )

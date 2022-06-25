@@ -29,24 +29,19 @@ Route::prefix('equipment')->group(function () {
                 ->push(__('Equipment'), route('frontend.equipment.index'));
 
             if ($equipmentType->parent() != null) {
-                // TODO: Test
-                // Only look upto two parents for now
-                if ($equipmentType->parent()->parent()->parent() != null) {
-                    $trail->push($equipmentType->parent()->parent()->parent()->title, route('frontend.equipment.category',
-                        $equipmentType->parent()->parent()->parent()));
-                }
-
                 if ($equipmentType->parent()->parent() != null) {
+                    if ($equipmentType->parent()->parent()->parent() != null) {
+                        $trail->push($equipmentType->parent()->parent()->parent()->title, route('frontend.equipment.category',
+                            $equipmentType->parent()->parent()->parent()));
+                    }
                     $trail->push($equipmentType->parent()->parent()->title, route('frontend.equipment.category',
                         $equipmentType->parent()->parent()));
                 }
-
                 $trail->push($equipmentType->parent()->title, route('frontend.equipment.category',
                     $equipmentType->parent()));
             }
 
             $trail->push($equipmentType->title);
-
 
         });
 
@@ -58,22 +53,20 @@ Route::prefix('equipment')->group(function () {
 
 
             if ($equipmentItem->equipment_type() != null) {
-                // TODO: Test
-                
-                // Only look upto one parents for now
                 $type = $equipmentItem->equipment_type;
 
-                if ($equipmentType->parent()->parent()->parent() != null) {
-                    $trail->push($equipmentType->parent()->parent()->parent()->title, route('frontend.equipment.category',
-                        $equipmentType->parent()->parent()->parent()));
-                }
                 if ($type->parent() != null) {
+                    if ($type->parent()->parent() != null) {
+                        if ($type->parent()->parent()->parent() != null) {
+                            $trail->push($type->parent()->parent()->parent()->title, route('frontend.equipment.category',
+                                $type->parent()->parent()->parent()));
+                        }
+                        $trail->push($type->parent()->parent()->title, route('frontend.equipment.category',
+                            $type->parent()->parent()));
+                    }
                     $trail->push($type->parent()->title, route('frontend.equipment.category',
                         $type->parent()));
                 }
-
-                $trail->push($type->title, route('frontend.equipment.category',
-                    $type));
             }
 
             $trail->push($equipmentItem->title);
