@@ -30,4 +30,9 @@ class EquipmentItem extends Model
         return null;
     }
 
+    // To create the pivot many-to-many relationship
+    public function stations()
+    {
+        return $this->belongsToMany(Stations::class, 'equipment_item_stations');
+    }
 }
