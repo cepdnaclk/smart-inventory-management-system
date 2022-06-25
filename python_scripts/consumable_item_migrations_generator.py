@@ -56,7 +56,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} resistor', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '1/4W', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '12'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} resistor', 'quantity' => '{quantity}', 'specifications' => '', 'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '12'),\n")
    id += 1
 
 inputData = '''10Ω	100	0.50	50.00	TRUE	TRUE
@@ -99,7 +99,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} resistor', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '1/4W', 'formFactor' => '1206', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '13'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} resistor', 'quantity' => '{quantity}', 'specifications' => '', 'formFactor' => '1206',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '13'),\n")
    id += 1
 
 inputData = '''0.1uF	50	1.50	75.00	TRUE	FALSE
@@ -126,7 +126,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} capacitor', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '1206', 'voltageRating' => '16V', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '15'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} capacitor', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '1206', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '15'),\n")
    id += 1
 
 inputData = '''100	50	0.75	37.50	TRUE	FALSE
@@ -168,7 +168,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title}uF capacitor', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '16'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title}uF capacitor', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '16'),\n")
    id += 1
 
 inputData = '''1pF	100	2.00	200.00	TRUE	TRUE
@@ -209,7 +209,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} capacitor', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '1206', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '17'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} capacitor', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '1206',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '17'),\n")
    id += 1
 
 inputData = '''1pF	100	2.00	200.00	TRUE	TRUE
@@ -250,7 +250,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} capacitor', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '1206', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '17'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} capacitor', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '1206',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '17'),\n")
    id += 1
 
 inputData = '''1N4001	30	1.50	45.00	TRUE	TRUE
@@ -264,7 +264,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} diode', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '1206', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '19'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} diode', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '1206',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '19'),\n")
    id += 1
 
 inputData = '''Straight 40 pin male headers (Black)	30	12.00	360.00	TRUE	TRUE
@@ -282,7 +282,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} diode', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '22'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} diode', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '22'),\n")
    id += 1
 
 inputData = '''Red (5mm, Difussed) 	100	1.75	175.00	TRUE	TRUE
@@ -301,7 +301,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} LED', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '24'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} LED', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '24'),\n")
    id += 1
 
 inputData = '''White (meters)	25	25.00	625.00	TRUE	TRUE
@@ -315,7 +315,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Single core wire', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '27'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Single core wire', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '27'),\n")
    id += 1
 
 inputData = '''7400	12	38.00	456.00	TRUE	TRUE
@@ -331,7 +331,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} logic IC', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => 'DIP 0.1\"', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '31'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} logic IC', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => 'DIP 0.1\"',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '31'),\n")
    id += 1
 
 inputData = '''74138	6	22.00	132.00	TRUE	TRUE
@@ -350,7 +350,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} IC', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => 'DIP 0.1\"', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '32'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} IC', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => 'DIP 0.1\"',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '32'),\n")
    id += 1
 
 inputData = '''NE555	7	15.00	105.00	TRUE	TRUE
@@ -365,7 +365,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} IC', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => 'DIP 0.1\"', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '33'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} IC', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => 'DIP 0.1\"',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '33'),\n")
    id += 1
 
 inputData = '''7805	10	24.00	240.00	TRUE	TRUE
@@ -382,7 +382,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Power regulator', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '34'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Power regulator', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '34'),\n")
    id += 1
 
 
@@ -403,7 +403,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Transistor', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '35'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Transistor', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '35'),\n")
    id += 1
 
 
@@ -423,7 +423,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Crystal oscillators (2pins)', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '36'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Crystal oscillators (2pins)', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '36'),\n")
    id += 1
 
 
@@ -441,7 +441,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} DIP switch', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '38'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} DIP switch', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '38'),\n")
    id += 1
 
 
@@ -460,7 +460,7 @@ for eachLine in inputData.split("\n"):
 
    if not(is_in_lab):
        continue
-   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Port', 'quantity' => '{quantity}', 'specifications' => '', 'description' => '', 'instructions' => NULL, 'powerRating' => '', 'formFactor' => '', 'voltageRating' => '', 'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '39'),\n")
+   outputFile.write(f"        array('id' => '{id}', 'code' => '', 'title' => '{title} Port', 'quantity' => '{quantity}', 'specifications' => '',  'formFactor' => '',  'datasheetURL' => '', 'price' => '{unit_price}', 'thumb' => 'comit1002.jpg', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-09-02 05:41:38', 'consumable_type_id' => '39'),\n")
    id += 1
 
 

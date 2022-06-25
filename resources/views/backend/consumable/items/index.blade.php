@@ -41,8 +41,8 @@
                             {{--                            <th>Product Code<br/>and Brand</th>--}}
                             <th>Category</th>
                             {{--                            <th>Price (LKR)</th>--}}
-                            <th>Voltage Rating</th>
-                            <th>Power Rating</th>
+{{--                            <th>Voltage Rating</th>--}}
+                            <th>Form factor</th>
                             <th>Quantity</th>
                             {{--                            <th>Size</th>--}}
                             <th>&nbsp;</th>
@@ -61,8 +61,8 @@
                                         </a>
                                     @endif
                                 </td>
-                                <td>{{ $cm->voltageRating }}</td>
-                                <td>{{ $cm->powerRating }}</td>
+                                <td>{{ $cm->formFactor }}</td>
+{{--                                <td>{{ $cm->powerRating }}</td>--}}
                                 <td>{{ $cm->quantity }}</td>
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">

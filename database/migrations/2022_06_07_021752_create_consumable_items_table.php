@@ -20,12 +20,12 @@ class CreateConsumableItemsTable extends Migration
             $table->integer("quantity")->nullable()->default(0);
 
             $table->text("specifications")->nullable();
-            $table->text("description")->nullable();
-            $table->text("instructions")->nullable();
+//            $table->text("description")->nullable();
+//            $table->text("instructions")->nullable();
 
-            $table->float("powerRating")->nullable();
+//            $table->float("powerRating")->nullable();
             $table->text("formFactor")->nullable();
-            $table->text("voltageRating")->nullable();
+//            $table->text("voltageRating")->nullable();
             $table->text("datasheetURL")->nullable();
             $table->float("price")->nullable(); // in LKR
             $table->string('thumb')->nullable();
