@@ -30,4 +30,7 @@ class StationController extends Controller
         return view('frontend.stations.station', compact('stations', 'equipment'));
         
     }
+
+    
+
 }

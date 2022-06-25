@@ -58,7 +58,7 @@
                     <ul>
                         @foreach($equipment as $eq)
                             <li>
-                            <a href="">{{ $eq->title}}</a>
+                            <a href="{{ route('frontend.equipment.item', $eq) }}">{{ $eq->title}}</a>
                             </li>
                         @endforeach
                     </ul>
