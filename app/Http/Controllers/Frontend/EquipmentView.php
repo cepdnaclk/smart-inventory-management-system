@@ -29,4 +29,4 @@ class EquipmentView extends Controller
     {
         return view('frontend.equipment.item', compact('equipmentItem'));
     }
-}
+} 

@@ -1,9 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\FullCalendarController;
+use App\Http\Controllers\Frontend\StationController;
 
 
 /*
@@ -21,6 +23,19 @@ Route::get('lang/{lang}', [LocaleController::class, 'change'])->name('locale.cha
 Route::group(['as' => 'frontend.'], function () {
     includeRouteFiles(__DIR__ . '/frontend/');
 });
+
+
+// Station- home page 
+Route::get('/stations', function(){
+    return view ('frontend.stations.index');
+});
+
+// To list the stations
+Route::get('/stations',[StationController::class, 'index'])->name('stations');
+// To list tools of a station
+Route::get('/stations/{station}',[StationController::class, 'viewStation'])->name('stations');
+
+
 
 /*
  * Backend Routes

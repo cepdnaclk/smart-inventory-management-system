@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-
+ 
 @section('title', $equipmentType->title )
 
 @section('content')
@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <h3>{{ $equipmentType->title }}</h3>
-
+ 
                 @if($equipmentType->children()->count() != 0)
                     <div class="container pt-2">Sub-Categories</div>
                     <div class="container pt-2">
