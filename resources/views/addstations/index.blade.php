@@ -1,10 +1,14 @@
-@extends('addstations.layout')
+@extends('frontend.layouts.app')
+
+
 @section('content')
     <div class="container">
         <div class="row">
  
             <div class="col-md-9">
+                <br>
                 <div class="card">
+                    
                     <div class="card-header">Stations</div>
                     <div class="card-body">
                         <a href="{{ url('/addstation/create') }}" class="btn btn-success btn-sm" title="Add New Station">

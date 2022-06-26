@@ -1,7 +1,8 @@
-@extends('addstations.layout')
+@extends('frontend.layouts.app')
+
 @section('content')
  
- 
+
 <div class="card">
   <div class="card-header">Contactus Page</div>
   <div class="card-body">
@@ -18,3 +19,5 @@
   
   </div>
 </div>
+
+@stop
