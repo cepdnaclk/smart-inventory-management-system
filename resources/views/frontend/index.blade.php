@@ -104,6 +104,7 @@
                 GitHub</a>
             <a href="/components">Components</a>
             <a href="/equipment">Equipment</a>
+            <a href="/stations">Stations</a>
 
         </div><!--links-->
     </div><!--content-->
