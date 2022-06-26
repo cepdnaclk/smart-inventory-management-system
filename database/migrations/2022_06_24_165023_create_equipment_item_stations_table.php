@@ -15,11 +15,10 @@ class CreateEquipmentItemStationsTable extends Migration
     {
         Schema::create('equipment_item_stations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('equipment_item_id')->constrained()->references('id')->on('equipment_items');
-            $table->foreignId('stations_id')->constrained()->references('id')->on('stations');
+            $table->foreignId('equipment_item_id')->constrained()->references('id')->onDelete('cascade')->on('equipment_items');
+            $table->foreignId('stations_id')->constrained()->references('id')->onDelete('cascade')->on('stations');
         });
     }
-
     /**
      * Reverse the migrations.
      *
