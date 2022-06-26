@@ -35,6 +35,7 @@ Route::get('/stations',[StationController::class, 'index'])->name('stations');
 Route::get('/stations/{station}',[StationController::class, 'viewStation'])->name('stations');
 
 
+
 /*
  * Backend Routes
  *

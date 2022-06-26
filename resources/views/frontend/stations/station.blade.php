@@ -37,7 +37,12 @@
                         <tr>
                             <td>Capacity</td>
                             <td>
-                                : <b>1-{{ $stations->capacity }} students per table</b>
+                                @if($stations->capacity > 1)
+                                    : <b>1-{{ $stations->capacity }} students per table</b>
+                                @else
+                                    : <b>{{ $stations->capacity }} student per table</b>
+                                @endif
+
                             </td>
                         </tr>
                         
@@ -58,7 +63,7 @@
                     <ul>
                         @foreach($equipment as $eq)
                             <li>
-                            <a href="">{{ $eq->title}}</a>
+                            <a href="{{ route('frontend.equipment.item', $eq) }}">{{ $eq->title}}</a>
                             </li>
                         @endforeach
                     </ul>

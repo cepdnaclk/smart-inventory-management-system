@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-
+ 
 @section('title', $equipmentType->title )
 
 @section('content')
