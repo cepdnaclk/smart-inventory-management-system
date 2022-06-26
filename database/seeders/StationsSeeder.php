@@ -11,7 +11,7 @@ class StationsSeeder extends Seeder
 
     protected $data = [
     
-        array('id' => '1', 'stationName' => 'Measuring station', 'description' => '','thumb' => '1629197752.jpg',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
+        array('id' => '1', 'stationName' => 'Measuring station', 'description' => '','thumb' => '',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
         array('id' => '2', 'stationName' => 'Soldering station', 'description' => '','thumb' => '',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
         array('id' => '3', 'stationName' => 'Assembly station', 'description' => '','thumb' => '',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
         

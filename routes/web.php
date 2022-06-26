@@ -6,6 +6,7 @@ use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\FullCalendarController;
 use App\Http\Controllers\Frontend\StationController;
+use App\Http\Controllers\AddStationController;
 
 
 /*
@@ -36,6 +37,8 @@ Route::get('/stations',[StationController::class, 'index'])->name('stations');
 Route::get('/stations/{station}',[StationController::class, 'viewStation'])->name('stations');
 
 
+// To add new station
+Route::resource('/addstation', AddStationController::class);
 
 /*
  * Backend Routes
