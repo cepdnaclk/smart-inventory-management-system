@@ -1,4 +1,5 @@
-@extends('addstations.layout')
+@extends('frontend.layouts.app')
+
 @section('content')
  
 <div class="card">
