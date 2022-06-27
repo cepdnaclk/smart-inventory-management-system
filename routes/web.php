@@ -25,21 +25,6 @@ Route::group(['as' => 'frontend.'], function () {
     includeRouteFiles(__DIR__ . '/frontend/');
 });
 
-
-// Station- home page 
-Route::get('/stations', function(){
-    return view ('frontend.stations.index');
-});
-
-// To list the stations
-Route::get('/stations',[StationController::class, 'index'])->name('stations');
-// To list tools of a station
-Route::get('/stations/{station}',[StationController::class, 'viewStation'])->name('stations');
-
-
-// To add new station
-Route::resource('/addstation', AddStationController::class);
-
 /*
  * Backend Routes
  *
