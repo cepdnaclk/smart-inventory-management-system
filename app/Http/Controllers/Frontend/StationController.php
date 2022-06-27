@@ -23,6 +23,7 @@ class StationController extends Controller
     //Station details page
     public function viewStation($station){
         
+        
         $stations = Stations::find($station);
 
         $equipment = (Stations::with('equipment_items')->find($station))->equipment_items;
