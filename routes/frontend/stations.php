@@ -23,8 +23,6 @@ Route::prefix('stations')->group(function () {
         });
 
     // To list tools of a station
-    Route::get('/{station}',[StationController::class, 'viewStation'])->name('stations');
-
     Route::get('/{station}', [StationController::class, 'viewStation'])
         ->name('stations.station')
         ->breadcrumbs(function (Trail $trail, $station) {
