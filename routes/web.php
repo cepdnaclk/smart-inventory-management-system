@@ -25,6 +25,8 @@ Route::group(['as' => 'frontend.'], function () {
     includeRouteFiles(__DIR__ . '/frontend/');
 });
 
+Route::resource('/addstation', AddStationController::class);
+
 /*
  * Backend Routes
  *
