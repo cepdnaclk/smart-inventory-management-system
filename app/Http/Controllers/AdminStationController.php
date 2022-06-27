@@ -70,7 +70,7 @@ class AdminStationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Stations $station)
     {
         return view('backend.station.show', compact('station'));
     }
@@ -81,7 +81,7 @@ class AdminStationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Stations $station)
     {
         //$station = Stations::find($id);
         //return view('addstations.edit')->with('stations', $station);
@@ -96,7 +96,7 @@ class AdminStationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Stations $station)
     {
  
                 $data = request()->validate([
