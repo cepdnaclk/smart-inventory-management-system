@@ -18,5 +18,12 @@ class Stations extends Model
         return $this->belongsToMany(EquipmentItem::class, 'equipment_item_stations');
     }
 
+    // Return the relative URL of the thumbnail
+    public function thumbURL()
+    {
+        if ($this->thumb != null) return '/img/stations/' . $this->thumb;
+        return null;
+    }
+
     
 }
