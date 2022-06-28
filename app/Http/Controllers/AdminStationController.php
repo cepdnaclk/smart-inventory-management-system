@@ -76,9 +76,16 @@ class AdminStationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /*
     public function show(Stations $station)
     {
         return view('backend.station.show', compact('station'));
+    }
+*/
+    public function show($id)
+    {
+        $station = Stations::find($id);
+        return view('backend.station.show')->with('stations', $station);
     }
 
     /**
@@ -87,12 +94,12 @@ class AdminStationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Stations $station)
+    public function edit($id)
     {
-        //$station = Stations::find($id);
-        //return view('addstations.edit')->with('stations', $station);
-        $types = Station::pluck('stationName', 'id');
-        return view('backend.station.edit', compact('station'));
+        $station = Stations::find($id);
+        return view('backend.station.edit')->with('stations', $station);
+        //$stations = Stations::pluck('stationName', 'id');
+        //return view('backend.station.edit', compact('station'));
     }
 
     /**
@@ -133,9 +140,12 @@ class AdminStationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Station $station)
+    public function delete($id)
     {
-        return view('backend.station.delete', compact('station'));
+        Stations::destroy($id);
+        return view('backend.station.delete')->with('flash_message', 'Station deleted!');  
+
+        //return view('backend.station.delete', compact('station'));
     }
 
     /**
