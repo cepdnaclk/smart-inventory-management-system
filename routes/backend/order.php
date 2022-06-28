@@ -7,9 +7,18 @@ use Tabuna\Breadcrumbs\Trail;
 
 // Lecturer Order request  Routes ----------------------------------------------------------------------------
 Route::middleware(['role:Administrator|Lecturer'])->group(function () {
+// Technical Officer Routes ----------------------------------------------------------------------------
+
+// index
+Route::get('/orders/officer', [OrderController::class, 'officer_index'])
+        ->name('orders.officer.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Requests'),);
+        });
 
 
-
+//------------------------------------------------------------------------------------------------------
 
  // index
  Route::get('/orders/lecturer', [OrderController::class, 'lecturer_index'])
@@ -88,8 +97,15 @@ Route::delete('orders/{order}', [OrderController::class, 'destroy'])
 
 
 
-    // Lecturer  Routes ----------------------------------------------------------------------------
-
+// Technical Officer Routes ----------------------------------------------------------------------------
+// Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
+//     Route::get('/orders/officer', [OrderController::class, 'officer_index'])
+//         ->name('orders.officer.index')
+//         ->breadcrumbs(function (Trail $trail) {
+//             $trail->push(__('Home'), route('admin.dashboard'))
+//                 ->push(__('Requests'),);
+//         });
+// });
 
   
    

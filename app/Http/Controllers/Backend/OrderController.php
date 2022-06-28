@@ -155,4 +155,13 @@ class OrderController extends Controller
     public function lecturer_show(Order $order){
    return view('backend.orders.lecturer.show',compact('order'));
     }
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+//technical-officer
+
+    public function officer_index()
+    {
+        return view('backend.orders.technical-officer.index');
+    }
+
 }
