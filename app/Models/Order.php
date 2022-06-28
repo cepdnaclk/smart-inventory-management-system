@@ -8,6 +8,7 @@ use App\Domains\Auth\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Locker;
 
 class Order extends Model
 {
@@ -46,4 +47,8 @@ class Order extends Model
         return $this->hasOne(OrderApproval::class);
     }
    
+    public function locker()
+    {
+        return $this->hasOne(Locker::class);
+    }
 }
