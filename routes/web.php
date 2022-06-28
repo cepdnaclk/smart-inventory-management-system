@@ -7,6 +7,8 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\FullCalendarController;
 use App\Http\Controllers\Frontend\StationController;
 use App\Http\Controllers\AddStationController;
+use App\Http\Controllers\AdminStationController;
+//use App\Http\Controllers\Backend\AdminStationController;
 
 
 /*
@@ -26,8 +28,11 @@ Route::group(['as' => 'frontend.'], function () {
 });
 
 
-
+//add stations
 Route::resource('/addstation', AddStationController::class);
+
+//add stations as admin new
+Route::resource('/addstationadmin', AdminStationController::class);
 
 /*
  * Backend Routes
