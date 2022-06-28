@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class EquipmentItem extends Model
+
+class EquipmentItem extends Model implements Searchable
 {
     use HasFactory;
 
@@ -28,6 +31,16 @@ class EquipmentItem extends Model
     {
         if ($this->thumb != null) return '/img/equipment_items/' . $this->thumb;
         return null;
+    }
+
+
+    public function getSearchResults():SearchResults{
+        $url = route('admin.search.index',$this->slug);
+        return new SearchResult(
+            $this,
+            $this->title,
+            $url
+        );
     }
 
 }
