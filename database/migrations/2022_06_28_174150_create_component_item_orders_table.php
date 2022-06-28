@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComponentItemOrderTable extends Migration
+class CreateComponentItemOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateComponentItemOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('component_item_order', function (Blueprint $table) {
+        Schema::create('component_item_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->timestamps();
@@ -43,7 +43,6 @@ class CreateComponentItemOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('component_item_order');
+        Schema::dropIfExists('component_item_orders');
     }
 }
-

@@ -17,7 +17,9 @@ class Order extends Model
 
     public function componentItems()
     {
-        return $this->belongsToMany(ComponentItem::class)->withPivot('quantity');   
+        //return $this->belongsToMany(ComponentItem::class)->withPivot('quantity');   
+        return $this->belongsToMany(ComponentItem::class, ComponentItemOrder::class)->withPivot('quantity'); 
+    
     }
 
     public function user()
