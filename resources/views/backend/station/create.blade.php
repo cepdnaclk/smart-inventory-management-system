@@ -1,10 +1,11 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Station'))
+@section('stationName', __('Station'))
  
 @section('content')
     <div>
-    <form action="{{ url('addstationadmin') }}" method="post">
+    <form action="{{ url('addstationadmin') }}" method="post" class ="container"
+    files="true" enctype="multipart/form-data" >
         {!! csrf_field() !!}
         <x-backend.card>
             <x-slot name="header">
