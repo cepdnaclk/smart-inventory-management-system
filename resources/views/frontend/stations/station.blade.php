@@ -69,6 +69,11 @@
                     </ul>
                 </div>
 
+                <div class="pt-3">
+                    <b><a href="calendar/index" style="float:right; font-size: 18px; text-decoration: underline;" >Make Reservation</a></b>
+                </div>
+
+
                 
             </div>
         </div>

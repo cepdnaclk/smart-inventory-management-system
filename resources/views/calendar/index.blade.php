@@ -78,6 +78,8 @@
                     right: 'month, agendaWeek, agendaDay'
 
                 },
+
+                
                 events: booking,
                 selectable: true,
                 selectHelper: true,
