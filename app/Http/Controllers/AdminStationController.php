@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+
 use App\Models\Stations;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class AdminStationController extends Controller
 
@@ -109,7 +115,7 @@ class AdminStationController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentItem->thumbURL(), $request->thumb, "station");
+                $data['thumb'] = $this->uploadThumb($station->thumbURL(), $request->thumb, "station");
             }
 
             $station->update($data);
