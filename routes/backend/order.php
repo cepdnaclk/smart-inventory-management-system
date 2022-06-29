@@ -4,18 +4,30 @@ use App\Http\Controllers\Backend\OrderController;
 use App\Models\Order;
 use Tabuna\Breadcrumbs\Trail;
 
+//Technical Officer Routes ----------------------------------------------------------------------------
+Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
+    // index
+    Route::get('/orders/officer', [OrderController::class, 'officer_index'])
+        ->name('orders.officer.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+            ->push(__('orders'), route('admin.orders.index'))//not yet implemented
+            ->push(__('Technical Officer'), route('admin.orders.officer.index'));;
+        });
+});
+
 
 // Lecturer Order request  Routes ----------------------------------------------------------------------------
 Route::middleware(['role:Administrator|Lecturer'])->group(function () {
 // Technical Officer Routes ----------------------------------------------------------------------------
 
-// index
-Route::get('/orders/officer', [OrderController::class, 'officer_index'])
-        ->name('orders.officer.index')
-        ->breadcrumbs(function (Trail $trail) {
-            $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Requests'),);
-        });
+// // index
+// Route::get('/orders/officer', [OrderController::class, 'officer_index'])
+//         ->name('orders.officer.index')
+//         ->breadcrumbs(function (Trail $trail) {
+//             $trail->push(__('Home'), route('admin.dashboard'))
+//                 ->push(__('Requests'),);
+//         });
 
 
 //------------------------------------------------------------------------------------------------------
@@ -96,17 +108,4 @@ Route::delete('orders/{order}', [OrderController::class, 'destroy'])
     ->name('orders.destroy');
 
 
-
-// Technical Officer Routes ----------------------------------------------------------------------------
-// Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
-//     Route::get('/orders/officer', [OrderController::class, 'officer_index'])
-//         ->name('orders.officer.index')
-//         ->breadcrumbs(function (Trail $trail) {
-//             $trail->push(__('Home'), route('admin.dashboard'))
-//                 ->push(__('Requests'),);
-//         });
-// });
-
-  
-   
-
+?>

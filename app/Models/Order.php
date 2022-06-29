@@ -53,4 +53,12 @@ class Order extends Model
     {
         return $this->hasOne(Locker::class);
     }
+
+    public static function ordersForTechOfficer()
+    {
+        // Waiting for TechOfficer approval
+        $orders_approval_for_officer = Order::where('status', 'WAITING_TECHNICAL_OFFICER_APPROVAL')->get();
+
+        return $orders_approval_for_officer;
+    }
 }

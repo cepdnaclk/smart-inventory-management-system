@@ -29,17 +29,25 @@
 
                     <table class="table table-striped">
                         <tr>
-                            <th>OrderID</th>
-                            <th>UserName</th>
-                            <th>Components</th>
-                            <th>Status</th>
-                            <th>&nbsp;</th>
+                            <th>Order_id</th>
+                            <th>Lecurer id</th>
+                            <th>is_approved_by_lecturer</th>
+                            <th>Technical officer id</th>
+                            <th>is_approved_by_TO</th>
                         </tr>
 
-                        {{-- @foreach($jobs as $job)
-
+                        @foreach($orderApprovals as $orderApproval)
+                        <tr>
+                            <td>{{ $orderApproval->order_id }}</td>
+                            <td>{{ $orderApproval->lecurer_id }}</td>
+                            <td>{{ $orderApproval->is_approved_by_lecturer }}</td>
+                            <td>{{ $orderApproval->technical_officer_id }}</td>
+                            <td>{{ $orderApproval->is_approved_by_TO }}</td>
+                        </tr>
+    
+{{-- 
                             <tr>
-                                <td>Job #{{ $job->id }}</td>
+                                <td>{{ $orderApproval->order_id }}</td>
                                 <th>{{ \App\Models\JobRequests::job_status()[$job->status]  }}</th>
                                 <td>
                                     @if($job->machine_info() != null)
@@ -76,10 +84,10 @@
                                     </div>
                                 </td>
 
-                            </tr>
-                        @endforeach --}}
-                    </table>
+                            </tr> --}}
+                        @endforeach
 
+                    </table>
                 </div>
             </x-slot>
         </x-backend.card>
