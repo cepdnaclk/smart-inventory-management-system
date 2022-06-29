@@ -20,11 +20,12 @@
                     <div class="d-flex">
                         <h4>Order#{{ $order->id }}</h4>
                     </div>
+                    @if ($order->orderApprovals->is_approved_by_lecturer==0)
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
                         <div class="btn-group" role="group" aria-label="Modify Buttons">
-                            <a 
-                               class="btn btn-primary btn-xs me-2"><i class="fa fa-check" title="Approve"></i>
-                                Approve
+                            <a href="{{ route('admin.orders.lecturer.approve', $order)}}"
+                            class="btn btn-primary btn-xs me-2"><i class="fa fa-check" title="Approve"></i>
+                             Approve
                             </a>
 
                             <a 
@@ -33,6 +34,8 @@
                             </a>
                         </div>
                     </div>
+                    @endif
+                  
                 </div>
                 <table class="table">
 

@@ -26,7 +26,7 @@ class CreateOrderApprovalsTable extends Migration
             ->on('orders');
      
 
-            $table->foreignId('lecurer_id')
+            $table->foreignId('lecturer_id')
             ->constrained()
             ->references('id')
             ->onDelete('cascade')

@@ -132,15 +132,17 @@
                             </div>
                         </a>
                     </div>
-
+                    @if ($logged_in_user->isLecturer() )
                     <div class="col-md-3">
                         <a class="text-decoration-none" href="{{ route('admin.orders.lecturer.index') }}">
                             <div class="card-counter request">
-                                <span class="count-numbers">18</span>
-                                <span class="count-name">Orders request</span>
+                                <span class="count-numbers">{{$orderrequest_lecturer}}</span>
+                                <span class="count-name">Order request</span>
                             </div>
                         </a>
                     </div>
+                    @endif
+                   
                 </div>
             </div>
         </x-slot>
