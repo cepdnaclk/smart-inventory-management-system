@@ -1,12 +1,20 @@
 @extends('backend.layouts.app')
 
 @section('stationName', __('Station'))
- 
+
+@section('breadcrumb-links')
+    @include('backend.station.includes.breadcrumb-links')
+@endsection 
+
 @section('content')
     <div>
-    <form action="{{ url('addstationadmin') }}" method="post" class ="container"
-    files="true" enctype="multipart/form-data" >
-        {!! csrf_field() !!}
+    {!! Form::open(['url' => route('admin.station.store'),
+            'method' => 'post',
+            'class' => 'container',
+            'files'=>true,
+            'enctype'=>'multipart/form-data'
+        ]) !!}
+
         <x-backend.card>
             <x-slot name="header">
                 Station : Create
@@ -71,6 +79,6 @@
 
         </x-backend.card>
 
-        </form>
+        {!! Form::close() !!}
     </div>
 @endsection

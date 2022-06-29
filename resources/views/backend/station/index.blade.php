@@ -3,7 +3,7 @@
 @section('title', __('Station'))
 
 @section('breadcrumb-links')
-    @include('backend.equipment.includes.breadcrumb-links')
+    @include('backend.station.includes.breadcrumb-links')
 @endsection 
 
 @section('content')
@@ -18,7 +18,7 @@
                     <x-utils.link
                             icon="c-icon cil-plus"
                             class="card-header-action"
-                            href="{{ url('/addstationadmin/create') }}"
+                            :href="route('admin.station.create')"
                             :text="__('Create Station')"></x-utils.link>
                 </x-slot>
             @endif
@@ -54,14 +54,14 @@
 
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ url('/addstationadmin/' . $st->id) }}"
+                                            <a href="{{ route('admin.station.show', $st)}}"
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
-                                            <a href="{{ url('/addstationadmin/' . $st->id . '/edit') }}"
+                                            <a href="{{ route('admin.station.edit', $st)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
-                                            <a href="{{ url('/addstationadmin/' . $st->id . '/delete') }}"
+                                            <a href="{{ route('admin.station.delete', $st)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
                                                                                 title="Delete"></i>
                                             </a>
