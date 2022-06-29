@@ -7,6 +7,7 @@ use App\Models\ComponentItem;
 use App\Models\ComponentType;
 use App\Models\EquipmentItem;
 use App\Models\EquipmentType;
+use App\Models\Stations;
 
 /**
  * Class DashboardController.
@@ -23,7 +24,8 @@ class DashboardController
         $equipmentTypeCount = EquipmentType::all()->count();
         $componentCount = ComponentItem::all()->count();
         $componentTypeCount = ComponentType::all()->count();
+        $stationCount = Stations::all()->count();
 
-        return view('backend.dashboard', compact('userCount', 'equipmentCount', 'equipmentTypeCount', 'componentCount', 'componentTypeCount'));
+        return view('backend.dashboard', compact('userCount', 'equipmentCount', 'equipmentTypeCount', 'componentCount', 'componentTypeCount', 'stationCount'));
     }
 }
