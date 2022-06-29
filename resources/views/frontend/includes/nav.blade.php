@@ -74,8 +74,8 @@
 
                             @if ($logged_in_user->isUser())
                                 <x-utils.link
-                                        :href="route('frontend.user.dashboard')"
-                                        :active="activeClass(Route::is('frontend.user.dashboard'))"
+                                        :href="route('frontend.user.products')"
+                                        :active="activeClass(Route::is('frontend.user.products'))"
                                         :text="__('Dashboard')"
                                         class="dropdown-item"></x-utils.link>
                             @endif

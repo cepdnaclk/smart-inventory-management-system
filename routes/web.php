@@ -41,5 +41,7 @@ Route::prefix('admin')->as('admin.')->middleware(['auth'])->group(function () {
 
 
 
+// Route::view("ordercomp",'frontend/user/ordercomp');
 
+// Route::get("ordercomp",[CartController::class,'compOrder']);
 

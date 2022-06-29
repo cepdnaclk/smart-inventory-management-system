@@ -30,6 +30,12 @@ class CartController
         return view('frontend.user.products', compact('componentItem'));
     }
 
+    public function compOrder()
+    {
+        $componentItem = ComponentItem::all();
+        return view('frontend.user.ordercomp', compact('componentItem'));
+    }
+
     public function cart()
     {
         return view('frontend.user.cart');

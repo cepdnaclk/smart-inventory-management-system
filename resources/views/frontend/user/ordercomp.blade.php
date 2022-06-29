@@ -1,16 +1,57 @@
 @extends('frontend.layouts.app')
 
-@section('title', ($componentItem->title))
+@section('title', __('Component details'))
 
-@push('after-styles')
-    <style>
-        td {
-        padding: 1px 12px 1px 0;
-        }
-    </style>
-@endpush
+@section('content') 
 
-@section('content')
+    <!--Home/Component navigation bar  -->
+    <nav id="breadcrumbs" aria-label="breadcrumb">
+        <ol class="container breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="http://127.0.0.1:8000" class="">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                @yield('title')
+            </li>
+        </ol>
+    </nav>
+
+    <!-- View of the cart components -->
+    <div class="cartcomponents">
+        <div class="row total-header-section">
+            <div class="col-lg-5 col-sm-5 col-5">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+            </div>
+                @php $total = 0 @endphp
+                @foreach((array) session('cart') as $id => $details)
+                @php $total +=  $details['quantity'] @endphp
+                @endforeach
+                <div class="col-lg-7 col-sm-7 col-7 total-section text">
+                <p>Products : <span class="text-info"> {{ $total }}  </span></p>
+                </div>
+        </div>
+        @if(session('cart'))
+            @foreach(session('cart') as $id => $details)
+                <div class="row cart-detail">
+                    <div class="col-lg-2 col-sm-2 col-2 cart-detail-img">
+                        <img src="{{ $details['image'] }}" />
+                    </div>
+                    <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                        {{ $details['name'] }}
+                        <span class="count"> Quantity : {{ $details['quantity'] }}</span>
+                    </div>
+                </div>
+                <br>
+            @endforeach
+        @endif
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                <a href="{{ route('frontend.user.cart') }}" class="btn btn-primary btn-block">View all</a>
+            </div>
+
+        </div>
+    </div>
+
     <div class="container py-4">
         <div class="row">
             <div class="col-md-4 col-sm-12 col-12 d-flex mb-4">
@@ -124,8 +165,34 @@
                     </div>
                 @endif
 
+
+                
             </div>
+
+            <div class="col-md-8 col-sm-12 col-12 mb-4">
+                <!-- <div class="pt-3">
+                    <label for="quantity">No. of components reserving:</label>
+                    <input type="number" id="quantity" name="quantity" min="1"><br>
+                </div> -->
+
+                <div class="pt-3">
+                    <p class="btn-holder">
+                        <a href="{{ route('frontend.user.addToCart', $componentItem->id) }}" class="btn btn-warning" role="button">Add to cart</a>
+                    </p>
+                </div>
+
+                <a href="{{ route('frontend.user.products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to components</a>
+
+            </div>
+
         </div>      
 
     </div>
+    
+    
+    
+
+
+
+    
 @endsection

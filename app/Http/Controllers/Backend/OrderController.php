@@ -156,6 +156,59 @@ class OrderController extends Controller
    return view('backend.orders.lecturer.show',compact('order'));
     }
 
+//---------------------------------------------------------------------------------------------------------------------------------------
+//technical-officer
+
+    public function officer_index()
+    {
+        $tech_officer_id = auth()->user()->id;
+        //dd(\Auth::user()->id);
+    
+        $orderApprovals = OrderApproval::where('technical_officer_id',$tech_officer_id)->where('is_approved_by_lecturer', '=', 1)->get();
+        
+        //$o_id = $orderApprovals -> order_id;
+        //dd($orderApprovals);
+
+        return view('backend.orders.technical-officer.index', compact('orderApprovals'));
+    }
+
+    // public function officer_show(JobRequests $jobRequests)
+    // {
+    //     return view('backend.jobs.technical-officer.show', compact('jobRequests'));
+    // }
+
+    // public function supervisor_approve(JobRequests $jobRequests)
+    // {
+    //     dd('Approved');
+    //     // TODO: The logic to be implemented
+    //     // Send an email to the student
+    //     // Send an email to the TO
+    //     // Update the status into 'PENDING_FABRICATION'
+    //     // Update timestamp details
+    //     return redirect()->route('admin.jobs.supervisor.index');
+    // }
+
+    // public function supervisor_reject(JobRequests $jobRequests)
+    // {
+    //     dd('Rejected');
+    //     // TODO: The logic to be implemented
+    //     // Send an email to the student
+    //     // Update the status into 'NOT_APPROVED'
+    //     // Update timestamp details
+    //     return redirect()->route('admin.jobs.supervisor.index');
+    // }
+
+    // public function officer_finish(JobRequests $jobRequests)
+    // {
+    //     dd("Finished");
+    //     // TODO: Finish the job
+    //     // Send emails to Student and Lecturer about the finish notice
+    //     // Update machine timed, material usage, etc...
+    //     return redirect()->route('admin.jobs.officer.index');
+    // }
+
+    
+
 
     public function lecturer_approve(Order $order)
     {
