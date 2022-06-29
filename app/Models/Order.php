@@ -8,6 +8,7 @@ use App\Domains\Auth\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Locker;
 
 class Order extends Model
 {
@@ -16,7 +17,9 @@ class Order extends Model
 
     public function componentItems()
     {
-        return $this->belongsToMany(ComponentItem::class)->withPivot('quantity');   
+        //return $this->belongsToMany(ComponentItem::class)->withPivot('quantity');   
+        return $this->belongsToMany(ComponentItem::class, ComponentItemOrder::class)->withPivot('quantity'); 
+    
     }
 
     public function user()
@@ -46,4 +49,16 @@ class Order extends Model
         return $this->hasOne(OrderApproval::class);
     }
    
+    public function locker()
+    {
+        return $this->hasOne(Locker::class);
+    }
+
+    public static function ordersForTechOfficer()
+    {
+        // Waiting for TechOfficer approval
+        $orders_approval_for_officer = Order::where('status', 'WAITING_TECHNICAL_OFFICER_APPROVAL')->get();
+
+        return $orders_approval_for_officer;
+    }
 }
