@@ -53,7 +53,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 });
 
 
-Route::get('/stations/calendar/index', [CalendarController::class, 'index'])->name('calendar.index');
+// Route::get('/stations/calendar/index', [CalendarController::class, 'index'])->name('calendar.index');
 Route::post('calendar', [CalendarController::class, 'store'])->name('calendar.store');
 
 Route::patch('calendar/update/{id}', [CalendarController::class, 'update'])->name('calendar.update');

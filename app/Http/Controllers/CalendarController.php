@@ -30,7 +30,9 @@ class CalendarController extends Controller
         //     ];
         // }
 
-        $bookings = Reservation::all();
+        $bookings = Reservation::where('station_id', $station->id)->get();
+
+        // $bookings = Reservation::all();
         foreach($bookings as $booking){
             // $color = null;
             // if($booking->email == 'Try'){
@@ -46,7 +48,7 @@ class CalendarController extends Controller
             ];
         }
 
-        return view('calendar.index', ['events' => $events]);
+        return view('calendar.index', ['events' => $events, 'station' => $station]);
     }
 
     public function store(Request $request){
