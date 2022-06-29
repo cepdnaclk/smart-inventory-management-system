@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComponentItemOrderTable extends Migration
+class CreateLockersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,17 @@ class CreateComponentItemOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('component_item_order', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
+        Schema::create('lockers', function (Blueprint $table) {
+            $table->id();
+            $table->boolean('is_available')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
-
-            $table->integer('quantity')->default(0);
-
-            $table->foreignId('component_item_id')
-                ->constrained()
-                ->references('id')
-                ->onDelete('cascade')
-                ->on('component_items');
 
             $table->foreignId('order_id')
                 ->constrained()
                 ->references('id')
                 ->onDelete('cascade')
                 ->on('orders');
-
-
         });
     }
 
@@ -43,7 +34,6 @@ class CreateComponentItemOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('component_item_order');
+        Schema::dropIfExists('lockers');
     }
 }
-

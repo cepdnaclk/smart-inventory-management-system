@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Order;
 use Carbon\Carbon;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\OrderApproval;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -137,4 +139,104 @@ class OrderController extends Controller
             return abort(500);
         }
     }
+
+    public function lecturer_index()
+    {
+      
+        $id = auth()->user()->id;
+    
+        $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 0)->get();
+      //return response()->json($orderApproval, 200);
+      
+        return view('backend.orders.lecturer.index', compact('orderApproval'));
+    }
+
+
+    public function lecturer_show(Order $order){
+   return view('backend.orders.lecturer.show',compact('order'));
+    }
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+//technical-officer
+
+    public function officer_index()
+    {
+        $tech_officer_id = auth()->user()->id;
+        //dd(\Auth::user()->id);
+    
+        $orderApprovals = OrderApproval::where('technical_officer_id',$tech_officer_id)->where('is_approved_by_lecturer', '=', 1)->get();
+        
+        //$o_id = $orderApprovals -> order_id;
+        //dd($orderApprovals);
+
+        return view('backend.orders.technical-officer.index', compact('orderApprovals'));
+    }
+
+    // public function officer_show(JobRequests $jobRequests)
+    // {
+    //     return view('backend.jobs.technical-officer.show', compact('jobRequests'));
+    // }
+
+    // public function supervisor_approve(JobRequests $jobRequests)
+    // {
+    //     dd('Approved');
+    //     // TODO: The logic to be implemented
+    //     // Send an email to the student
+    //     // Send an email to the TO
+    //     // Update the status into 'PENDING_FABRICATION'
+    //     // Update timestamp details
+    //     return redirect()->route('admin.jobs.supervisor.index');
+    // }
+
+    // public function supervisor_reject(JobRequests $jobRequests)
+    // {
+    //     dd('Rejected');
+    //     // TODO: The logic to be implemented
+    //     // Send an email to the student
+    //     // Update the status into 'NOT_APPROVED'
+    //     // Update timestamp details
+    //     return redirect()->route('admin.jobs.supervisor.index');
+    // }
+
+    // public function officer_finish(JobRequests $jobRequests)
+    // {
+    //     dd("Finished");
+    //     // TODO: Finish the job
+    //     // Send emails to Student and Lecturer about the finish notice
+    //     // Update machine timed, material usage, etc...
+    //     return redirect()->route('admin.jobs.officer.index');
+    // }
+
+    
+
+
+    public function lecturer_approve(Order $order)
+    {
+        //to update the accepted table 
+        $order->orderApprovals->is_approved_by_lecturer=1;
+        $order->status="WAITING_TECHNICAL_OFFICER_APPROVAL";
+        $order->orderApprovals->save();
+        $order->save();
+
+
+        // TODO: The logic to be implemented
+        // Send an email to the student
+        // Send an email to the TO
+        // Update the status into 'PENDING_FABRICATION'
+        // Update timestamp details
+        return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approoved the order.you can view the order in accepted order list.');
+    }
+
+
+    public function lecturer_accepted_index()
+    {
+      
+        $id = auth()->user()->id;
+    
+        $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 1)->get();
+      //return response()->json($orderApproval, 200);
+      
+        return view('backend.orders.lecturer.accepted.index', compact('orderApproval'));
+    }
+ 
 }

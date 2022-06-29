@@ -7,6 +7,7 @@ use App\Models\ComponentItem;
 use App\Models\ComponentType;
 use App\Models\EquipmentItem;
 use App\Models\EquipmentType;
+use App\Models\OrderApproval;
 
 /**
  * Class DashboardController.
@@ -23,7 +24,8 @@ class DashboardController
         $equipmentTypeCount = EquipmentType::all()->count();
         $componentCount = ComponentItem::all()->count();
         $componentTypeCount = ComponentType::all()->count();
+        $orderrequest_lecturer=OrderApproval::where('lecturer_id',auth()->user()->id)->where('is_approved_by_lecturer', '=', 0)->count();
 
-        return view('backend.dashboard', compact('userCount', 'equipmentCount', 'equipmentTypeCount', 'componentCount', 'componentTypeCount'));
+        return view('backend.dashboard', compact('userCount', 'equipmentCount', 'equipmentTypeCount', 'componentCount', 'componentTypeCount','orderrequest_lecturer'));
     }
 }
