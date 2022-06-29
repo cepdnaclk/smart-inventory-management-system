@@ -187,13 +187,14 @@
                 <ul class="c-sidebar-nav-dropdown-items">
                     
                     @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
-                        <li class="c-sidebar-nav-item">
-                            <x-utils.link
-                                    :href="route('admin.orders.lecturer.index')"
-                                    class="c-sidebar-nav-link"
-                                    :text="__('Order - Lecturer')"></x-utils.link>
-                        </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.orders.lecturer.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Request')"></x-utils.link>
+                    </li>
                     @endif
+                    
 
                     @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
                         <li class="c-sidebar-nav-item">
@@ -205,12 +206,14 @@
                     @endif
                     
                     @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
-                        <li class="c-sidebar-nav-item">
-                            <x-utils.link
-                                    :href="route('admin.orders.lecturer.index')"
-                                    class="c-sidebar-nav-link"
-                                    :text="__('Accepted - Lecturer')"></x-utils.link>
-                        </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                             
+                        :href="route('admin.orders.lecturer.accepted.index')"
+                    
+                                class="c-sidebar-nav-link"
+                                :text="__('Accepted Oders')"></x-utils.link>
+                    </li>
                     @endif
 
                     @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
