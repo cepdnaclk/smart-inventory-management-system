@@ -195,6 +195,8 @@
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
                              
+                        :href="route('admin.orders.lecturer.accepted.index')"
+                    
                                 class="c-sidebar-nav-link"
                                 :text="__('Accepted Oders')"></x-utils.link>
                     </li>

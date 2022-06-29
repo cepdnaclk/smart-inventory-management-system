@@ -145,7 +145,7 @@ class OrderController extends Controller
       
         $id = auth()->user()->id;
     
-        $orderApproval=OrderApproval::where('lecurer_id',$id)->where('is_approved_by_lecturer', '=', 0)->get();
+        $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 0)->get();
       //return response()->json($orderApproval, 200);
       
         return view('backend.orders.lecturer.index', compact('orderApproval'));
@@ -155,4 +155,35 @@ class OrderController extends Controller
     public function lecturer_show(Order $order){
    return view('backend.orders.lecturer.show',compact('order'));
     }
+
+
+    public function lecturer_approve(Order $order)
+    {
+        //to update the accepted table 
+        $order->orderApprovals->is_approved_by_lecturer=1;
+        $order->status="WAITING_TECHNICAL_OFFICER_APPROVAL";
+        $order->orderApprovals->save();
+        $order->save();
+
+
+        // TODO: The logic to be implemented
+        // Send an email to the student
+        // Send an email to the TO
+        // Update the status into 'PENDING_FABRICATION'
+        // Update timestamp details
+        return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approoved the order.you can view the order in accepted order list.');
+    }
+
+
+    public function lecturer_accepted_index()
+    {
+      
+        $id = auth()->user()->id;
+    
+        $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 1)->get();
+      //return response()->json($orderApproval, 200);
+      
+        return view('backend.orders.lecturer.accepted.index', compact('orderApproval'));
+    }
+ 
 }

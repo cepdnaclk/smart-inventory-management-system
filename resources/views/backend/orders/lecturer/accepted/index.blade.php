@@ -9,25 +9,22 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-            Order Requests - Lecturer View
+            Order Accepted - Lecturer View
             </x-slot>
 
             <x-slot name="body">
-           
-
-                {{-- Message --}}
-@if (Session::has('success'))
-<div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert">
-        <i class="fa fa-times"></i>
-    </button>
-    <strong>Success !</strong> {{ session('success') }}
-</div>
-@endif
+                @if (session('Success'))
+                    <div class="alert alert-success">
+                        {{ session('Success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
 
                 <div class="container table-responsive pt-3">
               
-                    <h4 class="pb-3">Waiting for Lecturer Approval -  {{auth()->user()->name}} </h4>
+                    <h4 class="pb-3">Waiting for TechnicalOfficer Approval</h4>
                     <table class="table table-striped align-middle">
 
                         <tr>

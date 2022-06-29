@@ -10,7 +10,6 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
 
 
 
-
  // index
  Route::get('/orders/lecturer', [OrderController::class, 'lecturer_index'])
  ->name('orders.lecturer.index')
@@ -26,6 +25,19 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
      $trail->push(__('Home'), route('admin.dashboard'))
          ->push(__('Requests'), route('admin.orders.lecturer.index'))
          ->push(__('Show'));
+ });
+
+     // Store the different types of updates
+     Route::get('/orders/lecturer/{order}/approve/', [OrderController::class, 'lecturer_approve'])
+     ->name('orders.lecturer.approve');
+
+
+      // accepted index
+ Route::get('/orders/lecturer/accepted', [OrderController::class, 'lecturer_accepted_index'])
+ ->name('orders.lecturer.accepted.index')
+ ->breadcrumbs(function (Trail $trail) {
+     $trail->push(__('Home'), route('admin.dashboard'))
+         ->push(__('Requests'),);
  });
 
 });
