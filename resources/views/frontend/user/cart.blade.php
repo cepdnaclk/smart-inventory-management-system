@@ -38,7 +38,7 @@
     </tbody>
     <tfoot>
         <tr >
-            <td> <a href="{{ route('frontend.user.products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+            <td> <a href="{{ route('frontend.user.products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to components</a></td>
 
             <td colspan="5" class="text-right"><h4><strong>Total Items : {{ $total }}</strong></h4></td>
 
@@ -58,7 +58,7 @@
                     
                    
                     <button class="btn btn-success" type="submit">
-                        Place Order
+                        Place reservation
                         </button>               
                     
                 </form>
