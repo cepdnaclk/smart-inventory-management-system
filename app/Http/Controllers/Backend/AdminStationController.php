@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Stations; 
 
-use App\Models\Stations;
 use Illuminate\Http\Request;
+use App\Models\EquipmentItem;
+use App\Http\Controllers\Controller;
+use App\Models\EquipmentItemStation;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 
 class AdminStationController extends Controller
@@ -32,8 +35,9 @@ class AdminStationController extends Controller
      */
     public function create()
     {
-      $station = Stations::pluck('stationName', 'id');
-      return view('backend.station.create', compact('station'));
+        $station = Stations::pluck('stationName', 'id');
+        $equipment = EquipmentItem::pluck('title', 'id');
+        return view('backend.station.create', compact('station', 'equipment'));
     }
 
     /**
@@ -44,24 +48,38 @@ class AdminStationController extends Controller
      */
     public function store(Request $request)
     {
+        
       
        $data = request()->validate([
         'stationName' => 'string|required',
+        'equipment_item_id' => 'numeric|required',
         'description' => 'string|nullable',
         'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
         'capacity' => 'numeric|required'
 
     ]);
-
+        
+        
     try {
         if ($request->thumb != null) {
             $data['thumb'] = $this->uploadThumb(null, $request->thumb, "stations");
         }
 
-        $type = new Stations($data);
-
+        $type = new Stations($data);        
 
         $type->save();
+        //dd($type->id);
+        // $pivot = [
+        //     'equipment_item_id' => $data['equipment_item_id'],
+        //     'stations_id' => $type->id,
+            
+        // ];
+        //dd($pivot['stations_id']);
+
+        $tool = EquipmentItem::where('id', $data['equipment_item_id'])->first();
+        //dd($tool);
+        $type->equipment_items()->attach($tool);
+        // $typePivot->save();
         return redirect()->route('admin.station.index')->with('Success', 'Station was created !');
 
     } catch (\Exception $ex) {

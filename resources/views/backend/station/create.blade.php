@@ -15,7 +15,7 @@
             'enctype'=>'multipart/form-data'
         ]) !!}
 
-        <x-backend.card>
+        <x-backend.card> 
             <x-slot name="header">
                 Station : Create
             </x-slot>
@@ -26,13 +26,26 @@
                     {!! Form::label('stationName', 'Station Name*', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::text('stationName', '', ['class'=>'form-control', 'required'=>true ]) !!}
+                        
+                        {!! Form::text('stationName', '', ['class'=>'form-control ', 'required'=>true ]) !!}
                         @error('stationName')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
                 </div>
 
+                
+                <!-- Equipment -->
+                <div class="form-group row">
+                    {!! Form::label('equipment_item_id', 'Equipment*', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-4">
+                        {!! Form::select('equipment_item_id', $equipment, null, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
+                        @error('equipment_item_id')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
                  
                 <!-- Description -->
                 <div class="form-group row">
