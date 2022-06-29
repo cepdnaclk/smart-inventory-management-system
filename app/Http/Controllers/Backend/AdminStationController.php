@@ -55,7 +55,7 @@ class AdminStationController extends Controller
 
     try {
         if ($request->thumb != null) {
-            $data['thumb'] = $this->uploadThumb(null, $request->thumb, "station");
+            $data['thumb'] = $this->uploadThumb(null, $request->thumb, "stations");
         }
 
         $type = new Stations($data);
@@ -118,7 +118,7 @@ class AdminStationController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($station->thumbURL(), $request->thumb, "station");
+                $data['thumb'] = $this->uploadThumb($station->thumbURL(), $request->thumb, "stations");
             }
 
             $station->update($data);
