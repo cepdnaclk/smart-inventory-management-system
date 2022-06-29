@@ -5,6 +5,8 @@ use App\Http\Controllers\Frontend\User\CartController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
+use App\Http\Controllers\OrderCompController;
+
 
 /*
  * These frontend controllers require the user to be logged in
@@ -43,6 +45,6 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
             ->push(__('My Order'), route('frontend.user.account'));
     });
 
-             
+    Route::get("users/{componentItem}/ordercomp",[OrderCompController::class,'orderComponent'])->name('ordercomp');
     
 });

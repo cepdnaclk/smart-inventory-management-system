@@ -30,3 +30,8 @@ Route::group(['as' => 'frontend.'], function () {
 Route::prefix('admin')->as('admin.')->middleware(['auth'])->group(function () {
     includeRouteFiles(__DIR__ . '/backend/');
 });
+
+
+// Route::view("ordercomp",'frontend/user/ordercomp');
+
+// Route::get("ordercomp",[CartController::class,'compOrder']);
