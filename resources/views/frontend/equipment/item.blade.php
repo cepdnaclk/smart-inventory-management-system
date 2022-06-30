@@ -14,7 +14,7 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-md-4 col-sm-12 col-12 d-flex mb-4">
-                @if( $equipmentItem->thumb != null )
+                @if( $equipmentItem->thumbURL() != null )
                     <img src="{{ $equipmentItem->thumbURL() }}"
                          alt="{{ $equipmentItem->title }}"
                          class="img img-thumbnail img-fluid p-3 mx-auto">
