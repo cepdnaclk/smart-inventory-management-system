@@ -85,7 +85,6 @@
                     <h4>{{ $product->title }}</h4>
                     <h4>{{ $product->id }}</h4>
                     
-                    <div class="text-end"> <h6> {{$product->isAvailable}}</h6></div>
                   
                     <p class="btn-holder">
                         <a href="{{ route('frontend.user.addToCart', $product->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to cart</a> 
