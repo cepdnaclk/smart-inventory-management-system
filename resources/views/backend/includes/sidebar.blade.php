@@ -242,15 +242,15 @@
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.equipment.items.index')"
+                            :href="route('admin.locker.details.index')"
                             class="c-sidebar-nav-link"
                             :text="__('Locker Details')"></x-utils.link>
                 </li>
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.equipment.types.index')"
+                            :href="route('admin.locker.has_order.index')"
                             class="c-sidebar-nav-link"
-                            :text="__('Available Lockers')"></x-utils.link>
+                            :text="__('Has Order')"></x-utils.link>
                 </li>
             </ul>
         </li>
