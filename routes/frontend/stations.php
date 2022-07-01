@@ -13,7 +13,7 @@ Route::prefix('stations')->group(function () {
     Route::get('/stations', function(){
         return view('frontend.stations.index');
     });
-
+ 
     //list the stations
     Route::get('/', [StationController::class, 'index'])
         ->name('stations.index')
