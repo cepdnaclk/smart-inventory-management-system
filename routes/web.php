@@ -6,7 +6,6 @@ use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\FullCalendarController;
 use App\Http\Controllers\Frontend\StationController;
-use App\Http\Controllers\AddStationController;
 
 
 /*
@@ -25,9 +24,6 @@ Route::group(['as' => 'frontend.'], function () {
     includeRouteFiles(__DIR__ . '/frontend/');
 });
 
-
-
-Route::resource('/addstation', AddStationController::class);
 
 /*
  * Backend Routes
@@ -48,8 +44,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 });
 
 
-
-Route::get('/stations/calendar/index', [CalendarController::class, 'index'])->name('calendar.index');
+// Route::get('/stations/calendar/index', [CalendarController::class, 'index'])->name('calendar.index');
 Route::post('calendar', [CalendarController::class, 'store'])->name('calendar.store');
 
 Route::patch('calendar/update/{id}', [CalendarController::class, 'update'])->name('calendar.update');

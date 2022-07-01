@@ -68,9 +68,22 @@
                         @endforeach
                     </ul>
                 </div>
+<<<<<<< HEAD
                 <div class="pt-3">
                     <b><a href="calendar/index" style="float:right; font-size: 18px;" >Make Reservation</a></b>
                 </div>
+=======
+
+                @auth
+                <div class="pt-3">
+                    <b><a href="calendar/index" style="float:right; font-size: 18px; text-decoration: underline;" >Make Reservation</a></b>
+                </div>
+                @endauth
+
+                
+
+                
+>>>>>>> a1f35f9640f7263bb98abf9d7e455b3d57fd6f36
             </div>
         </div>
     </div>

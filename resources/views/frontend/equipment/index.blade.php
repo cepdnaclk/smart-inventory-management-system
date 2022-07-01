@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', __('Equipment'))
+@section('title', __('Equipment')) 
 
 @section('content')
     <div class="container py-4">

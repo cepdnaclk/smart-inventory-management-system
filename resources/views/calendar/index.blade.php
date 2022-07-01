@@ -1,10 +1,13 @@
+
 <!DOCTYPE html>
-<html lang="en">
+
+<!-- <html lang="en"> -->
+<html lang="{{ htmlLang() }}" @langrtl dir="rtl" @endlangrtl>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Schedule</title>
+    <!-- <title>Schedule</title> -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
@@ -14,10 +17,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ appName() }} | {{ $station->stationName }}</title>
+    <meta name="description" content="@yield('meta_description', appName())">
+    <meta name="author" content="@yield('meta_author', 'Anthony Rappa')">
+    @yield('meta')
+
+    @stack('before-styles')
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
+    <livewire:styles />
+    @stack('after-styles')
+
  
 </head>
 <body>
 
+   
     <!-- Button trigger modal -->
 <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
@@ -46,7 +65,19 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3 class="text-center mt-5">Schedule Reservation</h3>
+                <h3 class="text-center mt-5">Schedule Reservation- {{ $station->stationName }}</h3>
+                <br>
+                <div id="path">
+                    <a href="{{ route('frontend.index') }}">Home</a>
+                    &nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp
+                    <a href="{{ route('frontend.stations.index') }}">Stations</a>
+                    &nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp
+                    <a href="{{ route('frontend.stations.station', [$station->id])}}" >{{ $station->stationName }}</a>
+                    &nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp
+                    <a >Schedule</a>
+
+                   
+                </div>
                 <div class="col-md-11 offset-1 mt-5 mb-5">
 
                     <div id="calendar">
@@ -78,6 +109,8 @@
                     right: 'month, agendaWeek, agendaDay'
 
                 },
+
+                
                 events: booking,
                 selectable: true,
                 selectHelper: true,
@@ -111,6 +144,7 @@
                                 data:{ title, start_date, end_date  },
                                 success:function(response)
                                 {
+                                
                                     //console.log(response)
                                     $('#bookingModal').modal('hide')
                                     $('#calendar').fullCalendar('renderEvent', {
@@ -255,12 +289,13 @@
 
             //css properties
 
-            $('.fc-event').css('font-size', '14px');
-            $('.fc-event').css('width', '20');
-            $('.fc-event').css('border-radius', '50%');
+            // $('.fc-event').css('font-size', '14px');
+            // $('.fc-event').css('width', '20');
+            // $('.fc-event').css('border-radius', '50%');
 
         });
     </script>
+
 
 </body>
 </html>

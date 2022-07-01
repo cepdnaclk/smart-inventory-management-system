@@ -8,6 +8,7 @@ use App\Models\EquipmentItem;
 use App\Models\StationEquipment;
 use App\Http\Controllers\Controller;
 use App\Models\EquipmentItemStation;
+use Illuminate\Support\Facades\Session;
 
 class StationController extends Controller
 {
@@ -25,12 +26,15 @@ class StationController extends Controller
         
         
         $stations = Stations::find($station);
+        Session::put('station', $stations);
 
         $equipment = (Stations::with('equipment_items')->find($station))->equipment_items;
             
         return view('frontend.stations.station', compact('stations', 'equipment'));
         
     }
+
+    
 
     
 
