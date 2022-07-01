@@ -1,72 +1,63 @@
 <?php
-
+ 
 namespace App\Http\Controllers; 
 
 use App\Models\Booking;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Domains\Auth\Models\User;
 use Illuminate\Support\Facades\Session;
  
 class CalendarController extends Controller
 {
     
     public function index(){
+
+        // Get the station model clicked
         $station = Session::get('station');
+
+        // Get the model of the user logged in
+        $userLoggedin = auth()->user();
         
         $events = array();
-        // $bookings = Booking::all();
-        // foreach($bookings as $booking){
-        //     $color = null;
-        //     if($booking->title == 'Try'){
-        //         $color = '#33C0FF';
-                
-        //     }
-        //     $events[] = [
-        //         'id' => $booking->id,
-        //         'title' =>$booking->title,
-        //         'start' =>$booking->start_date,
-        //         'end' =>$booking->end_date,
-        //         'color' => $color,
-        //     ];
-        // }
 
+        // Get all the reservations for that particular station
         $bookings = Reservation::where('station_id', $station->id)->get();
 
-        // $bookings = Reservation::all();
         foreach($bookings as $booking){
-            // $color = null;
-            // if($booking->email == 'Try'){
-            //     $color = '#33C0FF';
-                
-            // }
+                       
+
             $events[] = [
                 'id' => $booking->id,
-                'email' =>$booking->email,
+                'title' =>'Reservation made by '.$booking->email.'  for  '.$booking->E_numbers,
                 'start' =>$booking->start_date,
                 'end' =>$booking->end_date,
                 'stationId' => $station->id,
+                'auth' => $booking->email,
             ];
         }
 
-        return view('calendar.index', ['events' => $events, 'station' => $station]);
+        return view('calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin]);
     }
 
     public function store(Request $request){
         $station = Session::get('station');
+        $userLoggedin = auth()->user();
+        
         $request->validate([
             'title' => 'required|string'
         ]);
 
         $booking = Reservation::create([
-            // 'title' => $request->title,
-            // 'start_date' => $request->start_date,
-            // 'end_date' => $request->end_date,
-            'email' => $request->title,
+            
+            'email' => $userLoggedin['email'],
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'station_id' => $station->id,
-            // 'station_id' => $request->id,
+            'E_numbers' => $request->title,
         ]);
+
+        
 
         $color = null;
 
@@ -85,6 +76,7 @@ class CalendarController extends Controller
     }
 
     public function update( Request $request, $id){
+
         
         $booking = Reservation::find($id);
         if(! $booking){
@@ -103,13 +95,17 @@ class CalendarController extends Controller
 
     public function destroy($id){
         $booking = Reservation::find($id);
+        
+        
         if(! $booking){
             return response()->json([
                 'error' => 'Unable to locate the event'
             ], 404);
         }
 
+
         $booking->delete();
+
         return $id;
     }
 
