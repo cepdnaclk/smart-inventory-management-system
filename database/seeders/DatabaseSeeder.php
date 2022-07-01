@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\OrderApproval;
 use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
@@ -38,6 +39,7 @@ class DatabaseSeeder extends Seeder
       
         $this->call(OrderSeeder::class);
         $this->call(LockerSeeder::class);
+        $this->call(OrderApprovalSeeder::class);
 
 
         Model::reguard();
