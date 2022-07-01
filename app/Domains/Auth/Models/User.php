@@ -190,8 +190,8 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     function orders(){
         return $this->hasMany(Order::class);
     }
+
     function orderApprovals(){
         return $this->hasMany(OrderApproval::class); //lecturer has many order Aprrovals
     }
-
 }
