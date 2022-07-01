@@ -43,11 +43,12 @@
 </button> -->
 
 <!-- Modal -->
+<!-- Form changes -->
 <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Enter email</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Enter your/ your group members' E-numbers (comma separated)</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -106,11 +107,12 @@
                 header: {
                     left:'prev, next today',
                     center: 'title',
-                    right: 'month, agendaWeek, agendaDay'
+                    right: 'month, agendaWeek, agendaDay',
+                    
 
                 },
 
-                
+                               
                 events: booking,
                 selectable: true,
                 selectHelper: true,
@@ -124,45 +126,67 @@
                     
                 },
 
+                eventRender: function eventRender( event, element, view ) { 
+                    $("#calendar .fc-title").each(function (i){ 
+                        $(this).html($(this).text()); 
+                    }); 
+                },
+
+ 
                 
                 select: function(start, end, allDays, view){
 
                     if(view.name == 'agendaDay' || view.name == 'agendaWeek'){
+
+                        
                         $('#bookingModal').modal('toggle');
                     
-
                         $('#saveBtn').click(function(){
                             var title = $('#title').val();
                             var start_date = moment(start).format('YYYY-MM-DD HH:MM:SS');
                             var end_date = moment(end).format('YYYY-MM-DD HH:MM:SS');
 
-                            //Send to the database
-                            $.ajax({
-                                url:"{{ route('calendar.store') }}",
-                                type:"POST",
-                                dataType:'json',
-                                data:{ title, start_date, end_date  },
-                                success:function(response)
-                                {
-                                
-                                    //console.log(response)
-                                    $('#bookingModal').modal('hide')
-                                    $('#calendar').fullCalendar('renderEvent', {
-                                        'title': response.title,
-                                        'start' : response.start,
-                                        'end'  : response.end,
-                                        'color' : response.color
-                                    });
 
-                                },
-                                error:function(error)
-                                {
-                                    if(error.responseJSON.errors) {
-                                        $('#titleError').html(error.responseJSON.errors.title);
-                                    }
-                                },
+                            var loggedIn = @json($userLoggedin);
+                            var user = loggedIn['email'];
+
+                            
+                                //Send to the database
+                                $.ajax({
+                                    url:"{{ route('calendar.store') }}",
+                                    type:"POST",
+                                    dataType:'json',
+                                    data:{ title, start_date, end_date  },
+                                    success:function(response)
+                                    {
+                                    
+                                        //console.log(response)
+                                        $('#bookingModal').modal('hide')
+                                        $('#calendar').fullCalendar('renderEvent', {
+                                            'title': response.title,
+                                            'start' : response.start,
+                                            'end'  : response.end,
+                                            'color' : response.color,
+                                            'auth' : response.auth,
+                                            
+                                        });
+                                        
+
+
+                                    },
+                                    error:function(error)
+                                    {
+                                        if(error.responseJSON.errors) {
+                                            $('#titleError').html(error.responseJSON.errors.title);
+                                        }
+                                    },
+                                });
+                            
+
+
                             });
-                        });
+                        
+
                     }else{
                         
 
@@ -174,32 +198,39 @@
                 editable: true,
                 eventResize: function(event){
                      
-                    var title = event.title;
+
                     var id = event.id;
+                    var loggedIn = @json($userLoggedin);
+                    var user = loggedIn['email'];
 
                     var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
                     var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
 
-                    $.ajax({
-                        url: "{{ route('calendar.update', '') }}" +'/' + id,
-                        type: "PATCH",
-                        dataType: 'json', 
-                        data: {
-                            start_date,
-                            end_date,
-                        },
-                        success: function(response){
-                            $('#calendar').fullCalendar('refetchEvents', response);
-                            swal("Done!", "Event Updated!", "success");
-                        },
-                        error:function(error)
-                        {
-                            // if(error.responseJSON.errors) {
-                            //     $('#titleError').html(error.responseJSON.errors.title);
-                            // }
-                            console.log(error)
-                        },
-                    });
+                    if(event.auth == user){
+                        $.ajax({
+                            url: "{{ route('calendar.update', '') }}" +'/' + id,
+                            type: "PATCH",
+                            dataType: 'json', 
+                            data: {
+                                start_date,
+                                end_date,
+                            },
+                            success: function(response){
+                                
+                                $('#calendar').fullCalendar('refetchEvents', response);
+                                swal("Done!", "Event Updated!", "success");
+                            },
+                            error:function(error)
+                            {
+                                // if(error.responseJSON.errors) {
+                                //     $('#titleError').html(error.responseJSON.errors.title);
+                                // }
+                                console.log(error)
+                            },
+                        });
+                    }else{
+                        swal("Permission Denied!", "You can not update this event!", "failed");   
+                    }
 
                 },
 
@@ -209,22 +240,24 @@
                     var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
                     var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
 
-                    $.ajax({
+
+                    
+                    var loggedIn = @json($userLoggedin);
+                    var user = loggedIn['email'];
+
+                    if(event.auth == user){
+                        $.ajax({
+                                
                             url:"{{ route('calendar.update', '') }}" +'/' + id,
                             type:"PATCH",
                             dataType:'json',
                             data:{ start_date, end_date  },
                             success:function(response)
                             {
-                                //calendar.fullCalendar('refetchEvents', response);
+                                
+                                $('#calendar').fullCalendar('refetchEvents', response);
                                 swal("Done!", "Event Updated!", "success");
-                                // $('#bookingModal').modal('hide')
-                                // $('#calendar').fullCalendar('renderEvent', {
-                                //     'title': response.title,
-                                //     'start' : response.start_date,
-                                //     'end'  : response.end_date,
-                                //    // 'color' : response.color
-                                // });
+                                
 
                             },
                             error:function(error)
@@ -235,42 +268,45 @@
                                 console.log(error)
                             },
                         });
+                    }else{
+                        swal("Permission Denied!", "You can not update this event!", "failed");
+                    }
 
                 },    
 
                 eventClick: function(event){
-                    var id = event.id;
                     
-                    if(confirm('Are you sure you want to delete this event?')){
-                        $.ajax({
-                            url:"{{ route('calendar.destroy', '') }}" +'/' + id,
-                            type:"DELETE",
-                            dataType:'json',
-                            success:function(response)
-                            {
+                    var id = event.id;
+                    var loggedIn = @json($userLoggedin);
+                    var user = loggedIn['email'];
 
-                                // var id = response;
-                                // console.log(id);
-                                $('#calendar').fullCalendar('removeEvents', response);
+                    console.log(user, event.auth);
+                    if(event.auth == user){
+                        if(confirm('Are you sure you want to delete this event?')){
+                            $.ajax({
+                                url:"{{ route('calendar.destroy', '') }}" +'/' + id,
+                                type:"DELETE",
+                                dataType:'json',
+                                success:function(response)
+                                {
 
-                                swal("Done!", "Event Deleted!", "success");
-                                // $('#bookingModal').modal('hide')
-                                // $('#calendar').fullCalendar('renderEvent', {
-                                //     'title': response.title,
-                                //     'start' : response.start_date,
-                                //     'end'  : response.end_date,
-                                //    // 'color' : response.color
-                                // });
+                                    $('#calendar').fullCalendar('removeEvents', response);
 
-                            },
-                            error:function(error)
-                            {
-                                // if(error.responseJSON.errors) {
-                                //     $('#titleError').html(error.responseJSON.errors.title);
-                                // }
-                                console.log(error)
-                            },
-                        });
+                                    swal("Done!", "Event Deleted!", "success");
+                                    
+
+                                },
+                                error:function(error)
+                                {
+                                    // if(error.responseJSON.errors) {
+                                    //     $('#titleError').html(error.responseJSON.errors.title);
+                                    // }
+                                    console.log(error)
+                                },
+                            });
+                        }
+                    }else{
+                        swal("Permission Denied!", "You can not delete this event!", "failed");
                     }
 
 
@@ -289,9 +325,9 @@
 
             //css properties
 
-            // $('.fc-event').css('font-size', '14px');
-            // $('.fc-event').css('width', '20');
-            // $('.fc-event').css('border-radius', '50%');
+            $('.fc-event').css('font-size', '14px');
+            $('.fc-event').css('width', '20');
+            $('.fc-event').css('border-radius', '60%');
 
         });
     </script>

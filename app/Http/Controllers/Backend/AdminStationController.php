@@ -57,32 +57,29 @@ class AdminStationController extends Controller
         'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
         'capacity' => 'numeric|required'
 
-    ]);
+        ]);
+
         
         
     try {
         if ($request->thumb != null) {
             $data['thumb'] = $this->uploadThumb(null, $request->thumb, "stations");
+            
         }
 
+        
         $type = new Stations($data);        
 
         $type->save();
-        //dd($type->id);
-        // $pivot = [
-        //     'equipment_item_id' => $data['equipment_item_id'],
-        //     'stations_id' => $type->id,
-            
-        // ];
-        //dd($pivot['stations_id']);
+        
 
-        $tool = EquipmentItem::where('id', $data['equipment_item_id'])->first();
-        //dd($tool);
+        $tool = EquipmentItem::where('id', $data['equipment_item_id'])->get();
         $type->equipment_items()->attach($tool);
         // $typePivot->save();
         return redirect()->route('admin.station.index')->with('Success', 'Station was created !');
 
     } catch (\Exception $ex) {
+               
         return abort(500);
     }   
     
@@ -137,7 +134,9 @@ class AdminStationController extends Controller
         try {
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($station->thumbURL(), $request->thumb, "stations");
+                
             }
+            
 
             $station->update($data);
             return redirect()->route('admin.station.index')->with('Success', 'Station was updated !');
