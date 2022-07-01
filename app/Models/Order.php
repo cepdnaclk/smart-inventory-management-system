@@ -46,7 +46,7 @@ class Order extends Model
         return $otp==$this->otp;
     }
     public function orderApprovals(){
-        return $this->hasOne(OrderApproval::class);
+        return $this->hasOne(OrderApproval::class);  //Order  has one  order Aprrovals
     }
    
     public function locker()
@@ -61,4 +61,8 @@ class Order extends Model
 
         return $orders_approval_for_officer;
     }
+
+    
+
+
 }
