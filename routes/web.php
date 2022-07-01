@@ -39,9 +39,9 @@ Route::prefix('admin')->as('admin.')->middleware(['auth'])->group(function () {
     includeRouteFiles(__DIR__ . '/backend/');
 });
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-    includeRouteFiles(__DIR__.'/backend/');
-});
+// Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
+//     includeRouteFiles(__DIR__.'/backend/');
+// });
 
 
 // Route::get('/stations/calendar/index', [CalendarController::class, 'index'])->name('calendar.index');
