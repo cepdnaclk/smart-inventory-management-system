@@ -1,7 +1,5 @@
+@extends('frontend.layouts.app')
 
-
-    
-@extends('backend.layouts.app')
 @section('title', __('Orders'))
 
 @section('breadcrumb-links')
@@ -19,26 +17,17 @@
                 <div class="container pb-2 d-inline-flex">
                     <div class="d-flex">
                         <h4>{{ $order->user->name }}</h4>
+                     
+                          
+                      
                     </div>
-                    @if ($logged_in_user->isAdmin())
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
-                        <div class="btn-group" role="group" aria-label="Modify Buttons">
-                            <a href="{{ route('admin.orders.edit', $order)}}"
-                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
-                            </a>
-                            <a href="{{ route('admin.orders.delete', $order)}}"
-                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
-                                                                title="Delete"></i>
-                            </a>
-                        </div>
+                        
                     </div>
-                    @endif
-                   
                 </div>
                 <table class="table">
                     <tr>
                         <td>
-                      
                             Ordered-Date
                         </td>
                         <td>
@@ -101,6 +90,16 @@
                         <td>status </td>
                         <td>{{ $order->status }} 
                         </td>
+                    </tr>
+                    <tr>
+                        <td> Lecturer Name  </td>
+                        <td>{{$order->orderApprovals->lecturer->name}}</td>
+                        
+                    </tr>
+                    <tr>
+                        <td> TechnicalOfficer  Name  </td>
+                        <td>{{$order->orderApprovals->technicalOfficer->name}}</td>
+                        
                     </tr>
                     
                     
