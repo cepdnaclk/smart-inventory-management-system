@@ -17,7 +17,7 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
-        $equipmentTypes = EquipmentType::paginate(16);
+        $equipmentTypes = EquipmentType::orderBy('id', 'asc')->paginate(16);
         return view('backend.equipment.types.index', compact('equipmentTypes'));
     }
 
