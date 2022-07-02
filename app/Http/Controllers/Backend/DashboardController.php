@@ -10,6 +10,7 @@ use App\Models\ConsumableType;
 use App\Models\EquipmentItem;
 use App\Models\EquipmentType;
 use function PHPUnit\Framework\countOf;
+use App\Models\Stations;
 
 /**
  * Class DashboardController.
@@ -28,7 +29,8 @@ class DashboardController
         $componentTypeCount = ComponentType::all()->count();
         $consumableCount = ConsumableItem::all()->count();
         $consumableTypeCount = ConsumableType::all()->count();
+        $stationCount = Stations::all()->count();
 
-        return view('backend.dashboard', compact('userCount', 'equipmentCount', 'equipmentTypeCount', 'componentCount', 'componentTypeCount', 'consumableCount', 'consumableTypeCount'));
+        return view('backend.dashboard', compact('userCount', 'equipmentCount', 'equipmentTypeCount', 'componentCount', 'componentTypeCount', 'consumableCount', 'consumableTypeCount', 'stationCount'));
     }
 }

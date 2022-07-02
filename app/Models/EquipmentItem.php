@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Stations;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EquipmentItem extends Model
 {
@@ -28,6 +29,12 @@ class EquipmentItem extends Model
     {
         if ($this->thumb != null) return '/img/equipment_items/' . $this->thumb;
         else return $this->equipment_type->thumbURL();
+    }
+
+    // To create the pivot many-to-many relationship
+    public function stations()
+    {
+        return $this->belongsToMany(Stations::class, 'equipment_item_stations');
     }
 
 }
