@@ -21,7 +21,11 @@ class EquipmentType extends Model
     public function thumbURL()
     {
         if ($this->thumb != null) return '/img/equipment_types/' . $this->thumb;
-        return null;
+        else if ($this->parent() != null) {
+            return $this->parent()->thumbURL();
+        } else {
+            return null;
+        }
     }
 
     // Return the parent item of the current type or null

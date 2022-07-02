@@ -35,7 +35,7 @@ class ConsumableTypeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|void
      */
     public function store(Request $request)
     {
@@ -89,7 +89,7 @@ class ConsumableTypeController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|void
      */
     public function update(Request $request, ConsumableType $consumableType)
     {

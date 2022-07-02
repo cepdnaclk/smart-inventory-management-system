@@ -22,7 +22,7 @@ class ConsumableItemController extends Controller
 
     public function index()
     {
-        $consumables = ConsumableItem::paginate(12);
+        $consumables = ConsumableItem::paginate(36);
         return view("backend.consumable.items.index", compact('consumables'));
     }
 
@@ -50,19 +50,11 @@ class ConsumableItemController extends Controller
             'title' => 'string|required',
             'char' => 'string|nullable',
             'consumable_type_id' => 'numeric|required',
-
             'specifications' => 'string|nullable',
-//            'description' => 'string|nullable',
-//            'instructions' => 'string|nullable',
-            'location' => 'numeric|required',
-
-//            'powerRating' => 'nullable',
             'formFactor' => 'nullable',
-//            'voltageRating' => 'nullable',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
-
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -132,24 +124,18 @@ class ConsumableItemController extends Controller
             'title' => 'string|required',
             'char' => 'string|nullable',
             'consumable_type_id' => 'numeric|required',
-
             'specifications' => 'string|nullable',
-//            'description' => 'string|nullable',
-//            'instructions' => 'string|nullable',
-            'location' => 'numeric|required',
-//            'powerRating' => 'nullable',
             'formFactor' => 'nullable',
-//            'voltageRating' => 'nullable',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
-
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($consumableItem->thumbURL(), $request->thumb, "consumable_items");
+                $thumb = ($consumableItem->thumb == NULL) ? NULL : $consumableItem->thumbURL();
+                $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "consumable_items");
             }
 
 
