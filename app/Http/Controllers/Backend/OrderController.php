@@ -260,6 +260,16 @@ class OrderController extends Controller
       
         return view('backend.orders.lecturer.accepted.index', compact('orderApproval'));
     }
+    public function lecturer_rejected_index()
+    {
+      
+        $id = auth()->user()->id;
+    
+        $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 0)->get();
+      //return response()->json($orderApproval, 200);
+      
+        return view('backend.orders.lecturer.rejected.index', compact('orderApproval'));
+    }
 
     
  

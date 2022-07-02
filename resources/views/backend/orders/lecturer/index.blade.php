@@ -43,7 +43,7 @@
                                 @if ($order->orders->status=='WAITING_LECTURER_APPROVAL')
                                 <tr>
                                    
-                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->orders->id }}</td>
                                     <td>{{ $order->orders->user->name }}</td>
                                     <td>
                                         {{ $order->orders->status }}</td>

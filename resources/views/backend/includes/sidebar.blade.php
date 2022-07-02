@@ -203,7 +203,7 @@
                         <x-utils.link
                                 :href="route('admin.orders.lecturer.index')"
                                 class="c-sidebar-nav-link"
-                                :text="__('Request')"></x-utils.link>
+                                :text="__('Request-Lecturer')"></x-utils.link>
                     </li>
                     @endif
                     
@@ -236,6 +236,16 @@
                                     class="c-sidebar-nav-link"
                                     :text="__('Accepted - Technical Officer')"></x-utils.link>
                         </li>
+                    @endif
+                    @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                             
+                        :href="route('admin.orders.lecturer.rejected.index')"
+                    
+                                class="c-sidebar-nav-link"
+                                :text="__('Rejected - Lecturer')"></x-utils.link>
+                    </li>
                     @endif
                     
                  
