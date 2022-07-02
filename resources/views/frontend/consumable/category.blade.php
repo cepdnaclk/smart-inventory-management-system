@@ -33,6 +33,9 @@
                                                  alt="{{ $item->title }}"/>
                                             <div class="p-1">
                                                 {{ $item->title }}
+                                                @if($item->quantity==0)
+                                                    <br>(Out of Stock)
+                                                @endif
                                             </div>
                                         </a>
                                     </div>
