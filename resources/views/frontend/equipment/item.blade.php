@@ -25,12 +25,24 @@
 
             </div>
             <div class="col-md-8 col-sm-12 col-12 mb-4">
-                <h3>{{ $equipmentItem->title }} <br>
-                    <small class="text-muted">
-                        {{ $equipmentItem->inventoryCode() }}
-                        <hr>
-                    </small>
-                </h3>
+
+                <div class="container pb-2 d-inline-flex">
+                    <div class="col-10">
+                        <h3>{{ $equipmentItem->title }} <br>
+                            <small class="text-muted">
+                                {{ $equipmentItem->inventoryCode() }}
+                                <hr>
+                            </small>
+                        </h3>
+                    </div>
+                    <div class="col-2">
+                        @if ($logged_in_user!= null && ($logged_in_user->isAdmin() || $logged_in_user->isLecturer() || $logged_in_user->isTechOfficer() || $logged_in_user->isMaintainer()))
+                            <a target="_blank" href="{{ route('admin.equipment.items.edit', $equipmentItem)}}"
+                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                            </a>
+                        @endif
+                    </div>
+                </div>
 
                 <div>
                     <table>
@@ -96,7 +108,7 @@
                     </div>
                 @endif
 
-                @if($equipmentItem->description !== null)
+                @if($equipmentItem->description !== null && $equipmentItem->description !== "")
                     <div class="pt-3">
                         <u>Description</u>
                         <div class="pl-3">
@@ -105,7 +117,7 @@
                     </div>
                 @endif
 
-                @if($equipmentItem->specifications !== null)
+                @if($equipmentItem->specifications !== null && $equipmentItem->specifications !== "")
                     <div class="pt-3">
                         <u>Specifications</u>
                         <div class="pl-3">
@@ -115,7 +127,7 @@
                 @endif
 
 
-                @if($equipmentItem->instructions !== null)
+                @if($equipmentItem->instructions !== null && $equipmentItem->instructions !== "")
                     <div class="pt-3">
                         <u>Usage Instructions</u>
                         <div class="pl-3">
