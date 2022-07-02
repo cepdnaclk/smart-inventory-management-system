@@ -1,27 +1,27 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment Types'))
+@section('title', __('Consumable'))
 
 @section('breadcrumb-links')
-    @include('backend.equipment.includes.breadcrumb-links')
+    @include('backend.consumable.includes.breadcrumb-links')
 @endsection
 
 @section('content')
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Equipment Types
+                Consumable
             </x-slot>
 
-            {{--            @if ($logged_in_user->hasAllAccess())--}}
-            <x-slot name="headerActions">
-                <x-utils.link
-                        icon="c-icon cil-plus"
-                        class="card-header-action"
-                        :href="route('admin.equipment.types.create')"
-                        :text="__('Create Equipment Type')"></x-utils.link>
-            </x-slot>
-            {{--            @endif--}}
+            @if ($logged_in_user->hasAllAccess())
+                <x-slot name="headerActions">
+                    <x-utils.link
+                            icon="c-icon cil-plus"
+                            class="card-header-action"
+                            :href="route('admin.consumable.items.create')"
+                            :text="__('Create Consumable')"></x-utils.link>
+                </x-slot>
+            @endif
 
             <x-slot name="body">
 
@@ -37,39 +37,44 @@
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
-                            <th>Code</th>
                             <th>Title</th>
-                            <th>Parent Category</th>
-                            <th>Description</th>
+                            {{--                            <th>Product Code<br/>and Brand</th>--}}
+                            <th>Category</th>
+                            {{--                            <th>Price (LKR)</th>--}}
+{{--                            <th>Voltage Rating</th>--}}
+                            <th>Form factor</th>
+                            <th>Quantity</th>
+                            {{--                            <th>Size</th>--}}
                             <th>&nbsp;</th>
                         </tr>
 
-                        @foreach($equipmentTypes as $equipmentType)
+                        @foreach($consumables as $cm)
+
                             <tr>
-                                <td>{{ $equipmentType->inventoryCode()  }}</td>
-                                <td>{{ $equipmentType->title  }}</td>
+                                <td>{{ $cm->title  }}</td>
+                                {{--                                <td>{{ $cm->productCode ?? 'N/A' }} ({{ $cm->brand ?? 'N/A' }})</td>--}}
+
                                 <td>
-                                    @if( $equipmentType->parent() !== null)
-                                        <a href="{{ route('admin.equipment.types.show', $equipmentType->parent()->id) }}">
-                                            {{ $equipmentType->parent()->title }}
+                                    @if($cm->consumable_type() != null)
+                                        <a href="{{ route('admin.consumable.types.show', $cm->consumable_type) }}">
+                                            {{ $cm->consumable_type['title'] }}
                                         </a>
-                                    @else
-                                        N/A
                                     @endif
                                 </td>
-                                {{--                                <td>{{ $equipmentType->subtitle ?? 'N/A' }}</td>--}}
-                                <td>{{ $equipmentType->description  }}</td>
+                                <td>{{ $cm->formFactor }}</td>
+{{--                                <td>{{ $cm->powerRating }}</td>--}}
+                                <td>{{ $cm->quantity }}</td>
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.equipment.types.show', $equipmentType)}}"
+                                            <a href="{{ route('admin.consumable.items.show', $cm)}}"
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
-                                            <a href="{{ route('admin.equipment.types.edit', $equipmentType)}}"
+                                            <a href="{{ route('admin.consumable.items.edit', $cm)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.equipment.types.delete', $equipmentType)}}"
+                                            <a href="{{ route('admin.consumable.items.delete', $cm)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
                                                                                 title="Delete"></i>
                                             </a>
@@ -80,7 +85,8 @@
                             </tr>
                         @endforeach
                     </table>
-                    {{ $equipmentTypes->links() }}
+
+                    {{ $consumables->links() }}
                 </div>
             </x-slot>
         </x-backend.card>

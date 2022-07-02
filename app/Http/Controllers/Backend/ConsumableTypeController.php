@@ -3,33 +3,32 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\EquipmentType;
+use App\Models\ConsumableType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
-class EquipmentTypeController extends Controller
+class ConsumableTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $equipmentTypes = EquipmentType::orderBy('id', 'asc')->paginate(16);
-        return view('backend.equipment.types.index', compact('equipmentTypes'));
+        $consumableTypes = ConsumableType::paginate(12);
+        return view('backend.consumable.types.index', compact('consumableTypes'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.types.create', compact('types'));
+        $types = ConsumableType::pluck('title', 'id');
+        return view('backend.consumable.types.create', compact('types'));
     }
 
     /**
@@ -50,12 +49,12 @@ class EquipmentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "consumable_types");
             }
 
-            $type = new EquipmentType($data);
+            $type = new ConsumableType($data);
             $type->save();
-            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was created !');
+            return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was created !');
 
         } catch (\Exception $ex) {
             return abort(500, "Error 222");
@@ -65,34 +64,34 @@ class EquipmentTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\EquipmentType $equipmentType
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param ConsumableType $consumableType
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(EquipmentType $equipmentType)
+    public function show(ConsumableType $consumableType)
     {
-        return view('backend.equipment.types.show', compact('equipmentType'));
+        return view('backend.consumable.types.show', compact('consumableType'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\EquipmentType $equipmentType
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(EquipmentType $equipmentType)
+    public function edit(ConsumableType $consumableType)
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.types.edit', compact('equipmentType', 'types'));
+        $types = ConsumableType::pluck('title', 'id');
+        return view('backend.consumable.types.edit', compact('consumableType', 'types'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse|void
      */
-    public function update(Request $request, EquipmentType $equipmentType)
+    public function update(Request $request, ConsumableType $consumableType)
     {
         $data = request()->validate([
             'title' => 'string|required',
@@ -104,11 +103,11 @@ class EquipmentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentType->thumbURL(), $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb($consumableType->thumbURL(), $request->thumb, "consumable_types");
             }
 
-            $equipmentType->update($data);
-            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was updated !');
+            $consumableType->update($data);
+            return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was updated !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -118,28 +117,28 @@ class EquipmentTypeController extends Controller
     /**
      * Confirm to delete the specified resource from storage.
      *
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param ConsumableType $consumableType
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function delete(EquipmentType $equipmentType)
+    public function delete(ConsumableType $consumableType)
     {
-        return view('backend.equipment.types.delete', compact('equipmentType'));
+        return view('backend.consumable.types.delete', compact('consumableType'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param ConsumableType $consumableType
      * @return \Illuminate\Http\RedirectResponse|void
      */
-    public function destroy(EquipmentType $equipmentType)
+    public function destroy(ConsumableType $consumableType)
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentType->thumbURL());
+            $this->deleteThumb($consumableType->thumbURL());
 
-            $equipmentType->delete();
-            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was deleted !');
+            $consumableType->delete();
+            return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was deleted !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -155,7 +154,7 @@ class EquipmentTypeController extends Controller
     }
 
     // Private function to handle thumb images
-    private function uploadThumb($currentURL, $newImage, $folder)
+    private function uploadThumb($currentURL, $newImage, $folder): string
     {
 
         // Delete the existing image
@@ -169,4 +168,5 @@ class EquipmentTypeController extends Controller
 
         return $imageName;
     }
+
 }
