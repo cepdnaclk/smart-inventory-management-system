@@ -27,6 +27,6 @@ class ConsumableItem extends Model
     public function thumbURL()
     {
         if ($this->thumb != null) return '/img/consumable_items/' . $this->thumb;
-        return null;
+        else return $this->consumable_type->thumbURL();
     }
 }
