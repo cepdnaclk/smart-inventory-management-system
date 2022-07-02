@@ -20,7 +20,7 @@ class OrderApprovalFactory extends Factory
             //
             'is_approved_by_lecturer' =>  $this->faker->boolean(),
             'is_approved_by_TO'=>$this->faker->boolean(),
-            'order_id' => Order::where(['status' => 'WAITING_LECTURER_APPROVAL'||'WAITING_TECHNICAL_OFFICER_APPROVAL',
+            'order_id' =>Order::where(['status' => 'WAITING_LECTURER_APPROVAL'||'WAITING_TECHNICAL_OFFICER_APPROVAL',
             ])->get()->random()->id,
             'lecturer_id'=>User::lecturers()->random()->id ,
             'technical_officer_id' => User::techOfficers()->random()->id ,

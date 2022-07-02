@@ -40,7 +40,7 @@
                         </tr>
 
                         @foreach($orderApproval as $order)
-                
+                                @if ($order->orders->status=='WAITING_LECTURER_APPROVAL')
                                 <tr>
                                    
                                     <td>{{ $order->id }}</td>
@@ -63,6 +63,8 @@
 
                                 </tr>
                           
+                                @endif
+                        
                         @endforeach
                     </table>
 
