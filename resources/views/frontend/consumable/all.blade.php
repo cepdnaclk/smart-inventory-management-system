@@ -33,8 +33,8 @@
                         <div class="container pt-4">
                             {{ $items->links() }}
                         </div>
-
                     </div>
+                @endif
             </div>
         </div>
 @endsection
