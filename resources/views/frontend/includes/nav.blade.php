@@ -25,7 +25,7 @@
                         @include('includes.partials.lang')
                     </li>
                 @endif
-
+                      
                 @guest
                     <li class="nav-item">
                         <x-utils.link
@@ -74,8 +74,8 @@
 
                             @if ($logged_in_user->isUser())
                                 <x-utils.link
-                                        :href="route('frontend.user.dashboard')"
-                                        :active="activeClass(Route::is('frontend.user.dashboard'))"
+                                        :href="route('frontend.user.products')"
+                                        :active="activeClass(Route::is('frontend.user.products'))"
                                         :text="__('Dashboard')"
                                         class="dropdown-item"></x-utils.link>
                             @endif
@@ -84,6 +84,13 @@
                                     :href="route('frontend.user.account')"
                                     :active="activeClass(Route::is('frontend.user.account'))"
                                     :text="__('My Account')"
+                                    class="dropdown-item"></x-utils.link>
+
+
+                                    <x-utils.link
+                                    :href="route('frontend.user.show.order')"
+                                    :active="activeClass(Route::is('frontend.user.show.order'))"
+                                    :text="__('My Orders')"
                                     class="dropdown-item"></x-utils.link>
 
                             <x-utils.link
