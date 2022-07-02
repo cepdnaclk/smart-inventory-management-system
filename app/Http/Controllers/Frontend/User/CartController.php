@@ -106,14 +106,7 @@ class CartController
     return view('frontend.orders.index', compact('orders'));
      return response()->json($order,200);
     } 
-    public function showMyOrders(){
-        $id = auth()->user()->id; //getting current user id 
-        $orders=Order::where('user_id',$id)->get();
-        $orders=$orders->reverse();
-    
-       return view('frontend.orders.index', compact('orders'));
-    
-     }
+   
         
 
 }

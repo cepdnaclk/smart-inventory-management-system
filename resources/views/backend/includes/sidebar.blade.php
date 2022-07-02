@@ -183,15 +183,28 @@
                         :text="__('Order Requests')"></x-utils.link>
 
                 <ul class="c-sidebar-nav-dropdown-items">
+
+                    @if ($logged_in_user->isAdmin())
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                      
+                                :href="route('admin.orders.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Orders')"></x-utils.link>
+                    </li>
+                    @endif
+                   
+                    
                     
                     @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
                                 :href="route('admin.orders.lecturer.index')"
                                 class="c-sidebar-nav-link"
-                                :text="__('Request')"></x-utils.link>
+                                :text="__('Request-Lecturer')"></x-utils.link>
                     </li>
                     @endif
+                    
                     
 
                     @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
@@ -210,7 +223,7 @@
                         :href="route('admin.orders.lecturer.accepted.index')"
                     
                                 class="c-sidebar-nav-link"
-                                :text="__('Accepted Oders')"></x-utils.link>
+                                :text="__('Accepted - Lecturer')"></x-utils.link>
                     </li>
                     @endif
 
@@ -221,6 +234,16 @@
                                     class="c-sidebar-nav-link"
                                     :text="__('Accepted - Technical Officer')"></x-utils.link>
                         </li>
+                    @endif
+                    @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                             
+                        :href="route('admin.orders.lecturer.rejected.index')"
+                    
+                                class="c-sidebar-nav-link"
+                                :text="__('Rejected - Lecturer')"></x-utils.link>
+                    </li>
                     @endif
                     
                  

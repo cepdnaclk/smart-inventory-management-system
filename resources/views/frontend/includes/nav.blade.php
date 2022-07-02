@@ -88,8 +88,8 @@
 
 
                                     <x-utils.link
-                                    :href="route('frontend.user.show.order')"
-                                    :active="activeClass(Route::is('frontend.user.show.order'))"
+                                    :href="route('frontend.user.orders.index')"
+                                    :active="activeClass(Route::is('frontend.user.orders.index'))"
                                     :text="__('My Orders')"
                                     class="dropdown-item"></x-utils.link>
 
