@@ -1,16 +1,16 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Equipment Types'))
+@section('title', __('Consumable Types'))
 
 @section('breadcrumb-links')
-    @include('backend.equipment.includes.breadcrumb-links')
+    @include('backend.consumable.includes.breadcrumb-links')
 @endsection
 
 @section('content')
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Equipment Types
+                Consumable Types
             </x-slot>
 
             {{--            @if ($logged_in_user->hasAllAccess())--}}
@@ -18,8 +18,8 @@
                 <x-utils.link
                         icon="c-icon cil-plus"
                         class="card-header-action"
-                        :href="route('admin.equipment.types.create')"
-                        :text="__('Create Equipment Type')"></x-utils.link>
+                        :href="route('admin.consumable.types.create')"
+                        :text="__('Create Consumable Type')"></x-utils.link>
             </x-slot>
             {{--            @endif--}}
 
@@ -37,39 +37,38 @@
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
-                            <th>Code</th>
                             <th>Title</th>
                             <th>Parent Category</th>
+                            {{-- <th>Subtitle</th> --}}
                             <th>Description</th>
                             <th>&nbsp;</th>
                         </tr>
 
-                        @foreach($equipmentTypes as $equipmentType)
+                        @foreach($consumableTypes as $type)
                             <tr>
-                                <td>{{ $equipmentType->inventoryCode()  }}</td>
-                                <td>{{ $equipmentType->title  }}</td>
+                                <td>{{ $type->title  }}</td>
                                 <td>
-                                    @if( $equipmentType->parent() !== null)
-                                        <a href="{{ route('admin.equipment.types.show', $equipmentType->parent()->id) }}">
-                                            {{ $equipmentType->parent()->title }}
+                                    @if( $type->parent() !== null)
+                                        <a href="{{ route('admin.consumable.types.show', $type->parent()->id) }}">
+                                            {{ $type->parent()->title }}
                                         </a>
                                     @else
                                         N/A
                                     @endif
                                 </td>
-                                {{--                                <td>{{ $equipmentType->subtitle ?? 'N/A' }}</td>--}}
-                                <td>{{ $equipmentType->description  }}</td>
+                                {{-- <td>{{ $type->subtitle ?? 'N/A' }}</td> --}}
+                                <td>{{ $type->description  }}</td>
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.equipment.types.show', $equipmentType)}}"
+                                            <a href="{{ route('admin.consumable.types.show', $type)}}"
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
-                                            <a href="{{ route('admin.equipment.types.edit', $equipmentType)}}"
+                                            <a href="{{ route('admin.consumable.types.edit', $type)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.equipment.types.delete', $equipmentType)}}"
+                                            <a href="{{ route('admin.consumable.types.delete', $type)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
                                                                                 title="Delete"></i>
                                             </a>
@@ -80,7 +79,7 @@
                             </tr>
                         @endforeach
                     </table>
-                    {{ $equipmentTypes->links() }}
+                    {{ $consumableTypes->links() }}
                 </div>
             </x-slot>
         </x-backend.card>

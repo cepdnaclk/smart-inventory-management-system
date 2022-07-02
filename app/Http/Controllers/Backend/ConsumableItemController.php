@@ -3,22 +3,25 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\EquipmentType;
+use App\Models\ComponentType;
+use App\Models\ConsumableItem;
+use App\Models\ConsumableType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
-class EquipmentTypeController extends Controller
+class ConsumableItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
+
     public function index()
     {
-        $equipmentTypes = EquipmentType::orderBy('id', 'asc')->paginate(16);
-        return view('backend.equipment.types.index', compact('equipmentTypes'));
+        $consumables = ConsumableItem::paginate(36);
+        return view("backend.consumable.items.index", compact('consumables'));
     }
 
     /**
@@ -28,8 +31,8 @@ class EquipmentTypeController extends Controller
      */
     public function create()
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.types.create', compact('types'));
+        $types = ConsumableType::pluck('title', 'id');
+        return view('backend.consumable.items.create', compact('types'));
     }
 
     /**
@@ -42,73 +45,85 @@ class EquipmentTypeController extends Controller
     {
         $data = request()->validate([
             'title' => 'string|required',
-            'parent_id' => 'integer|nullable', // TODO: Validate properly
-            'subtitle' => 'string|nullable',
-            'description' => 'string|nullable',
-            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
+            'char' => 'string|nullable',
+            'consumable_type_id' => 'numeric|required',
+            'specifications' => 'string|nullable',
+            'formFactor' => 'nullable',
+            'datasheetURL' => 'nullable',
+            'quantity' => 'numeric|nullable',
+            'price' => 'numeric|nullable',
+            'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "consumable_items");
             }
 
-            $type = new EquipmentType($data);
+            $type = new ConsumableItem($data);
+
             $type->save();
-            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was created !');
+            return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was created !');
 
         } catch (\Exception $ex) {
-            return abort(500, "Error 222");
+            return abort(500);
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param ConsumableItem $consumableItem
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(EquipmentType $equipmentType)
+    public function show(ConsumableItem $consumableItem)
     {
-        return view('backend.equipment.types.show', compact('equipmentType'));
+        return view('backend.consumable.items.show', compact("consumableItem"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param ConsumableItem $consumableItem
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(EquipmentType $equipmentType)
+    public function edit(ConsumableItem $consumableItem)
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.types.edit', compact('equipmentType', 'types'));
+        $types = ConsumableType::pluck('title', 'id');
+        return view('backend.consumable.items.edit', compact('types', 'consumableItem'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\EquipmentType $equipmentType
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @param ConsumableItem $consumableItem
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, EquipmentType $equipmentType)
+    public function update(Request $request, ConsumableItem $consumableItem)
     {
         $data = request()->validate([
             'title' => 'string|required',
-            'parent_id' => 'integer|nullable', // TODO: Validate properly
-            'subtitle' => 'string|nullable',
-            'description' => 'string|nullable',
-            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
+            'char' => 'string|nullable',
+            'consumable_type_id' => 'numeric|required',
+            'specifications' => 'string|nullable',
+            'formFactor' => 'nullable',
+            'datasheetURL' => 'nullable',
+            'quantity' => 'numeric|nullable',
+            'price' => 'numeric|nullable',
+            'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentType->thumbURL(), $request->thumb, "equipment_types");
+                $thumb = ($consumableItem->thumb == NULL) ? NULL : $consumableItem->thumbURL();
+                $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "consumable_items");
             }
 
-            $equipmentType->update($data);
-            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was updated !');
+
+            $consumableItem->update($data);
+
+            return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was updated !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -118,28 +133,29 @@ class EquipmentTypeController extends Controller
     /**
      * Confirm to delete the specified resource from storage.
      *
-     * @param \App\Models\EquipmentType $equipmentType
+     * @param ConsumableItem $consumableItem
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function delete(EquipmentType $equipmentType)
+    public function delete(ConsumableItem $consumableItem)
     {
-        return view('backend.equipment.types.delete', compact('equipmentType'));
+        return view('backend.consumable.items.delete', compact('consumableItem'));
     }
+
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\EquipmentType $equipmentType
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @param ConsumableItem $consumableItem
+     * @return \Illuminate\Http\RedirectResponse|null
      */
-    public function destroy(EquipmentType $equipmentType)
+    public function destroy(ConsumableItem $consumableItem)
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentType->thumbURL());
+            $this->deleteThumb($consumableItem->thumbURL());
 
-            $equipmentType->delete();
-            return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was deleted !');
+            $consumableItem->delete();
+            return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -157,7 +173,6 @@ class EquipmentTypeController extends Controller
     // Private function to handle thumb images
     private function uploadThumb($currentURL, $newImage, $folder)
     {
-
         // Delete the existing image
         $this->deleteThumb($currentURL);
 
