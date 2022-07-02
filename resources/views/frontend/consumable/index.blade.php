@@ -10,6 +10,7 @@
 
                 <div class="container">
                     <ul>
+                        <li><a href="{{ route('frontend.consumable.index.all')  }}">All</a></li>
                         @foreach($consumableTypes as $type)
                             @if( $type->parent() == null )
                                 <li>

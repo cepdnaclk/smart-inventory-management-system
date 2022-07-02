@@ -16,6 +16,13 @@ class ConsumableView extends Controller
         return view('frontend.consumable.index', compact('consumableTypes'));
     }
 
+    // All Consumables
+    public function index_all()
+    {
+        $items = ConsumableItem::paginate(36);
+        return view('frontend.consumable.all', compact('items'));
+    }
+
     // consumable Category Page
     public function viewCategory(ConsumableType $consumableType)
     {

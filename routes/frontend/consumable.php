@@ -13,6 +13,14 @@ Route::prefix('consumables')->group(function () {
                 ->push(__('Consumables'), route('frontend.consumable.index'));
         });
 
+    Route::get('/all', [ConsumableView::class, 'index_all'])
+                ->name('consumable.index.all')
+                ->breadcrumbs(function (Trail $trail) {
+                    $trail->parent('frontend.index')
+                        ->push(__('Consumables'),  route('frontend.consumable.index'))
+                        ->push(__('All'), route('frontend.consumable.index.all'));
+                });
+                
     Route::get('/category/{consumableType}', [ConsumableView::class, 'viewCategory'])
         ->name('consumable.category')
         ->breadcrumbs(function (Trail $trail, ConsumableType $consumableType) {
