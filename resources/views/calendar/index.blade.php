@@ -134,7 +134,7 @@
                 
                 select: function(start, end, allDays, view){
 
-                    if((view.name == 'agendaDay' || view.name == 'agendaWeek')){
+                    if((view.name == 'agendaDay' || view.name == 'agendaWeek') && (!isAnOverlapEvent(start,end))){
                         
                         $('#bookingModal').modal('toggle');
                     
@@ -328,6 +328,32 @@
 
         });
 
+        function isAnOverlapEvent(eventStartDay, eventEndDay){
+            var events = $('#calendar').fullCalendar('clientEvents');
+
+            for (let i = 0; i < events.length; i++) {
+
+                const eventA = events[i];
+
+                                                    // start-time in between any of the events
+                if (moment(eventStartDay).isAfter(eventA.start) && moment(eventStartDay).isBefore(eventA.end)) {
+                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    return true;
+                }
+                                    //end-time in between any of the events
+                if (moment(eventEndDay).isAfter(eventA.start) && moment(eventEndDay).isBefore(eventA.end)) {
+                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    return true;
+                }
+                                    //any of the events in between/on the start-time and end-time
+                if (moment(eventStartDay).isSameOrBefore(eventA.start) && moment(eventEndDay).isSameOrAfter(eventA.end)) {
+                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    return true;
+                }
+            }
+
+            return false;
+        }
     </script>
 
 
