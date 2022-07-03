@@ -146,12 +146,19 @@
                             var start_date = moment(start).format('YYYY-MM-DD HH:MM:SS');
                             var end_date = moment(end).format('YYYY-MM-DD HH:MM:SS');
 
-
                             var loggedIn = @json($userLoggedin);
                             var user = loggedIn['email'];
 
+                            //count hours                            
+                            var ms = moment(end_date,"YYYY-MM-DD HH:MM:SS").diff(moment(start_date,"YYYY-MM-DD HH:MM:SS"));
+                            var d = moment.duration(ms);
+                            var m = d.asMinutes(); 
+                            
+                            const time_limit = 300;
+
                             
                                 //Send to the database
+                                if(m<time_limit){  //limit maximum time
                                 $.ajax({
                                     url:"{{ route('calendar.store') }}",
                                     type:"POST",
@@ -181,8 +188,10 @@
                                         }
                                     },
                                 });
-                            
-
+                             }
+                             else{
+                                 swal("Permission Denied!", "You can not exceed 4 hours!", "warning");   
+                             }
 
                             });
                         
@@ -206,7 +215,15 @@
                     var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
                     var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
 
+                    var ms = moment(end_date,"YYYY-MM-DD HH:MM:SS").diff(moment(start_date,"YYYY-MM-DD HH:MM:SS"));
+                    var d = moment.duration(ms);
+                    var m = d.asMinutes();
+                    //console.log(m);  
+
+                    const time_limit = 300;
+
                     if(event.auth == user){
+                        if(m<time_limit){ //limit maximum time
                         $.ajax({
                             url: "{{ route('calendar.update', '') }}" +'/' + id,
                             type: "PATCH",
@@ -228,8 +245,13 @@
                                 console.log(error)
                             },
                         });
-                    }else{
-                        swal("Permission Denied!", "You can not update this event!", "failed");   
+                    }
+                    else{
+                        swal("Permission Denied!", "You can not exceed 4 hours!", "warning");   
+                    }
+                }                   
+                    else{
+                        swal("Permission Denied!", "You can not update this event!", "warning");   
                     }
 
                 },
@@ -240,12 +262,17 @@
                     var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
                     var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
 
-
+                    var ms = moment(end_date,"YYYY-MM-DD HH:MM:SS").diff(moment(start_date,"YYYY-MM-DD HH:MM:SS"));
+                    var d = moment.duration(ms);
+                    var m = d.asMinutes();
                     
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['email'];
 
+                    const time_limit = 300;
+
                     if(event.auth == user){
+                        if(m<time_limit){ //limit maximum time
                         $.ajax({
                                 
                             url:"{{ route('calendar.update', '') }}" +'/' + id,
@@ -268,8 +295,13 @@
                                 console.log(error)
                             },
                         });
-                    }else{
-                        swal("Permission Denied!", "You can not update this event!", "failed");
+                    }
+                    else{
+                        swal("Permission Denied!", "You can not exceed 4 hours!", "warning");   
+                    }
+                }     
+                    else{
+                        swal("Permission Denied!", "You can not update this event!", "warning");
                     }
 
                 },    
