@@ -16,6 +16,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function refreshPage(){
+            window.location.reload();
+        } 
+    </script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +46,7 @@
 <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
 </button> -->
-
+ 
 <!-- Modal -->
 <!-- Form changes -->
 <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -140,51 +145,59 @@
 
                         
                         $('#bookingModal').modal('toggle');
-                    
+                      
                         $('#saveBtn').click(function(){
                             var title = $('#title').val();
                             var start_date = moment(start).format('YYYY-MM-DD HH:MM:SS');
                             var end_date = moment(end).format('YYYY-MM-DD HH:MM:SS');
 
-
-                            var loggedIn = @json($userLoggedin);
-                            var user = loggedIn['email'];
+                            var begin = moment(start).format('YYYY-MM-DD');
 
                             
-                                //Send to the database
-                                $.ajax({
-                                    url:"{{ route('calendar.store') }}",
-                                    type:"POST",
-                                    dataType:'json',
-                                    data:{ title, start_date, end_date  },
-                                    success:function(response)
-                                    {
-                                    
-                                        //console.log(response)
-                                        $('#bookingModal').modal('hide')
-                                        $('#calendar').fullCalendar('renderEvent', {
-                                            'title': response.title,
-                                            'start' : response.start,
-                                            'end'  : response.end,
-                                            'color' : response.color,
-                                            'auth' : response.auth,
-                                            
-                                        });
+                            //Send to the database
+                            $.ajax({
+                                url:"{{ route('calendar.store') }}",
+                                type:"POST",
+                                dataType:'json',
+                                data:{ title, start_date, end_date, begin},
+                                success:function(response)
+                                {
+                                
+                                    console.log(response)
+                                    $('#bookingModal').modal('hide')
+                                    $('#calendar').fullCalendar('renderEvent', {
+                                        'title': response.title,
+                                        'start' : response.start,
+                                        'end'  : response.end,
+                                        'color' : response.color,
+                                        'auth' : response.auth,
                                         
+                                    });
+                                    swal("Done!", "Event Created!", "success");
+                                                                      
 
 
-                                    },
-                                    error:function(error)
-                                    {
-                                        if(error.responseJSON.errors) {
-                                            $('#titleError').html(error.responseJSON.errors.title);
-                                        }
-                                    },
-                                });
-                            
-
-
+                                },
+                                error:function(error)
+                                {
+                                    if(error.responseJSON.errors) {
+                                        $('#titleError').html(error.responseJSON.errors.title);
+                                        
+                                    }
+                                        else{
+                                        $('#bookingModal').modal('hide')
+                                        swal("Denied!", "Can not make multiple reservations in a day!", "error");
+                                    }
+                                    
+                                    console.log(error);
+                                },
                             });
+
+                            // return back();
+                                                     
+
+
+                        });
                         
 
                     }else{
@@ -201,7 +214,7 @@
 
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
-                    var user = loggedIn['email'];
+                    var user = loggedIn['id'];
 
                     var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
                     var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
@@ -243,7 +256,7 @@
 
                     
                     var loggedIn = @json($userLoggedin);
-                    var user = loggedIn['email'];
+                    var user = loggedIn['id'];
 
                     if(event.auth == user){
                         $.ajax({
@@ -278,9 +291,8 @@
                     
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
-                    var user = loggedIn['email'];
+                    var user = loggedIn['id'];
 
-                    console.log(user, event.auth);
                     if(event.auth == user){
                         if(confirm('Are you sure you want to delete this event?')){
                             $.ajax({
