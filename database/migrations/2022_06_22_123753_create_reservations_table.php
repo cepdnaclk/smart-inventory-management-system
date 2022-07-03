@@ -28,12 +28,14 @@ class CreateReservationsTable extends Migration
                 ->references('id')
                 ->onDelete('cascade')
                 ->on('stations');
+            $table->string('E_numbers');
             $table->timestamps();
+            
             
         });
 
         Schema::table('reservations', function($table) {
-            $table->foreign('email')->constrained()->references('email')->onDelete('cascade')->on('users');
+            $table->foreign('email')->references('email')->on('users');
         });
 
     }

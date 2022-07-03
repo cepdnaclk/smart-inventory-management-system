@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
-class EquipmentItemController extends Controller
+class EquipmentItemController extends Controller 
 {
     /**
      * Display a listing of the resource.
