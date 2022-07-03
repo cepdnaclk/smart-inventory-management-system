@@ -200,7 +200,7 @@
                                             $('#titleError').html(error.responseJSON.errors.title);
                                         }else{
                                         $('#bookingModal').modal('hide')
-                                        swal("Denied!", "Can not make multiple reservations in a day!", "error");
+                                        swal("Denied!", "Can not make multiple reservations in a day!", "warning");
                                         }
                                     
                                         console.log(error);
