@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Order;
 use App\Domains\Auth\Models\User;
-
+use App\Models\Locker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderFactory extends Factory
@@ -29,6 +29,8 @@ class OrderFactory extends Factory
             'due_date_to_return' => $this->faker->date(),
             'returned_date'=>NULL,
             'user_id' => User::all()->random()->id ,
+            'locker_id' => rand(1, 75),
+            // 'locker_id' => Locker::all()->random()->id ,
             'status' => $this->faker->randomElement(['WAITING_LECTURER_APPROVAL','WAITING_TECHNICAL_OFFICER_APPROVAL', 'READY',  'PICKEDUP'])
         ];
     }

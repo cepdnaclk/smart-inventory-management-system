@@ -25,7 +25,6 @@ class LockerFactory extends Factory
         return [
             'notes'=>$this->faker->text(),
             'is_available'=>rand(0, 1),
-            'order_id' => $this->faker->unique()->numberBetween(1, Order::count()),
         ];
     }
 }

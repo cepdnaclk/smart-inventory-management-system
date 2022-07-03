@@ -18,14 +18,6 @@ class CreateLockersTable extends Migration
             $table->boolean('is_available')->default(0);
             $table->text('notes')->nullable();
             $table->timestamps();
-
-            $table->foreignId('order_id')
-                ->nullable()    //locker without order are avilable
-                ->unique()      //one order must be placed in one location
-                ->constrained()
-                ->references('id')
-                ->onDelete('cascade')
-                ->on('orders');
         });
     }
 

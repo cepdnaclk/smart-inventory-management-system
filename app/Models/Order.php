@@ -51,7 +51,7 @@ class Order extends Model
    
     public function locker()
     {
-        return $this->hasOne(Locker::class);
+        return $this->belongsTo(locker::class);
     }
 
     public static function ordersForTechOfficer()

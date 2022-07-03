@@ -28,6 +28,13 @@ class CreateOrdersTable extends Migration
                 ->references('id')
                 ->onDelete('cascade')
                 ->on('users');
+
+            $table->foreignId('locker_id')
+                ->nullable()    //order without locker id are avilable
+                ->constrained()
+                ->references('id')
+                ->onDelete('cascade')
+                ->on('lockers');
         });
     }
 

@@ -11,13 +11,18 @@ class Locker extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function order()
+    public function orders()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasMany(Order::class);
     }
 
     public static function getNextLockerId()
     {
         return Locker::orderBy('id','desc')->first()->id + 1;
+    }
+
+    public static function getHasOrderLockers()
+    {
+        return Locker::where('order_id', '!=', NULL)->orderBy('id')->paginate(16);
     }
 }
