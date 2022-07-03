@@ -56,18 +56,6 @@
                 </div>
             </div>
 
-            <!-- Order Id -->
-            <div class="form-group row">
-                {!! Form::label('order_id', 'Order Id', ['class' => 'col-md-2 col-form-label']) !!}
-
-                <div class="col-md-4">
-                    {!! Form::select('order_id', $orders, null, ['class'=>'form-control', 'placeholder' => '']) !!}
-                    @error('order_id')
-                    <strong>{{ $message }}</strong>
-                    @enderror
-                </div>
-            </div>
-
         </x-slot>
 
         <x-slot name="footer">

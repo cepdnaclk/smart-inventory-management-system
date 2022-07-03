@@ -49,7 +49,7 @@
                         
                         <td>Order Id<br>(placed)</td>
                         <td>
-                            @if( $lockerDetail->order_id !== null)
+                            @if( $lockerDetail->order_id !== NULL)
                                 {{-- <a href="{{ route('admin.order.show', $lockerDetail->order_id) }}"> --}}
                                     {{ $lockerDetail->order_id }}
                                 {{-- </a> --}}

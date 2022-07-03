@@ -43,7 +43,7 @@ class LockerController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'order_id' => 'numeric|nullable',
+            // 'order_id' => 'numeric|nullable',
 
             'notes' => 'string|nullable',
 
@@ -56,6 +56,7 @@ class LockerController extends Controller
 
             // Update checkbox condition
             $locker->is_available = $request->input('is_available') ? true : false;
+            $locker->order_id = NULL; 
 
             $locker->save();
             return redirect()->route('admin.locker.details.index')->with('Success', 'locker was created !');
@@ -84,6 +85,7 @@ class LockerController extends Controller
      */
     public function edit(Locker $lockerDetail)
     {
+        //dd($lockerDetail);
         $orders = Order::pluck('id');
         return view('backend.locker.details.edit', compact('orders','lockerDetail'));
     }
@@ -142,5 +144,14 @@ class LockerController extends Controller
         } catch (\Exception $ex) {
             return abort(500);
         }
+    }
+
+    public function index_for_ready_orders()
+    {
+
+        $orders = Order::getReadyOrders();
+        //dd($orders);
+
+        return view('backend.locker.ready_orders.index', compact('orders'));
     }
 }

@@ -248,9 +248,9 @@
                 </li>
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.locker.has_order.index')"
+                            :href="route('admin.locker.ready_orders.index')"
                             class="c-sidebar-nav-link"
-                            :text="__('Has Order')"></x-utils.link>
+                            :text="__('Ready Orders')"></x-utils.link>
                 </li>
             </ul>
         </li>

@@ -21,8 +21,4 @@ class Locker extends Model
         return Locker::orderBy('id','desc')->first()->id + 1;
     }
 
-    public static function getHasOrderLockers()
-    {
-        return Locker::where('order_id', '!=', NULL)->orderBy('id')->paginate(16);
-    }
 }

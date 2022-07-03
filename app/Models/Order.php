@@ -61,4 +61,9 @@ class Order extends Model
 
         return $orders_approval_for_officer;
     }
+
+    public static function getReadyOrders()
+    {
+        return Order::where('status', 'READY')->orderBy('locker_id')->paginate(16);
+    }
 }

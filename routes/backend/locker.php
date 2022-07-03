@@ -85,12 +85,11 @@ Route::middleware(['editAccess'])->group(function () {
     //locker availables --------------------------------------------------------------------
 
     //Index
-    Route::get('locker/has_order', [ComponentItemController::class, 'index'])
-    ->name('locker.has_order.index')
+    Route::get('locker/ready_orders', [LockerController::class, 'index_for_ready_orders'])
+    ->name('locker.ready_orders.index')
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Lockers'), route('admin.locker.index'))
-            ->push(__('Items'));
+            ->push(__('Ready Orders'));
     });
-
 });
