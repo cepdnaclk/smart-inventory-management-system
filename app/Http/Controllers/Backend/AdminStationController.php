@@ -123,7 +123,7 @@ class AdminStationController extends Controller
      */
     public function update(Request $request, Stations $station)
     { 
-                $data = request()->validate([
+        $data = request()->validate([
                 'stationName' => 'string|required',
                 'description' => 'string|nullable',
                 'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
