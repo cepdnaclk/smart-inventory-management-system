@@ -155,8 +155,8 @@
                                     dataType:'json',
                                     data:{ title, start_date, end_date  },
                                     success:function(response)
-                                    {
-                                    
+                                    {   
+                                        
                                         //fill the calnedar when eventt is entered instantaneously
                                         $('#bookingModal').modal('hide')
                                         $('#calendar').fullCalendar('renderEvent', {
@@ -167,8 +167,7 @@
                                             'auth' : response.auth,
                                             
                                         });
-                                        
-
+                                             
 
                                     },
                                     error:function(error)
