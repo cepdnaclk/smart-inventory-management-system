@@ -100,7 +100,6 @@
                 }
             });
 
-            
             var booking = @json($events);
             
             $('#calendar').fullCalendar({
@@ -132,12 +131,10 @@
                     }); 
                 },
 
- 
                 
                 select: function(start, end, allDays, view){
 
-                    if(view.name == 'agendaDay' || view.name == 'agendaWeek'){
-
+                    if((view.name == 'agendaDay' || view.name == 'agendaWeek')){
                         
                         $('#bookingModal').modal('toggle');
                     
@@ -160,7 +157,7 @@
                                     success:function(response)
                                     {
                                     
-                                        //console.log(response)
+                                        //fill the calnedar when eventt is entered instantaneously
                                         $('#bookingModal').modal('hide')
                                         $('#calendar').fullCalendar('renderEvent', {
                                             'title': response.title,
@@ -194,11 +191,10 @@
 
                 },
 
-
                 editable: true,
+                eventOverlap: false,                //events cant overlap
                 eventResize: function(event){
                      
-
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['email'];
@@ -207,6 +203,7 @@
                     var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
 
                     if(event.auth == user){
+
                         $.ajax({
                             url: "{{ route('calendar.update', '') }}" +'/' + id,
                             type: "PATCH",
@@ -234,7 +231,7 @@
 
                 },
 
-                editable: true,
+                //editable: true,
                 eventDrop: function(event){
                     var id = event.id;
                     var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
@@ -330,6 +327,7 @@
             $('.fc-event').css('border-radius', '60%');
 
         });
+
     </script>
 
 
