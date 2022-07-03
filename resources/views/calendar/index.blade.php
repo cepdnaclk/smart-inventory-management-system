@@ -105,7 +105,6 @@
                 }
             });
 
-            
             var booking = @json($events);
             
             $('#calendar').fullCalendar({
@@ -137,12 +136,10 @@
                     }); 
                 },
 
- 
                 
                 select: function(start, end, allDays, view){
 
-                    if(view.name == 'agendaDay' || view.name == 'agendaWeek'){
-
+                    if((view.name == 'agendaDay' || view.name == 'agendaWeek') && (!isAnOverlapEvent(start,end))){
                         
                         $('#bookingModal').modal('toggle');
                       
@@ -175,9 +172,9 @@
                                     dataType:'json',
                                     data:{ title, start_date, end_date, begin},
                                     success:function(response)
-                                    {
-                                    
-                                        //console.log(response)
+                                    {   
+                                        
+                                        //fill the calnedar when eventt is entered instantaneously
                                         $('#bookingModal').modal('hide')
                                         $('#calendar').fullCalendar('renderEvent', {
                                             'title': response.title,
@@ -188,9 +185,11 @@
                                             
                                         });
 
+
                             
                                     swal("Done!", "Event Created!", "success");
                                                                       
+
 
 
                                     },
@@ -223,11 +222,10 @@
 
                 },
 
-
                 editable: true,
+                eventOverlap: false,                //events cant overlap
                 eventResize: function(event){
                      
-
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
@@ -243,7 +241,11 @@
                     const time_limit = 300;
 
                     if(event.auth == user){
+
                         if(m<time_limit){ //limit maximum time
+
+
+
                         $.ajax({
                             url: "{{ route('calendar.update', '') }}" +'/' + id,
                             type: "PATCH",
@@ -276,7 +278,7 @@
 
                 },
 
-                editable: true,
+                //editable: true,
                 eventDrop: function(event){
                     var id = event.id;
                     var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
@@ -381,6 +383,33 @@
             $('.fc-event').css('border-radius', '60%');
 
         });
+
+        function isAnOverlapEvent(eventStartDay, eventEndDay){
+            var events = $('#calendar').fullCalendar('clientEvents');
+
+            for (let i = 0; i < events.length; i++) {
+
+                const eventA = events[i];
+
+                                                    // start-time in between any of the events
+                if (moment(eventStartDay).isAfter(eventA.start) && moment(eventStartDay).isBefore(eventA.end)) {
+                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    return true;
+                }
+                                    //end-time in between any of the events
+                if (moment(eventEndDay).isAfter(eventA.start) && moment(eventEndDay).isBefore(eventA.end)) {
+                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    return true;
+                }
+                                    //any of the events in between/on the start-time and end-time
+                if (moment(eventStartDay).isSameOrBefore(eventA.start) && moment(eventEndDay).isSameOrAfter(eventA.end)) {
+                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    return true;
+                }
+            }
+
+            return false;
+        }
     </script>
 
 
