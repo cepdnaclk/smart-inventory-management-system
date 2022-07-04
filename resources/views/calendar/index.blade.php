@@ -22,6 +22,7 @@
         } 
     </script>
 
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -40,6 +41,7 @@
  
 </head>
 <body>
+
 
    
     <!-- Button trigger modal -->
@@ -68,22 +70,17 @@
   </div>
 </div>
 
+    <div id="app">
+        @include('frontend.includes.nav')
+        
+    </div><!--app-->
+
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <h3 class="text-center mt-5">Schedule Reservation- {{ $station->stationName }}</h3>
                 <br>
-                <div id="path">
-                    <a href="{{ route('frontend.index') }}">Home</a>
-                    &nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp
-                    <a href="{{ route('frontend.stations.index') }}">Stations</a>
-                    &nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp
-                    <a href="{{ route('frontend.stations.station', [$station->id])}}" >{{ $station->stationName }}</a>
-                    &nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp
-                    <a >Schedule</a>
-
-                   
-                </div>
+                
                 <div class="col-md-11 offset-1 mt-5 mb-5">
 
                     <div id="calendar">
@@ -393,17 +390,17 @@
 
                                                     // start-time in between any of the events
                 if (moment(eventStartDay).isAfter(eventA.start) && moment(eventStartDay).isBefore(eventA.end)) {
-                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    swal("Time Unvavailable!", "Please choose another slot", "error");
                     return true;
                 }
                                     //end-time in between any of the events
                 if (moment(eventEndDay).isAfter(eventA.start) && moment(eventEndDay).isBefore(eventA.end)) {
-                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    swal("Time Unvavailable!", "Please choose another slot", "error");
                     return true;
                 }
                                     //any of the events in between/on the start-time and end-time
                 if (moment(eventStartDay).isSameOrBefore(eventA.start) && moment(eventEndDay).isSameOrAfter(eventA.end)) {
-                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    swal("Time Unvavailable!", "Please choose another slot", "error");
                     return true;
                 }
             }
@@ -411,6 +408,10 @@
             return false;
         }
     </script>
+
+   
+    
+   
 
 
 </body>

@@ -1,4 +1,4 @@
-<?php
+<?php 
  
 namespace App\Http\Controllers; 
 
@@ -48,7 +48,7 @@ class CalendarController extends Controller
     }
 
     public function store(Request $request){
-        
+
         $station = Session::get('station');
         $userLoggedin = auth()->user();
 

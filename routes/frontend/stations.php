@@ -36,7 +36,7 @@ Route::prefix('stations')->group(function () {
         });
 
 
-    Route::get('/calendar/index', [CalendarController::class, 'index'])
+        Route::get('/calendar/index', [CalendarController::class, 'index'])
         ->name('calendar.index')
         ->breadcrumbs(function (Trail $trail) {
             $stations = Session::get('station');
@@ -46,8 +46,6 @@ Route::prefix('stations')->group(function () {
                 ->push($stations->stationName, route('frontend.stations.station',
                 $stations->stationName));
         });
-
-
 });
 
 
