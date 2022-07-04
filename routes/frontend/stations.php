@@ -4,7 +4,8 @@
 use App\Models\Stations;
 
 use Tabuna\Breadcrumbs\Trail;
-use App\Http\Controllers\CalendarController;
+
+use App\Http\Controllers\Registered\CalendarController;
 use App\Http\Controllers\AddStationController;
 use App\Http\Controllers\Frontend\StationController;
 
@@ -35,17 +36,6 @@ Route::prefix('stations')->group(function () {
                 $stations->stationName));
         });
 
-
-        Route::get('/calendar/index', [CalendarController::class, 'index'])
-        ->name('calendar.index')
-        ->breadcrumbs(function (Trail $trail) {
-            $stations = Session::get('station');
-            //$stations = Stations::find($station);
-            $trail->parent('frontend.index')
-                ->push(__('Stations'), route('frontend.stations.index'))
-                ->push($stations->stationName, route('frontend.stations.station',
-                $stations->stationName));
-        });
 });
 
 

@@ -1,17 +1,16 @@
-<?php 
- 
-namespace App\Http\Controllers; 
+<?php
 
-use App\Models\Booking;
+namespace App\Http\Controllers\registered;
+
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
- 
+
 class CalendarController extends Controller
 {
-    
     public function index(){
 
        
@@ -158,6 +157,4 @@ class CalendarController extends Controller
 
         return $id;
     }
-
-    
 }
