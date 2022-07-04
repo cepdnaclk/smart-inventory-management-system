@@ -124,7 +124,7 @@ class MachinesController extends Controller
         $data = request()->validate([
             'code' => 'string|nullable|max:8',
             'title' => 'string|required',
-            'location' => 'numeric|requried',
+            'location' => 'numeric|required',
 
         ]);
 

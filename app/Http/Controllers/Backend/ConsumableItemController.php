@@ -52,13 +52,14 @@ class ConsumableItemController extends Controller
             'consumable_type_id' => 'numeric|required',
             'specifications' => 'string|nullable',
             'formFactor' => 'nullable',
+            'location' => 'numeric|required',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        try {
+//        try {
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "consumable_items");
             }
@@ -78,10 +79,10 @@ class ConsumableItemController extends Controller
 
             $location->save();
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was created !');
-
-        } catch (\Exception $ex) {
-            return abort(500);
-        }
+//
+//        } catch (\Exception $ex) {
+//            return abort(500);
+//        }
     }
 
     /**
@@ -126,13 +127,14 @@ class ConsumableItemController extends Controller
             'consumable_type_id' => 'numeric|required',
             'specifications' => 'string|nullable',
             'formFactor' => 'nullable',
+            'location' => 'numeric|required',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        try {
+//        try {
             if ($request->thumb != null) {
                 $thumb = ($consumableItem->thumb == NULL) ? NULL : $consumableItem->thumbURL();
                 $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "consumable_items");
@@ -152,9 +154,9 @@ class ConsumableItemController extends Controller
 
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was updated !');
 
-        } catch (\Exception $ex) {
-            return abort(500);
-        }
+//        } catch (\Exception $ex) {
+//            return abort(500);
+//        }
     }
 
     /**

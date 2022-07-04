@@ -4,6 +4,7 @@ namespace Tests\Feature\Backend\Component;
 
 use App\Domains\Auth\Models\User;
 use App\Models\ComponentItem;
+use App\Models\ItemLocations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -95,12 +96,18 @@ class ComponentItemTest extends TestCase
 
         $this->actingAs(User::factory()->admin()->create());
         $component = ComponentItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $component->inventoryCode(),
+                'location_id' => 1
+            ]
+        );
 
         $component->title = 'New Component Title';
         $component_array =  $component->toArray();
         $component_array['location'] = 2;
         $response = $this->put("/admin/components/items/{$component->id}", $component_array);
-
+        $response->assertStatus(302);
         $this->assertDatabaseHas('component_items', [
             'title' => 'New Component Title',
         ]);

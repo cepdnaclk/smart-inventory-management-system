@@ -94,13 +94,18 @@ class ConsumableItemTest extends TestCase
     public function an_consumable_can_be_updated()
     {
 
-        $this->actingAs(User::factory()->admin()->create());
+        $this->loginAsAdmin();
         $consumable = ConsumableItem::factory()->create();
+        ItemLocations::factory()->create([
+            'item_id' => $consumable->inventoryCode(),
+            'location_id' => 2
+        ]);
 
         $consumable->title = 'New consumable Title';
         $consumable_array = $consumable->toArray();
-        $consumable_array['location'] = 1;
+        $consumable_array['location'] = 2;
         $response = $this->put("/admin/consumables/items/{$consumable->id}",$consumable_array );
+        $response->assertStatus(302);
 
         $this->assertDatabaseHas('consumable_items', [
             'title' => 'New consumable Title',
@@ -132,5 +137,6 @@ class ConsumableItemTest extends TestCase
         $response = $this->delete('/admin/consumables/items/' . $consumable->id);
         $response->assertStatus(302);
     }
+
 
 }
