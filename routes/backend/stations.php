@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 use App\Http\Controllers\Backend\AdminStationController;
 use Tabuna\Breadcrumbs\Trail;

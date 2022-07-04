@@ -28,32 +28,19 @@ Route::group(['as' => 'frontend.'], function () {
 });
 
 
-//add stations
-Route::resource('/addstation', AddStationController::class);
-
-//add stations as admin new
-Route::resource('/addstationadmin', AdminStationController::class);
-
 /*
  * Backend Routes
  *
  * These routes can only be accessed by users with type `admin`
  */
 
-//Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-//    includeRouteFiles(__DIR__ . '/backend/');
-//});
-
 Route::prefix('admin')->as('admin.')->middleware(['auth'])->group(function () {
     includeRouteFiles(__DIR__ . '/backend/');
 });
 
-// Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-//     includeRouteFiles(__DIR__.'/backend/');
-// });
 
 
-// Route::get('/stations/calendar/index', [CalendarController::class, 'index'])->name('calendar.index');
+// Route::get('/stations/calendar/index', [CalendarController::class, 'index'])->name('stations.calendar.index');
 Route::post('calendar', [CalendarController::class, 'store'])->name('calendar.store');
 
 Route::patch('calendar/update/{id}', [CalendarController::class, 'update'])->name('calendar.update');
