@@ -164,7 +164,7 @@
                                 //Send to the database
                                 if(m<time_limit){  //limit maximum time
                                 $.ajax({
-                                    url:"{{ route('calendar.store') }}",
+                                    url:"{{ route('user.calendar.store') }}",
                                     type:"POST",
                                     dataType:'json',
                                     data:{ title, start_date, end_date, begin},
@@ -243,33 +243,31 @@
 
 
 
-                        $.ajax({
-                            url: "{{ route('calendar.update', '') }}" +'/' + id,
-                            type: "PATCH",
-                            dataType: 'json', 
-                            data: {
-                                start_date,
-                                end_date,
-                            },
-                            success: function(response){
-                                
-                                $('#calendar').fullCalendar('refetchEvents', response);
-                                swal("Done!", "Event Updated!", "success");
-                            },
-                            error:function(error)
-                            {
-                                // if(error.responseJSON.errors) {
-                                //     $('#titleError').html(error.responseJSON.errors.title);
-                                // }
-                                console.log(error)
-                            },
-                        });
-                    }
-                    else{
-                        swal("Permission Denied!", "You can not exceed 4 hours!", "warning");   
-                    }
-                }                   
-                    else{
+                            $.ajax({
+                                url: "{{ route('user.calendar.update', '') }}" +'/' + id,
+                                type: "PATCH",
+                                dataType: 'json', 
+                                data: {
+                                    start_date,
+                                    end_date,
+                                },
+                                success: function(response){
+                                    
+                                    $('#calendar').fullCalendar('refetchEvents', response);
+                                    swal("Done!", "Event Updated!", "success");
+                                },
+                                error:function(error)
+                                {
+                                    // if(error.responseJSON.errors) {
+                                    //     $('#titleError').html(error.responseJSON.errors.title);
+                                    // }
+                                    console.log(error)
+                                },
+                            });
+                        } else{
+                            swal("Permission Denied!", "You can not exceed 4 hours!", "warning");   
+                        }
+                    } else{
                         swal("Permission Denied!", "You can not update this event!", "warning");   
                     }
 
@@ -290,11 +288,11 @@
 
                     const time_limit = 300;
 
-                    if(event.auth == user){
+                    if(event.auth == user){ 
                         if(m<time_limit){ //limit maximum time
                         $.ajax({
                                 
-                            url:"{{ route('calendar.update', '') }}" +'/' + id,
+                            url:"{{ route('user.calendar.update', '') }}" +'/' + id,
                             type:"PATCH",
                             dataType:'json',
                             data:{ start_date, end_date  },
@@ -334,7 +332,7 @@
                     if(event.auth == user){
                         if(confirm('Are you sure you want to delete this event?')){
                             $.ajax({
-                                url:"{{ route('calendar.destroy', '') }}" +'/' + id,
+                                url:"{{ route('user.calendar.destroy', '') }}" +'/' + id,
                                 type:"DELETE",
                                 dataType:'json',
                                 success:function(response)

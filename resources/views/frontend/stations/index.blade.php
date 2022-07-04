@@ -16,6 +16,7 @@
                                 <li>
                                     <a href="/stations/{{ $station->id }}">{{ $station->stationName  }}</a>
                                 </li>
+                                
                         @endforeach
                     </ul>
                 </div>
