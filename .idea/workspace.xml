@@ -16,10 +16,25 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:issue_025" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef0aa575-db56-40a8-9e0c-6c7cab003ff2" name="Default Changelist" comment="" />
+    <list default="true" id="79aa89ba-9268-4b0e-be08-e84a1f755b40" name="Default Changelist" comment="List changes">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/smart-inventory-management-system.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/smart-inventory-management-system.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Frontend/User/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Frontend/User/CartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Frontend/User/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Frontend/User/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Frontend/User/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Frontend/User/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -198,21 +213,23 @@
       <path value="$PROJECT_DIR$/vendor/laravel/sanctum" />
       <path value="$PROJECT_DIR$/vendor/laravel/passport" />
       <path value="$PROJECT_DIR$/vendor/defuse/php-encryption" />
-      <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
-      <path value="$PROJECT_DIR$/vendor/react/promise" />
       <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
       <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
-      <path value="$PROJECT_DIR$/vendor/seld/jsonlint" />
       <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
       <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
-      <path value="$PROJECT_DIR$/vendor/seld/phar-utils" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
       <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
       <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
       <path value="$PROJECT_DIR$/vendor/laravel/sail" />
+      <path value="$PROJECT_DIR$/vendor/jean85/pretty-package-versions" />
+      <path value="$PROJECT_DIR$/vendor/treeware/plant" />
+      <path value="$PROJECT_DIR$/vendor/league/uri" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-interfaces" />
     </include_path>
   </component>
   <component name="ProjectId" id="2A8wzmTX3zDzaOETFiRQKUggId3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -224,15 +241,15 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/artisan" />
     <property name="nodejs_package_manager_path" value="yarn" />
   </component>
-  <component name="RunManager" selected="PHPUnit.AuthControllerTest.test_show_validation_error_on_email_when_credential_donot_match">
-    <configuration name="AuthControllerTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+  <component name="RunManager" selected="PHP Script.Serve">
+    <configuration name="AuthControllerTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner class="Tests\Feature\Api\Auth\AuthControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" scope="Class" />
       <method v="2" />
     </configuration>
-    <configuration name="AuthControllerTest.test_show_validation_error_on_email_when_credential_donot_match" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+    <configuration name="AuthControllerTest.test_show_validation_error_on_email_when_credential_donot_match" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner class="Tests\Feature\Api\Auth\AuthControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" method="test_show_validation_error_on_email_when_credential_donot_match" scope="Method" />
       <method v="2" />
     </configuration>
@@ -248,10 +265,33 @@
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <configuration name="Migrate" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="migrate:fresh --seed">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4.9" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <configuration name="Serve" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="serve">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4.9" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="PHP Script.Serve" />
+      <item itemvalue="PHP Script.Migrate" />
+      <item itemvalue="PHPUnit.phpunit.xml" />
+      <item itemvalue="PHPUnit.AuthControllerTest" />
+      <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_on_email_when_credential_donot_match" />
+      <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_when_both_fields_empty" />
+      <item itemvalue="PHPUnit.ComponentItemTest" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_on_email_when_credential_donot_match" />
-        <item itemvalue="PHPUnit.AuthControllerTest" />
         <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_when_both_fields_empty" />
         <item itemvalue="PHPUnit.ComponentItemTest" />
       </list>
@@ -296,29 +336,38 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="397" y="7" key="#PHP/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408163452" />
-    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1654408285259">
+    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1656764868175">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1656764868175" />
     <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408285259" />
     <state x="238" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1654409615846">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="238" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654409615846" />
-    <state width="1323" height="226" key="GridCell.Tab.0.bottom" timestamp="1654410159904">
+    <state x="441" y="107" key="FileChooserDialogImpl" timestamp="1656764847064">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="441" y="107" key="FileChooserDialogImpl/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1656764847064" />
+    <state width="1323" height="202" key="GridCell.Tab.0.bottom" timestamp="1656764909897">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="202" key="GridCell.Tab.0.bottom/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1656764909897" />
     <state width="1323" height="226" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654410159904" />
-    <state width="1323" height="226" key="GridCell.Tab.0.center" timestamp="1654410159904">
+    <state width="1323" height="202" key="GridCell.Tab.0.center" timestamp="1656764909897">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="202" key="GridCell.Tab.0.center/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1656764909897" />
     <state width="1323" height="226" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654410159904" />
-    <state width="1323" height="226" key="GridCell.Tab.0.left" timestamp="1654410159904">
+    <state width="1323" height="202" key="GridCell.Tab.0.left" timestamp="1656764909897">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="202" key="GridCell.Tab.0.left/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1656764909897" />
     <state width="1323" height="226" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654410159904" />
-    <state width="1323" height="226" key="GridCell.Tab.0.right" timestamp="1654410159904">
+    <state width="1323" height="202" key="GridCell.Tab.0.right" timestamp="1656764909897">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="202" key="GridCell.Tab.0.right/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1656764909897" />
     <state width="1323" height="226" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654410159904" />
     <state x="291" y="87" key="NewPhpClassDialog" timestamp="1654409759205">
       <screen x="0" y="0" width="1366" height="728" />
