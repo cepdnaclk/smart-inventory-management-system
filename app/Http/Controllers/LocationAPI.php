@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ItemLocations;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 
 class LocationAPI extends Controller
 {
@@ -12,8 +13,8 @@ class LocationAPI extends Controller
 //        $time_start = microtime(true);
 
         $locations = ItemLocations::all();
-//      foreach in locations to get the full location path
         foreach ($locations as $key => $value) {
+//      foreach in locations to get the full location path
             $full_location_path_array = $this->getFullLocationPathByLocationID($value->location_id);
             $locations[$key]->full_location_path = implode(' > ', array_reverse($full_location_path_array));
 
