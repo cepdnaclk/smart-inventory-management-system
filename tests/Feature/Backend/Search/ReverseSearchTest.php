@@ -28,6 +28,7 @@ class ReverseSearchTest extends TestCase
     {
         $this->loginAsAdmin();
         $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '0']);
+//        dd($response->content());
         $locationName = Locations::where('id', '0')->first()->name;
         $response->assertStatus(200);
         $response->assertSee($locationName);

@@ -4,6 +4,7 @@ namespace Tests\Feature\Backend\Consumable;
 
 use App\Domains\Auth\Models\User;
 use App\Models\ConsumableItem;
+use App\Models\ItemLocations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

@@ -68,20 +68,29 @@ class SearchController extends Controller
             $exploded = explode("/", $item_id);
             if ($exploded[0] == "EQ") {
                 $thisItem = EquipmentItem::where('id', end($exploded))->get();
-                $allItems[] = $thisItem[0];
+                if (count($thisItem) > 0) {
+                    $allItems[] = $thisItem[0];
+                }
             } elseif ($exploded[0] == "MC") {
                 $thisItem = Machines::where('id', end($exploded))->get();
-                $allItems[] = $thisItem[0];
+                if (count($thisItem) > 0) {
+                    $allItems[] = $thisItem[0];
+                }
             } elseif ($exploded[1] == "CS") {
                 $thisItem = ConsumableItem::where('id', end($exploded))->get();
-                $allItems[] = $thisItem[0];
+                if (count($thisItem) > 0) {
+                    $allItems[] = $thisItem[0];
+                }
             } elseif ($exploded[0] == "RW") {
                 $thisItem = RawMaterials::where('id', (int)end($exploded))->get();
-//                dd($thisItem);
-                $allItems[] = $thisItem[0];
+                if (count($thisItem) > 0) {
+                    $allItems[] = $thisItem[0];
+                }
             } elseif ($exploded[0] == "CM") {
                 $thisItem = ComponentItem::where('id', end($exploded))->get();
-                $allItems[] = $thisItem[0];
+                if (count($thisItem) > 0) {
+                    $allItems[] = $thisItem[0];
+                }
             }
         }
 //        dd($allItems);
