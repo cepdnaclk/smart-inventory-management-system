@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ComponentType;
 use App\Models\ConsumableItem;
 use App\Models\ConsumableType;
 use App\Models\ItemLocations;
@@ -21,7 +22,7 @@ class ConsumableItemController extends Controller
 
     public function index()
     {
-        $consumables = ConsumableItem::paginate(12);
+        $consumables = ConsumableItem::paginate(36);
         return view("backend.consumable.items.index", compact('consumables'));
     }
 
@@ -49,19 +50,12 @@ class ConsumableItemController extends Controller
             'title' => 'string|required',
             'char' => 'string|nullable',
             'consumable_type_id' => 'numeric|required',
-
             'specifications' => 'string|nullable',
-//            'description' => 'string|nullable',
-//            'instructions' => 'string|nullable',
-            'location' => 'numeric|required',
-
-//            'powerRating' => 'nullable',
             'formFactor' => 'nullable',
-//            'voltageRating' => 'nullable',
+            'location' => 'numeric|required',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
-
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -131,15 +125,9 @@ class ConsumableItemController extends Controller
             'title' => 'string|required',
             'char' => 'string|nullable',
             'consumable_type_id' => 'numeric|required',
-
             'specifications' => 'string|nullable',
-//            'description' => 'string|nullable',
-//            'instructions' => 'string|nullable',
-            'location' => 'numeric|required',
-
-//            'powerRating' => 'nullable',
             'formFactor' => 'nullable',
-//            'voltageRating' => 'nullable',
+            'location' => 'numeric|required',
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
@@ -195,11 +183,12 @@ class ConsumableItemController extends Controller
             // Delete the thumbnail form the file system
             $this->deleteThumb($consumableItem->thumbURL());
 
-//            delete location entry
+            $consumableItem->delete();
+
+            //            delete location entry
             $this_item_location = ItemLocations::where('item_id',$consumableItem->inventoryCode())->get()[0];
             $this_item_location->delete();
 
-            $consumableItem->delete();
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
 
         } catch (\Exception $ex) {

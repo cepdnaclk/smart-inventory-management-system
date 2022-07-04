@@ -1,25 +1,12 @@
 @extends('frontend.layouts.app')
 
-@section('title', $consumableType->title )
+@section('title', 'All Consumables' )
 
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <h3>{{ $consumableType->title }}</h3>
-
-                @if($consumableType->children()->count() != 0)
-                    <div class="container pt-2">Sub-Categories</div>
-                    <div class="container pt-2">
-                        @foreach($consumableType->children() as $category)
-                            <a class="btn btn-secondary byn-200 mx-1 mb-2"
-                               href="{{ route('frontend.consumable.category', $category) }}">{{ $category->title }}</a>
-                        @endforeach
-                        <hr/>
-                    </div>
-                @else
-                    {{-- No sub categories available--}}
-                @endif
+                <h3>All Consumables</h3>
 
                 @if($items->count() != 0)
                     <div class="container pt-2">
@@ -33,10 +20,10 @@
                                                  alt="{{ $item->title }}"/>
                                             <div class="p-1">
                                                 {{ $item->title }}
-                                                @if($item->quantity==0)
-                                                    <br>(Out of Stock)
-                                                @endif
                                             </div>
+                                        </a>
+                                        <a href="{{ route('frontend.consumable.category', $item->consumable_type) }}">
+                                            ({{ $item->consumable_type->title }})
                                         </a>
                                     </div>
                                 </div>
@@ -46,14 +33,8 @@
                         <div class="container pt-4">
                             {{ $items->links() }}
                         </div>
-
-                        @elseif ($items->count() == 0 && $consumableType->children()->count() == 0)
-                            <p>No items listed under this category yet</p>
-                        @else
-                            {{-- No items available--}}
-                        @endif
-
                     </div>
+                @endif
             </div>
         </div>
 @endsection

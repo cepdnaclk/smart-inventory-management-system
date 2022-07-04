@@ -4,6 +4,7 @@ namespace Tests\Feature\Backend\Equipment;
 
 use App\Domains\Auth\Models\User;
 use App\Models\EquipmentItem;
+use App\Models\ItemLocations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -98,11 +99,18 @@ class EquipmentItemTest extends TestCase
 
         $this->actingAs(User::factory()->admin()->create());
         $equipment = EquipmentItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $equipment->inventoryCode(),
+                'location_id' => 2,
+            ]
+        );
 
         $equipment->title = 'New Equipment Title';
         $equipment_array = $equipment->toArray();
         $equipment_array['location'] = 1;
         $response = $this->put("/admin/equipment/items/{$equipment->id}", $equipment_array);
+        $response->assertStatus(302);
 
         $this->assertDatabaseHas('equipment_items', [
             'title' => 'New Equipment Title',

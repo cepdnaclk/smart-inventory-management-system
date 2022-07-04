@@ -12,7 +12,7 @@ class ConsumableItem extends Model implements Searchable
     use HasFactory;
 
     protected $guarded = [];
-
+    //comment here
     // Link the Component Type table
     public function consumable_type()
     {
@@ -30,7 +30,7 @@ class ConsumableItem extends Model implements Searchable
     public function thumbURL()
     {
         if ($this->thumb != null) return '/img/consumable_items/' . $this->thumb;
-        return null;
+        else return $this->consumable_type->thumbURL();
     }
 
     public function getSearchResult(): SearchResult

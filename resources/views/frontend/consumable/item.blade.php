@@ -14,7 +14,7 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-md-4 col-sm-12 col-12 d-flex mb-4">
-                @if( $consumableItem->thumb != null )
+                @if( $consumableItem->thumbURL() != null )
                     <img src="{{ $consumableItem->thumbURL() }}"
                          alt="{{ $consumableItem->title }}"
                          class="img img-thumbnail img-fluid p-3 mx-auto">
@@ -25,12 +25,23 @@
 
             </div>
             <div class="col-md-8 col-sm-12 col-12 mb-4">
-                <h3>{{ $consumableItem->title }} <br>
-                    <small class="text-muted">
-                        {{ $consumableItem->inventoryCode() }}
-                        <hr>
-                    </small>
-                </h3>
+                <div class="container pb-2 d-inline-flex">
+                    <div class="col-10">
+                        <h3>{{ $consumableItem->title }} <br>
+                            <small class="text-muted">
+                                {{ $consumableItem->inventoryCode() }}
+                                <hr>
+                            </small>
+                        </h3>
+                    </div>
+                    <div class="col-2">
+                        @if ($logged_in_user!= null && ($logged_in_user->isAdmin() || $logged_in_user->isLecturer() || $logged_in_user->isTechOfficer() || $logged_in_user->isMaintainer()))
+                            <a target="_blank" href="{{ route('admin.consumable.items.edit', $consumableItem)}}"
+                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                            </a>
+                        @endif
+                    </div>
+                </div>
 
                 <div>
                     <table>
@@ -50,43 +61,18 @@
                         </tr>
 
                         <tr>
-                            <td>Product Code</td>
-                            <td>
-                                : <b>{{ $consumableItem->productCode }}({{ $consumableItem->brand }})</b>
-                            </td>
-                        </tr>
-
-                        <tr>
                             <td>Available Quantity</td>
                             <td>
-                                : <b>{{ $consumableItem->quantity }}</b>
-                            </td>
-                        </tr>
-{{--                        <tr>--}}
-{{--                            <td>Dimensions</td>--}}
-{{--                            <td>--}}
-{{--                                : <b>--}}
-{{--                                    @if( $consumableItem->width!=0 && $consumableItem->height!=0 && $consumableItem->length!=0)--}}
-{{--                                        {{ $consumableItem->width }} x {{ $consumableItem->height }}--}}
-{{--                                        x {{ $consumableItem->length }} cm <br>--}}
-{{--                                    @else--}}
-{{--                                        <span>[Not Available]</span> <br>--}}
-{{--                                    @endif--}}
-{{--                                </b>--}}
-{{--                            </td>--}}
-{{--                        </tr>--}}
-                        <tr>
-                            <td>Weight</td>
-                            <td>
                                 : <b>
-                                    @if( $consumableItem->weight != null )
-                                        {{ $consumableItem->weight." g"}}
+                                    @if($consumableItem->quantity==0)
+                                        Out of Stock
                                     @else
-                                        <span>[Not Available]</span>
+                                        {{ $consumableItem->quantity }}
                                     @endif
                                 </b>
                             </td>
                         </tr>
+
                         <tr>
                             <td>Datasheet URL</td>
                             <td>
@@ -94,37 +80,27 @@
                                     @if( $consumableItem->datasheetUrl != null )
                                         <a href="{{ $consumableItem->datasheetUrl }}" target="_blank">
                                             {{ $consumableItem->datasheetUrl }}
-                                    @else
-                                        <span>[Not Available]</span>
-                                    @endif
+                                            @else
+                                                <span>[Not Available]</span>
+                                @endif
                             </td>
                         </tr>
+
+                        @if ($consumableItem->formFactor != null)
+                            <tr>
+                                <td>Form Factor</td>
+                                <td>: {{ $consumableItem->formFactor}}</td>
+                            </tr>
+                        @endif
+
+                        @if ($consumableItem->price != null)
+                            <tr>
+                                <td>Price</td>
+                                <td>: {{ "Rs. " . sprintf("%0.2f", $consumableItem->price) }}</td>
+                            </tr>
+                        @endif
                     </table>
                 </div>
-
-                @if($consumableItem->powerRating != null)
-                    <div class="pt-3">
-                        Power Rating: {{ $consumableItem->powerRating}}
-                    </div>
-                @endif
-
-                @if ($consumableItem->formFactor != null)
-                    <div class="pt-3">
-                        Form Factor: {{ $consumableItem->formFactor}}
-                    </div>
-                @endif
-
-                @if ($consumableItem->voltageRating != null)
-                    <div class="pt-3">
-                        Voltage Rating: {{ $consumableItem->voltageRating}}
-                    </div>
-                @endif
-
-                @if ($consumableItem->price != null)
-                    <div class="pt-3">
-                        Price: {{ "Rs. " . $consumableItem->price }}
-                    </div>
-                @endif
 
                 @if($consumableItem->description !== null)
                     <div class="pt-3">
@@ -135,21 +111,11 @@
                     </div>
                 @endif
 
-                @if($consumableItem->specifications !== null)
+                @if($consumableItem->specifications !== null && $consumableItem->specifications !== "")
                     <div class="pt-3">
                         <u>Specifications</u>
                         <div class="pl-3">
                             {!! str_replace("\n", "<br>", $consumableItem->specifications) !!}
-                        </div>
-                    </div>
-                @endif
-
-
-                @if($consumableItem->instructions !== null)
-                    <div class="pt-3">
-                        <u>Usage Instructions</u>
-                        <div class="pl-3">
-                            {!! str_replace("\n", "<br>", $consumableItem->instructions) !!}
                         </div>
                     </div>
                 @endif

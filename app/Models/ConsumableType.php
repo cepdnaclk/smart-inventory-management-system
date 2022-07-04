@@ -27,8 +27,12 @@ class ConsumableType extends Model
     // Return the relative URL of the thumbnail
     public function thumbURL()
     {
-        if ($this->thumb != null) return '/img/consumable_type/' . $this->thumb;
-        return null;
+        if ($this->thumb != null) return '/img/consumable_types/' . $this->thumb;
+        else if ($this->parent() != null) {
+            return $this->parent()->thumbURL();
+        } else {
+            return null;
+        }
     }
 
     // Return the parent item of the current type or null
