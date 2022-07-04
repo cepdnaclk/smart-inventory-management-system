@@ -22,6 +22,7 @@
         } 
     </script>
 
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -40,6 +41,7 @@
  
 </head>
 <body>
+
 
    
     <!-- Button trigger modal -->
@@ -68,22 +70,17 @@
   </div>
 </div>
 
+    <div id="app">
+        @include('frontend.includes.nav')
+        
+    </div><!--app-->
+
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <h3 class="text-center mt-5">Schedule Reservation- {{ $station->stationName }}</h3>
                 <br>
-                <div id="path">
-                    <a href="{{ route('frontend.index') }}">Home</a>
-                    &nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp
-                    <a href="{{ route('frontend.stations.index') }}">Stations</a>
-                    &nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp
-                    <a href="{{ route('frontend.stations.station', [$station->id])}}" >{{ $station->stationName }}</a>
-                    &nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp
-                    <a >Schedule</a>
-
-                   
-                </div>
+                
                 <div class="col-md-11 offset-1 mt-5 mb-5">
 
                     <div id="calendar">
@@ -168,7 +165,7 @@
                                 //Send to the database
                                 if(m<time_limit){  //limit maximum time
                                 $.ajax({
-                                    url:"{{ route('calendar.store') }}",
+                                    url:"{{ route('user.calendar.store') }}",
                                     type:"POST",
                                     dataType:'json',
                                     data:{ title, start_date, end_date, begin},
@@ -247,33 +244,31 @@
 
 
 
-                        $.ajax({
-                            url: "{{ route('calendar.update', '') }}" +'/' + id,
-                            type: "PATCH",
-                            dataType: 'json', 
-                            data: {
-                                start_date,
-                                end_date,
-                            },
-                            success: function(response){
-                                
-                                $('#calendar').fullCalendar('refetchEvents', response);
-                                swal("Done!", "Event Updated!", "success");
-                            },
-                            error:function(error)
-                            {
-                                // if(error.responseJSON.errors) {
-                                //     $('#titleError').html(error.responseJSON.errors.title);
-                                // }
-                                console.log(error)
-                            },
-                        });
-                    }
-                    else{
-                        swal("Permission Denied!", "You can not exceed 4 hours!", "warning");   
-                    }
-                }                   
-                    else{
+                            $.ajax({
+                                url: "{{ route('user.calendar.update', '') }}" +'/' + id,
+                                type: "PATCH",
+                                dataType: 'json', 
+                                data: {
+                                    start_date,
+                                    end_date,
+                                },
+                                success: function(response){
+                                    
+                                    $('#calendar').fullCalendar('refetchEvents', response);
+                                    swal("Done!", "Event Updated!", "success");
+                                },
+                                error:function(error)
+                                {
+                                    // if(error.responseJSON.errors) {
+                                    //     $('#titleError').html(error.responseJSON.errors.title);
+                                    // }
+                                    console.log(error)
+                                },
+                            });
+                        } else{
+                            swal("Permission Denied!", "You can not exceed 4 hours!", "warning");   
+                        }
+                    } else{
                         swal("Permission Denied!", "You can not update this event!", "warning");   
                     }
 
@@ -294,11 +289,11 @@
 
                     const time_limit = 300;
 
-                    if(event.auth == user){
+                    if(event.auth == user){ 
                         if(m<time_limit){ //limit maximum time
                         $.ajax({
                                 
-                            url:"{{ route('calendar.update', '') }}" +'/' + id,
+                            url:"{{ route('user.calendar.update', '') }}" +'/' + id,
                             type:"PATCH",
                             dataType:'json',
                             data:{ start_date, end_date  },
@@ -338,7 +333,7 @@
                     if(event.auth == user){
                         if(confirm('Are you sure you want to delete this event?')){
                             $.ajax({
-                                url:"{{ route('calendar.destroy', '') }}" +'/' + id,
+                                url:"{{ route('user.calendar.destroy', '') }}" +'/' + id,
                                 type:"DELETE",
                                 dataType:'json',
                                 success:function(response)
@@ -394,17 +389,17 @@
 
                                                     // start-time in between any of the events
                 if (moment(eventStartDay).isAfter(eventA.start) && moment(eventStartDay).isBefore(eventA.end)) {
-                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    swal("Time Unvavailable!", "Please choose another slot", "error");
                     return true;
                 }
                                     //end-time in between any of the events
                 if (moment(eventEndDay).isAfter(eventA.start) && moment(eventEndDay).isBefore(eventA.end)) {
-                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    swal("Time Unvavailable!", "Please choose another slot", "error");
                     return true;
                 }
                                     //any of the events in between/on the start-time and end-time
                 if (moment(eventStartDay).isSameOrBefore(eventA.start) && moment(eventEndDay).isSameOrAfter(eventA.end)) {
-                    swal("Time Unvavailable!", "Please choose another time period", "error");
+                    swal("Time Unvavailable!", "Please choose another slot", "error");
                     return true;
                 }
             }
@@ -412,6 +407,10 @@
             return false;
         }
     </script>
+
+   
+    
+   
 
 
 </body>
