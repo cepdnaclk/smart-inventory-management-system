@@ -100,20 +100,16 @@ class CartController
             $order->componentItems()->attach($web['product'][$i], ['quantity' => $request->quantity[$i]]);
         }
 
-        // $user_id=$request->user()->id;
-        // $order_date=$data['ordered_date'];
-        $orders = Order::where('id', $request->user()->id)->get();
-        // return  Order::where('id',$request->user()->id)->get();;
-        return view('frontend.orders.index', compact('orders'));
-        // return response()->json($order, 200);
-    }
 
-    public function showMyOrders()
-    {
-        $id = auth()->user()->id; //getting current user id
-        $orders = Order::where('user_id', $id)->get();
-        $orders = $orders->reverse();
+    //    $user_id=$request->user()->id;
+       // $order_date=$data['ordered_date'];
+      $orders=Order::where('id',$request->user()->id)->get();
+   // return  Order::where('id',$request->user()->id)->get();;
+    return view('frontend.orders.index', compact('orders'));
+     return response()->json($order,200);
+    } 
+   
 
-        return view('frontend.orders.index', compact('orders'));
-    }
+
+    
 }

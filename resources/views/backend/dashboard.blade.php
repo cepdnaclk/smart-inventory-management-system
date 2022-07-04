@@ -101,6 +101,15 @@
                     </div>
 
                     <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.consumable.items.index') }}">
+                            <div class="card-counter info">
+                                <span class="count-numbers">{{ $consumableCount }}</span>
+                                <span class="count-name">Consumables ({{ $consumableTypeCount }} types)</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
                         @if ($logged_in_user->hasAllAccess())
                             <a class="text-decoration-none" href="{{ route('admin.auth.user.index') }}">
                                 @endif
@@ -108,7 +117,8 @@
                                     <span class="count-numbers">{{ $userCount }}</span>
                                     <span class="count-name">Users</span>
                                 </div>
-                                @if ($logged_in_user->hasAllAccess())</a> @endif
+                                @if ($logged_in_user->hasAllAccess())</a>
+                        @endif
                     </div>
 
 
