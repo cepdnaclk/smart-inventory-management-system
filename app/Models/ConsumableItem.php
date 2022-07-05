@@ -20,6 +20,7 @@ class ConsumableItem extends Model implements Searchable
         return null;
     }
 
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
         return $this->consumable_type->inventoryCode() . "/" . $this->id;
@@ -29,12 +30,12 @@ class ConsumableItem extends Model implements Searchable
     public function thumbURL()
     {
         if ($this->thumb != null) return '/img/consumable_items/' . $this->thumb;
-        return null;
+        else return $this->consumable_type->thumbURL();
     }
 
-
-    public function getSearchResults():SearchResults{
-        $url = route('admin.search.index',$this->slug);
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('admin.consumable.items.show', $this);
         return new SearchResult(
             $this,
             $this->title,

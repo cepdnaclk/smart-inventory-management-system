@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-
 class EquipmentItem extends Model implements Searchable
 {
     use HasFactory;
@@ -33,14 +32,13 @@ class EquipmentItem extends Model implements Searchable
         return null;
     }
 
-
-    public function getSearchResults():SearchResults{
-        $url = route('admin.search.index',$this->slug);
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('admin.equipment.items.show', $this);
         return new SearchResult(
             $this,
             $this->title,
             $url
         );
     }
-
 }
