@@ -7,6 +7,9 @@ use App\Models\EquipmentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use App\Models\ItemLocations;
+use App\Models\Locations;
+use Torann\GeoIP\Location;
 
 class EquipmentTypeController extends Controller
 {
@@ -70,7 +73,22 @@ class EquipmentTypeController extends Controller
      */
     public function show(EquipmentType $equipmentType)
     {
-        return view('backend.equipment.types.show', compact('equipmentType'));
+        $locations_array = array();
+        $locationID = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get();
+        $flag = false;
+        if ($locationID->count() > 0){
+            $locationID = $locationID[0]->location_id;
+            $flag = true;
+        }
+        while ($flag) {
+            $thisLocation = Locations::where('id', $locationID)->get()[0];
+            array_push($locations_array, $thisLocation->location);
+            $locationID = $thisLocation->parent_location;
+
+            if ($locationID == null) break;
+        }
+
+        return view('backend.equipment.items.show', compact('equipmentItem','locations_array'));
     }
 
     /**
