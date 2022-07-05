@@ -3,10 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocaleController;
-use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\Registered\CalendarController;
 use App\Http\Controllers\FullCalendarController;
 use App\Http\Controllers\Frontend\StationController;
-
 
 
 /*
@@ -32,22 +31,17 @@ Route::group(['as' => 'frontend.'], function () {
  * These routes can only be accessed by users with type `admin`
  */
 
-//Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-//    includeRouteFiles(__DIR__ . '/backend/');
-//});
-
 Route::prefix('admin')->as('admin.')->middleware(['auth'])->group(function () {
     includeRouteFiles(__DIR__ . '/backend/');
 });
 
-// Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-//     includeRouteFiles(__DIR__.'/backend/');
-// });
+/*
+ * Registered user Routes
+ *
+ * These routes can only be accessed by registered users
+ */
 
+Route::prefix('user')->as('user.')->middleware(['auth'])->group(function () {
+    includeRouteFiles(__DIR__ . '/registered/');
+});
 
-// Route::get('/stations/calendar/index', [CalendarController::class, 'index'])->name('calendar.index');
-Route::post('calendar', [CalendarController::class, 'store'])->name('calendar.store');
-
-Route::patch('calendar/update/{id}', [CalendarController::class, 'update'])->name('calendar.update');
-Route::delete('calendar/destroy/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
-//Route::patch('calendar/action/{id}', [CalendarController::class, 'action'])->name('calendar.action');
