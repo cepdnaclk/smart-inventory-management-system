@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\ItemLocations;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
 
 class LocationAPI extends Controller
 {
