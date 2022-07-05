@@ -2,9 +2,7 @@
 
 @section('title', __('Search'))
 
-@section('breadcrumb-links')
-    @include('backend.component.includes.breadcrumb-links')
-@endsection
+
 
 @section('content')
     <div>
@@ -30,13 +28,18 @@
                     </div>
                 @endif
 
-                    <h1>Search</h1>
+                    {{--<h1>Search</h1>--}}
 
                     You are searching for '{{$keywords}}'. <br>
                     There are {{ $searchResults->count() }} results.
 
+                    @if($searchResults->count() == 0)
+                        <br> Please check your spellings
+                    @endif
+                    <br><br>
+
                     @foreach($searchResults->groupByType() as $type => $modelSearchResults)
-                        <h2>{{ $type }}</h2>
+                        {{--<h2>{{ $type }}</h2>--}}
 
                         @foreach($modelSearchResults as $searchResult)
                             <ul>

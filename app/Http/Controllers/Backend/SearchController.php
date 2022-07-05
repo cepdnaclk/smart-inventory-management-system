@@ -8,6 +8,9 @@ use App\Models\EquipmentItem;
 use App\Models\Machines;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
+use App\Models\ConsumableItem;
+use App\Models\ConsumableType;
+use App\Models\ItemLocations;
 
 class SearchController extends Controller
 {
@@ -16,6 +19,11 @@ class SearchController extends Controller
     }
     public function results(Request $request){
     $keywords = $request->keywords;
+
+    if (strlen($keywords) == 0){
+        return view('backend.search.index')->with('status', 'Search string is empty. Please type something');
+    }
+    
 
     $searchResults = (new search())
     ->registerModel(ComponentItem::class,['title'])
