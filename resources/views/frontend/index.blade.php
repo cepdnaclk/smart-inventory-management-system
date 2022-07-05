@@ -78,7 +78,7 @@
                 <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
             @endif
 
-            <a href="{{ route('frontend.user.products') }}">User Dashboard</a>
+            <a href="{{ route('frontend.user.dashboard') }}">User Dashboard</a>
 
             <a href="{{ route('frontend.user.account') }}">@lang('Account')</a>
         @else

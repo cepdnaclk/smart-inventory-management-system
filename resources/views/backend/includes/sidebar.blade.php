@@ -9,14 +9,74 @@
     </div><!--c-sidebar-brand-->
 
     <ul class="c-sidebar-nav">
-        <li class="c-sidebar-nav-item">
-            <x-utils.link
-                    class="c-sidebar-nav-link"
-                    :href="route('admin.dashboard')"
-                    :active="activeClass(Route::is('admin.dashboard'), 'c-active')"
-                    icon="c-sidebar-nav-icon cil-speedometer"
-                    :text="__('Dashboard')"></x-utils.link>
-        </li>
+
+        @if ($logged_in_user->isUser())
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.dashboard')"
+                        :active="activeClass(Route::is('frontend.user.dashboard'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-speedometer"
+                        :text="__('Dashboard')"></x-utils.link>
+            </li>
+        
+        @else
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('admin.dashboard')"
+                        :active="activeClass(Route::is('admin.dashboard'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-speedometer"
+                        :text="__('Dashboard')"></x-utils.link>
+            </li>
+
+        @endif
+
+
+        <!-- User  -->
+        @if ($logged_in_user->isUser())
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.account')"
+                        :active="activeClass(Route::is('frontend.user.account'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-user"
+                        :text="__('Account')"></x-utils.link>
+            </li>
+
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.products')"
+                        :active="activeClass(Route::is('frontend.user.products'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-blur"
+                        :text="__('Components')"></x-utils.link>
+            </li>
+
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.cart')"
+                        :active="activeClass(Route::is('frontend.user.cart'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-cart"
+                        :text="__('Cart')"></x-utils.link>
+            </li>
+
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.show.order')"
+                        :active="activeClass(Route::is('frontend.user.show.order'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-description"
+                        :text="__('My orders')"></x-utils.link>
+            </li>
+
+            
+
+        @endif
+
+
+           
 
         @if (
         $logged_in_user->hasAllAccess() ||
@@ -173,7 +233,8 @@
             </ul>
         </li>
 
-      
+
+        
 
         {{-- Order Requests --}}
         @if ($logged_in_user->isLecturer() || $logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
@@ -281,6 +342,8 @@
                 </ul>
             </li>
         @endif
+
+        
     </ul>
 
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"

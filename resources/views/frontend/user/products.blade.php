@@ -2,6 +2,75 @@
 
 @section('title', __('Component reservation'))
 
+@push('after-styles')
+
+    <style>
+        .ordercomp{
+        /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+        /* max-width: 300px; */
+        
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+        }
+
+        .components {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: 30px;
+        margin-left: 30px;
+        padding:30px;
+        width: 75%;
+        height:700px;
+        float:left;
+        overflow:hidden;
+        overflow-y:scroll;
+        
+        }
+
+        .cartcomponents{
+        background:#eff0eb;
+        width: 20%;
+        padding:20px;
+        height:700px;
+        float:left;
+        overflow:hidden;
+        overflow-y:scroll;
+        }
+
+        .img-ordercomp {
+        padding: 0.25rem;
+        background-color: #f8fafc;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        max-width: 100%;
+        height: auto;
+        float:left;
+        }
+
+        .price {
+        color: grey;
+        font-size: 22px;
+        }
+
+        .card button {
+        border: none;
+        outline: 0;
+        padding: 12px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        }
+
+        .card button:hover {
+        opacity: 0.7;
+        }
+    </style>
+@endpush
+
 @section('content') 
 
     <!--Home/Component navigation bar  -->
