@@ -8,7 +8,7 @@ class LocationAPI extends Controller
 {
     public function index()
     {
-//        $time_start = microtime(true);
+        $time_start = microtime(true);
 
         $locations = ItemLocations::all();
         foreach ($locations as $key => $value) {
@@ -33,9 +33,9 @@ class LocationAPI extends Controller
 
 
         }
-//        $time_end = microtime(true);
-//        $execution_time = ($time_end - $time_start);
-//        $locations['time'] = $execution_time;
+        $time_end = microtime(true);
+        $execution_time = ($time_end - $time_start);
+        $locations['timeToCompute'] = $execution_time;
         return $locations;
     }
 }
