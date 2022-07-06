@@ -2,6 +2,7 @@
 
 @section('title', __('Search'))
 
+
 @section('content')
     <div>
         <x-backend.card>
@@ -31,7 +32,9 @@
                         {{ $status }}
                     </div>
                 @endif
+
                 <p>Search for Equipment, Components, Consumables, Machines and Raw Material</p>
+
                     {{ Form::open(array('route' => 'admin.search.results')) }}
                        {!! Form::text('keywords');  !!}
                     {!! Form::submit('Search') !!}
@@ -41,3 +44,4 @@
         </x-backend.card>
     </div>
 @endsection
+
