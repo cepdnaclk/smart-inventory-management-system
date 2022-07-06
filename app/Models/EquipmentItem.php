@@ -42,3 +42,4 @@ class EquipmentItem extends Model implements Searchable
         );
     }
 }
+

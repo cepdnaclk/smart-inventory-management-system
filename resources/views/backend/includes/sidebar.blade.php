@@ -121,6 +121,7 @@
                 </ul>
             </li>
 
+            {{-- Components --}}
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
                         href="#"
@@ -167,6 +168,7 @@
 {{--                    </li>--}}
                 </ul>
             </li>
+
         @endif
 
         {{-- Fabrication Requests --}}

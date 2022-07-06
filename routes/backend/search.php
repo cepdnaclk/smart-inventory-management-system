@@ -5,6 +5,7 @@ use Tabuna\Breadcrumbs\Trail;
 
 Route::middleware(['editAccess'])->group(function () {
 
+
     Route::get('/search', [SearchController::class,'index'])->name('search.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))

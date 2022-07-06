@@ -109,7 +109,6 @@ class EquipmentItemController extends Controller
     public function show(EquipmentItem $equipmentItem)
     {
         $locations_array = $this->getLocationOfItem($equipmentItem);
-
         return view('backend.equipment.items.show', compact('equipmentItem','locations_array'));
     }
 

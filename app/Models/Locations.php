@@ -15,4 +15,5 @@ class Locations extends Model
     public function get_parent_location(){
         return $this->hasOne(Locations::class,"id","parent_location");
     }
+
 }

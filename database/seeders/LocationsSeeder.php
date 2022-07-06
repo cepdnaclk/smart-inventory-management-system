@@ -22,6 +22,7 @@ class LocationsSeeder extends Seeder
     public function run()
     {
         foreach ($this->data as $index => $setting) {
+
             $result = DB::table('locations')->insert($setting);
 
             if (!$result) {
@@ -29,7 +30,7 @@ class LocationsSeeder extends Seeder
                 return;
             }
         }
-
         $this->command->info('Inserted ' . count($this->data) . ' records to locations table');
     }
 }
+

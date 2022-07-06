@@ -13,6 +13,7 @@ use App\Models\RawMaterials;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 
+
 class SearchController extends Controller
 {
     public function index(){
@@ -39,3 +40,4 @@ class SearchController extends Controller
         return view('backend.search.results',compact('searchResults','keywords'));
     }
 }
+
