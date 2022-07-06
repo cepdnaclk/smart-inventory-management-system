@@ -138,5 +138,4 @@ class ConsumableItemTest extends TestCase
         $response->assertStatus(302);
     }
 
-
 }

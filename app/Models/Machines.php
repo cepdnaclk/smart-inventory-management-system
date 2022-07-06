@@ -13,6 +13,7 @@ class Machines extends Model implements  Searchable
 
     protected $guarded = [];
 
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
         return sprintf("MC/%03d",$this->id);

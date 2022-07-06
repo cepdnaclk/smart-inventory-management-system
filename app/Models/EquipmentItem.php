@@ -20,8 +20,10 @@ class EquipmentItem extends Model implements Searchable
         return null;
     }
 
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
+
         return $this->equipment_type->inventoryCode() . "/" . $this->id;
     }
 

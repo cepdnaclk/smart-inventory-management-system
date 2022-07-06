@@ -13,6 +13,7 @@ class RawMaterials extends Model implements Searchable
 
     protected $guarded = [];
 
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
         return sprintf("RW/%03d",$this->id);
