@@ -73,22 +73,7 @@ class EquipmentTypeController extends Controller
      */
     public function show(EquipmentType $equipmentType)
     {
-        $locations_array = array();
-        $locationID = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get();
-        $flag = false;
-        if ($locationID->count() > 0){
-            $locationID = $locationID[0]->location_id;
-            $flag = true;
-        }
-        while ($flag) {
-            $thisLocation = Locations::where('id', $locationID)->get()[0];
-            array_push($locations_array, $thisLocation->location);
-            $locationID = $thisLocation->parent_location;
-
-            if ($locationID == null) break;
-        }
-
-        return view('backend.equipment.items.show', compact('equipmentItem','locations_array'));
+        return view('backend.equipment.types.show', compact('equipmentType'));
     }
 
     /**

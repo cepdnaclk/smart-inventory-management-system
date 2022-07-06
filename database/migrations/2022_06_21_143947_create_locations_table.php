@@ -19,9 +19,9 @@ class CreateLocationsTable extends Migration
             $table->integer('parent_location')->nullable();
             $table->foreign('parent_location')->references('id')->on('locations');
             
-            $table->integer('x');
-            $table->integer('y');
-            $table->integer('z');
+            $table->integer('x')->nullable();
+            $table->integer('y')->nullable();
+            $table->integer('z')->nullable();
 
             $table->timestamps();
         });

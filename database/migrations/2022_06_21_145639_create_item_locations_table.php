@@ -15,7 +15,7 @@ class CreateItemLocationsTable extends Migration
     {
         Schema::create('item_locations', function (Blueprint $table) {
             $table->id();
-            $table->foriegnId('location_id')->constrained();
+            $table->foreignId('location_id')->constrained();
             $table->string('item_id');
             $table->timestamps();
         });
