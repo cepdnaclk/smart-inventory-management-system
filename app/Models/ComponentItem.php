@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class ComponentItem extends Model
+class ComponentItem extends Model implements Searchable
 {
     use HasFactory;
 
@@ -18,6 +20,7 @@ class ComponentItem extends Model
         return null;
     }
 
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
         return $this->component_type->inventoryCode() . "/" . $this->id;
@@ -30,4 +33,14 @@ class ComponentItem extends Model
         return null;
     }
 
+    // used to search
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('admin.component.items.show', $this);
+        return new SearchResult(
+            $this,
+            $this->title,
+            $url
+        );
+    }
 }
