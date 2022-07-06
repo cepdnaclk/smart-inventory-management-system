@@ -36,6 +36,21 @@
                         <td>{{ $equipmentItem->inventoryCode() }}</td>
                     </tr>
                     <tr>
+                        <td>Location</td>
+                        <td>
+                            @if(count($locations_array) > 0)
+                                @foreach(array_reverse($locations_array) as $eachLocation)
+                                    {{ $eachLocation }}
+                                        @if(!($loop->last))
+                                            ->
+                                        @endif
+                                @endforeach
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Type</td>
                         <td>
                             @if($equipmentItem->equipment_type() != null)

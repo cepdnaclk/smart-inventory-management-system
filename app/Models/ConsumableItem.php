@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class ConsumableItem extends Model
+class ConsumableItem extends Model implements Searchable
 {
     use HasFactory;
 
@@ -18,6 +20,7 @@ class ConsumableItem extends Model
         return null;
     }
 
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
         return $this->consumable_type->inventoryCode() . "/" . $this->id;
@@ -28,5 +31,15 @@ class ConsumableItem extends Model
     {
         if ($this->thumb != null) return '/img/consumable_items/' . $this->thumb;
         else return $this->consumable_type->thumbURL();
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('admin.consumable.items.show', $this);
+        return new SearchResult(
+            $this,
+            $this->title,
+            $url
+        );
     }
 }

@@ -6,6 +6,7 @@ use App\Models\ConsumableType;
 use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Torann\GeoIP\Location;
 
 /**
  * Class DatabaseSeeder.
@@ -38,6 +39,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RawMaterialsSeeder::class);
         $this->call(MachinesSeeder::class);
         $this->call(JobRequestsSeeder::class);
+        $this->call(LocationsSeeder::class);
+        $this->call(ItemLocationsSeeder::class);
 
         Model::reguard();
     }
