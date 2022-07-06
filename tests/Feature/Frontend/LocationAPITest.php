@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class LocationAPI extends TestCase
+class LocationAPITest extends TestCase
 {
     use RefreshDatabase;
 
