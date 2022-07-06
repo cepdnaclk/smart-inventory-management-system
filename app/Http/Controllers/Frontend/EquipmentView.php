@@ -27,7 +27,6 @@ class EquipmentView extends Controller
     public function viewCategory(EquipmentType $equipmentType)
     {
         $items = $equipmentType->hasMany(EquipmentItem::class)->paginate(36);;
-        // ->paginate(16);
         return view('frontend.equipment.category', compact('items', 'equipmentType'));
     }
 
