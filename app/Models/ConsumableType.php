@@ -17,10 +17,9 @@ class ConsumableType extends Model
      * @var mixed
      */
 
-    // reverse search depends on this. Change SearchController.php if you're chaning this
+    // reverse search depends on this. Change SearchController.php if you're changing this
     public function inventoryCode()
     {
-        // TODO: Make a common standard for this
         return "MS/CS/" . $this->id;
     }
 

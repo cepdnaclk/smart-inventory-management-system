@@ -9,9 +9,9 @@ class LocationsSeeder extends Seeder
 {
     protected $data = [
 
-        array('id' => '0', 'location'=> 'Makerspace Lab', 'parent_location' => null,'x' => null, 'y' => null, 'z'=> null),
-        array('id' => '1', 'location'=> 'Soldering Station Desk', 'parent_location' => 0,'x' => null, 'y' => null, 'z'=> null),
-        array('id' => 2, 'location'=> 'Item Drawer', 'parent_location' => 1,'x' => null, 'y' => null, 'z'=> null),
+        array('id' => 1, 'location' => 'Makerspace Lab', 'parent_location' => null, 'x' => null, 'y' => null, 'z' => null),
+        array('id' => 2, 'location' => 'Soldering Station Desk', 'parent_location' => 1, 'x' => null, 'y' => null, 'z' => null),
+        array('id' => 3, 'location' => 'Item Drawer', 'parent_location' => 2, 'x' => null, 'y' => null, 'z' => null),
     ];
 
     /**

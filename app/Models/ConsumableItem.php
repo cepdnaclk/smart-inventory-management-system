@@ -12,7 +12,7 @@ class ConsumableItem extends Model implements Searchable
     use HasFactory;
 
     protected $guarded = [];
-    //comment here
+
     // Link the Component Type table
     public function consumable_type()
     {
@@ -20,7 +20,7 @@ class ConsumableItem extends Model implements Searchable
         return null;
     }
 
-    // reverse search depends on this. Change SearchController.php if you're chaning this
+    // reverse search depends on this. Change SearchController.php if you're changing this
     public function inventoryCode()
     {
         return $this->consumable_type->inventoryCode() . "/" . $this->id;

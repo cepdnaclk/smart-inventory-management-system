@@ -8,13 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class ItemLocations extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
-    public function location(){
-        return $this->hasOne(Locations::class,"id");
+    public function location()
+    {
+        return $this->hasOne(Locations::class, "id");
     }
 
-    public function get_item(){
+    public function get_item()
+    {
         $item_to_return = null;
         $item_id = $this->item_id;
         $exploded = explode("/", $item_id);

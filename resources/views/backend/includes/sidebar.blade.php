@@ -121,7 +121,7 @@
                 </ul>
             </li>
 
-            {{-- Components --}}
+            {{-- Consumables --}}
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
                         href="#"
@@ -158,20 +158,14 @@
                         <x-utils.link
                                 :href="route('admin.search.index')"
                                 class="c-sidebar-nav-link"
-                                :text="__('Search by item')"></x-utils.link>
+                                :text="__('Search by Item')"></x-utils.link>
                     </li>
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
                                 :href="route('admin.search.reverse')"
                                 class="c-sidebar-nav-link"
-                                :text="__('Search by location')"></x-utils.link>
+                                :text="__('Search by Location')"></x-utils.link>
                     </li>
-                    {{--                    <li class="c-sidebar-nav-item">--}}
-                    {{--                        <x-utils.link--}}
-                    {{--                                :href="route('admin.component.types.index')"--}}
-                    {{--                                class="c-sidebar-nav-link"--}}
-                    {{--                                :text="__('Types')"></x-utils.link>--}}
-                    {{--                    </li>--}}
                 </ul>
             </li>
 

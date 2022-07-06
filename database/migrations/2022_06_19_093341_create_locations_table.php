@@ -17,11 +17,12 @@ class CreateLocationsTable extends Migration
             $table->id();
             $table->string("location");
             $table->integer("parent_location")->nullable();
-            $table->foreign("parent_location")->references("id")->on("locations");
             $table->integer("x")->nullable();
             $table->integer("y")->nullable();
             $table->integer("z")->nullable();
             $table->timestamps();
+
+            $table->foreign("parent_location")->references("id")->on("locations");
         });
     }
 
