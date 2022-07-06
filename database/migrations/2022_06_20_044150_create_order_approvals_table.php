@@ -16,8 +16,8 @@ class CreateOrderApprovalsTable extends Migration
         Schema::create('order_approvals', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->boolean('is_approved_by_lecturer')->default(false);
-            $table->boolean('is_approved_by_TO')->default(false);
+            $table->boolean('is_approved_by_lecturer')->nullable();
+            $table->boolean('is_approved_by_TO')->nullable();
 
             $table->foreignId('order_id')
             ->constrained()

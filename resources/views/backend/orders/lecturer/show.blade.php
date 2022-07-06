@@ -20,7 +20,7 @@
                     <div class="d-flex">
                         <h4>Order#{{ $order->id }}</h4>
                     </div>
-                    @if ($order->orderApprovals->is_approved_by_lecturer==0)
+                    @if ($order->orderApprovals->is_approved_by_lecturer==0&&$order->status="WAITING_LECTURER_APPROVAL")
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
                         <div class="btn-group" role="group" aria-label="Modify Buttons">
                             <a href="{{ route('admin.orders.lecturer.approve', $order)}}"
@@ -28,7 +28,7 @@
                              Approve
                             </a>
 
-                            <a 
+                            <a  href="{{ route('admin.orders.lecturer.rejected', $order)}}"
                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i>
                                 Reject
                             </a>
