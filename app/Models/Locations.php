@@ -9,17 +9,11 @@ class Locations extends Model
 {
     use HasFactory;
 
-    public function ItemLocations()
-    {
-        return $this->belongsTo(ItemLocations::class);
-        
+    /**
+     * Get the parent location
+     */
+    public function get_parent_location(){
+        return $this->hasOne(Locations::class,"id","parent_location");
     }
-
-    public function get_parent_function(){
-
-        return $this->hasOne(Locations::class,'id','parent_location');
-
-    }
-
 
 }

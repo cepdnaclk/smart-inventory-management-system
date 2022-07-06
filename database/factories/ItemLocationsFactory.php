@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\ComponentItem;
+use App\Models\EquipmentItem;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ItemLocationsFactory extends Factory

@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ItemLocations extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
-    public function Locations()
-    {
-        return $this->hasOne(Locations::class);
+    public function location(){
+        return $this->hasOne(Locations::class,"id");
     }
 }

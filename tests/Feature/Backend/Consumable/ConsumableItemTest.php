@@ -4,6 +4,7 @@ namespace Tests\Feature\Backend\Consumable;
 
 use App\Domains\Auth\Models\User;
 use App\Models\ConsumableItem;
+use App\Models\ItemLocations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -73,6 +74,7 @@ class ConsumableItemTest extends TestCase
             'description' => 'The 741 Op Amp IC is a monolithic integrated circuit, comprising of a general purpose Operational Amplifier.',
             'instructions' => 'NO INSTRUCTION AVAILABLE',
             'powerRating' => '12',
+            'location' => '2',
             'formFactor' => 'some form factor',
             'voltageRating' => '1234',
             'datasheetURL' => 'some url',
@@ -92,12 +94,18 @@ class ConsumableItemTest extends TestCase
     public function an_consumable_can_be_updated()
     {
 
-        $this->actingAs(User::factory()->admin()->create());
+        $this->loginAsAdmin();
         $consumable = ConsumableItem::factory()->create();
+        ItemLocations::factory()->create([
+            'item_id' => $consumable->inventoryCode(),
+            'location_id' => 2
+        ]);
 
         $consumable->title = 'New consumable Title';
-
-        $response = $this->put("/admin/consumables/items/{$consumable->id}", $consumable->toArray());
+        $consumable_array = $consumable->toArray();
+        $consumable_array['location'] = 2;
+        $response = $this->put("/admin/consumables/items/{$consumable->id}",$consumable_array );
+        $response->assertStatus(302);
 
         $this->assertDatabaseHas('consumable_items', [
             'title' => 'New consumable Title',
@@ -109,7 +117,16 @@ class ConsumableItemTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $consumable = ConsumableItem::factory()->create();
-        $this->delete('/admin/consumables/items/' . $consumable->id);
+//        create item locations for this item
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $consumable->inventoryCode(),
+                'location_id' => 1,
+            ]
+        );
+
+        $response = $this->delete('/admin/consumables/items/' . $consumable->id);
+//        dd($response->getContent());
         $this->assertDatabaseMissing('consumable_items', ['id' => $consumable->id]);
     }
 
@@ -120,5 +137,6 @@ class ConsumableItemTest extends TestCase
         $response = $this->delete('/admin/consumables/items/' . $consumable->id);
         $response->assertStatus(302);
     }
+
 
 }

@@ -2,8 +2,6 @@
 
 @section('title', __('Search'))
 
-
-
 @section('content')
     <div>
         <x-backend.card>
@@ -30,6 +28,7 @@
 
                     {{--<h1>Search</h1>--}}
 
+
                     You are searching for '{{$keywords}}'. <br>
                     There are {{ $searchResults->count() }} results.
 
@@ -37,9 +36,9 @@
                         <br> Please check your spellings
                     @endif
                     <br><br>
-
                     @foreach($searchResults->groupByType() as $type => $modelSearchResults)
-                        {{--<h2>{{ $type }}</h2>--}}
+{{--                        <h2>{{ $type }}</h2>--}}
+
 
                         @foreach($modelSearchResults as $searchResult)
                             <ul>
@@ -51,4 +50,6 @@
             </x-slot>
         </x-backend.card>
     </div>
+
 @endsection
+

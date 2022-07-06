@@ -3,7 +3,6 @@
 @section('title', __('Search'))
 
 
-
 @section('content')
     <div>
         <x-backend.card>
@@ -27,12 +26,14 @@
                         </button>
                     </div>
                 @endif
-                
+
                 @if (!empty($status))
                     <div class="alert alert-danger" role="alert">
                         {{ $status }}
                     </div>
                 @endif
+
+                <p>Search for Equipment, Components, Consumables, Machines and Raw Material</p>
 
                     {{ Form::open(array('route' => 'admin.search.results')) }}
                        {!! Form::text('keywords');  !!}
@@ -43,3 +44,4 @@
         </x-backend.card>
     </div>
 @endsection
+

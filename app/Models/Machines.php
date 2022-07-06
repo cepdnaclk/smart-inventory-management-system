@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-class Machines extends Model implements Searchable
+class Machines extends Model implements  Searchable
 {
     use HasFactory;
 
@@ -51,10 +51,10 @@ class Machines extends Model implements Searchable
         return (intdiv($this->lifespan,60)) . " hours " . ($this->lifespan % 60) . " minutes";
     }
 
-
     public function getSearchResult(): SearchResult
     {
-        $url = route('admin.search.index', $this->slug);
+        $url = route('admin.machines.show', $this);
+
         return new SearchResult(
             $this,
             $this->title,

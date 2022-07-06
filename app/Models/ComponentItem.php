@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-
-class ComponentItem extends Model implements Searchable 
+class ComponentItem extends Model implements Searchable
 {
     use HasFactory;
 
@@ -33,6 +32,7 @@ class ComponentItem extends Model implements Searchable
         return null;
     }
 
+    // used to search
     public function getSearchResult(): SearchResult
     {
         $url = route('admin.component.items.show', $this);
@@ -42,5 +42,4 @@ class ComponentItem extends Model implements Searchable
             $url
         );
     }
-
 }

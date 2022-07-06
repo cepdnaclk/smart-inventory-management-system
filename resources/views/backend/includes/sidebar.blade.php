@@ -120,6 +120,7 @@
                     </li>
                 </ul>
             </li>
+
             {{-- Components --}}
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
@@ -131,7 +132,8 @@
                 <ul class="c-sidebar-nav-dropdown-items">
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
-                                :href="route('admin.consumable.items.index')"                                class="c-sidebar-nav-link"
+                                :href="route('admin.consumable.items.index')"
+                                class="c-sidebar-nav-link"
                                 :text="__('Items')"></x-utils.link>
                     </li>
                     <li class="c-sidebar-nav-item">
@@ -166,8 +168,6 @@
 {{--                    </li>--}}
                 </ul>
             </li>
-
-
 
         @endif
 
@@ -222,8 +222,7 @@
             </ul>
         </li>
 
-       
-        </li>
+
 
         @if ($logged_in_user->hasAllAccess())
             {{-- Logs and Reports --}}
