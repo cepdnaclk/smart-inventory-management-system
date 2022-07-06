@@ -45,14 +45,7 @@
                             @endif
                         </td>
                     </tr>
-                    {{--                    <tr>--}}
-                    {{--                        <td>Brand</td>--}}
-                    {{--                        <td>{{ $consumableItem->brand }}</td>--}}
-                    {{--                    </tr>--}}
-                    {{--                    <tr>--}}
-                    {{--                        <td>Product Code</td>--}}
-                    {{--                        <td>{{ $consumableItem->productCode }}</td>--}}
-                    {{--                    </tr>--}}
+
                     <tr>
                         <td>Price</td>
                         <td>
@@ -68,52 +61,15 @@
                         <td>{{ $consumableItem->quantity }}
                         </td>
                     </tr>
-
-                    {{--                    <tr>--}}
-                    {{--                        <td>Size</td>--}}
-                    {{--                        <td>{{ $consumableItem->size }}--}}
-                    {{--                        </td>--}}
-                    {{--                    </tr>--}}
-
                     <tr>
-                        <td>Description</td>
-                        <td>{!! str_replace("\n", "<br>", $consumableItem->description) !!}</td>
-                    </tr>
-                    <tr>
-                        <td>Usage Instructions</td>
-                        <td>{!! str_replace("\n", "<br>", $consumableItem->instructions) !!}</td>
-                    </tr>
-                    {{--                    <tr>--}}
-                    {{--                        --}}{{-- !have to be changed --}}
-                    {{--                        <td>Is It Available ?</td>--}}
-                    {{--                        <td>--}}
-                    {{--                            @if($consumableItem->quan=='1')--}}
-                    {{--                                <span>YES</span>--}}
-                    {{--                            @else--}}
-                    {{--                                <span class="text-danger">NO</span>--}}
-                    {{--                            @endif--}}
-                    {{--                        </td>--}}
-                    {{--                    </tr>--}}
-                    {{--                    <tr>--}}
-                    {{--                        <td>Is It Electrical? ?</td>--}}
-                    {{--                        <td>--}}
-                    {{--                            @if($consumableItem->isElectrical=='1')--}}
-                    {{--                                <span>YES</span>--}}
-                    {{--                            @else--}}
-                    {{--                                <span class="text-danger">NO</span>--}}
-                    {{--                            @endif--}}
-                    {{--                        </td>--}}
-                    {{--                    </tr>--}}
-
-                    <tr>
-                        <td>Power Rating</td>
-                        <td>
-                            @if( $consumableItem->powerRating != null )
-                                {{ $consumableItem->powerRating . " W"}}
-                            @else
-                                <span>[Not Available]</span>
-                            @endif
+                        <td>Form factor</td>
+                        <td>{{ $consumableItem->formFactor }}
                         </td>
+                    </tr>
+
+                    <tr>
+                        <td>Specification</td>
+                        <td>{!! str_replace("\n", "<br>", $consumableItem->specifications) !!}</td>
                     </tr>
 
                     <tr>
