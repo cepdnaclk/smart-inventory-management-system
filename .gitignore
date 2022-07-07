@@ -33,5 +33,6 @@ Thumbs.db
 yarn-error.log
 commands.txt
 composer.lock
+notes.txt
 package-lock.json
 yarn.lock

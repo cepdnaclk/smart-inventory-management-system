@@ -7,6 +7,9 @@ use App\Models\EquipmentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use App\Models\ItemLocations;
+use App\Models\Locations;
+use Torann\GeoIP\Location;
 
 class EquipmentTypeController extends Controller
 {
