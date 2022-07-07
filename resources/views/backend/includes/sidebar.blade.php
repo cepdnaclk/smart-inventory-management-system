@@ -120,6 +120,48 @@
                     </li>
                 </ul>
             </li>
+
+
+            {{-- Stations --}}
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link
+                        href="#"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-dropdown-toggle"
+                        :text="__('Stations')"></x-utils.link>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.station.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Stations')"></x-utils.link>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.reservation.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Reservations - Maintainer')"></x-utils.link>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.reservation.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Reservations - User')"></x-utils.link>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- {{-- Stations --}}
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        :href="route('admin.station.index')"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-link"
+                        :text="__('Stations')"></x-utils.link>
+            </li> -->
+
+
         @endif
 
         {{-- Fabrication Requests --}}
