@@ -3,10 +3,7 @@
 @section('title',  appName().' |  '.$station->stationName )
 
 @push('after-styles')
-    {{--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"--}}
-    {{--          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
-
     <style>
         .fc-event {
             font-size: 14px;
@@ -99,10 +96,12 @@
 
                             console.log(ms, d, m);
 
+                            // TODO: Validate the E Numbers
+
                             //Send to the database
                             if (m < time_limit) {  //limit maximum time
                                 $.ajax({
-                                    url: "{{ route('user.calendar.store') }}",
+                                    url: "{{ route('frontend.calendar.store') }}",
                                     type: "POST",
                                     dataType: 'json',
                                     data: {title, start_date, end_date, begin, m},
@@ -159,7 +158,7 @@
                     if (event.auth === user) {
                         if (m < time_limit) { //limit maximum time
                             $.ajax({
-                                url: "{{ route('user.calendar.update', '') }}" + '/' + id,
+                                url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
                                 type: "PATCH",
                                 dataType: 'json',
                                 data: {
@@ -210,7 +209,7 @@
                         if (m < time_limit) { //limit maximum time
                             $.ajax({
 
-                                url: "{{ route('user.calendar.update', '') }}" + '/' + id,
+                                url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
                                 type: "PATCH",
                                 dataType: 'json',
                                 data: {start_date, end_date},
@@ -241,9 +240,11 @@
                     var user = loggedIn['id'];
 
                     if (event.auth === user) {
+                        // TODO: It may ne nice if you can use a swal() like popup menu to get the confirmation
+
                         if (confirm('Are you sure you want to delete this event?')) {
                             $.ajax({
-                                url: "{{ route('user.calendar.destroy', '') }}" + '/' + id,
+                                url: "{{ route('frontend.calendar.destroy', '') }}" + '/' + id,
                                 type: "DELETE",
                                 dataType: 'json',
                                 success: function (response) {
