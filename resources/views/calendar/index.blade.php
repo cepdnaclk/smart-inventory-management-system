@@ -142,8 +142,7 @@
                       
                         $('#saveBtn').click(function(){
                             var title = $('#title').val();
-                            var shiftedTime = moment(start).add(7, 'minutes');
-                            var start_date = shiftedTime.format('YYYY-MM-DD HH:MM:SS');
+                            var start_date = moment(start).format('YYYY-MM-DD HH:MM:SS');
                             var end_date = moment(end).format('YYYY-MM-DD HH:MM:SS');
 
 
