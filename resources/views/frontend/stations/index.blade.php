@@ -1,8 +1,8 @@
-@extends('frontend.layouts.app') 
+@extends('frontend.layouts.app')
 
 @section('title', __('Station Details'))
 
-@section('content') 
+@section('content')
 
     <div class="container py-4">
         <div class="row justify-content-center">
@@ -12,18 +12,14 @@
                 <div class="container">
                     <ul>
                         @foreach($stations as $station)
-                    
-                                <li>
-                                    <a href="/stations/{{ $station->id }}">{{ $station->stationName  }}</a>
-                                </li>
-                                
+                            <li>
+                                <a href="{{ route('frontend.stations.station',$station->id ) }}">{{ $station->stationName  }}</a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
-
-                
             </div>
         </div>
     </div>
-    
+
 @endsection 
