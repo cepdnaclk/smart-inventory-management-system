@@ -17,7 +17,6 @@ _ide_helper.php
 .DS_Store
 .env
 .env.backup
-.idea
 .php_cs.cache
 .phpunit.result.cache
 .phpstorm.meta.php
@@ -32,5 +31,7 @@ npm-debug.log
 output.txt
 Thumbs.db
 yarn-error.log
-package-lock.json
+commands.txt
 composer.lock
+package-lock.json
+yarn.lock
