@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ItemLocations;
+use App\Models\Locations;
 use App\Models\RawMaterials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -25,19 +27,20 @@ class RawMaterialsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
         $availabilityOptions = RawMaterials::availabilityOptions();
-        return view('backend.raw_materials.create', compact('availabilityOptions'));
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.raw_materials.create', compact('availabilityOptions','locations'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -46,6 +49,7 @@ class RawMaterialsController extends Controller
             'title' => 'string|required',
             'color' => 'string|nullable',
             'description' => 'string|nullable',
+            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'quantity' => 'numeric|nullable',
             'unit' => 'string|nullable',
@@ -59,9 +63,18 @@ class RawMaterialsController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "raw_materials");
             }
 
-            $material = new RawMaterials($data);
+            $filtered_data = $data;
+            unset($filtered_data['location']);
+            $materials = new RawMaterials($filtered_data);
+            $materials->save();
+            $data_for_location = [
+                'item_id' => $materials->inventoryCode(),
+                'location_id' => $data['location']
+            ];
+            $location = new ItemLocations($data_for_location);
 
-            $material->save();
+
+            $location->save();
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw Material was created !');
 
         } catch (\Exception $ex) {
@@ -77,7 +90,8 @@ class RawMaterialsController extends Controller
      */
     public function show(RawMaterials $rawMaterials)
     {
-        return view('backend.raw_materials.show', compact('rawMaterials'));
+        $locations_array = $this->getLocationOfItem($rawMaterials);
+        return view('backend.raw_materials.show', compact('rawMaterials','locations_array'));
     }
 
     /**
@@ -88,7 +102,10 @@ class RawMaterialsController extends Controller
      */
     public function edit(RawMaterials $rawMaterials)
     {
-        return view('backend.raw_materials.edit', compact('rawMaterials'));
+        $this_item_location = ItemLocations::where('item_id',$rawMaterials->inventoryCode())->get()[0]['location_id'];
+//        dd($this_item_location);
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.raw_materials.edit', compact('rawMaterials','this_item_location','locations'));
     }
 
     /**
@@ -108,6 +125,7 @@ class RawMaterialsController extends Controller
             'color' => 'string|nullable',
             'description' => 'string|nullable',
             'specifications' => 'string|nullable',
+            'location' => 'numeric|required',
             'quantity' => 'numeric|nullable',
             'unit' => 'string|nullable',
             'availability' => Rule::in(['AVAILABLE','NOT_AVAILABLE','CONDITIONALLY_AVAILABLE']),
@@ -122,7 +140,17 @@ class RawMaterialsController extends Controller
                 $data['thumb'] = $this->uploadThumb($rawMaterials->thumbURL(), $request->thumb, "raw_materials");
             }
 
-            $rawMaterials->update($data);
+            $filtered_data = $data;
+            unset($filtered_data['location']);
+            $rawMaterials->update($filtered_data);
+
+
+            $this_item_location = ItemLocations::where('item_id',$rawMaterials->inventoryCode())->get()[0];
+            $new_location_data = [
+                'location_id' => $data['location']
+            ];
+            $this_item_location->update($new_location_data);
+
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw Material was updated !');
 
         } catch (\Exception $ex) {
@@ -153,6 +181,11 @@ class RawMaterialsController extends Controller
             $this->deleteThumb($rawMaterials->thumbURL());
 
             $rawMaterials->delete();
+
+            //            delete location entry
+            $this_item_location = ItemLocations::where('item_id',$rawMaterials->inventoryCode())->get()[0];
+            $this_item_location->delete();
+
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw material was deleted !');
 
         } catch (\Exception $ex) {
