@@ -132,6 +132,17 @@ class EquipmentItemController extends Controller
         return view('backend.equipment.items.edit', compact('types', 'equipmentItem','this_item_location','locations'));
     }
 
+
+    /**
+     * Edit the locations ot the item
+     *
+     * @param EquipmentItem $equipmentItem
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function editLocation(EquipmentItem $equipmentItem){
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.equipment.items.edit-location', compact('equipmentItem','locations'));
+    }
     /**
      * Update the specified resource in storage.
      *

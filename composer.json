@@ -24,7 +24,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.0",
         "laravelcollective/html": "^6.2",
-        "livewire/livewire": "^2.0",
+        "livewire/livewire": "^2.10",
         "rappasoft/laravel-livewire-tables": "^1.0",
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",

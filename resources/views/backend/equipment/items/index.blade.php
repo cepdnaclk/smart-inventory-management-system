@@ -75,6 +75,9 @@
                                             <a href="{{ route('admin.equipment.items.edit', $eq)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
+                                            <a href="{{ route('admin.equipment.items.edit.location', $eq)}}"
+                                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker" title="Edit Location"></i>
+                                            </a>
                                             <a href="{{ route('admin.equipment.items.delete', $eq)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
                                                                                 title="Delete"></i>
