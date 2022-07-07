@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Carbon\Carbon;
 use App\Models\Reservation;
 use App\Models\Stations;
 use Illuminate\Http\Request;
@@ -18,25 +17,10 @@ class CalendarController extends Controller
         $userLoggedin = auth()->user();
         $events = array();
 
-        // $today = Carbon::now()->subDays(7);
-        // // $agoDate = $currentDate->subDays($currentDate->dayOfWeek)->subWeek();
-        // $weekStartDate = Carbon::now()->startOfWeek()->endOfWeek()->startOfWeek()->format('Y-m-d H:i:s');
-        // dd($today);
-
         // Get all the reservations for that particular station
-        $bookings = Reservation::where('station_id', $station->id)->where('start_date' , '>', Carbon::now()->subDays(8))->get();
+        $bookings = Reservation::where('station_id', $station->id)->get();
 
-        
         foreach ($bookings as $booking) {
-
-            $color = null;
-
-            if($booking->user_id == $userLoggedin['id']){
-                $color = '#3C89AB';
-            }else{
-                $color = '#435258';
-            }
-
             $userVar = User::find($booking->user_id);
             $events[] = [
                 'id' => $booking->id,
@@ -45,7 +29,6 @@ class CalendarController extends Controller
                 'end' => $booking->end_date,
                 'stationId' => $station->id,
                 'auth' => $booking->user_id,
-                'color' => $color,
             ];
         }
 
@@ -82,23 +65,20 @@ class CalendarController extends Controller
 
             ]);
 
-            // $color = null;
+            $color = null;
 
-            // if ($booking->title == 'Try') {
-            //     $color = '#33C0FF';
-            // }
-
+            if ($booking->title == 'Try') {
+                $color = '#33C0FF';
+            }
             return response()->json([
                 'id' => $booking->id,
                 'start' => $booking->start_date,
                 'end' => $booking->end_date,
                 'title' => $booking->title,
                 'station_id' => $station->id,
-                // 'color' => $color ? $color : '',
+                'color' => $color ? $color : '',
 
             ]);
-
-            // return redirect()->route('user.calendar.index');
 
         } else {
             // Print message
