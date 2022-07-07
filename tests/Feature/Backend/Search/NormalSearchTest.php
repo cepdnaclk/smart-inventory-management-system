@@ -48,7 +48,7 @@ class NormalSearchTest extends TestCase
     {
         $this->loginAsAdmin();
         $response = $this->post('/admin/search/results', ['keywords' => 'resistor']);
-        $response->assertViewHas("keywords");
+        $response->assertSee("href");
     }
 
     /** @test */
@@ -82,7 +82,7 @@ class NormalSearchTest extends TestCase
         $response = $this->post('/admin/equipment/items', [
             'title' => 'Sample Equipment',
             'brand' => 'Brand',
-            'location' => '0',
+            'location' => '1',
             'productCode' => '100-X',
             'quantity' => 1,
             'specifications' => NULL,
