@@ -24,6 +24,7 @@
     <script>
         function refreshPage() {
             window.location.reload();
+            // return back();
         }
     </script>
 
@@ -73,16 +74,21 @@
 
                 select: function (start, end, allDays, view) {
 
+                    var viewname = view.name;
+
                     if ((view.name === 'agendaDay' || view.name === 'agendaWeek') && (!isAnOverlapEvent(start, end))) {
 
                         $('#bookingModal').modal('toggle');
                         $('#saveBtn').click(function () {
+
+                            
                             var title = $('#title').val();
                             var start_date = $.fullCalendar.formatDate(start, "YYYY-MM-DD HH:mm:ss");
                             var end_date = $.fullCalendar.formatDate(end, "YYYY-MM-DD HH:mm:ss");
+                            var begin = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
                             var loggedIn = @json($userLoggedin);
                             var user = loggedIn['email'];
-                            var begin = moment(start).format('YYYY-MM-DD');
+                            
 
                             // console.log(start, end);
                             console.log(start_date, end_date);
@@ -95,7 +101,7 @@
                             var d = moment.duration(ms);
                             var m = d.asMinutes();
 
-                            const time_limit = 300;
+                            const time_limit = 241;
 
                             console.log(ms, d, m);
 
@@ -121,6 +127,10 @@
 
                                         // TODO: This is a temporary fix. Find a better way to this
                                         refreshPage();
+                                    
+                                        // $('#calendar').fullCalendar('changeView', 'agendaDay');
+                                        // mix.browserSync('localhost:8000')
+                                        
                                     },
                                     error: function (error) {
                                         if (error.responseJSON.errors) {
@@ -147,14 +157,27 @@
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
 
-                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
-                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
+                    // var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
+                    // var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
 
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+                    var start_date = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD HH:mm:ss");
+                    var end_date = $.fullCalendar.formatDate(event.end, "YYYY-MM-DD HH:mm:ss");
+
+                    // var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+                    // var d = moment.duration(ms);
+                    // var m = d.asMinutes();
+
+                    // const time_limit = 241;
+
+                    // count hours
+                    const date1 = new Date(start_date);
+                    const date2 = new Date(end_date);
+
+                    var ms = date2.getTime() - date1.getTime();
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
 
-                    const time_limit = 300;
+                    const time_limit = 241;
 
                     if (event.auth === user) {
                         if (m < time_limit) { //limit maximum time
@@ -195,16 +218,30 @@
                     var id = event.id;
 
                     // TODO: Update this without moment
-                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
-                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+
+                    var start_date = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD HH:mm:ss");
+                    var end_date = $.fullCalendar.formatDate(event.end, "YYYY-MM-DD HH:mm:ss");
+
+                    // var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
+                    // var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
+                    // var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+
+                    // var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+                    // var d = moment.duration(ms);
+                    // var m = d.asMinutes();
+
+                    // count hours
+                    const date1 = new Date(start_date);
+                    const date2 = new Date(end_date);
+
+                    var ms = date2.getTime() - date1.getTime();
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
 
+                    const time_limit = 241;
+
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
-
-                    const time_limit = 300;
 
                     if (event.auth === user) {
                         if (m < time_limit) { //limit maximum time
