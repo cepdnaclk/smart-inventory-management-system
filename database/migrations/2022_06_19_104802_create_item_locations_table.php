@@ -17,6 +17,10 @@ class CreateItemLocationsTable extends Migration
             $table->id();
             $table->foreignId('location_id')->constrained();
             $table->string("item_id");
+            $table->integer("x")->nullable();
+            $table->integer("y")->nullable();
+            $table->integer("z")->nullable();
+//            TODO: add orientation if needed
             $table->timestamps();
         });
     }
