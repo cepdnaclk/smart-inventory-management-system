@@ -5,7 +5,7 @@
 @push('after-styles')
     <style>
         td {
-        padding: 1px 12px 1px 0;
+            padding: 1px 12px 1px 0;
         }
     </style>
 @endpush
@@ -27,13 +27,13 @@
             </div>
             <div class="col-md-8 col-sm-12 col-12 mb-4">
 
-                <h3>{{ $stations->stationName }} <br>      
-                    <hr>    
+                <h3>{{ $stations->stationName }} <br>
+                    <hr>
                 </h3>
 
                 <div>
                     <table>
-                        
+
                         <tr>
                             <td>Capacity</td>
                             <td>
@@ -45,7 +45,7 @@
 
                             </td>
                         </tr>
-                        
+
                     </table>
                 </div>
 
@@ -55,7 +55,7 @@
                         <div class="pl-3">
                             {!! str_replace("\n", "<br>", $stations->description) !!}
                         </div>
-                    </div> 
+                    </div>
                 @endif
 
                 <div class="pt-3">
@@ -63,23 +63,21 @@
                     <ul>
                         @foreach($equipment as $eq)
                             <li>
-                            <a href="{{ route('frontend.equipment.item', $eq) }}">{{ $eq->title}}</a>
+                                <a href="{{ route('frontend.equipment.item', $eq) }}">{{ $eq->title}}</a>
                             </li>
                         @endforeach
                     </ul>
                 </div>
 
                 @auth
-                <div class="pt-3">
-                    <b><a href="{{ route('user.calendar.index') }}" style="float:right; font-size: 18px; text-decoration: underline;" >Make Reservation</a></b>
-                </div>
+                    <div class="pt-3">
+                        <b><a href="{{ route('user.calendar.index') }}"
+                              style="float:right; font-size: 18px; text-decoration: underline;">Make Reservation</a></b>
+                    </div>
                 @endauth
 
-                
-
-                
             </div>
         </div>
     </div>
-    
+
 @endsection
