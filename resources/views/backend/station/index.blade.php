@@ -4,7 +4,7 @@
 
 @section('breadcrumb-links')
     @include('backend.station.includes.breadcrumb-links')
-@endsection 
+@endsection
 
 @section('content')
     <div>
@@ -43,7 +43,7 @@
                             <th>Capacity</th>
                             <th>&nbsp;</th>
                         </tr>
-                        
+
                         @foreach($station as $st)
                             <tr>
                                 <td>{{ $st->stationName  }}</td>

@@ -10,14 +10,11 @@ class StationsSeeder extends Seeder
 {
 
     protected $data = [
-    
-        array('id' => '1', 'stationName' => 'Measuring Station A', 'description' => 'This measuring station can be used to do the measurements with electronic instruments such as Oscilloscopes, Signal Generators, etc... They also can do some prototyping works with breadboards in here','thumb' => '1656510813.jpg',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
-        array('id' => '2', 'stationName' => 'Measuring Station B', 'description' => 'This measuring station can be used to do the measurements with electronic instruments such as Oscilloscopes, Signal Generators, etc... They also can do some prototyping works with breadboards in here','thumb' => '1656510813.jpg',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
-        array('id' => '3', 'stationName' => 'Soldering Station', 'description' => 'Students can use this Soldering Station for doing soldering, desoldering and testing the PCBs.','thumb' => '1656511624.jpg',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
-        array('id' => '4', 'stationName' => 'Assembly Station', 'description' => 'Students can use this table to keep the materials and do basic assembly works using light tools such as screwdrivers, paper cutters, etc… Those tools will be available as a moveable tools rack (under development)','thumb' => '1656511700.jpg',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
-        array('id' => '5', 'stationName' => 'Drawer Rack', 'description' => 'Keep all the sensors, modules and electronic components in well organized way. This should be managed by the Technical Officer, while keeping the records of inventory.','thumb' => '1656512658.jpg',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
-       // array('id' => '5', 'stationName' => '3D Printer Station', 'description' => 'This station will contain 3 x 3D Printers, with the maintaining materials and 3d printer fillaments,','thumb' => '125.jpg',  'capacity'=> '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2021-08-04 15:25:03'),
-        
+        array('id' => '1', 'stationName' => 'Measuring Station A', 'description' => 'This measuring station can be used to do the measurements with electronic instruments such as Oscilloscopes, Signal Generators, etc... They also can do some prototyping works with breadboards in here', 'thumb' => '1657218108.jpg', 'capacity' => '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2022-07-07 18:21:48'),
+        array('id' => '2', 'stationName' => 'Measuring Station B', 'description' => 'This measuring station can be used to do the measurements with electronic instruments such as Oscilloscopes, Signal Generators, etc... They also can do some prototyping works with breadboards in here', 'thumb' => '1657218135.jpg', 'capacity' => '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2022-07-07 18:22:15'),
+        array('id' => '3', 'stationName' => 'Soldering Station', 'description' => 'Students can use this Soldering Station for doing soldering, desoldering and testing the PCBs.', 'thumb' => '1657218148.jpg', 'capacity' => '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2022-07-07 18:22:28'),
+        array('id' => '4', 'stationName' => 'Assembly Station A', 'description' => 'Students can use this table to keep the materials and do basic assembly works using light tools such as screwdrivers, paper cutters, etc… Those tools will be available as a moveable tools rack', 'thumb' => '1657218165.jpg', 'capacity' => '3', 'created_at' => '2021-08-04 15:23:56', 'updated_at' => '2022-07-07 18:26:23'),
+        array('id' => '5', 'stationName' => 'Assembly Station B', 'description' => 'Students can use this table to keep the materials and do basic assembly works using light tools such as screwdrivers, paper cutters, etc…', 'thumb' => '1657218403.jpg', 'capacity' => '1', 'created_at' => '2022-07-07 18:26:43', 'updated_at' => '2022-07-07 18:26:43')
     ];
 
     /**
@@ -38,10 +35,10 @@ class StationsSeeder extends Seeder
         }
 
         //example to add equipment to station
-        foreach (Stations::all() as $station){
+        foreach (Stations::all() as $station) {
             $station->equipment_items()->attach(1000);
         }
 
-        $this->command->info('Inserted ' . count($this->data) . ' records to reservations table');
+        $this->command->info('Inserted ' . count($this->data) . ' records to Stations table');
     }
 }

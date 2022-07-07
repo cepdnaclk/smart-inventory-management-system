@@ -1,26 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\registered;
+namespace App\Http\Controllers\Frontend;
 
 use Carbon\Carbon;
 use App\Models\Reservation;
+use App\Models\Stations;
 use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Redirect;
 
 class CalendarController extends Controller
 {
-    public function index()
+    public function index(Stations $station)
     {
-
-        // Get the station model clicked
-        $station = Session::get('station');
-
         // Get the model of the user logged in
         $userLoggedin = auth()->user();
-
         $events = array();
 
         // $today = Carbon::now()->subDays(7);
@@ -54,7 +49,7 @@ class CalendarController extends Controller
             ];
         }
 
-        return view('calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin]);
+        return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin]);
     }
 
     public function store(Request $request)
@@ -112,7 +107,6 @@ class CalendarController extends Controller
             ], 403);
         }
 
-
         // $booking = Reservation::create([
 
         //     'email' => $userLoggedin['email'],
@@ -141,8 +135,6 @@ class CalendarController extends Controller
 
     public function update(Request $request, $id)
     {
-
-
         $booking = Reservation::find($id);
         if (!$booking) {
             return response()->json([
@@ -168,7 +160,6 @@ class CalendarController extends Controller
                 'error' => 'Unable to locate the event'
             ], 404);
         }
-
 
         $booking->delete();
 

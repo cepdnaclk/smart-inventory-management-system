@@ -44,7 +44,7 @@
             background-color: #c55d88;
             color: #FFF;
         }
-        
+
 
         .card-counter i {
             font-size: 5em;
@@ -140,7 +140,7 @@
                             </div>
                         </a>
                     </div>
-                    
+
                 </div>
             </div>
         </x-slot>
