@@ -157,9 +157,10 @@
                             var d = moment.duration(ms);
                             var m = d.asMinutes(); 
                             
+                            
                             const time_limit = 300;
 
-                            
+;                           console.log(m);
 
                                 //Send to the database
                                 if(m<time_limit){  //limit maximum time
@@ -167,7 +168,7 @@
                                     url:"{{ route('user.calendar.store') }}",
                                     type:"POST",
                                     dataType:'json',
-                                    data:{ title, start_date, end_date, begin},
+                                    data:{ title, start_date, end_date, begin, m},
                                     success:function(response)
                                     {   
                                         
@@ -354,7 +355,7 @@
                             });
                         }
                     }else{
-                        swal("Permission Denied!", "You can not delete this event!", "failed");
+                        swal("Permission Denied!", "You can not delete this event!", "warning");
                     }
 
 
