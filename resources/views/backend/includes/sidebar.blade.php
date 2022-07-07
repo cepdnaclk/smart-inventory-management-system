@@ -120,6 +120,15 @@
                     </li>
                 </ul>
             </li>
+
+            {{-- Stations --}}
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        :href="route('admin.station.index')"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-link"
+                        :text="__('Stations')"></x-utils.link>
+            </li>
         @endif
 
         {{-- Fabrication Requests --}}

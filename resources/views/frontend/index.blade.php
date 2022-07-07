@@ -102,9 +102,14 @@
             <a href="https://github.com/cepdnaclk/smart-inventory-management-system" target="_blank"><i
                         class="fab fa-github"></i>
                 GitHub</a>
-            <a href="/components">Components</a>
-            <a href="/equipment">Equipment</a>
 
+            <!-- <a href="/components">Components</a> -->
+            <!-- <a href="/equipment">Equipment</a> -->
+            <a href="{{ route('frontend.component.index') }}">Components</a>
+            <a href="{{ route('frontend.equipment.index') }}">Equipment</a>
+            <a href="/stations">Stations</a>
+            
+           
         </div><!--links-->
     </div><!--content-->
 </div><!--app-->
