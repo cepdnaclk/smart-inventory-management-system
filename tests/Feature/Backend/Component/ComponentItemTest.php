@@ -95,12 +95,6 @@ class ComponentItemTest extends TestCase
 
         $this->actingAs(User::factory()->admin()->create());
         $component = ComponentItem::factory()->create();
-        ItemLocations::factory()->create(
-            [
-                'item_id' => $component->inventoryCode(),
-                'location_id' => 1
-            ]
-        );
 
         $component->title = 'New Component Title';
         $component_array =  $component->toArray();
