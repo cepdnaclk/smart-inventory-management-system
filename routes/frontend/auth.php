@@ -16,7 +16,9 @@ use Tabuna\Breadcrumbs\Trail;
 /*
  * Frontend Access Controllers
  * All route names are prefixed with 'frontend.auth'.
+ * 
  */
+
 Route::group(['as' => 'auth.'], function () {
     Route::group(['middleware' => 'auth'], function () {
         // Authentication
@@ -47,7 +49,7 @@ Route::group(['as' => 'auth.'], function () {
 
                 // Two-factor Authentication
                 Route::group(['prefix' => 'account/2fa', 'as' => 'account.2fa.'], function () {
-                    Route::group(['middleware' => '2fa:disabled'], function () {
+                    Route::group([], function () {
                         Route::get('enable', [TwoFactorAuthenticationController::class, 'create'])
                             ->name('create')
                             ->breadcrumbs(function (Trail $trail) {
@@ -56,7 +58,7 @@ Route::group(['as' => 'auth.'], function () {
                             });
                     });
 
-                    Route::group(['middleware' => '2fa:enabled'], function () {
+                    Route::group([], function () {
                         Route::get('recovery', [TwoFactorAuthenticationController::class, 'show'])
                             ->name('show')
                             ->breadcrumbs(function (Trail $trail) {

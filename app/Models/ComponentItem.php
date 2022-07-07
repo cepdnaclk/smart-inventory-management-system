@@ -43,4 +43,9 @@ class ComponentItem extends Model implements Searchable
             $url
         );
     }
+    
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);   
+    }
 }
