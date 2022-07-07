@@ -6,18 +6,19 @@ use Tabuna\Breadcrumbs\Trail;
 Route::middleware(['editAccess'])->group(function () {
 
     Route::get('/station', function () {
-        return view('backend.station.index');
-    })->name('station.index')
+        return view('backend.station.indexmain');
+    })->name('station.indexmain')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
                 ->push(__('Station'), route('admin.station.index'));
         });
 
     // Index
-    Route::get('station', [AdminStationController::class, 'index'])
+    Route::get('station/index', [AdminStationController::class, 'index'])
         ->name('station.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
+            ->push(__('Stations'), route('admin.station.indexmain'))
                 ->push(__('Station'), route('admin.station.index'))
                 ;
         });

@@ -109,7 +109,7 @@ class CalendarController extends Controller
             // Print message
             return response()->json([
                 'error' => 'Unable to locate the event'
-            ], 403);
+            ], 404);
         }
 
 

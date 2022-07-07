@@ -149,6 +149,7 @@
                                 class="c-sidebar-nav-link"
                                 :text="__('Reservations - User')"></x-utils.link>
                     </li>
+                    
                 </ul>
             </li>
 
