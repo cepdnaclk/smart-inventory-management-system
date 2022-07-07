@@ -33,6 +33,11 @@ class ConsumableView extends Controller
     // conusmable Item Page
     public function viewItem(ConsumableItem $consumableItem)
     {
-        return view('frontend.consumable.item', compact('consumableItem'));
+        $locationCount = $this->getNumberOfLocationsForItem($consumableItem);
+        $locationStringArray = array();
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locationStringArray[] = $this->getFullLocationPathAsString($consumableItem, $i);
+        }
+        return view('frontend.consumable.item', compact('consumableItem','locationStringArray'));
     }
 }

@@ -59,6 +59,12 @@
                                 </a>
                             </td>
                         </tr>
+                        @foreach($locationStringArray as $eachLocation)
+                            <tr>
+                                <td>Location {{$loop->index + 1}}</td>
+                                <td> : {{$eachLocation}}</td>
+                            </tr>
+                        @endforeach
 
                         <tr>
                             <td>Available Quantity</td>
