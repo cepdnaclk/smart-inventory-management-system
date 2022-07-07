@@ -3,9 +3,19 @@
 @section('title', $stations->stationName)
 
 @push('after-styles')
+
+    {{--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"--}}
+    {{--          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
+
     <style>
         td {
             padding: 1px 12px 1px 0;
+        }
+
+        .fc-event {
+            font-size: 14px;
+            border-radius: 1px !important;
         }
     </style>
 @endpush
@@ -76,6 +86,22 @@
                     </div>
                 @endauth
 
+            </div>
+        </div>
+
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-center mt-5">Schedule Reservation - {{ $stations->stationName }}</h3>
+                        <br>
+
+                        <div class="col-md-11 offset-1 mt-5 mb-5">
+                            <div id="calendar">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
