@@ -1,9 +1,9 @@
 <x-livewire-tables::bs4.table.cell>
-    @include('backend.auth.user.includes.type', ['user' => $row])
+    {{ $row->name }}
 </x-livewire-tables::bs4.table.cell>
 
 <x-livewire-tables::bs4.table.cell>
-    {{ $row->name }}
+    @include('backend.auth.user.includes.type', ['user' => $row])
 </x-livewire-tables::bs4.table.cell>
 
 <x-livewire-tables::bs4.table.cell>

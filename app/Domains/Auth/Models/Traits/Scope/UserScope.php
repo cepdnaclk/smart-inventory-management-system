@@ -83,4 +83,34 @@ trait UserScope
     {
         return $query->where('type', $this::TYPE_USER);
     }
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeLecturers($query)
+    {
+        return $query->where('type', $this::TYPE_LECTURER);
+    }
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeTechOfficers($query)
+    {
+        return $query->where('type', $this::TYPE_TECH_OFFICER);
+    }
+
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeMaintainers($query)
+    {
+        return $query->where('type', $this::TYPE_MAINTAINER);
+    }
 }
