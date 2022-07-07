@@ -5,8 +5,8 @@
                 :text="appName()"
                 class="navbar-brand"></x-utils.link>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="@lang('Toggle navigation')">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -19,6 +19,7 @@
                                 class="nav-link dropdown-toggle"
                                 id="navbarDropdownLanguageLink"
                                 data-toggle="dropdown"
+                                data-bs-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="false"></x-utils.link>
 
@@ -53,6 +54,7 @@
                                 class="nav-link dropdown-toggle"
                                 role="button"
                                 data-toggle="dropdown"
+                                data-bs-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="false"
                                 v-pre
@@ -100,8 +102,8 @@
                     </li>
                 @endguest
             </ul>
-        </div><!--navbar-collapse-->
-    </div><!--container-->
+        </div>
+    </div>
 </nav>
 
 @if (config('boilerplate.frontend_breadcrumbs'))

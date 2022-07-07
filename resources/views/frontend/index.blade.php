@@ -105,7 +105,7 @@
 
             <a href="{{ route('frontend.component.index') }}">Components</a>
             <a href="{{ route('frontend.equipment.index') }}">Equipment</a>
-            <a href="{{ route('frontend.consumables.index') }}">Consumables</a>
+            <a href="{{ route('frontend.consumable.index') }}">Consumables</a>
             <a href="{{ route('frontend.stations.index') }}">Stations</a>
             
         </div><!--links-->

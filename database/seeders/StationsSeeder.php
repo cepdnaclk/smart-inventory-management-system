@@ -34,11 +34,6 @@ class StationsSeeder extends Seeder
             }
         }
 
-        //example to add equipment to station
-        foreach (Stations::all() as $station) {
-            $station->equipment_items()->attach(1000);
-        }
-
         $this->command->info('Inserted ' . count($this->data) . ' records to Stations table');
     }
 }

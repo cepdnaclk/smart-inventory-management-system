@@ -236,8 +236,6 @@
             </ul>
         </li>
 
-        @endif
-
         @if ($logged_in_user->hasAllAccess())
             {{-- Logs and Reports --}}
             <li class="c-sidebar-nav-dropdown">

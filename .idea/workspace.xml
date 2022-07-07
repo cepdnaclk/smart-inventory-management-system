@@ -20,10 +20,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef0aa575-db56-40a8-9e0c-6c7cab003ff2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.example " beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php-test-framework.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php-test-framework.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-06-11_6_57_PM_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-06-11_6_57_PM__Default_Changelist_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/smart-inventory-management-system.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/smart-inventory-management-system.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/EquipmentItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/EquipmentItem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Machines.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Machines.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Stations.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Stations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2022_06_24_165023_create_equipment_item_stations_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/StationsSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/StationsSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_global.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/includes/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/includes/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/includes/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/includes/nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/includes/partials/breadcrumbs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/includes/partials/breadcrumbs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/Backend/Component/ComponentItemTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/Backend/Component/ComponentItemTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +129,6 @@
       <path value="$PROJECT_DIR$/vendor/fideloper/proxy" />
       <path value="$PROJECT_DIR$/vendor/fruitcake/laravel-cors" />
       <path value="$PROJECT_DIR$/vendor/paragonie/certainty" />
-      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
       <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/vendor/paragonie/sodium_compat" />
       <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
@@ -129,7 +153,6 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/type" />
       <path value="$PROJECT_DIR$/vendor/sebastian/version" />
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/vendor/jamesmills/laravel-timezone" />
@@ -212,13 +235,18 @@
       <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
       <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
       <path value="$PROJECT_DIR$/vendor/seld/phar-utils" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
       <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
       <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
       <path value="$PROJECT_DIR$/vendor/laravel/sail" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-searchable" />
     </include_path>
   </component>
   <component name="ProjectId" id="2A8wzmTX3zDzaOETFiRQKUggId3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -230,21 +258,63 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/artisan" />
     <property name="nodejs_package_manager_path" value="yarn" />
   </component>
-  <component name="RunManager" selected="PHPUnit.ComponentItemTest">
-    <configuration name="ComponentItemTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+  <component name="RunManager" selected="PHP Script.Serve">
+    <configuration name="ComponentItemTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner class="Tests\Feature\Backend\Component\ComponentItemTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Backend/Component/ComponentItemTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ComponentItemTest.an_admin_can_access_the_list_component_page" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\Backend\Component\ComponentItemTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Backend/Component/ComponentItemTest.php" method="an_admin_can_access_the_list_component_page" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ComponentItemTest.an_admin_can_access_the_show_component_page" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\Backend\Component\ComponentItemTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Backend/Component/ComponentItemTest.php" method="an_admin_can_access_the_show_component_page" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <configuration name="Migrate" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="migrate:fresh --seed">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4.9" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <configuration name="Serve" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="serve">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4.9" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <configuration name="Test" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="test">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4.9" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="PHP Script.Serve" />
+      <item itemvalue="PHP Script.Test" />
+      <item itemvalue="PHP Script.Migrate" />
+      <item itemvalue="PHPUnit.phpunit.xml" />
+      <item itemvalue="PHPUnit.ComponentItemTest" />
+      <item itemvalue="PHPUnit.ComponentItemTest.an_admin_can_access_the_list_component_page" />
+      <item itemvalue="PHPUnit.ComponentItemTest.an_admin_can_access_the_show_component_page" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.ComponentItemTest" />
+        <item itemvalue="PHPUnit.ComponentItemTest.an_admin_can_access_the_show_component_page" />
+        <item itemvalue="PHPUnit.ComponentItemTest.an_admin_can_access_the_list_component_page" />
       </list>
     </recent_temporary>
   </component>
@@ -260,6 +330,9 @@
       <updated>1654404784172</updated>
       <workItem from="1654404786140" duration="1208000" />
       <workItem from="1654406035715" duration="2163000" />
+      <workItem from="1657223061978" duration="27000" />
+      <workItem from="1657223119515" duration="110000" />
+      <workItem from="1657223234055" duration="2702000" />
     </task>
     <servers />
   </component>
@@ -287,25 +360,34 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="397" y="7" key="#PHP/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408163452" />
-    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1654408285259">
+    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1657224248904">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657224248904" />
     <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408285259" />
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1654408178097">
+    <state x="441" y="107" key="FileChooserDialogImpl" timestamp="1657224242976">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="441" y="107" key="FileChooserDialogImpl/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657224242976" />
+    <state width="1323" height="294" key="GridCell.Tab.0.bottom" timestamp="1657225366857">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="294" key="GridCell.Tab.0.bottom/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657225366857" />
     <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1654408178097">
+    <state width="1323" height="294" key="GridCell.Tab.0.center" timestamp="1657225366856">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="294" key="GridCell.Tab.0.center/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657225366856" />
     <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1654408178097">
+    <state width="1323" height="294" key="GridCell.Tab.0.left" timestamp="1657225366856">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="294" key="GridCell.Tab.0.left/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657225366856" />
     <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1654408178097">
+    <state width="1323" height="294" key="GridCell.Tab.0.right" timestamp="1657225366857">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="294" key="GridCell.Tab.0.right/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657225366857" />
     <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
   </component>
 </project>

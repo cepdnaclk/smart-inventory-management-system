@@ -29,7 +29,7 @@
     @include('frontend.includes.nav')
     @include('includes.partials.messages')
 
-    <main>
+    <main class="pt-3">
         @yield('content')
     </main>
 </div><!--app-->

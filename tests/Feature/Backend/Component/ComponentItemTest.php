@@ -4,7 +4,6 @@ namespace Tests\Feature\Backend\Component;
 
 use App\Domains\Auth\Models\User;
 use App\Models\ComponentItem;
-use App\Models\ItemLocations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
