@@ -141,7 +141,8 @@ class EquipmentItemController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentItem->thumbURL(), $request->thumb, "equipment_items");
+                $thumb = ($equipmentItem->thumb == NULL) ? NULL : $equipmentItem->thumbURL();
+                $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "equipment_items");
             }
 
             // Update checkbox condition
@@ -183,7 +184,6 @@ class EquipmentItemController extends Controller
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
 
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500);
         }
     }

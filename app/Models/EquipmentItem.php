@@ -27,7 +27,7 @@ class EquipmentItem extends Model
     public function thumbURL()
     {
         if ($this->thumb != null) return '/img/equipment_items/' . $this->thumb;
-        return null;
+        else return $this->equipment_type->thumbURL();
     }
 
 }
