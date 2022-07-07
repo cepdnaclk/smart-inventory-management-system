@@ -9,28 +9,37 @@
             <div class="col-md-12">
                 <h3>Stations</h3>
 
-                <div class="container">
-                    <ul>
+                @if($stations->count() != 0)
+                <div class="container pt-2">
+                    <div class="row equal">
                         @foreach($stations as $station)
-                            <ul>
-                                <div class="col-md-4 col-sm-12 col-12 d-flex mb-4">
-                                    @if( $station->thumb != null )
-                                        <img src="{{ $station->thumbURL() }}"
-                                        alt="{{ $station->stationName }}"
-                                        class="img img-thumbnail img-fluid p-3 mx-auto">
-                                    @else
-                                        {{-- TODO: Add a default image --}}
-                                        <span>[Not Available]</span>
-                                    @endif
-
-                                    <div class="col-md-8 col-sm-12 col-12 mb-4">
-                                        <a href="{{ route('frontend.stations.station',$station->id ) }}">{{ $station->stationName  }}</a>
-                                    </div>
+                            <div class="col-6 col-sm-3 col-md-4 p-1 d-flex">
+                                <div class="text-center card">
+                                    <a class="text-decoration-none"
+                                       href="{{ route('frontend.stations.station', $station) }}">
+                                        <img class="img-fluid p-1 mx-auto" src="{{ $station->thumbURL() }}"
+                                             alt="{{ $station->stationName }}"/>
+                                        <div class="p-0.5">
+                                            {{ $station->stationName }}
+                                            <br><br><p> <b>Capacity: 1-{{ $station->capacity}} student(s) per table</b></p>
+                                        </div>
+                                    </a>
                                 </div>
-                            </ul>
+                            </div>
                         @endforeach
-                    </ul>
-                </div> 
+                    </div>
+
+                    {{-- <div class="container pt-4">
+                        {{ $stations->links() }}
+                    </div> --}}
+
+                    @elseif ($stations->count() == 0)
+                        <p>No items listed under this category yet</p>
+                    @else
+                        {{-- No items available--}}
+                    @endif
+
+                </div>
             </div>
         </div>
     </div>
