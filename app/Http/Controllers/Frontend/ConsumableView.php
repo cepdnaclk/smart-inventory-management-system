@@ -38,6 +38,7 @@ class ConsumableView extends Controller
         for ($i = 0; $i < $locationCount; $i++) {
             $locationStringArray[] = $this->getFullLocationPathAsString($consumableItem, $i);
         }
-        return view('frontend.consumable.item', compact('consumableItem','locationStringArray'));
+
+        return view('frontend.consumable.item', compact('consumableItem','locationStringArray','locationCount'));
     }
 }

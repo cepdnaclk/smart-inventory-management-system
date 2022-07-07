@@ -7,6 +7,25 @@ use Illuminate\Support\Facades\DB;
 
 class ItemLocationsSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        foreach ($this->data as $index => $setting) {
+            $result = DB::table('item_locations')->insert($setting);
+
+            if (!$result) {
+                $this->command->info("Insert failed at record $index.");
+                return;
+            }
+        }
+
+        $this->command->info('Inserted ' . count($this->data) . ' records to item_locations table');
+    }
+
     protected $data = [
         array('id' => '193',  'location_id' => 3, 'item_id' => 'EQ/17/1000'),
         array('id' => '1',  'location_id' => 1, 'item_id' => 'EQ/17/1001'),
@@ -67,6 +86,7 @@ class ItemLocationsSeeder extends Seeder
         array('id' => '56',  'location_id' => 2, 'item_id' => 'MC/001'),
         array('id' => '57',  'location_id' => 3, 'item_id' => 'MC/002'),
         array('id' => '58',  'location_id' => 1, 'item_id' => 'MS/CS/12/1001'),
+        array('id' => '194',  'location_id' => 3, 'item_id' => 'MS/CS/12/1001'),
         array('id' => '59',  'location_id' => 2, 'item_id' => 'MS/CS/12/1002'),
         array('id' => '60',  'location_id' => 3, 'item_id' => 'MS/CS/12/1003'),
         array('id' => '61',  'location_id' => 1, 'item_id' => 'MS/CS/12/1004'),
@@ -201,25 +221,8 @@ class ItemLocationsSeeder extends Seeder
         array('id' => '190',  'location_id' => 1, 'item_id' => 'RW/005'),
         array('id' => '191',  'location_id' => 2, 'item_id' => 'RW/006'),
         array('id' => '192',  'location_id' => 3, 'item_id' => 'RW/007'),
+//        id 193 is used
+//        id 194 is used
 
     ];
-
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        foreach ($this->data as $index => $setting) {
-            $result = DB::table('item_locations')->insert($setting);
-
-            if (!$result) {
-                $this->command->info("Insert failed at record $index.");
-                return;
-            }
-        }
-
-        $this->command->info('Inserted ' . count($this->data) . ' records to item_locations table');
-    }
 }
