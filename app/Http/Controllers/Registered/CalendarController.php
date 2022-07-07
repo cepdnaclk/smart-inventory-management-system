@@ -71,6 +71,7 @@ class CalendarController extends Controller
                 'end_date' => $request->end_date,
                 'station_id' => $station->id,
                 'E_numbers' => $request->title,
+                'duration' => $request->m,
 
             ]);
 
