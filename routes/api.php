@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
  * API Routes
  */
 Route::group(['as' => 'api.'], function () {
-    includeRouteFiles(__DIR__.'/Api/');
+    includeRouteFiles(__DIR__.'/api/');
 });
 
 Route::group(['prefix' => 'v1'], function () {
