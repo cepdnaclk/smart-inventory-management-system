@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Stations;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EquipmentItem extends Model implements Searchable
 {

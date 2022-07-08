@@ -4,7 +4,7 @@
 
 @section('breadcrumb-links')
     @include('backend.equipment.includes.breadcrumb-links')
-@endsection
+@endsection 
 
 @section('content')
     <div>

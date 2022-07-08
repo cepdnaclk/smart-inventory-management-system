@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocaleController;
 
 /*
@@ -18,15 +19,12 @@ Route::group(['as' => 'frontend.'], function () {
     includeRouteFiles(__DIR__ . '/frontend/');
 });
 
+
 /*
  * Backend Routes
  *
  * These routes can only be accessed by users with type `admin`
  */
-//Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-//    includeRouteFiles(__DIR__ . '/backend/');
-//});
-
 Route::prefix('admin')->as('admin.')->middleware(['auth'])->group(function () {
     includeRouteFiles(__DIR__ . '/backend/');
 });

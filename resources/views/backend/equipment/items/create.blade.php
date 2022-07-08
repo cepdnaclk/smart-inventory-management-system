@@ -15,7 +15,7 @@
             'enctype'=>'multipart/form-data'
         ]) !!}
 
-        <x-backend.card>
+        <x-backend.card>  
             <x-slot name="header">
                 Equipment : Create
             </x-slot>
