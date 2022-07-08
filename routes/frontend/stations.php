@@ -35,7 +35,7 @@ Route::prefix('stations')->group(function () {
                 ->push($stations->stationName, route('frontend.stations.station',
                 $stations->stationName));
         });
-
+ 
 });
 
 
