@@ -10,6 +10,7 @@ Route::middleware(['editAccess'])->group(function () {
     })->name('reservation.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Stations'), route('admin.station.indexmain'))
                 ->push(__('Reservation'), route('admin.reservation.index'));
         });
 
@@ -18,8 +19,8 @@ Route::middleware(['editAccess'])->group(function () {
         ->name('reservation.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Reservation'), route('admin.reservation.index'))
-                ;
+                ->push(__('Stations'), route('admin.station.indexmain'))
+                ->push(__('Reservation'), route('admin.reservation.index'));
         });
 
     // Show
