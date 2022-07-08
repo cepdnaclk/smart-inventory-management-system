@@ -2,7 +2,7 @@
 
 use Tabuna\Breadcrumbs\Trail;
 use App\Http\Controllers\Frontend\User\CartController;
-use App\Http\Controllers\Frontend\User\UserController;
+// use App\Http\Controllers\Frontend\User\UserController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
@@ -34,10 +34,10 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
     Route::get('products', [CartController::class, 'index'])->name('products');
     Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
     Route::get('cart', [CartController::class, 'cart'])->name('cart');
-    Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remove.from.cart');  
+    Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remove.from.cart');
     Route::patch('update-cart', [CartController::class, 'update'])->name('update.cart');
     Route::post('place-order', [CartController::class, 'placeOrder'])->name('place.order');
-    Route::get('my-order',[UserController::class,'index'])->name('placbe.order');
-             
-    
+    // Route::get('my-order',[UserController::class,'index'])->name('placbe.order');
+
+
 });

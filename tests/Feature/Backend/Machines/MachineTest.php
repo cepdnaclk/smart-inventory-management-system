@@ -3,6 +3,7 @@
 namespace Tests\Feature\Backend\Machines;
 
 use App\Domains\Auth\Models\User;
+use App\Models\ItemLocations;
 use App\Models\Machines;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -67,6 +68,7 @@ class MachineTest extends TestCase
             'type' => array_rand(Machines::types()),
             'build_width' => 30,
             'build_length' => 40,
+            'location' => 1,
             'build_height' => 50,
             'power' => rand(30, 100),
             'thumb' => NULL,
@@ -89,9 +91,16 @@ class MachineTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $machine = Machines::factory()->create();
+        ItemLocations::factory()->create([
+            'item_id' => $machine->inventoryCode(),
+            'location_id' => 2
+        ]);
         $machine->title = 'New Machine Title';
-        $response = $this->put("/admin/machines/{$machine->id}", $machine->toArray());
+        $machineArray = $machine->toArray();
+        $machineArray['location'] = 2;
 
+        $response = $this->put("/admin/machines/{$machine->id}", $machineArray);
+        $response->assertStatus(302);
         $this->assertDatabaseHas('machines', [
             'title' => 'New Machine Title',
         ]);

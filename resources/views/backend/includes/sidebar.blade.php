@@ -121,47 +121,38 @@
                 </ul>
             </li>
 
-
-            {{-- Stations --}}
+            {{-- Consumables --}}
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
                         href="#"
                         icon="c-sidebar-nav-icon cil-list"
                         class="c-sidebar-nav-dropdown-toggle"
-                        :text="__('Stations')"></x-utils.link>
+                        :text="__('Consumables')"></x-utils.link>
 
                 <ul class="c-sidebar-nav-dropdown-items">
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
-                                :href="route('admin.station.index')"
+                                :href="route('admin.consumable.items.index')"
                                 class="c-sidebar-nav-link"
-                                :text="__('Stations')"></x-utils.link>
+                                :text="__('Items')"></x-utils.link>
                     </li>
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
-                                :href="route('admin.reservation.index')"
+                                :href="route('admin.consumable.types.index')"
                                 class="c-sidebar-nav-link"
-                                :text="__('Reservations - Maintainer')"></x-utils.link>
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link
-                                :href="route('admin.reservation.index')"
-                                class="c-sidebar-nav-link"
-                                :text="__('Reservations - User')"></x-utils.link>
+                                :text="__('Types')"></x-utils.link>
                     </li>
                 </ul>
             </li>
 
-            <!-- {{-- Stations --}}
+            {{-- Stations --}}
             <li class="c-sidebar-nav-item">
                 <x-utils.link
                         :href="route('admin.station.index')"
                         icon="c-sidebar-nav-icon cil-list"
                         class="c-sidebar-nav-link"
                         :text="__('Stations')"></x-utils.link>
-            </li> -->
-
-
+            </li>
         @endif
 
         {{-- Fabrication Requests --}}
@@ -215,38 +206,34 @@
             </ul>
         </li>
 
+        {{-- Search --}}
         <li class="c-sidebar-nav-dropdown">
             <x-utils.link
                     href="#"
                     icon="c-sidebar-nav-icon cil-list"
                     class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Consumables')"></x-utils.link>
+                    :text="__('Search')"></x-utils.link>
 
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.consumable.items.index')"
+                            :href="route('admin.search.index')"
                             class="c-sidebar-nav-link"
-                            :text="__('Items')"></x-utils.link>
+                            :text="__('Search by item')"></x-utils.link>
                 </li>
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.consumable.types.index')"
+                            :href="route('admin.search.reverse')"
                             class="c-sidebar-nav-link"
-                            :text="__('Types')"></x-utils.link>
+                            :text="__('Search by location')"></x-utils.link>
                 </li>
+                {{--                    <li class="c-sidebar-nav-item">--}}
+                {{--                        <x-utils.link--}}
+                {{--                                :href="route('admin.component.types.index')"--}}
+                {{--                                class="c-sidebar-nav-link"--}}
+                {{--                                :text="__('Types')"></x-utils.link>--}}
+                {{--                    </li>--}}
             </ul>
-        </li>
-
-        <li class="c-sidebar-nav-dropdown">
-                    
-                        <li class="c-sidebar-nav-item">
-                            <x-utils.link
-                            icon="c-sidebar-nav-icon cil-list"
-                                    :href="route('admin.orders.index')"
-                                    class="c-sidebar-nav-link"
-                                    :text="__('Orders')"></x-utils.link>
-                        </li>
         </li>
 
         @if ($logged_in_user->hasAllAccess())
