@@ -69,6 +69,20 @@
 
             </div>
         </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-center mt-5">Schedule Reservation - {{ $stations->stationName }}</h3>
+                    <br>
+    
+                    <div class="col-md-11 offset-1 mt-5 mb-5">
+                        <div id="calendar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection
