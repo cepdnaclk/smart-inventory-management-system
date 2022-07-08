@@ -69,7 +69,7 @@
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
                                             <a href="{{ route('admin.consumable.types.delete', $type)}}"
-                                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                 title="Delete"></i>
                                             </a>
                                         </div>

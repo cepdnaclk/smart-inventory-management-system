@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class EquipmentType extends Model
 {
-    use HasFactory;
+    use HasFactory; 
 
     protected $guarded = [];
 
     // A  Unique ID assigned by the inventory management system
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
         return sprintf("EQ/%02d",$this->id);

@@ -60,6 +60,15 @@ class Kernel extends HttpKernel
             'password.expires',
             'is_admin',
         ],
+
+        'user' => [
+            /*
+             * A prefix for all registered users 
+             */
+            'is_admin',
+            'is_super_admin',
+            'is_user',
+        ],
     ];
 
     /**

@@ -11,6 +11,7 @@ class ComponentType extends Model
     protected $guarded = [];
 
     // A  Unique ID assigned by the inventory management system
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
         return sprintf("CM/%02d",$this->id);
