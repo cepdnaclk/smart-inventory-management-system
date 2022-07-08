@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\ComponentItem;
+
 use App\Domains\Auth\Models\User ;
 use App\Models\ComponentItemOrder;
 use App\Http\Controllers\Controller;
@@ -99,11 +100,17 @@ class CartController
             $order->componentItems()->attach($web['product'][$i], array('quantity' => $request->quantity[$i]));
         }
 
+
+        $lecturers=User::where('type','lecturer')->get();
+        //return response()->json($lecturers,200);
+        
+
     //    $user_id=$request->user()->id;
        // $order_date=$data['ordered_date'];
-      $orders=Order::where('id',$request->user()->id)->get();
+     // $orders=Order::where('id',$request->user()->id)->get();
    // return  Order::where('id',$request->user()->id)->get();;
-    return view('frontend.orders.index', compact('orders'));
+
+    return view('frontend.orders.request', compact('order','lecturers'));   
      return response()->json($order,200);
     } 
    
