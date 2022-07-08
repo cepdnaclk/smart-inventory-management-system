@@ -36,7 +36,7 @@
 
                 
                 <!-- Equipment -->
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     {!! Form::label('equipment_item_id', 'Equipment*', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
@@ -45,7 +45,7 @@
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
-                </div>
+                </div> -->
                  
                 <!-- Description -->
                 <div class="form-group row">

@@ -58,16 +58,7 @@
                     </div>
                 @endif
 
-                <div class="pt-3">
-                    <u>Tools and Accessories</u>
-                    <ul>
-                        @foreach($equipment as $eq)
-                            <li>
-                                <a href="{{ route('frontend.equipment.item', $eq) }}">{{ $eq->title}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                
 
                 @auth
                     <div class="pt-3">

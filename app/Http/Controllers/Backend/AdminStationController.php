@@ -52,7 +52,7 @@ class AdminStationController extends Controller
       
        $data = request()->validate([
         'stationName' => 'string|required',
-        'equipment_item_id' => 'numeric|required',
+        // 'equipment_item_id' => 'numeric|required',
         'description' => 'string|nullable',
         'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
         'capacity' => 'numeric|required'
@@ -73,8 +73,8 @@ class AdminStationController extends Controller
         $type->save();
         
 
-        $tool = EquipmentItem::where('id', $data['equipment_item_id'])->get();
-        $type->equipment_items()->attach($tool);
+        // $tool = EquipmentItem::where('id', $data['equipment_item_id'])->get();
+        // $type->equipment_items()->attach($tool);
         // $typePivot->save();
         return redirect()->route('admin.station.index')->with('Success', 'Station was created !');
 

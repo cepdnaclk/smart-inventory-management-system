@@ -70,8 +70,11 @@ class CalendarController extends Controller
 
         $date = $request->begin;
 
-        // See if the user has already made a reservation on that day
-        $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->get();
+        // See if the user has already made a reservation on that day for this station
+        $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->where('station_id', $station->id)->get();
+
+        
+        // $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->get();
 
         // If the user has not made a reservation before
         if ($bookings1->isEmpty()) {

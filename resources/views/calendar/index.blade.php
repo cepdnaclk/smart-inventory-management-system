@@ -135,10 +135,10 @@
                                     error: function (error) {
                                         if (error.responseJSON.errors) {
                                             $('#titleError').html(error.responseJSON.errors.title);
-                                        } //else {
-                                        //     $('#bookingModal').modal('hide')
-                                        //     swal("Denied!", "Can not make multiple reservations in a day!", "warning");
-                                        // }
+                                        } else {
+                                            $('#bookingModal').modal('hide')
+                                            swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                        }
                                         console.log(error);
                                     },
                                 });

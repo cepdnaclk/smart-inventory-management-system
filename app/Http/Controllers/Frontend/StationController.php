@@ -24,9 +24,8 @@ class StationController extends Controller
     {
         $stations = Stations::find($station);
         Session::put('station', $stations);
-        $equipment = (Stations::with('equipment_items')->find($station))->equipment_items;
-
-        return view('frontend.stations.station', compact('stations', 'equipment'));
+        
+        return view('frontend.stations.station', compact('stations'));
     }
 
 }
