@@ -53,7 +53,7 @@ class StationController extends Controller
 
         //return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin]);
         
-        return view('frontend.stations.station', compact('stations', 'events'));
+        return view('frontend.stations.station', compact('stations', 'events', 'userLoggedin'));
     }
 
      
