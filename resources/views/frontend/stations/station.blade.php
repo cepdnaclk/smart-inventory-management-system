@@ -370,7 +370,7 @@
                     <h5 class="text-center mt-5">Schedule Reservation</h5>
                     <br>
     
-                    <div class="col-md-11 offset-1 mt-5 mb-5">
+                    <div class="col-md-8 offset-2 mt-20 mb-5">
                         <div id="calendar">
                         </div>
                     </div>

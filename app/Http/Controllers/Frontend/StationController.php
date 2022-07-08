@@ -7,6 +7,7 @@ use App\Models\Stations;
 use App\Models\Reservation;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use App\Domains\Auth\Models\User;
 
 class StationController extends Controller
 {
@@ -45,7 +46,7 @@ class StationController extends Controller
                 'title' => 'Reservation made by ' . $userVar->email . '  for  ' . $booking->E_numbers,
                 'start' => $booking->start_date,
                 'end' => $booking->end_date,
-                'stationId' => $station->id,
+                'stationId' => $stations->id,
                 'auth' => $booking->user_id,
                 'color' => $color,
             ];
