@@ -9,9 +9,21 @@ use App\Models\Order;
 class Locker extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
-    public function order()
+    public function orders()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasMany(Order::class);
     }
+
+    public static function getNextLockerId()
+    {
+        return Locker::orderBy('id','desc')->first()->id + 1;
+    }
+
+    public static function getAvailableLockers()
+    {
+        return Locker::where('is_available', '1')->get();
+    }
+
 }

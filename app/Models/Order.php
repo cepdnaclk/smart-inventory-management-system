@@ -51,7 +51,7 @@ class Order extends Model
    
     public function locker()
     {
-        return $this->hasOne(Locker::class);
+        return $this->belongsTo(locker::class);
     }
 
     public static function ordersForTechOfficer()
@@ -62,7 +62,14 @@ class Order extends Model
         return $orders_approval_for_officer;
     }
 
+    public static function getReadyOrders()
+    {
+        return Order::where('status', 'READY')->orderBy('locker_id')->paginate(16);
+    }
+
+    public static function getApprovedOrders()
+    {
+        return Order::where('status', 'APPROVED')->orderBy('created_at','desc')->paginate(16);
+    }
     
-
-
 }

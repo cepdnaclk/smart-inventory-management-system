@@ -15,15 +15,9 @@ class CreateLockersTable extends Migration
     {
         Schema::create('lockers', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_available')->nullable();
+            $table->boolean('is_available')->default(0);
             $table->text('notes')->nullable();
             $table->timestamps();
-
-            $table->foreignId('order_id')
-                ->constrained()
-                ->references('id')
-                ->onDelete('cascade')
-                ->on('orders');
         });
     }
 

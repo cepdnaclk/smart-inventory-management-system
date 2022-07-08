@@ -10,7 +10,7 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Order Requests - Technical Officer View
+                Approved Orders - Technical Officer View
             </x-slot>
 
             <x-slot name="body">
@@ -29,65 +29,62 @@
 
                     <table class="table table-striped">
                         <tr>
-                            <th>Order_id</th>
-                            <th>Lecurer id</th>
-                            <th>is_approved_by_lecturer</th>
-                            <th>Technical officer id</th>
-                            <th>is_approved_by_TO</th>
+                            <th>Order Id</th>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                            <th>Orderd Date</th>
+                            <th>Components</th>
+                            <th>Quantity</th>
+                            <th>&nbsp;</th>
                         </tr>
 
-                        @foreach($orderApprovals as $orderApproval)
-                        <tr>
-                            <td>{{ $orderApproval->order_id }}</td>
-                            <td>{{ $orderApproval->lecurer_id }}</td>
-                            <td>{{ $orderApproval->is_approved_by_lecturer }}</td>
-                            <td>{{ $orderApproval->technical_officer_id }}</td>
-                            <td>{{ $orderApproval->is_approved_by_TO }}</td>
-                        </tr>
-    
-{{-- 
+                        @foreach($approvedOrders as $approvedOrder)
                             <tr>
-                                <td>{{ $orderApproval->order_id }}</td>
-                                <th>{{ \App\Models\JobRequests::job_status()[$job->status]  }}</th>
+                                <td>{{ $approvedOrder->id }}</td>
                                 <td>
-                                    @if($job->machine_info() != null)
-                                        <a href="{{ route('admin.machines.show', $job->machine) }}" target="_blank">
-                                            {{ $job->machine_info['title'] }}
-                                        </a>
-                                    @endif
+                                    {{ $approvedOrder->user['name'] }}
                                 </td>
+                                <th>{{ $approvedOrder->status }}</th>
+                                <td>{{ $approvedOrder->ordered_date }}</td>
+
+                                {{-- SHOW EVERY COMPONENTS AND THEIR QUANTITY --}}
                                 <td>
-                                    @if($job->material_info() != null)
-                                        <a href="{{ route('admin.raw_materials.show', $job->material) }}"
-                                           target="_blank">
-                                            {{ $job->material_info['title'] }}
-                                        </a>
-                                    @endif
+                                    @foreach($approvedOrder->componentItems as $componentItem)
+                                            <a href="{{ route('admin.component.items.show', $componentItem) }}">
+                                                {{ $componentItem->title }}
+                                            </a>
+                                            <br>
+                                    @endforeach
                                 </td>
+
                                 <td>
-                                    @if($job->supervisor_info() != null)
-                                        {{ $job->supervisor_info['name'] }}
-                                    @endif
+                                    @foreach($approvedOrder->componentItems as $componentItem)
+                                        @if($componentItem->pivot_quantity == null)
+                                            0
+                                            @else
+                                            {{ $componentItem ->pivot_quantity }}
+                                        @endif
+                                        <br>
+                                    @endforeach
                                 </td>
 
                                 <td class="d-flex justify-content-end">
                                     <div class="btn-group" role="group">
-                                        @if ($job->status == 'PENDING_FABRICATION')
-                                            <a href="{{ route('admin.jobs.officer.edit', $job)}}"
-                                               class="btn btn-primary btn-xs"><i class="fa fa-edit"
-                                                                                 title="Edit"></i>
-                                            </a>
-                                        @endif
-                                        <a href="{{ route('admin.jobs.officer.show', $job)}}"
+                                        <a href="{{ route('admin.orders.officer.confirm', $approvedOrder)}}"
+                                            class="btn btn-primary btn-xs">
+                                            <i class="fa fa-check" title="Approval"></i>
+                                        </a>
+                                        
+                                        <a href="{{ route('admin.orders.officer.show', $approvedOrder)}}"
                                            class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                         </a>
                                     </div>
                                 </td>
-
-                            </tr> --}}
-                        @endforeach
+                            </tr>
+                         @endforeach
 
                     </table>
+                    {{ $approvedOrders->links() }}
                 </div>
             </x-slot>
         </x-backend.card>
