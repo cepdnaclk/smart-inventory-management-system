@@ -42,7 +42,6 @@ Route::prefix('equipment')->group(function () {
             }
 
             $trail->push($equipmentType->title);
-
         });
 
     Route::get('/item/{equipmentItem}', [EquipmentView::class, 'viewItem'])
