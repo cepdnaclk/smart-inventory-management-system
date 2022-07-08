@@ -7,6 +7,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\OrderApproval;
 use App\Http\Controllers\Controller;
+use App\Models\Locker;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -153,7 +154,7 @@ class OrderController extends Controller
 
 
     public function lecturer_show(Order $order){
-   return view('backend.orders.lecturer.show',compact('order'));
+        return view('backend.orders.lecturer.show',compact('order'));
     }
 
 //---------------------------------------------------------------------------------------------------------------------------------------
@@ -161,52 +162,69 @@ class OrderController extends Controller
 
     public function officer_index()
     {
-        $tech_officer_id = auth()->user()->id;
-        //dd(\Auth::user()->id);
-    
-        $orderApprovals = OrderApproval::where('technical_officer_id',$tech_officer_id)->where('is_approved_by_lecturer', '=', 1)->get();
-        
-        //$o_id = $orderApprovals -> order_id;
-        //dd($orderApprovals);
+        $approvedOrders = Order::getApprovedOrders();
 
-        return view('backend.orders.technical-officer.index', compact('orderApprovals'));
+        return view('backend.orders.technical-officer.index', compact('approvedOrders'));
     }
 
-    // public function officer_show(JobRequests $jobRequests)
-    // {
-    //     return view('backend.jobs.technical-officer.show', compact('jobRequests'));
-    // }
+    public function officer_show(Order $approvedOrder)
+    {
+        return view('backend.orders.technical-officer.show', compact('approvedOrder'));
+    }
 
-    // public function supervisor_approve(JobRequests $jobRequests)
-    // {
-    //     dd('Approved');
-    //     // TODO: The logic to be implemented
-    //     // Send an email to the student
-    //     // Send an email to the TO
-    //     // Update the status into 'PENDING_FABRICATION'
-    //     // Update timestamp details
-    //     return redirect()->route('admin.jobs.supervisor.index');
-    // }
+    public function officer_confirm(Order $approvedOrder)
+    {
+        $availableLockers = Locker::getAvailableLockers()->pluck('id','id');
+        if ($approvedOrder->status == 'APPROVED') {
+            return view('backend.orders.technical-officer.confirm', compact('approvedOrder','availableLockers'));
+        } else {
+            $id = $approvedOrder->id;
+            return redirect()->route('admin.orders.officer.index')->with('Success', 'The Order request #' . $id . ' already ready !');
+        }
+    }
 
-    // public function supervisor_reject(JobRequests $jobRequests)
-    // {
-    //     dd('Rejected');
-    //     // TODO: The logic to be implemented
-    //     // Send an email to the student
-    //     // Update the status into 'NOT_APPROVED'
-    //     // Update timestamp details
-    //     return redirect()->route('admin.jobs.supervisor.index');
-    // }
+    public function officer_mail(Request $request, Order $approvedOrder)
+    {   
+        $data = request()->validate([
+            'locker_id' => 'numeric|required',
+            'due_date_to_return' => 'date|required',
+        ]);
 
-    // public function officer_finish(JobRequests $jobRequests)
-    // {
-    //     dd("Finished");
-    //     // TODO: Finish the job
-    //     // Send emails to Student and Lecturer about the finish notice
-    //     // Update machine timed, material usage, etc...
-    //     return redirect()->route('admin.jobs.officer.index');
-    // }
+        try {
+            $approvedOrder->update($data);
 
+            //Update Locker isAvailable field
+            $approvedOrder->locker->is_available = false;
+            $approvedOrder->locker->save();
+            
+            dd('Mail send page');
+            return redirect()->route('admin.orders.officer.ready');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
+    }
+
+    public function officer_ready(Order $approvedOrder)
+    {
+        dd('Approved');
+        // TODO: The logic to be implemented
+        // Send an email to the student
+        // Send an email to the TO
+        // Update the status into 'PENDING_FABRICATION'
+        // Update timestamp details
+        return redirect()->route('admin.orders.officer.index');
+    }
+    
+    public function officer_finish(Order $approvedOrder)
+    {
+        dd("Finished");
+        // TODO: Finish the job
+        // Send emails to Student and Lecturer about the finish notice
+        // Update machine timed, material usage, etc...
+        return redirect()->route('admin.jobs.officer.index');
+    }
+//---------------------------------------------------------------------------------------------------------------------------------------
     
 
 

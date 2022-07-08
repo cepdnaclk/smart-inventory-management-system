@@ -21,4 +21,9 @@ class Locker extends Model
         return Locker::orderBy('id','desc')->first()->id + 1;
     }
 
+    public static function getAvailableLockers()
+    {
+        return Locker::where('is_available', '1')->get();
+    }
+
 }
