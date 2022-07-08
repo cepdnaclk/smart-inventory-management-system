@@ -1,6 +1,6 @@
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     <div class="c-sidebar-brand d-lg-down-none">
-    <!-- <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+        <!-- <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
         <use xlink:href="{{ asset('img/brand/coreui.svg#full') }}"></use>
     </svg>
     <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
@@ -121,6 +121,30 @@
                 </ul>
             </li>
 
+            {{-- Consumables --}}
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link
+                        href="#"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-dropdown-toggle"
+                        :text="__('Consumables')"></x-utils.link>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.consumable.items.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Items')"></x-utils.link>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.consumable.types.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Types')"></x-utils.link>
+                    </li>
+                </ul>
+            </li>
+
             {{-- Stations --}}
             <li class="c-sidebar-nav-item">
                 <x-utils.link
@@ -179,6 +203,36 @@
                                 :text="__('Raw Materials')"></x-utils.link>
                     </li>
                 @endif
+            </ul>
+        </li>
+
+        {{-- Search --}}
+        <li class="c-sidebar-nav-dropdown">
+            <x-utils.link
+                    href="#"
+                    icon="c-sidebar-nav-icon cil-list"
+                    class="c-sidebar-nav-dropdown-toggle"
+                    :text="__('Search')"></x-utils.link>
+
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.search.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Search by item')"></x-utils.link>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.search.reverse')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Search by location')"></x-utils.link>
+                </li>
+                {{--                    <li class="c-sidebar-nav-item">--}}
+                {{--                        <x-utils.link--}}
+                {{--                                :href="route('admin.component.types.index')"--}}
+                {{--                                class="c-sidebar-nav-link"--}}
+                {{--                                :text="__('Types')"></x-utils.link>--}}
+                {{--                    </li>--}}
             </ul>
         </li>
 

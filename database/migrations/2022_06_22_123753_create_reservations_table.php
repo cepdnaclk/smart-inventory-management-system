@@ -32,7 +32,7 @@ class CreateReservationsTable extends Migration
                 ->onDelete('cascade')
                 ->on('stations');
             $table->string('E_numbers');
-            $table->string('duration')->nullable();
+            $table->string('duration');
             $table->timestamps();
             
             

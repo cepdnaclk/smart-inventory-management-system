@@ -60,7 +60,9 @@
 
                 @auth
                     <div class="pt-3">
-                        <b><a href="{{ route('user.calendar.index', $stations->id) }}"
+
+                        <b><a href="{{ route('frontend.calendar.index', $stations->id) }}"
+
                               style="float:right; font-size: 18px; text-decoration: underline;">Make a Reservation</a></b>
                     </div>
                 @endauth
