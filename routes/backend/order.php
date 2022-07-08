@@ -73,11 +73,20 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
      // Store the different types of updates
      Route::get('/orders/lecturer/{order}/approve/', [OrderController::class, 'lecturer_approve'])
      ->name('orders.lecturer.approve');
-
+     Route::get('/orders/lecturer/{order}/rejected/', [OrderController::class, 'lecturer_reject'])
+     ->name('orders.lecturer.rejected');
 
       // accepted index
  Route::get('/orders/lecturer/accepted', [OrderController::class, 'lecturer_accepted_index'])
  ->name('orders.lecturer.accepted.index')
+ ->breadcrumbs(function (Trail $trail) {
+     $trail->push(__('Home'), route('admin.dashboard'))
+         ->push(__('Requests'),);
+ });
+
+ //Rejected index
+ Route::get('/orders/lecturer/rejected', [OrderController::class, 'lecturer_rejected_index'])
+ ->name('orders.lecturer.rejected.index')
  ->breadcrumbs(function (Trail $trail) {
      $trail->push(__('Home'), route('admin.dashboard'))
          ->push(__('Requests'),);

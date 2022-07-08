@@ -23,41 +23,40 @@ class OrderController extends Controller
         return view('backend.orders.index', compact('orders'));
 
     }
-    
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-         $types = Order::pluck('title', 'id');
+        $types = Order::pluck('title', 'id');
         return view('backend.orders.create', compact('types'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse|void
      */
     public function store(Request $request)
     {
         $data = request()->validate([
-            
-            'picked_date' => 'string|nullable', // TODO: Validate properly
-            'due_date_to_return' => 'string|required',
-            'returned_date' => 'string|nullable',
+            'picked_date' => 'date|nullable', // TODO: Validate properly
+            'due_date_to_return' => 'date|required', // TODO: Validate properly
+            'returned_date' => 'date|nullable', // TODO: Validate properly
             'status' => 'string|required',
-            
         ]);
+
         try {
             $data['ordered_date'] = Carbon::now()->format('Y-m-d');
             $data['user_id'] = $request->user()->id;
             $order = new Order($data);
             $order->save();
             return redirect()->route('admin.orders.index')->with('Success', 'Order was created !');
+
         } catch (\Exception $ex) {
             return abort(500, "Error 222");
         }
@@ -66,8 +65,8 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Order $order
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(Order $order)
     {
@@ -77,8 +76,8 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Order $order
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Order $order)
     {
@@ -88,17 +87,17 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Order $order
+     * @return \Illuminate\Http\RedirectResponse|void
      */
     public function update(Request $request, Order $order)
     {
         $data = request()->validate([
-            'ordered_date' => 'string|required',
-            'picked_date' => 'string|nullable', // TODO: Validate properly
-            'due_date_to_return' => 'string|required',
-            'returned_date' => 'string|nullable',
+            'ordered_date' => 'date|required', // TODO: Validate properly
+            'picked_date' => 'date|nullable', // TODO: Validate properly
+            'due_date_to_return' => 'date|required', // TODO: Validate properly
+            'returned_date' => 'date|nullable', // TODO: Validate properly
             'status' => 'string|required',
         ]);
 
@@ -126,13 +125,12 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Order $order
+     * @return \Illuminate\Http\RedirectResponse|void
      */
     public function destroy(Order $order)
     {
         try {
-            
             $order->delete();
             return redirect()->route('admin.orders.index')->with('Success', 'Order was deleted !');
 
@@ -143,22 +141,22 @@ class OrderController extends Controller
 
     public function lecturer_index()
     {
-      
         $id = auth()->user()->id;
-    
-        $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 0)->get();
-      //return response()->json($orderApproval, 200);
-      
+
+        $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', 0)->get();
+        //return response()->json($orderApproval, 200);
+
         return view('backend.orders.lecturer.index', compact('orderApproval'));
     }
 
 
-    public function lecturer_show(Order $order){
-        return view('backend.orders.lecturer.show',compact('order'));
+    public function lecturer_show(Order $order)
+    {
+        return view('backend.orders.lecturer.show', compact('order'));
     }
 
-//---------------------------------------------------------------------------------------------------------------------------------------
-//technical-officer
+    //---------------------------------------------------------------------------------------------------------------------------------------
+    //technical-officer
 
     public function officer_index()
     {
@@ -231,8 +229,25 @@ class OrderController extends Controller
     public function lecturer_approve(Order $order)
     {
         //to update the accepted table 
-        $order->orderApprovals->is_approved_by_lecturer=1;
-        $order->status="WAITING_TECHNICAL_OFFICER_APPROVAL";
+        $order->orderApprovals->is_approved_by_lecturer = 1;
+        $order->status = "WAITING_TECHNICAL_OFFICER_APPROVAL";
+        $order->orderApprovals->save();
+        $order->save();
+
+        // TODO: The logic to be implemented
+        // Send an email to the student
+        // Send an email to the TO
+        // Update the status into 'PENDING_FABRICATION'
+        // Update timestamp details
+        return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order. you can view the order in accepted order list.');
+    }
+
+
+    public function lecturer_reject(Order $order)
+    {
+        //to update the accepted table 
+        $order->orderApprovals->is_approved_by_lecturer=0;
+        $order->status="REJECTED_BY_LECTURER";
         $order->orderApprovals->save();
         $order->save();
 
@@ -248,13 +263,26 @@ class OrderController extends Controller
 
     public function lecturer_accepted_index()
     {
+
+        $id = auth()->user()->id;
+
+        $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', 1)->get();
+        //return response()->json($orderApproval, 200);
+
+        return view('backend.orders.lecturer.accepted.index', compact('orderApproval'));
+    }
+
+    public function lecturer_rejected_index()
+    {
       
         $id = auth()->user()->id;
     
-        $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 1)->get();
+        $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 0)->get();
       //return response()->json($orderApproval, 200);
       
-        return view('backend.orders.lecturer.accepted.index', compact('orderApproval'));
+        return view('backend.orders.lecturer.rejected.index', compact('orderApproval'));
     }
- 
+
+    
+
 }
