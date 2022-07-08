@@ -7,7 +7,7 @@ use App\Http\Controllers\Frontend\User\OrderController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
-
+use App\Models\Cart;
 
 /*
  * These frontend controllers require the user to be logged in
@@ -52,6 +52,7 @@ Route::get('orders/{order}', [OrderController::class, 'show'])
             ->push(__('My Orders'),route('frontend.user.orders.index'))
             ->push(__('Show'));
 });
+Route::post('store-request', [OrderController::class, 'store'])->name('store.request');
 
     Route::get("users/{componentItem}/ordercomp",[OrderCompController::class,'orderComponent'])->name('ordercomp');
     
