@@ -3,6 +3,7 @@
 namespace Tests\Feature\Backend\RawMaterials;
 
 use App\Domains\Auth\Models\User;
+use App\Models\ItemLocations;
 use App\Models\RawMaterials;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -68,6 +69,7 @@ class RawMaterialItemTest extends TestCase
             'description' => 'Sample description',
             'specifications' => 'Not applicable',
             'quantity' => '10',
+            'location' => 1,
             'unit' => 'pcs',
             'availability' => 'AVAILABLE',
             'thumb' => NULL
@@ -85,9 +87,18 @@ class RawMaterialItemTest extends TestCase
 
         $this->actingAs(User::factory()->admin()->create());
         $raw_material = RawMaterials::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'location_id' => '1',
+                'item_id' => $raw_material->inventoryCode(),
+            ]
+        );
         $raw_material->title = 'New Raw Material Title';
-        $response = $this->put("/admin/raw_materials/{$raw_material->id}", $raw_material->toArray());
-
+        $raw_material_array = $raw_material->toArray();
+        $raw_material_array['location'] = 1;
+//        dd($raw_material_array);
+        $response = $this->put("/admin/raw_materials/{$raw_material->id}", $raw_material_array);
+        $response->assertStatus(302);
         $this->assertDatabaseHas('raw_materials', [
             'title' => 'New Raw Material Title',
         ]);

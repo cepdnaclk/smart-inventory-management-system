@@ -13,6 +13,10 @@
 
                     <x-slot name="body">
                         @lang('You are logged in!')
+                        <br>
+                        <div>
+                           <a href="{{ route('frontend.user.products') }}">Create a cart</a>     
+                        </div>   
                     </x-slot>
                 </x-frontend.card>
             </div><!--col-md-10-->

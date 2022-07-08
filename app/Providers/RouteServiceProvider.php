@@ -29,7 +29,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string|null
      */
-    // protected $namespace = 'App\\Http\\Controllers';
+    protected $namespace = 'App\\Http\\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -50,11 +50,14 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
 
+
             // For the 'Login As' functionality from the 404labfr/laravel-impersonate package
             Route::middleware('web')
                 ->group(function (Router $router) {
                     $router->impersonate();
                 });
+            
+            
         });
 
         // To be able to restore a user, since the default binding is a find and would result in a 404

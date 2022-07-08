@@ -7,6 +7,9 @@ use App\Models\EquipmentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use App\Models\ItemLocations;
+use App\Models\Locations;
+use Torann\GeoIP\Location;
 
 class EquipmentTypeController extends Controller
 {
@@ -17,7 +20,7 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
-        $equipmentTypes = EquipmentType::paginate(16);
+        $equipmentTypes = EquipmentType::orderBy('id', 'asc')->paginate(16);
         return view('backend.equipment.types.index', compact('equipmentTypes'));
     }
 

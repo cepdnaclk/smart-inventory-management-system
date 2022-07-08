@@ -20,7 +20,7 @@
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
                         <div class="btn-group" role="group" aria-label="Modify Buttons">
                             <a href="{{ route('admin.jobs.student.delete', $jobRequests)}}"
-                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i>
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash" title="Delete"></i>
                             </a>
                         </div>
                     </div>

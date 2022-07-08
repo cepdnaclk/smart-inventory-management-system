@@ -37,15 +37,16 @@
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
+                            <th>Code</th>
                             <th>Title</th>
                             <th>Parent Category</th>
-                            {{--<th>Subtitle</th>--}}
                             <th>Description</th>
                             <th>&nbsp;</th>
                         </tr>
 
                         @foreach($equipmentTypes as $equipmentType)
                             <tr>
+                                <td>{{ $equipmentType->inventoryCode()  }}</td>
                                 <td>{{ $equipmentType->title  }}</td>
                                 <td>
                                     @if( $equipmentType->parent() !== null)
@@ -69,7 +70,7 @@
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
                                             <a href="{{ route('admin.equipment.types.delete', $equipmentType)}}"
-                                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                 title="Delete"></i>
                                             </a>
                                         </div>

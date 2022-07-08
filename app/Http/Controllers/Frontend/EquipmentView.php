@@ -16,10 +16,17 @@ class EquipmentView extends Controller
         return view('frontend.equipment.index', compact('eqTypes'));
     }
 
+    // All Equipments
+    public function index_all()
+    {
+        $items = EquipmentItem::paginate(36);
+        return view('frontend.equipment.all', compact('items'));
+    }
+
     // Equipment Category Page
     public function viewCategory(EquipmentType $equipmentType)
     {
-        $items = $equipmentType->hasMany(EquipmentItem::class)->paginate(12);;
+        $items = $equipmentType->hasMany(EquipmentItem::class)->paginate(36);;
         // ->paginate(16);
         return view('frontend.equipment.category', compact('items', 'equipmentType'));
     }
@@ -29,4 +36,4 @@ class EquipmentView extends Controller
     {
         return view('frontend.equipment.item', compact('equipmentItem'));
     }
-}
+} 
