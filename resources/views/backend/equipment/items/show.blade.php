@@ -24,7 +24,7 @@
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
                             <a href="{{ route('admin.equipment.items.delete', $equipmentItem)}}"
-                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                 title="Delete"></i>
                             </a>
                         </div>
@@ -34,6 +34,21 @@
                     <tr>
                         <td>Code (to be finalized)</td>
                         <td>{{ $equipmentItem->inventoryCode() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Location</td>
+                        <td>
+                            @if(count($locations_array) > 0)
+                                @foreach(array_reverse($locations_array) as $eachLocation)
+                                    {{ $eachLocation }}
+                                        @if(!($loop->last))
+                                            ->
+                                        @endif
+                                @endforeach
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td>Type</td>
