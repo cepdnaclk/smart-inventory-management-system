@@ -168,7 +168,9 @@ Airflow: 200-500L/min /200-500L/min / 500 L/min
 Adjustable temperature with LCD display for precise control
 With 1pcs scraper and 4pcs nozzles
 With 1pcs 60mm putty trowel', 'description' => NULL, 'instructions' => NULL, 'isElectrical' => '1', 'powerRating' => '2000.00', 'price' => '9500.00', 'width' => '9.00', 'length' => '29.00', 'height' => '21.00', 'weight' => '650.00', 'thumb' => '1656160114.jpg', 'created_at' => '2022-06-25 12:28:34', 'updated_at' => '2022-06-27 03:54:39', 'equipment_type_id' => '12'),
-        array('id' => '1145','code' => '','title' => 'Hot Glue Gun','brand' => NULL,'productCode' => NULL,'quantity' => '2','specifications' => NULL,'description' => NULL,'instructions' => NULL,'isElectrical' => '0','powerRating' => '60.00','price' => '750.00','width' => '17.00','length' => '3.50','height' => '25.00','weight' => '200.00','thumb' => '1657270870.jpg','created_at' => '2022-06-25 12:28:34','updated_at' => '2022-07-08 09:01:11','equipment_type_id' => '12'),
+
+
+        array('id' => '1145','code' => '','title' => 'Hot Glue Gun','brand' => NULL,'productCode' => NULL,'quantity' => '2','specifications' => NULL,'description' => NULL,'instructions' => NULL,'isElectrical' => '1','powerRating' => '60.00','price' => '750.00','width' => '17.00','length' => '3.50','height' => '25.00','weight' => '200.00','thumb' => '1657297587.jpg','created_at' => '2022-06-25 12:28:34','updated_at' => '2022-07-08 09:01:11','equipment_type_id' => '12'),
   
 
         // Bits and Power Tool Accessories
