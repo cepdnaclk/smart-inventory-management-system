@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Reservation;
+use Carbon\Carbon;
 use App\Models\Stations;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
@@ -18,9 +19,17 @@ class CalendarController extends Controller
         $events = array();
 
         // Get all the reservations for that particular station
-        $bookings = Reservation::where('station_id', $station->id)->get();
+        $bookings = Reservation::where('station_id', $station->id)->where('start_date', '>', Carbon::now()->subDays(8))->get();
+
+        $color = null;
 
         foreach ($bookings as $booking) {
+
+            if($booking->user_id != $userLoggedin['id']){
+                $color = '#435258';
+            }else{
+                $color = '#3E9CC2';
+            }
             $userVar = User::find($booking->user_id);
             $events[] = [
                 'id' => $booking->id,
@@ -29,6 +38,7 @@ class CalendarController extends Controller
                 'end' => $booking->end_date,
                 'stationId' => $station->id,
                 'auth' => $booking->user_id,
+                'color' => $color,
             ];
         }
 

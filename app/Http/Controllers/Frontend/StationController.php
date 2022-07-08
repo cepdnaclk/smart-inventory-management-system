@@ -24,11 +24,5 @@ class StationController extends Controller
         return view('frontend.stations.station', compact('stations'));
     }
 
-        // $equipment = (Stations::with('equipment_items')->find($station))->equipment_items;
-        
-
-    //     return view('frontend.stations.station', compact('stations', 'equipment'));
-
-    // }
- 
+     
 }

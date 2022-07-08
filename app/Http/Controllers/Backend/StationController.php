@@ -45,17 +45,6 @@ class StationController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD:app/Http/Controllers/Backend/AdminStationController.php
-        
-      
-       $data = request()->validate([
-        'stationName' => 'string|required',
-        // 'equipment_item_id' => 'numeric|required',
-        'description' => 'string|nullable',
-        'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
-        'capacity' => 'numeric|required'
-=======
->>>>>>> 2e01b16293f59104b62a541bb643eed49bf8024c:app/Http/Controllers/Backend/StationController.php
 
         $data = request()->validate([
             'stationName' => 'string|required',
@@ -72,17 +61,10 @@ class StationController extends Controller
             $type->save();
             return redirect()->route('admin.station.index')->with('Success', 'Station was created !');
 
-<<<<<<< HEAD:app/Http/Controllers/Backend/AdminStationController.php
-        // $tool = EquipmentItem::where('id', $data['equipment_item_id'])->get();
-        // $type->equipment_items()->attach($tool);
-        // $typePivot->save();
-        return redirect()->route('admin.station.index')->with('Success', 'Station was created !');
-=======
         } catch (\Exception $ex) {
             dd($ex);
             return abort(500);
         }
->>>>>>> 2e01b16293f59104b62a541bb643eed49bf8024c:app/Http/Controllers/Backend/StationController.php
 
     }
 
