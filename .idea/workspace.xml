@@ -20,8 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef0aa575-db56-40a8-9e0c-6c7cab003ff2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +233,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/artisan" />
     <property name="nodejs_package_manager_path" value="yarn" />
   </component>
-  <component name="RunManager" selected="PHP Script.Test">
+  <component name="RunManager" selected="PHP Script.Serve">
     <configuration name="AuthControllerTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\Api\Auth\AuthControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" scope="Class" />
       <method v="2" />
@@ -317,6 +316,8 @@
       <workItem from="1654404786140" duration="1208000" />
       <workItem from="1654406035715" duration="2163000" />
       <workItem from="1657251926047" duration="1025000" />
+      <workItem from="1657253978887" duration="283000" />
+      <workItem from="1657258749511" duration="157000" />
     </task>
     <servers />
   </component>
@@ -344,11 +345,12 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="397" y="7" key="#PHP/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408163452" />
-    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1657224248904">
+    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1657253970830">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657224248904" />
     <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408285259" />
+    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1657253970830" />
     <state width="1323" height="258" key="GridCell.Tab.0.bottom" timestamp="1657253286714">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

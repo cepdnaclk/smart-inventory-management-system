@@ -121,10 +121,8 @@ class EquipmentItemController extends Controller
     public function edit(EquipmentItem $equipmentItem)
     {
         $types = EquipmentType::pluck('title', 'id');
-        $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get()[0]['location_id'];
-//        dd($this_item_location);
         $locations = Locations::pluck('location', 'id');
-        return view('backend.equipment.items.edit', compact('types', 'equipmentItem','this_item_location','locations'));
+        return view('backend.equipment.items.edit', compact('types', 'equipmentItem','locations'));
     }
 
     /**
@@ -143,7 +141,6 @@ class EquipmentItemController extends Controller
             'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
 
-            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -171,14 +168,7 @@ class EquipmentItemController extends Controller
             $equipmentItem->isElectrical = ($request->isElectrical != null);
 
             $filtered_data = $data;
-            unset($filtered_data['location']);
             $equipmentItem->update($filtered_data);
-
-            $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get()[0];
-            $new_location_data = [
-                'location_id' => $data['location']
-            ];
-            $this_item_location->update($new_location_data);
 
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was updated !');
 
