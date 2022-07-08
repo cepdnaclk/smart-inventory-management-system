@@ -30,7 +30,7 @@
                     </td>
                     
                     <td class="actions" data-th="">
-                        <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i>Remove</button>
+                        <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash"></i>Remove</button>
                     </td>
                 </tr>
             @endforeach

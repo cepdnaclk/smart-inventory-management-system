@@ -36,3 +36,4 @@ composer.lock
 notes.txt
 package-lock.json
 yarn.lock
+/.idea

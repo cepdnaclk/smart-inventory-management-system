@@ -20,10 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef0aa575-db56-40a8-9e0c-6c7cab003ff2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.example " beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +101,6 @@
       <path value="$PROJECT_DIR$/vendor/fideloper/proxy" />
       <path value="$PROJECT_DIR$/vendor/fruitcake/laravel-cors" />
       <path value="$PROJECT_DIR$/vendor/paragonie/certainty" />
-      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
       <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/vendor/paragonie/sodium_compat" />
       <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
@@ -129,7 +125,6 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/type" />
       <path value="$PROJECT_DIR$/vendor/sebastian/version" />
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/vendor/jamesmills/laravel-timezone" />
@@ -212,13 +207,19 @@
       <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
       <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
       <path value="$PROJECT_DIR$/vendor/seld/phar-utils" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
       <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
       <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
       <path value="$PROJECT_DIR$/vendor/laravel/sail" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-searchable" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
     </include_path>
   </component>
   <component name="ProjectId" id="2A8wzmTX3zDzaOETFiRQKUggId3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -230,20 +231,75 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/artisan" />
     <property name="nodejs_package_manager_path" value="yarn" />
   </component>
-  <component name="RunManager" selected="PHPUnit.ComponentItemTest">
+  <component name="RunManager" selected="PHP Script.Test">
+    <configuration name="AuthControllerTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\Api\Auth\AuthControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="AuthControllerTest.test_show_validation_error_on_email_when_credential_donot_match" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\Api\Auth\AuthControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" method="test_show_validation_error_on_email_when_credential_donot_match" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="AuthControllerTest.test_show_validation_error_when_both_fields_empty" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\Api\Auth\AuthControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" method="test_show_validation_error_when_both_fields_empty" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="ComponentItemTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\Backend\Component\ComponentItemTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Backend/Component/ComponentItemTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ListRoleTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\Backend\Role\ListRoleTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Backend/Role/ListRoleTest.php" scope="Class" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <configuration name="Migrate" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="migrate:fresh --seed">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4.9" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <configuration name="Serve" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="serve">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4.9" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <configuration name="Test" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="test">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4.9" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="PHP Script.Serve" />
+      <item itemvalue="PHP Script.Test" />
+      <item itemvalue="PHP Script.Migrate" />
+      <item itemvalue="PHPUnit.phpunit.xml" />
+      <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_on_email_when_credential_donot_match" />
+      <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_when_both_fields_empty" />
+      <item itemvalue="PHPUnit.ComponentItemTest" />
+      <item itemvalue="PHPUnit.AuthControllerTest" />
+      <item itemvalue="PHPUnit.ListRoleTest" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="PHPUnit.ListRoleTest" />
+        <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_on_email_when_credential_donot_match" />
+        <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_when_both_fields_empty" />
+        <item itemvalue="PHPUnit.AuthControllerTest" />
         <item itemvalue="PHPUnit.ComponentItemTest" />
       </list>
     </recent_temporary>
@@ -260,6 +316,7 @@
       <updated>1654404784172</updated>
       <workItem from="1654404786140" duration="1208000" />
       <workItem from="1654406035715" duration="2163000" />
+      <workItem from="1657251926047" duration="1025000" />
     </task>
     <servers />
   </component>
@@ -287,25 +344,34 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="397" y="7" key="#PHP/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408163452" />
-    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1654408285259">
+    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1657224248904">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657224248904" />
     <state x="115" y="7" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408285259" />
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1654408178097">
+    <state width="1323" height="258" key="GridCell.Tab.0.bottom" timestamp="1657253286714">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="213" key="GridCell.Tab.0.bottom/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657226335461" />
     <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1654408178097">
+    <state width="1323" height="258" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1657253286714" />
+    <state width="1323" height="258" key="GridCell.Tab.0.center" timestamp="1657253286713">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="213" key="GridCell.Tab.0.center/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657226335460" />
     <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1654408178097">
+    <state width="1323" height="258" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1657253286713" />
+    <state width="1323" height="258" key="GridCell.Tab.0.left" timestamp="1657253286713">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="213" key="GridCell.Tab.0.left/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657226335460" />
     <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1654408178097">
+    <state width="1323" height="258" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1657253286713" />
+    <state width="1323" height="258" key="GridCell.Tab.0.right" timestamp="1657253286713">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="213" key="GridCell.Tab.0.right/0.0.1366.728/0.-768.1366.728@0.0.1366.728" timestamp="1657226335460" />
     <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1654408178097" />
+    <state width="1323" height="258" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1657253286713" />
   </component>
 </project>
