@@ -4,6 +4,7 @@ namespace Tests\Feature\Backend\Component;
 
 use App\Domains\Auth\Models\User;
 use App\Models\ComponentItem;
+use App\Models\ItemLocations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -71,6 +72,7 @@ class ComponentItemTest extends TestCase
             'title' => 'Sample Component',
             'brand' => NULL,
             'productCode' => 'ICOA101',
+            'location' => '1',
             'specifications' => 'UA741CP OpAmp 1MHz',
             'description' => 'The 741 Op Amp IC is a monolithic integrated circuit, comprising of a general purpose Operational Amplifier.',
             'instructions' => 'NO INSTRUCTION AVAILABLE',
@@ -91,14 +93,20 @@ class ComponentItemTest extends TestCase
     /** @test */
     public function an_component_can_be_updated()
     {
-
         $this->actingAs(User::factory()->admin()->create());
         $component = ComponentItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $component->inventoryCode(),
+                'location_id' => 1
+            ]
+        );
 
         $component->title = 'New Component Title';
-
-        $response = $this->put("/admin/components/items/{$component->id}", $component->toArray());
-
+        $component_array = $component->toArray();
+        $component_array['location'] = 2;
+        $response = $this->put("/admin/components/items/{$component->id}", $component_array);
+        $response->assertStatus(302);
         $this->assertDatabaseHas('component_items', [
             'title' => 'New Component Title',
         ]);
