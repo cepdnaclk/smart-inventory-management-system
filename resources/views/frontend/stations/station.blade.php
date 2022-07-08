@@ -3,9 +3,8 @@
 @section('title', $stations->stationName)
 
 @push('after-styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
     <style>
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
         td {
             padding: 1px 12px 1px 0;
         }
