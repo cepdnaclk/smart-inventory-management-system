@@ -5,6 +5,7 @@ namespace Backend\Search;
 use App\Models\ComponentItem;
 use App\Models\ConsumableItem;
 use App\Models\EquipmentItem;
+use App\Models\ItemLocations;
 use App\Models\Locations;
 use App\Models\Machines;
 use App\Models\RawMaterials;
@@ -67,7 +68,6 @@ class ReverseSearchTest extends TestCase
             'brand' => 'Brand',
             'productCode' => '100-X',
             'quantity' => 1,
-            'location' => '2',
             'specifications' => NULL,
             'description' => 'Sample Description',
             'instructions' => 'Sample Instructions',
@@ -82,6 +82,10 @@ class ReverseSearchTest extends TestCase
             'equipment_type_id' => 11
         ]);
         $createdItem = EquipmentItem::where('title', 'Sample Equipment')->first();
+        ItemLocations::factory()->create([
+            'item_id' => $createdItem->inventoryCode(),
+            'location_id' => 2
+        ]);
         $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '2']);
         $response->assertSee($createdItem->title);
     }

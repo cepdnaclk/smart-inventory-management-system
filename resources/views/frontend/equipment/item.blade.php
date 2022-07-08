@@ -5,7 +5,7 @@
 @push('after-styles')
     <style>
         td {
-        padding: 1px 12px 1px 0;
+            padding: 1px 12px 1px 0;
         }
     </style>
 @endpush
@@ -67,7 +67,12 @@
                                 : <b>{{ $equipmentItem->productCode }}({{ $equipmentItem->brand }})</b>
                             </td>
                         </tr>
-
+                        @foreach($locationStringArray as $eachLocation)
+                            <tr>
+                                <td>Location {{$loop->index + 1}}</td>
+                                <td> : {{$eachLocation}}</td>
+                            </tr>
+                        @endforeach
                         <tr>
                             <td>Available Quantity</td>
                             <td>

@@ -52,7 +52,6 @@ class EquipmentItemController extends Controller
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
-            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -75,25 +74,14 @@ class EquipmentItemController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_items");
             }
 
-            $filtered_data = $data;
-            unset($filtered_data['location']);
-            $type = new EquipmentItem($filtered_data);
+            $type = new EquipmentItem($data);
 
             // Update checkbox condition
             $type->isElectrical = ($request->isElectrical != null);
 
             //            save first, otherwise the id is not there
             $type->save();
-
-            $data_for_location = [
-                'item_id' => $type->inventoryCode(),
-                'location_id' => $data['location']
-            ];
-            $location = new ItemLocations($data_for_location);
-
-
-            $location->save();
-            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was created !');
+            return redirect()->route('admin.equipment.items.edit.location',$type)->with('Success', 'Equipment was created !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -108,7 +96,12 @@ class EquipmentItemController extends Controller
      */
     public function show(EquipmentItem $equipmentItem)
     {
-        $locations_array = $this->getFullLocationPathAsArray($equipmentItem,0);
+        $locationCount = $this->getNumberOfLocationsForItem($equipmentItem);
+
+        $locations_array = array();
+        for ($i = 0; $i < $locationCount ; $i++){
+            $locations_array[] = $this->getFullLocationPathAsString($equipmentItem,$i);
+        }
         return view('backend.equipment.items.show', compact('equipmentItem','locations_array'));
     }
 
@@ -158,8 +151,6 @@ class EquipmentItemController extends Controller
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
-
-            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -186,15 +177,7 @@ class EquipmentItemController extends Controller
             // Update checkbox condition
             $equipmentItem->isElectrical = ($request->isElectrical != null);
 
-            $filtered_data = $data;
-            unset($filtered_data['location']);
-            $equipmentItem->update($filtered_data);
-
-            $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get()[0];
-            $new_location_data = [
-                'location_id' => $data['location']
-            ];
-            $this_item_location->update($new_location_data);
+            $equipmentItem->update($data);
 
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was updated !');
 
@@ -229,9 +212,8 @@ class EquipmentItemController extends Controller
 
             $equipmentItem->delete();
 
-            //            delete location entry
-            $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get()[0];
-            $this_item_location->delete();
+            //            delete all location entries
+            $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->delete();
 
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
 
