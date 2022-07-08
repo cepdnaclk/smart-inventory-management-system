@@ -1,26 +1,27 @@
 <?php 
 
 use App\Http\Controllers\Backend\ReservationController;
-use Tabuna\Breadcrumbs\Trail;
+
+use Tabuna\Breadcrumbs\Trail; 
 
 Route::middleware(['editAccess'])->group(function () {
-
+ 
     Route::get('/reservation', function () {
-        return view('backend.reservation.index');
-    })->name('reservation.index')
+        return view('backend.reservation.indexmain');
+    })->name('reservation.indexmain')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Stations'), route('admin.station.indexmain'))
                 ->push(__('Reservation'), route('admin.reservation.index'));
         });
 
+    //Maintainer------------------------------------------------------------------
     // Index
-    Route::get('reservation', [ReservationController::class, 'index'])
+    Route::get('reservation/maintainer', [ReservationController::class, 'index'])
         ->name('reservation.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Stations'), route('admin.station.indexmain'))
-                ->push(__('Reservation'), route('admin.reservation.index'));
+                ->push(__('Reservation'), route('admin.reservation.indexmain'))
+                ->push(__('Maintainer'));
         });
 
     // Show
@@ -28,7 +29,28 @@ Route::middleware(['editAccess'])->group(function () {
         ->name('reservation.show')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Reservation'), route('admin.reservation.index'))
+                ->push(__('Reservation'), route('admin.reservation.indexmain'))
+                ->push(__('Maintainer'), route('admin.reservation.index'))
+                ->push(__('Show'));
+        });
+
+    //User------------------------------------------------------------------------
+    // Index
+    Route::get('reservation/user', [ReservationController::class, 'index_user'])
+        ->name('reservation.user.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Reservation'), route('admin.reservation.indexmain'))
+                ->push(__('User'));
+        });
+  
+    // Show
+    Route::get('reservation/user/{reservation}', [ReservationController::class, 'show_user'])
+        ->name('reservation.user.show')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Reservation'), route('admin.reservation.indexmain'))
+                ->push(__('User'), route('admin.reservation.user.index'))
                 ->push(__('Show'));
         });
 
