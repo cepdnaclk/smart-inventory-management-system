@@ -20,8 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef0aa575-db56-40a8-9e0c-6c7cab003ff2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,14 +283,14 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="PHP Script.Migrate" />
       <item itemvalue="PHP Script.Serve" />
       <item itemvalue="PHP Script.Test" />
-      <item itemvalue="PHP Script.Migrate" />
       <item itemvalue="PHPUnit.phpunit.xml" />
+      <item itemvalue="PHPUnit.AuthControllerTest" />
       <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_on_email_when_credential_donot_match" />
       <item itemvalue="PHPUnit.AuthControllerTest.test_show_validation_error_when_both_fields_empty" />
       <item itemvalue="PHPUnit.ComponentItemTest" />
-      <item itemvalue="PHPUnit.AuthControllerTest" />
       <item itemvalue="PHPUnit.ListRoleTest" />
     </list>
     <recent_temporary>
@@ -317,6 +316,7 @@
       <workItem from="1654404786140" duration="1208000" />
       <workItem from="1654406035715" duration="2163000" />
       <workItem from="1657251926047" duration="1025000" />
+      <workItem from="1657253604343" duration="217000" />
     </task>
     <servers />
   </component>

@@ -6,8 +6,6 @@ use Illuminate\Database\Seeder;
 use Torann\GeoIP\Location;
 use Illuminate\Database\Eloquent\Model;
 use Database\Seeders\Traits\TruncateTable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Seeder;
 
 /**
  * Class DatabaseSeeder.
