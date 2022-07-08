@@ -234,7 +234,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/artisan" />
     <property name="nodejs_package_manager_path" value="yarn" />
   </component>
-  <component name="RunManager" selected="PHPUnit.ListRoleTest">
+  <component name="RunManager" selected="PHP Script.Test">
     <configuration name="AuthControllerTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\Api\Auth\AuthControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/Api/Auth/AuthControllerTest.php" scope="Class" />
       <method v="2" />
