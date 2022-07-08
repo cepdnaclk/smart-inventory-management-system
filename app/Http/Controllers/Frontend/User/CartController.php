@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
-use id;
-use index;
-use Carbon\Carbon;
+
 use App\Models\Order;
+use Carbon\Carbon;
+use id;
 use Illuminate\Http\Request;
+
 use App\Models\ComponentItem;
 
 use App\Domains\Auth\Models\User ;
-use App\Models\ComponentItemOrder;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+
 
 /**
  * Class CartController.
@@ -22,18 +21,20 @@ class CartController
     /**
      * Write code on Method
      *
-     * @return response()
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
 
     public function index()
     {
         $componentItem = ComponentItem::all();
+
         return view('frontend.user.products', compact('componentItem'));
     }
 
     public function compOrder()
     {
         $componentItem = ComponentItem::all();
+
         return view('frontend.user.ordercomp', compact('componentItem'));
     }
 
@@ -54,11 +55,12 @@ class CartController
                 "name" => $componentItem->title,
                 "quantity" => 1,
                 "code" => $componentItem->id,
-                "image" => $componentItem->image
+                "image" => $componentItem->image,
             ];
         }
 
         session()->put('cart', $cart);
+
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
@@ -88,7 +90,7 @@ class CartController
     {
         $web = request()->validate([
             'product' => 'required|array|min:1', // TODO: Validate properly
-            'quantity' => 'required|array|min:1'
+            'quantity' => 'required|array|min:1',
         ]);
 
         $data['ordered_date'] = Carbon::now()->format('Y-m-d');
@@ -97,13 +99,15 @@ class CartController
         $order->save();
 
         for ($i = 0; $i < count($web['product']); $i++) {
-            $order->componentItems()->attach($web['product'][$i], array('quantity' => $request->quantity[$i]));
+            $order->componentItems()->attach($web['product'][$i], ['quantity' => $request->quantity[$i]]);
         }
+
 
 
         $lecturers=User::where('type','lecturer')->get();
         //return response()->json($lecturers,200);
         
+
 
     //    $user_id=$request->user()->id;
        // $order_date=$data['ordered_date'];
@@ -114,7 +118,7 @@ class CartController
      return response()->json($order,200);
     } 
    
-        
 
+
+    
 }
-
