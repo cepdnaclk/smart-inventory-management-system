@@ -51,8 +51,8 @@
                     right: 'month, agendaWeek, agendaDay',
                 },
                 events: booking,
-                selectable: true,
-                selectHelper: true,
+                selectable: false,
+                selectHelper: false,
 
                 dayClick: function (date, jsEvent, view) {
                     if (view.name === 'month') {
@@ -67,84 +67,7 @@
                     });
                 },
 
-                select: function (start, end, allDays, view) {
-
-                    if ((view.name === 'agendaDay' || view.name === 'agendaWeek') && (!isAnOverlapEvent(start, end))) {
-
-                        $('#bookingModal').modal('toggle');
-                        $('#saveBtn').click(function () {
-                            var title = $('#title').val();
-                            var start_date = $.fullCalendar.formatDate(start, "YYYY-MM-DD HH:mm:ss");
-                            var end_date = $.fullCalendar.formatDate(end, "YYYY-MM-DD HH:mm:ss");
-                            var loggedIn = @json($userLoggedin);
-                            var user = loggedIn['email'];
-                            var begin = moment(start).format('YYYY-MM-DD');
-
-                            // console.log(start, end);
-                            console.log(start_date, end_date);
-
-                            // count hours
-                            const date1 = new Date(start_date);
-                            const date2 = new Date(end_date);
-
-                            var ms = date2.getTime() - date1.getTime();
-                            var d = moment.duration(ms);
-                            var m = d.asMinutes();
-
-                            const time_limit = 300;
-
-                            console.log(ms, d, m);
-
-                            // TODO: Validate the E Numbers
-
-                            //Send to the database
-                            if (m < time_limit) {  //limit maximum time
-                                $.ajax({
-                                    url: "{{ route('frontend.calendar.store') }}",
-                                    type: "POST",
-                                    dataType: 'json',
-                                    data: {title, start_date, end_date, begin, m},
-                                    success: function (response) {
-
-                                        //fill the calendar when event is entered instantaneously
-                                        $('#bookingModal').modal('hide')
-                                        $('#calendar').fullCalendar('renderEvent', {
-                                            'title': response.title,
-                                            'start': response.start,
-                                            'end': response.end,
-                                            'color': response.color,
-                                            'auth': response.auth,
-                                        });
-                                        swal("Done!", "Event Created!", "success");
-
-                                        // TODO: This is a temporary fix. Find a better way to this
-                                        refreshPage();
-                                    },
-                                    error: function (error) {
-                                        if (error.responseJSON.errors) {
-                                            $('#titleError').html(error.responseJSON.errors.title);
-                                        } else {
-                                            $('#bookingModal').modal('hide')
-                                            swal("Denied!", "Can not make multiple reservations in a day!", "warning");
-                                        }
-                                        console.log(error);
-                                    },
-                                });
-                            } else {
-                                swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
-                            }
-                        });
-                    }
-                },
-                eventOverlap: false, //events cant overlap
-                eventResize:false,
                 editable: false,
-                eventDrop: false,
-                eventClick: false,
-                //Not allowing to choose multiple events
-                selectAllow: function (event) {
-                    return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcOffset(false), 'day');
-                }
             });
 
         });
@@ -216,7 +139,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h5 class="text-center mt-20">Schedule Reservation</h5>
+                    <h5 class="text-center mt-20">Current Reservations</h5>
                     <br>
     
                     <div class="col-md-8 offset-2 mt-20 mb-5">
