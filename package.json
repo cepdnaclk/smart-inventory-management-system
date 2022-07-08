@@ -12,7 +12,8 @@
     "devDependencies": {
         "@coreui/coreui": "^3.0.0",
         "@coreui/icons": "^1.0.1",
-        "@popperjs/core": "^2.9.2",
+        "@fortawesome/fontawesome-free": "^5.12.1",
+        "@popperjs/core": "^2.11.5",
         "alpinejs": "^2.3.5",
         "axios": "^0.21.1",
         "bootstrap": "^5.0.1",
