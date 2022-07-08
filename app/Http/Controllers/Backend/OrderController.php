@@ -9,6 +9,8 @@ use App\Models\OrderApproval;
 use App\Http\Controllers\Controller;
 use App\Models\Locker;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TechnicalOfficerMail;
 
 class OrderController extends Controller
 {
@@ -181,8 +183,8 @@ class OrderController extends Controller
         }
     }
 
-    public function officer_mail(Request $request, Order $approvedOrder)
-    {   
+    public function officer_ready(Request $request, Order $approvedOrder)
+    {
         $data = request()->validate([
             'locker_id' => 'numeric|required',
             'due_date_to_return' => 'date|required',
@@ -191,33 +193,36 @@ class OrderController extends Controller
         try {
             $approvedOrder->update($data);
 
+            // Change the status
+            $approvedOrder->status = 'READY';
+            $approvedOrder->save();
+
             //Update Locker isAvailable field
             $approvedOrder->locker->is_available = false;
             $approvedOrder->locker->save();
             
-            dd('Mail send page');
-            return redirect()->route('admin.orders.officer.ready');
+            return view('backend.orders.technical-officer.mail', compact('approvedOrder'));
 
         } catch (\Exception $ex) {
             return abort(500);
         }
     }
 
-    public function officer_ready(Order $approvedOrder)
-    {
-        dd('Approved');
-        // TODO: The logic to be implemented
-        // Send an email to the student
-        // Send an email to the TO
-        // Update the status into 'PENDING_FABRICATION'
-        // Update timestamp details
-        return redirect()->route('admin.orders.officer.index');
+    public function officer_mail(Request $request)
+    {   $data = request()->validate([
+            'email' => 'required|email',
+            'body' => 'string|required',
+        ]);
+
+        Mail::to($data['email'])->send(new TechnicalOfficerMail($data));
+
+        return redirect()->route('admin.orders.officer.index')->with('Success', 'Email has been sent!');
     }
     
     public function officer_finish(Order $approvedOrder)
     {
         dd("Finished");
-        // TODO: Finish the job
+        // TODO: Finish the order
         // Send emails to Student and Lecturer about the finish notice
         // Update machine timed, material usage, etc...
         return redirect()->route('admin.jobs.officer.index');

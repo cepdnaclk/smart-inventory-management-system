@@ -36,16 +36,18 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
         });
 
     // Ready
-    Route::get('/orders/officer/{approvedOrder}/ready/', [OrderController::class, 'officer_ready'])
+    Route::put('/orders/officer/{approvedOrder}/ready/', [OrderController::class, 'officer_ready'])
         ->name('orders.officer.ready');
+
+    // Mail
+    Route::post('/orders/officer/mail/', [OrderController::class, 'officer_mail'])
+    ->name('orders.officer.mail');
 
     // Finish
     Route::post('/orders/officer/{approvedOrder}/finish', [OrderController::class, 'officer_finish'])
         ->name('orders.officer.finish');
 
-    // Mail
-    Route::put('/orders/officer/{approvedOrder}/mail/', [OrderController::class, 'officer_mail'])
-    ->name('orders.officer.mail');
+    
 });
 
 

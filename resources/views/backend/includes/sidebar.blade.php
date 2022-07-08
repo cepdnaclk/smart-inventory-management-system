@@ -65,8 +65,8 @@
             <li class="c-sidebar-nav-item">
                 <x-utils.link
                         class="c-sidebar-nav-link"
-                        :href="route('frontend.user.show.order')"
-                        :active="activeClass(Route::is('frontend.user.show.order'), 'c-active')"
+                        :href="route('frontend.user.orders.index')"
+                        :active="activeClass(Route::is('frontend.user.orders.index'), 'c-active')"
                         icon="c-sidebar-nav-icon cil-description"
                         :text="__('My orders')"></x-utils.link>
             </li>

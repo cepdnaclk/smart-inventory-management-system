@@ -7,7 +7,7 @@
 
 @section('content')
     <div>
-        {!! Form::open(['url' => route('admin.orders.officer.mail',
+        {!! Form::open(['url' => route('admin.orders.officer.ready',
                    compact('approvedOrder')),
                    'method' => 'put',
                    'class' => 'container',

@@ -133,7 +133,7 @@
 
 
                     <div class="col-md-3">
-                        <a class="text-decoration-none" href="{{ route('frontend.user.show.order') }}">
+                        <a class="text-decoration-none" href="{{ route('frontend.user.orders.index') }}">
                             <div class="card-counter danger">
                                 <span class="count-numbers">My Orders</span>
                                 <span class="count-name">Details</span>
