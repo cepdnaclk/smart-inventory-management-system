@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Machines extends Model
+class Machines extends Model implements Searchable
 {
     use HasFactory;
 
     protected $guarded = [];
 
+    // reverse search depends on this. Change SearchController.php if you're chaning this
     public function inventoryCode()
     {
         return sprintf("MC/%03d",$this->id);
@@ -47,5 +50,16 @@ class Machines extends Model
     public function lifespanString()
     {
         return (intdiv($this->lifespan,60)) . " hours " . ($this->lifespan % 60) . " minutes";
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('admin.machines.show', $this);
+
+        return new SearchResult(
+            $this,
+            $this->title,
+            $url
+        );
     }
 }

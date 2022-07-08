@@ -20,7 +20,10 @@ class CreateReservationsTable extends Migration
 
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
+            // $table->string('email');
+            $table->foreignId('user_id')
+                ->references('id')
+                ->on('users');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->foreignId('station_id')
@@ -29,14 +32,15 @@ class CreateReservationsTable extends Migration
                 ->onDelete('cascade')
                 ->on('stations');
             $table->string('E_numbers');
+            $table->string('duration');
             $table->timestamps();
             
             
         });
 
-        Schema::table('reservations', function($table) {
-            $table->foreign('email')->references('email')->on('users');
-        });
+        // Schema::table('reservations', function($table) {
+        //     $table->foreign('email')->references('email')->on('users');
+        // });
 
     }
 

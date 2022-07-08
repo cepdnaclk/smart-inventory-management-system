@@ -87,36 +87,35 @@
             @if (config('boilerplate.access.user.registration'))
             <a href="{{ route('frontend.auth.register') }}">@lang('Register')</a>
             @endif
-            @endauth
-        </div><!--top-right-->
+        @endauth
+    </div><!--top-right-->
 
-        <div class="content">
-            @include('includes.partials.messages')
+    <div class="content">
+        @include('includes.partials.messages')
 
-            <div class="title m-b-md">
-                {{ config('app.name', 'Laravel') }}
-            </div><!--title-->
+        <div class="title m-b-md">
+            {{ config('app.name', 'Laravel') }}
+        </div><!--title-->
 
-            <div class="links">
-                {{--            <a href="http://laravel-boilerplate.com" target="_blank"><i class="fa fa-book"></i> @lang('Docs')</a>--}}
-                <a href="https://github.com/cepdnaclk/smart-inventory-management-system" target="_blank"><i
-                    class="fab fa-github"></i>
-                    GitHub</a>
+        <div class="links">
+            {{--            <a href="http://laravel-boilerplate.com" target="_blank"><i class="fa fa-book"></i> @lang('Docs')</a>--}}
+            <a href="https://github.com/cepdnaclk/smart-inventory-management-system" target="_blank"><i
+                        class="fab fa-github"></i>
+                GitHub</a>
 
+            <a href="{{ route('frontend.component.index') }}">Components</a>
+            <a href="{{ route('frontend.equipment.index') }}">Equipment</a>
+            <a href="{{ route('frontend.consumable.index') }}">Consumables</a>
+            <a href="{{ route('frontend.stations.index') }}">Stations</a>
+            
+        </div><!--links-->
+    </div><!--content-->
+</div><!--app-->
 
-                    <a href="{{ route('frontend.component.index') }}">Components</a>
-                    <a href="{{ route('frontend.equipment.index') }}">Equipment</a>
-                    <a href="{{ route('frontend.consumable.index') }}">Consumables</a>
-                    <a href="/stations">Stations</a>
-
-                </div><!--links-->
-            </div><!--content-->
-        </div><!--app-->
-
-        @stack('before-scripts')
-        <script src="{{ mix('js/manifest.js') }}"></script>
-        <script src="{{ mix('js/vendor.js') }}"></script>
-        <script src="{{ mix('js/frontend.js') }}"></script>
-        @stack('after-scripts')
-    </body>
-    </html>
+@stack('before-scripts')
+<script src="{{ mix('js/manifest.js') }}"></script>
+<script src="{{ mix('js/vendor.js') }}"></script>
+<script src="{{ mix('js/frontend.js') }}"></script>
+@stack('after-scripts')
+</body>
+</html>

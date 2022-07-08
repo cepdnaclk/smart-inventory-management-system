@@ -75,6 +75,7 @@
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
                                             <a href="{{ route('admin.consumable.items.delete', $cm)}}"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
                                                                                 title="Delete"></i>
                                             </a>

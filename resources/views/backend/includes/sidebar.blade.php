@@ -121,6 +121,30 @@
                 </ul>
             </li>
 
+            {{-- Consumables --}}
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link
+                        href="#"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-dropdown-toggle"
+                        :text="__('Consumables')"></x-utils.link>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.consumable.items.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Items')"></x-utils.link>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.consumable.types.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Types')"></x-utils.link>
+                    </li>
+                </ul>
+            </li>
+
             {{-- Stations --}}
             <li class="c-sidebar-nav-item">
                 <x-utils.link
@@ -182,26 +206,33 @@
             </ul>
         </li>
 
+        {{-- Search --}}
         <li class="c-sidebar-nav-dropdown">
             <x-utils.link
                     href="#"
                     icon="c-sidebar-nav-icon cil-list"
                     class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Consumables')"></x-utils.link>
+                    :text="__('Search')"></x-utils.link>
 
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.consumable.items.index')"
+                            :href="route('admin.search.index')"
                             class="c-sidebar-nav-link"
-                            :text="__('Items')"></x-utils.link>
+                            :text="__('Search by item')"></x-utils.link>
                 </li>
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.consumable.types.index')"
+                            :href="route('admin.search.reverse')"
                             class="c-sidebar-nav-link"
-                            :text="__('Types')"></x-utils.link>
+                            :text="__('Search by location')"></x-utils.link>
                 </li>
+                {{--                    <li class="c-sidebar-nav-item">--}}
+                {{--                        <x-utils.link--}}
+                {{--                                :href="route('admin.component.types.index')"--}}
+                {{--                                class="c-sidebar-nav-link"--}}
+                {{--                                :text="__('Types')"></x-utils.link>--}}
+                {{--                    </li>--}}
             </ul>
         </li>
 

@@ -4,7 +4,7 @@
 
 @section('breadcrumb-links')
     @include('backend.station.includes.breadcrumb-links')
-@endsection 
+@endsection
 
 @section('content')
     <div>
@@ -39,16 +39,16 @@
                         <tr>
                             <th>Station Name</th>
                             <th>Description</th>
-                            <th>Thumbnail</th>
+                            <!-- <th>Thumbnail</th> -->
                             <th>Capacity</th>
                             <th>&nbsp;</th>
                         </tr>
-                        
+
                         @foreach($station as $st)
                             <tr>
                                 <td>{{ $st->stationName  }}</td>
                                 <td>{{ $st->description }}</td>
-                                <td>{{ $st->thumb }}</td>
+                                <!-- <td>{{ $st->thumb }}</td> -->
                                 <td>{{ $st->capacity }}</td>
                                 <td>
 
@@ -62,7 +62,7 @@
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
                                             <a href="{{ route('admin.station.delete', $st)}}"
-                                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                 title="Delete"></i>
                                             </a>
                                         </div>

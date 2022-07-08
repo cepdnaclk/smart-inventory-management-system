@@ -5,7 +5,7 @@
 @push('after-styles')
     <style>
         td {
-        padding: 1px 12px 1px 0;
+            padding: 1px 12px 1px 0;
         }
     </style>
 @endpush
@@ -27,13 +27,13 @@
             </div>
             <div class="col-md-8 col-sm-12 col-12 mb-4">
 
-                <h3>{{ $stations->stationName }} <br>      
-                    <hr>    
+                <h3>{{ $stations->stationName }} <br>
+                    <hr>
                 </h3>
 
                 <div>
                     <table>
-                        
+
                         <tr>
                             <td>Capacity</td>
                             <td>
@@ -45,7 +45,7 @@
 
                             </td>
                         </tr>
-                        
+
                     </table>
                 </div>
 
@@ -58,28 +58,15 @@
                     </div>
                 @endif
 
-                <div class="pt-3">
-                    <u>Tools and Accessories</u>
-                    <ul>
-                        @foreach($equipment as $eq)
-                            <li>
-                            <a href="{{ route('frontend.equipment.item', $eq) }}">{{ $eq->title}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
                 @auth
-                <div class="pt-3">
-                    <b><a href="calendar/index" style="float:right; font-size: 18px; text-decoration: underline;" >Make Reservation</a></b>
-                </div>
+                    <div class="pt-3">
+                        <b><a href="{{ route('frontend.calendar.index', $stations->id) }}"
+                              style="float:right; font-size: 18px; text-decoration: underline;">Make a Reservation</a></b>
+                    </div>
                 @endauth
 
-                
-
-                
             </div>
         </div>
     </div>
-    
+
 @endsection
