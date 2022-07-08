@@ -24,7 +24,7 @@ Route::prefix('stations')->group(function () {
                 ->push(__('Stations'), route('frontend.stations.index'))
                 ->push($stations->stationName, route('frontend.stations.station', $stations->stationName));
         });
-
+ 
 });
 
 

@@ -9,14 +9,36 @@
             <div class="col-md-12">
                 <h3>Stations</h3>
 
-                <div class="container">
-                    <ul>
+                @if($stations->count() != 0)
+                <div class="container pt-2">
+                    <div class="row equal">
                         @foreach($stations as $station)
-                            <li>
-                                <a href="{{ route('frontend.stations.station',$station->id ) }}">{{ $station->stationName  }}</a>
-                            </li>
+                            <div class="col-6 col-sm-3 col-md-4 p-1 d-flex">
+                                <div class="text-center card">
+                                    <a class="text-decoration-none"
+                                       href="{{ route('frontend.stations.station', $station) }}">
+                                        <img class="img-fluid p-1 mx-auto" src="{{ $station->thumbURL() }}"
+                                             alt="{{ $station->stationName }}"/>
+                                        <div class="p-0.5">
+                                            {{ $station->stationName }}
+                                            <br><br><p> <b>Capacity: 1-{{ $station->capacity}} student(s) per table</b></p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         @endforeach
-                    </ul>
+                    </div>
+
+                    {{-- <div class="container pt-4">
+                        {{ $stations->links() }}
+                    </div> --}}
+
+                    @elseif ($stations->count() == 0)
+                        <p>No items listed under this category yet</p>
+                    @else
+                        {{-- No items available--}}
+                    @endif
+
                 </div>
             </div>
         </div>
