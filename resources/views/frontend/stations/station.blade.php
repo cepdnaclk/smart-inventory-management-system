@@ -136,171 +136,20 @@
                         });
                     }
                 },
-                editable: true,
                 eventOverlap: false, //events cant overlap
-
-                eventResize: function (event) {
-
-                    var id = event.id;
-                    var loggedIn = @json($userLoggedin);
-                    var user = loggedIn['id'];
-
-                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
-                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
-
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
-                    var d = moment.duration(ms);
-                    var m = d.asMinutes();
-
-                    const time_limit = 300;
-
-                    if (event.auth === user) {
-                        if (m < time_limit) { //limit maximum time
-                            $.ajax({
-                                url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
-                                type: "PATCH",
-                                dataType: 'json',
-                                data: {
-                                    start_date,
-                                    end_date,
-                                },
-                                success: function (response) {
-
-                                    $('#calendar').fullCalendar('refetchEvents', response);
-                                    swal("Done!", "Event Updated!", "success");
-                                },
-                                error: function (error) {
-                                    // if(error.responseJSON.errors) {
-                                    //     $('#titleError').html(error.responseJSON.errors.title);
-                                    // }
-                                    console.log(error)
-                                },
-                            });
-                        } else {
-                            swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
-                        }
-                    } else {
-                        swal("Permission Denied!", "You can not update this event!", "warning");
-
-                        // TODO: Need to reset the time duration back to the previous value
-                        //  This is a temporary fix. Find a better way to this
-                        refreshPage();
-                    }
-                },
-
-                //editable: true,
-                eventDrop: function (event) {
-                    var id = event.id;
-
-                    // TODO: Update this without moment
-                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
-                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
-                    var d = moment.duration(ms);
-                    var m = d.asMinutes();
-
-                    var loggedIn = @json($userLoggedin);
-                    var user = loggedIn['id'];
-
-                    const time_limit = 300;
-
-                    if (event.auth === user) {
-                        if (m < time_limit) { //limit maximum time
-                            $.ajax({
-
-                                url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
-                                type: "PATCH",
-                                dataType: 'json',
-                                data: {start_date, end_date},
-                                success: function (response) {
-
-                                    $('#calendar').fullCalendar('refetchEvents', response);
-                                    swal("Done!", "Event Updated!", "success");
-
-                                },
-                                error: function (error) {
-                                    // if(error.responseJSON.errors) {
-                                    //     $('#titleError').html(error.responseJSON.errors.title);
-                                    // }
-                                    console.log(error)
-                                },
-                            });
-                        } else {
-                            swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
-                        }
-                    } else {
-                        swal("Permission Denied!", "You can not update this event!", "warning");
-                    }
-
-                },
-                eventClick: function (event) {
-                    var id = event.id;
-                    var loggedIn = @json($userLoggedin);
-                    var user = loggedIn['id'];
-
-                    if (event.auth === user) {
-                        // TODO: It may ne nice if you can use a swal() like popup menu to get the confirmation
-
-                        if (confirm('Are you sure you want to delete this event?')) {
-                            $.ajax({
-                                url: "{{ route('frontend.calendar.destroy', '') }}" + '/' + id,
-                                type: "DELETE",
-                                dataType: 'json',
-                                success: function (response) {
-                                    $('#calendar').fullCalendar('removeEvents', response);
-                                    swal("Done!", "Event Deleted!", "success");
-
-                                },
-                                error: function (error) {
-                                    // if(error.responseJSON.errors) {
-                                    //     $('#titleError').html(error.responseJSON.errors.title);
-                                    // }
-                                    console.log(error)
-                                },
-                            });
-                        }
-                    } else {
-                        swal("Permission Denied!", "You can not delete this event!", "warning");
-                    }
-
-
-                },
+                eventResize:false,
+                editable: false,
+                eventDrop: false,
+                eventClick: false,
                 //Not allowing to choose multiple events
                 selectAllow: function (event) {
                     return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcOffset(false), 'day');
                 }
             });
 
-            $("#bookingModal").on("hidden.bs.modal", function () {
-                $('#saveBtn').unbind();
-            });
-
         });
 
-        function isAnOverlapEvent(eventStartDay, eventEndDay) {
-            var events = $('#calendar').fullCalendar('clientEvents');
-
-            for (let i = 0; i < events.length; i++) {
-                const eventA = events[i];
-
-                // start-time in between any of the events
-                if (moment(eventStartDay).isAfter(eventA.start) && moment(eventStartDay).isBefore(eventA.end)) {
-                    swal("Time Unavailable!", "Please choose another slot", "error");
-                    return true;
-                }
-                //end-time in between any of the events
-                if (moment(eventEndDay).isAfter(eventA.start) && moment(eventEndDay).isBefore(eventA.end)) {
-                    swal("Time Unavailable!", "Please choose another slot", "error");
-                    return true;
-                }
-                //any of the events in between/on the start-time and end-time
-                if (moment(eventStartDay).isSameOrBefore(eventA.start) && moment(eventEndDay).isSameOrAfter(eventA.end)) {
-                    swal("Time Unavailable!", "Please choose another slot", "error");
-                    return true;
-                }
-            }
-            return false;
-        }
+ 
     </script>
 @endpush
 
@@ -367,7 +216,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h5 class="text-center mt-5">Schedule Reservation</h5>
+                    <h5 class="text-center mt-20">Schedule Reservation</h5>
                     <br>
     
                     <div class="col-md-8 offset-2 mt-20 mb-5">
