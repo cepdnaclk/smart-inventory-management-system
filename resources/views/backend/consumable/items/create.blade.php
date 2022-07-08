@@ -44,6 +44,7 @@
                         @enderror
                     </div>
                 </div>
+                
                 <!-- Location -->
                 <div class="form-group row">
                     {!! Form::label('location_label', 'Location*', ['class' => 'col-md-2 col-form-label']) !!}
@@ -55,7 +56,6 @@
                         @enderror
                     </div>
                 </div>
-
 
                 {{--                <div class="form-group row">--}}
                 {{--                    <!-- Brand -->--}}

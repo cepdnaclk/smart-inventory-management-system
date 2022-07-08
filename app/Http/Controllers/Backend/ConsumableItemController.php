@@ -8,6 +8,7 @@ use App\Models\ConsumableItem;
 use App\Models\ConsumableType;
 use App\Models\ItemLocations;
 use App\Models\Locations;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -110,6 +111,7 @@ class ConsumableItemController extends Controller
 //        dd($this_item_location);
         $locations = Locations::pluck('location', 'id');
         return view('backend.consumable.items.edit', compact('types', 'consumableItem','locations','this_item_location'));
+
     }
 
     /**
@@ -131,7 +133,6 @@ class ConsumableItemController extends Controller
             'datasheetURL' => 'nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
-
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -139,8 +140,6 @@ class ConsumableItemController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($consumableItem->thumbURL(), $request->thumb, "consumable_items");
             }
-
-
             $filtered_data = $data;
             unset($filtered_data['location']);
             $consumableItem->update($filtered_data);
@@ -188,7 +187,6 @@ class ConsumableItemController extends Controller
             //            delete location entry
             $this_item_location = ItemLocations::where('item_id',$consumableItem->inventoryCode())->get()[0];
             $this_item_location->delete();
-
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
 
         } catch (\Exception $ex) {

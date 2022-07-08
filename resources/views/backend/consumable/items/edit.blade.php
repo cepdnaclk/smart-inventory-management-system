@@ -57,7 +57,7 @@
                         @enderror
                     </div>
                 </div>
-
+                
                 {{--                <div class="form-group row">--}}
                 {{--                    <!-- Brand -->--}}
                 {{--                    {!! Form::label('brand', 'Brand', ['class' => 'col-md-2 col-form-label']) !!}--}}
