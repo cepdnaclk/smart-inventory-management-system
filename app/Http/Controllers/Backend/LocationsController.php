@@ -9,23 +9,13 @@ use Illuminate\Http\Request;
 class LocationsController extends Controller
 {
 
-    // get array of all locations in their full path form ( root > child 1 > child 2 > child 3  etc...)
-    public function getFullLocationStringFromPluck()
-    {
-        $locations = Locations::pluck('location', 'id');
-        foreach ($locations as $key => $value) {
-            $locations[$key] = implode(' > ', array_reverse($this->getFullLocationPathByLocationID($key)));
-        }
-        return $locations;
-    }
-
     /**
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $locations = $this->getFullLocationStringFromPluck();
+        $locations = Locations::getFullLocationStringFromPluck();
         $allLocations = Locations::pluck('id');
         return view('backend.locations.index', compact('locations', 'allLocations'));
     }

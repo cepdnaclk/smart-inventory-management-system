@@ -20,7 +20,7 @@ class ConsumableType extends Model
     // reverse search depends on this. Change SearchController.php if you're changing this
     public function inventoryCode()
     {
-        return "MS/CS/" . $this->id;
+        return "CS/" . $this->id;
     }
 
     // Return the relative URL of the thumbnail

@@ -21,22 +21,28 @@
                         </button>
                     </div>
                 @endif
-                <p> Change locations for <b>{{$equipmentItem->title}}</b></p>
-                @for($i = 1; $i < count($locations)+1; $i++)
-                    <div>
-                        <table>
-                            <tr>
-                                {{-- Suggestion: List the locations like a tree view with child/parent relationship --}}
-                                {{-- like in http://localhost:8000/equipment --}}
+                <p> Change locations for <b>{{ $equipmentItem->title }}</b></p>
 
-                                <td class="p-1" style="text-align: center; vertical-align: middle;">
-                                    @livewire('locations-toggler', ['locationID' => $i, 'itemModel' => $equipmentItem])
-                                </td>
-                                <td style="text-align: center; vertical-align: middle;">{{ $locations[$i] }}</td>
-                            </tr>
-                        </table>
-                    </div>
-                @endfor
+                <ul>
+                    {{-- TODO: Need to loop this in a recursive way to handle multiple levels in the tree --}}
+                    @foreach($locations as $i => $loc)
+                        <li>
+                            @livewire('locations-toggler', ['locationID' => $loc->id, 'locationTitle'=> $loc->location,
+                            'itemModel' =>
+                            $equipmentItem])
+
+                            <ul>
+                                @foreach($loc->getChildrenLocations() as $l)
+                                    <li>
+                                        @livewire('locations-toggler', ['locationID' => $l->id, 'locationTitle'=>
+                                        $l->location, 'itemModel' =>
+                                        $equipmentItem])
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endforeach
+                </ul>
                 <br>
                 <a href="{{route('admin.equipment.items.show',$equipmentItem)}}" class="btn btn-primary">Back</a>
             </x-slot>

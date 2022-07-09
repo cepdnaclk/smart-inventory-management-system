@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Torann\GeoIP\Location;
 
-class EquipmentItemController extends Controller 
+class EquipmentItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class EquipmentItemController extends Controller
      */
     public function index()
     {
-        $equipment = EquipmentItem::orderBy('id', 'desc')->paginate(16);
+        $equipment = EquipmentItem::orderBy('id', 'asc')->paginate(16);
         return view('backend.equipment.items.index', compact('equipment'));
     }
 
@@ -36,7 +36,7 @@ class EquipmentItemController extends Controller
     {
         $types = EquipmentType::pluck('title', 'id');
         $locations = Locations::pluck('location', 'id');
-        return view('backend.equipment.items.create', compact('types','locations'));
+        return view('backend.equipment.items.create', compact('types', 'locations'));
     }
 
     /**
@@ -81,7 +81,7 @@ class EquipmentItemController extends Controller
 
             //            save first, otherwise the id is not there
             $type->save();
-            return redirect()->route('admin.equipment.items.edit.location',$type)->with('Success', 'Equipment was created !');
+            return redirect()->route('admin.equipment.items.edit.location', $type)->with('Success', 'Equipment was created !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -99,10 +99,10 @@ class EquipmentItemController extends Controller
         $locationCount = $this->getNumberOfLocationsForItem($equipmentItem);
 
         $locations_array = array();
-        for ($i = 0; $i < $locationCount ; $i++){
-            $locations_array[] = $this->getFullLocationPathAsString($equipmentItem,$i);
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locations_array[] = $this->getFullLocationPathAsString($equipmentItem, $i);
         }
-        return view('backend.equipment.items.show', compact('equipmentItem','locations_array'));
+        return view('backend.equipment.items.show', compact('equipmentItem', 'locations_array'));
     }
 
     /**
@@ -114,7 +114,7 @@ class EquipmentItemController extends Controller
     public function edit(EquipmentItem $equipmentItem)
     {
         $types = EquipmentType::pluck('title', 'id');
-        $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get();
+        $this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
         if ($this_item_location->count() > 0) {
             $this_item_location = $this_item_location->first()->location_id;
         } else {
@@ -122,7 +122,7 @@ class EquipmentItemController extends Controller
         }
 //        dd($this_item_location);
         $locations = Locations::pluck('location', 'id');
-        return view('backend.equipment.items.edit', compact('types', 'equipmentItem','this_item_location','locations'));
+        return view('backend.equipment.items.edit', compact('types', 'equipmentItem', 'this_item_location', 'locations'));
     }
 
 
@@ -132,10 +132,18 @@ class EquipmentItemController extends Controller
      * @param EquipmentItem $equipmentItem
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function editLocation(EquipmentItem $equipmentItem){
-        $locations = Locations::pluck('location', 'id');
-        return view('backend.equipment.items.edit-location', compact('equipmentItem','locations'));
+    public function editLocation(EquipmentItem $equipmentItem)
+    {
+        $locations = Locations::all()->map(function ($loc, $key) {
+            return $loc->getFullLocationAddress();
+        })->all();
+
+        $locations = Locations::all()->where('parent_location', 1)->all();
+//        dd($locations);
+
+        return view('backend.equipment.items.edit-location', compact('equipmentItem', 'locations'));
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -213,7 +221,7 @@ class EquipmentItemController extends Controller
             $equipmentItem->delete();
 
             //            delete all location entries
-            $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->delete();
+            $this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->delete();
 
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
 

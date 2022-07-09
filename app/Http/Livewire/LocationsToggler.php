@@ -10,11 +10,12 @@ class LocationsToggler extends Component
 {
     public $itemModel;
     public $locationID;
+    public $locationTitle;
     public $isAvailableInLocation;
 
     public function addLocation()
     {
-        $locations = ItemLocations::where('item_id', $this->itemModel->inventoryCode())->where('location_id',$this->locationID)->get();
+        $locations = ItemLocations::where('item_id', $this->itemModel->inventoryCode())->where('location_id', $this->locationID)->get();
         if ($locations->count() == 0) {
             ItemLocations::create([
                 'location_id' => $this->locationID,
@@ -32,6 +33,6 @@ class LocationsToggler extends Component
     public function render()
     {
         $this->isAvailableInLocation = ItemLocations::where('item_id', $this->itemModel->inventoryCode())->where('location_id', $this->locationID)->exists();
-        return view('livewire.locations-toggler');
+        return view('livewire.locations-toggler' , ['id'=> $this->locationID, 'location' => $this->locationTitle]);
     }
 }
