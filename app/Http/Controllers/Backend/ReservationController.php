@@ -23,6 +23,7 @@ class ReservationController extends Controller
     public function index()
     {
         $reservation = Reservation::orderBy('station_id')->paginate(16);
+        // dd($reservation);
         return view('backend.reservation.index', compact('reservation'));
     }
 
@@ -44,9 +45,11 @@ class ReservationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_user()
+    public function indexUser()
     {
+        dd('hi');
         $reservation = Reservation::orderBy('station_id')->paginate(16);
+        // dd($reservation);
         return view('backend.reservation.user.index', compact('reservation'));
     }
 
@@ -58,7 +61,7 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show_user(Reservation $reservation)
+    public function showUser(Reservation $reservation)
     {
        return view('backend.reservation.user.show', compact('reservation'));
     }

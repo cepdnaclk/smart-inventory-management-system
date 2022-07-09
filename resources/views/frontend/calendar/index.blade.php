@@ -267,6 +267,10 @@
                 }
             });
 
+            
+
+            // $('#calendar').fullCalendar('gotoDate', '2022-10-12');
+
             $("#bookingModal").on("hidden.bs.modal", function () {
                 $('#saveBtn').unbind();
             });
@@ -297,6 +301,7 @@
             }
             return false;
         }
+
     </script>
 @endpush
 

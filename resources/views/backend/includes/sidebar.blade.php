@@ -146,7 +146,7 @@
                 </ul>
             </li>
 
-            {{-- Stations --}}
+            <!-- {{-- Stations --}}
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
                         href="#"
@@ -169,13 +169,15 @@
                     </li>
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
-                                :href="route('admin.reservation.user.index')"
+                                :href="route('admin.reservation.users.index')"
                                 class="c-sidebar-nav-link"
                                 :text="__('Reservations - User')"></x-utils.link>
                     </li>
                 </ul>
-            </li>
+            </li> -->
         @endif
+
+        
 
         {{-- Fabrication Requests --}}
         <li class="c-sidebar-nav-dropdown">
@@ -225,6 +227,60 @@
                                 :text="__('Raw Materials')"></x-utils.link>
                     </li>
                 @endif
+            </ul>
+        </li>
+
+        {{-- Stations --}}
+        <li class="c-sidebar-nav-dropdown">
+            <x-utils.link
+                    href="#"
+                    icon="c-sidebar-nav-icon cil-list"
+                    class="c-sidebar-nav-dropdown-toggle"
+                    :text="__('Stations')"></x-utils.link>
+
+            <ul class="c-sidebar-nav-dropdown-items">
+                
+
+                @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin() || $logged_in_user->isTechOfficer())
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.reservation.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Reservations - Maintainer')"></x-utils.link>
+                    </li>
+
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.station.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Stations')"></x-utils.link>
+                    </li>
+
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.reservation.users.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Reservations - User')"></x-utils.link>
+                    </li>
+                @else
+
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('frontend.stations.list')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Stations')"></x-utils.link>
+                    </li>
+
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('frontend.reservation.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Reservations - User')"></x-utils.link>
+                    </li>
+
+                    
+                @endif
+
             </ul>
         </li>
 

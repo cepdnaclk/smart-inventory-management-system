@@ -62,7 +62,7 @@
 
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.reservation.user.show', $res)}}"
+                                            <a href="{{ route('admin.reservation.users.show', $res)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
