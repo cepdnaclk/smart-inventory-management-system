@@ -61,27 +61,6 @@
                             </td>
                         </tr>
 
-                        {{--                        Location info--}}
-                        @if($locationCount > 1)
-                            @foreach($locationStringArray as $eachLocation)
-                                <tr>
-                                    <td>Location {{$loop->index + 1}}</td>
-                                    <td> : {{$eachLocation}}</td>
-                                </tr>
-                            @endforeach
-                        @elseif ($locationCount == 1)
-                            <tr>
-                                <td>Location</td>
-                                <td> : {{$locationStringArray[0]}}</td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td>Location</td>
-                                <td> : <b><span>[Not Available]</span></b></td>
-                            </tr>
-
-                        @endif
-
                         <tr>
                             <td>Product Code</td>
                             <td>
@@ -121,6 +100,25 @@
                         </tr>
                     </table>
                 </div>
+
+                {{-- Location info --}}
+                @if($locationCount > 1)
+                    <div class="pt-3">
+                        <u>Locations</u>
+                        <ul>
+                            @foreach($locationStringArray as $eachLocation)
+                                <li>{{$eachLocation}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @elseif ($locationCount == 1)
+                    <div class="pt-3">
+                        <u>Location</u>
+                        <ul>
+                            <li>{{$locationStringArray[0]}}</li>
+                        </ul>
+                    </div>
+                @endif
 
                 @if($equipmentItem->isElectrical && $equipmentItem->powerRating != null)
                     <div class="pt-3">
