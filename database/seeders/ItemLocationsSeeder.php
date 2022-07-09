@@ -201,7 +201,6 @@ class ItemLocationsSeeder extends Seeder
         array('id' => '190',  'location_id' => 1, 'item_id' => 'RW/005'),
         array('id' => '191',  'location_id' => 2, 'item_id' => 'RW/006'),
         array('id' => '192',  'location_id' => 3, 'item_id' => 'RW/007'),
-
     ];
 
     /**
