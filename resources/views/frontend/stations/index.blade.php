@@ -13,7 +13,7 @@
                 <div class="container pt-2">
                     <div class="row equal">
                         @foreach($stations as $station)
-                            <div class="col-6 col-sm-3 col-md-4 p-1 d-flex">
+                            <div class="col-6 col-sm-3 col-md-2 p-1 d-flex">
                                 <div class="text-center card">
                                     <a class="text-decoration-none"
                                        href="{{ route('frontend.stations.station', $station) }}">
@@ -21,7 +21,11 @@
                                              alt="{{ $station->stationName }}"/>
                                         <div class="p-0.5">
                                             {{ $station->stationName }}
-                                            <br><br><p> <b>Capacity: 1-{{ $station->capacity}} student(s) per table</b></p>
+                                            @if($station->capacity > 1)
+                                            <br><br><p> <b>Capacity: 1-{{ $station->capacity}} students per table</b></p>
+                                            @else
+                                            <br><br><p> <b>Capacity:{{ $station->capacity}} student per table</b></p>
+                                            @endif
                                         </div>
                                     </a>
                                 </div>
