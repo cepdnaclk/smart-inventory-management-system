@@ -1,0 +1,156 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\Http\Controllers\Controller;
+use App\Models\Locations;
+use Illuminate\Http\Request;
+
+class LocationsController extends Controller
+{
+
+    // get array of all locations in their full path form ( root > child 1 > child 2 > child 3  etc...)
+    public function getFullLocationStringFromPluck()
+    {
+        $locations = Locations::pluck('location', 'id');
+        foreach ($locations as $key => $value) {
+            $locations[$key] = implode(' > ', array_reverse($this->getFullLocationPathByLocationID($key)));
+        }
+        return $locations;
+    }
+
+    /**
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function index()
+    {
+        $locations = $this->getFullLocationStringFromPluck();
+        $allLocations = Locations::pluck('id');
+        return view('backend.locations.index', compact('locations', 'allLocations'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function create()
+    {
+        $locations = $this->getFullLocationStringFromPluck();
+        return view('backend.locations.create', compact('locations'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|never
+     */
+    public function store(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'locationName' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    'unique:locations,location'
+                ],
+                'parentLocation' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        $allLocations = Locations::pluck('id')->toArray();
+                        if (!in_array($value, $allLocations)) {
+                            $fail(__('The parent location does not exist.'));
+                        }
+                    }
+                ]
+            ]);
+
+            Locations::create([
+                'location' => $data['locationName'],
+                'parent_location' => $data['parentLocation']
+            ]);
+
+            return redirect()->route('admin.locations.index')->with('Success', 'Equipment was created !');
+        } catch (\Exception $e) {
+            return abort(500);
+        }
+
+    }
+
+    /**
+     * @param Locations $location
+     * @return void
+     */
+    public function show(Locations $location)
+    {
+//        not used
+    }
+
+    /**
+     * @param Locations $location
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function edit(Locations $location)
+    {
+        $locations = $this->getFullLocationStringFromPluck();
+        return view('backend.locations.edit', compact('location', 'locations'));
+    }
+
+    /**
+     * @param Request $request
+     * @param Locations $location
+     * @return \Illuminate\Http\RedirectResponse|never
+     */
+    public function update(Request $request, Locations $location)
+    {
+        try {
+            $data = $request->validate([
+                'locationName' => [
+                    'required',
+                    'string',
+                    'max:255'
+                ],
+                'parentLocation' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        $allLocations = Locations::pluck('id')->toArray();
+                        if (!in_array($value, $allLocations)) {
+                            $fail(__('The parent location does not exist.'));
+                        }
+                    }
+                ]
+            ]);
+            $location->update([
+                'location' => $data['locationName'],
+                'parent_location' => $data['parentLocation']
+            ]);
+
+            return redirect()->route('admin.locations.index')->with('Success', 'Location was updated !');
+        } catch (\Exception $e) {
+            return abort(500);
+        }
+    }
+
+    /**
+     * @param Locations $location
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function delete(Locations $location)
+    {
+        return view('backend.locations.delete', compact('location'));
+    }
+
+    /**
+     * @param Locations $location
+     * @return \Illuminate\Http\RedirectResponse|never
+     */
+    public function destroy(Locations $location)
+    {
+        try {
+            $location->delete();
+            return redirect()->route('admin.locations.index')->with('Success', 'Location was deleted !');
+        } catch (\Exception $e) {
+            return abort(500);
+        }
+    }
+
+}

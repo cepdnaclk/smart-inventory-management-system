@@ -9,6 +9,8 @@ class Locations extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     /**
      * Get the parent location
      */
