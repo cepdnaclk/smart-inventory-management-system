@@ -25,10 +25,10 @@
                             </a>
                             <a href="{{ route('admin.equipment.items.edit.location', $equipmentItem)}}"
                                class="btn btn-warning btn-xs"><i class="fa fa-map-marker" title="Edit Location"></i>
-                            <a href="{{ route('admin.equipment.items.delete', $equipmentItem)}}"
-                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
-                                                                title="Delete"></i>
-                            </a>
+                                <a href="{{ route('admin.equipment.items.delete', $equipmentItem)}}"
+                                   class="btn btn-danger btn-xs"><i class="fa fa-trash"
+                                                                    title="Delete"></i>
+                                </a>
                         </div>
                     </div>
                 </div>
@@ -38,14 +38,15 @@
                         <td>{{ $equipmentItem->inventoryCode() }}</td>
                     </tr>
 
-
                     @if(count($locations_array) > 0)
-                        @foreach($locations_array as $eachLocation)
-                            <tr>
-                                <td>Location {{$loop->index + 1}}</td>
-                                <td>{{ $eachLocation }}</td>
-                            </tr>
-                        @endforeach
+                        <tr>
+                            <td>Locations</td>
+                            <td>
+                                @foreach($locations_array as $eachLocation)
+                                    {{ $eachLocation }}<br>
+                                @endforeach
+                            </td>
+                        </tr>
                     @else
                         <tr>
                             <td>Location</td>
