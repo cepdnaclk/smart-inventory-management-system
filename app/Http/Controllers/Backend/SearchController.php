@@ -32,8 +32,8 @@ class SearchController extends Controller
         $searchResults = (new Search())
             ->registerModel(ComponentItem::class, ['title', 'brand'])
             ->registerModel(EquipmentItem::class, ['title', 'brand'])
-            ->registerModel(Machines::class, ['title', 'brand'])
-            ->registerModel(ConsumableItem::class, ['title', 'brand'])
+            ->registerModel(Machines::class, ['title'])
+            ->registerModel(ConsumableItem::class, ['title'])
             ->registerModel(RawMaterials::class, ['title', 'description'])
             ->search($keywords);
 

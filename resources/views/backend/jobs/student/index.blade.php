@@ -81,7 +81,7 @@
                                            class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                         </a>
                                         <a href="{{ route('admin.jobs.student.delete', $job)}}"
-                                           class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i>
+                                           class="btn btn-danger btn-xs"><i class="fa fa-trash" title="Delete"></i>
                                         </a>
                                     </div>
                                 </td>

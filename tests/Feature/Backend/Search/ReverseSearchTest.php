@@ -27,9 +27,9 @@ class ReverseSearchTest extends TestCase
     public function admin_can_search_for_items()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '0']);
+        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => 1]);
 //        dd($response->content());
-        $locationName = Locations::where('id', '0')->first()->name;
+        $locationName = Locations::where('id', '1')->first()->name;
         $response->assertStatus(200);
         $response->assertSee($locationName);
     }
@@ -37,7 +37,7 @@ class ReverseSearchTest extends TestCase
     /** @test */
     public function search_results_has_href(){
         $this->loginAsAdmin();
-        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '0']);
+        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
         $flag = false;
         if (str_contains($response->content(), '/admin/equipment/')) {
             $flag = true;

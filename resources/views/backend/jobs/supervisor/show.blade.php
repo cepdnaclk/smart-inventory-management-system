@@ -28,7 +28,7 @@
                             </a>
 
                             <a href="{{ route('admin.jobs.supervisor.reject', $jobRequests)}}"
-                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i>
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash" title="Delete"></i>
                                 Reject
                             </a>
                         </div>

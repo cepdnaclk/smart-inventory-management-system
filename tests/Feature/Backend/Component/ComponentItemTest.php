@@ -72,7 +72,7 @@ class ComponentItemTest extends TestCase
             'title' => 'Sample Component',
             'brand' => NULL,
             'productCode' => 'ICOA101',
-            'location'=>'1',
+            'location' => '1',
             'specifications' => 'UA741CP OpAmp 1MHz',
             'description' => 'The 741 Op Amp IC is a monolithic integrated circuit, comprising of a general purpose Operational Amplifier.',
             'instructions' => 'NO INSTRUCTION AVAILABLE',
@@ -93,7 +93,6 @@ class ComponentItemTest extends TestCase
     /** @test */
     public function an_component_can_be_updated()
     {
-
         $this->actingAs(User::factory()->admin()->create());
         $component = ComponentItem::factory()->create();
         ItemLocations::factory()->create(
@@ -104,7 +103,7 @@ class ComponentItemTest extends TestCase
         );
 
         $component->title = 'New Component Title';
-        $component_array =  $component->toArray();
+        $component_array = $component->toArray();
         $component_array['location'] = 2;
         $response = $this->put("/admin/components/items/{$component->id}", $component_array);
         $response->assertStatus(302);
