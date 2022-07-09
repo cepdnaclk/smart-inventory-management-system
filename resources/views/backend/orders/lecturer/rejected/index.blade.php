@@ -37,7 +37,7 @@
                         </tr>
 
                         @foreach($orderApproval as $order)
-                @if ($order->orders->status=="REJECTED_BY_LECTURER")
+                @if ($order->orders->status=="REJECTED")
                 <tr>
                                    
                     <td>{{ $order->orders->id }}</td>

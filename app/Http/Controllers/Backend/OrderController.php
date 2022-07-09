@@ -145,7 +145,7 @@ class OrderController extends Controller
     {
         $id = auth()->user()->id;
 
-        $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', 0)->get();
+        $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', null)->get();
         //return response()->json($orderApproval, 200);
 
         return view('backend.orders.lecturer.index', compact('orderApproval'));
@@ -235,7 +235,7 @@ class OrderController extends Controller
     {
         //to update the accepted table 
         $order->orderApprovals->is_approved_by_lecturer = 1;
-        $order->status = "WAITING_TECHNICAL_OFFICER_APPROVAL";
+        $order->status = "WAITING_H_O_D_APPROVAL";
         $order->orderApprovals->save();
         $order->save();
 
@@ -252,7 +252,7 @@ class OrderController extends Controller
     {
         //to update the accepted table 
         $order->orderApprovals->is_approved_by_lecturer=0;
-        $order->status="REJECTED_BY_LECTURER";
+        $order->status="REJECTED";
         $order->orderApprovals->save();
         $order->save();
 
