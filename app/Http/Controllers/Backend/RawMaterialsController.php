@@ -90,7 +90,7 @@ class RawMaterialsController extends Controller
      */
     public function show(RawMaterials $rawMaterials)
     {
-        $locations_array = $this->getLocationOfItem($rawMaterials);
+        $locations_array = $this->getFullLocationPathAsArray($rawMaterials,0);
         return view('backend.raw_materials.show', compact('rawMaterials','locations_array'));
     }
 

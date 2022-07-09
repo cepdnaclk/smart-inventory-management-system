@@ -93,7 +93,7 @@ class ConsumableItemController extends Controller
      */
     public function show(ConsumableItem $consumableItem)
     {
-        $locations_array = $this->getLocationOfItem($consumableItem);
+        $locations_array = $this->getFullLocationPathAsArray($consumableItem,0);
         return view('backend.consumable.items.show', compact("consumableItem",'locations_array'));
     }
 

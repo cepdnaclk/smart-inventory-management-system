@@ -108,7 +108,7 @@ class ComponentItemController extends Controller
      */
     public function show(ComponentItem $componentItem)
     {
-        $locations_array = $this->getLocationOfItem($componentItem);
+        $locations_array = $this->getFullLocationPathAsArray($componentItem,0);
         return view('backend.component.items.show', compact("componentItem",'locations_array'));
     }
 

@@ -5,7 +5,7 @@
 @push('after-styles')
     <style>
         td {
-        padding: 1px 12px 1px 0;
+            padding: 1px 12px 1px 0;
         }
     </style>
 @endpush
@@ -61,13 +61,33 @@
                             </td>
                         </tr>
 
+                        {{--                        Location info--}}
+                        @if($locationCount > 1)
+                            @foreach($locationStringArray as $eachLocation)
+                                <tr>
+                                    <td>Location {{$loop->index + 1}}</td>
+                                    <td> : {{$eachLocation}}</td>
+                                </tr>
+                            @endforeach
+                        @elseif ($locationCount == 1)
+                            <tr>
+                                <td>Location</td>
+                                <td> : {{$locationStringArray[0]}}</td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td>Location</td>
+                                <td> : <b><span>[Not Available]</span></b></td>
+                            </tr>
+
+                        @endif
+
                         <tr>
                             <td>Product Code</td>
                             <td>
                                 : <b>{{ $equipmentItem->productCode }}({{ $equipmentItem->brand }})</b>
                             </td>
                         </tr>
-
                         <tr>
                             <td>Available Quantity</td>
                             <td>
