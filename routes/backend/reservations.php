@@ -36,8 +36,8 @@ Route::middleware(['editAccess'])->group(function () {
 
     //User------------------------------------------------------------------------
     // Index
-    Route::get('reservation/user', [ReservationController::class, 'index_user'])
-        ->name('reservation.user.index')
+    Route::get('reservation/users', [ReservationController::class, 'indexUser'])
+        ->name('reservation.users.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
                 ->push(__('Reservation'), route('admin.reservation.indexmain'))
@@ -45,12 +45,12 @@ Route::middleware(['editAccess'])->group(function () {
         });
   
     // Show
-    Route::get('reservation/user/{reservation}', [ReservationController::class, 'show_user'])
-        ->name('reservation.user.show')
+    Route::get('reservation/users/{reservation}', [ReservationController::class, 'showUser'])
+        ->name('reservation.users.show')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
                 ->push(__('Reservation'), route('admin.reservation.indexmain'))
-                ->push(__('User'), route('admin.reservation.user.index'))
+                ->push(__('User'), route('admin.reservation.users.index'))
                 ->push(__('Show'));
         });
 

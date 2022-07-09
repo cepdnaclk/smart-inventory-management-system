@@ -16,7 +16,7 @@
             <x-slot name="body">
                 <a class="btn btn-secondary btn-150 mb-2" href="{{ route('admin.reservation.index') }}">Reservations- Maintainer</a>
                 <br/>
-                <a class="btn btn-secondary btn-150 mb-2" href="{{ route('admin.reservation.user.index') }}">Reservations- User</a>
+                <a class="btn btn-secondary btn-150 mb-2" href="{{ route('admin.reservation.users.index') }}">Reservations- User</a>
             </x-slot>
         </x-backend.card>
     </div>
