@@ -17,9 +17,7 @@ class LockerController extends Controller
     public function index()
     {
         $lockers = Locker::paginate(16);
-        //dd($lockers);
         return view('backend.locker.details.index', compact('lockers'));
-        // return "Hi";
     }
 
     /**
@@ -29,9 +27,8 @@ class LockerController extends Controller
      */
     public function create()
     {
-        $orders = Order::pluck('id');
         $Locker_id = Locker::getNextLockerId();
-        return view('backend.locker.details.create', compact('orders','Locker_id'));
+        return view('backend.locker.details.create', compact('Locker_id'));
     }
 
     /**
@@ -43,10 +40,7 @@ class LockerController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            // 'order_id' => 'numeric|nullable',
-
             'notes' => 'string|nullable',
-
             'is_available' => 'nullable|boolean',
         ]);
         
@@ -85,9 +79,7 @@ class LockerController extends Controller
      */
     public function edit(Locker $lockerDetail)
     {
-        //dd($lockerDetail);
-        $orders = Order::pluck('id');
-        return view('backend.locker.details.edit', compact('orders','lockerDetail'));
+        return view('backend.locker.details.edit', compact('lockerDetail'));
     }
 
     /**
@@ -100,7 +92,7 @@ class LockerController extends Controller
     public function update(Request $request, Locker $lockerDetail)
     {
         $data = request()->validate([
-            'order_id' => 'numeric|nullable',
+            // 'order_id' => 'numeric|nullable',
 
             'notes' => 'string|nullable',
 
@@ -148,10 +140,7 @@ class LockerController extends Controller
 
     public function index_for_ready_orders()
     {
-
         $orders = Order::getReadyOrders();
-        //dd($orders);
-
         return view('backend.locker.ready_orders.index', compact('orders'));
     }
 }
