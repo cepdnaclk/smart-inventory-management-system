@@ -39,6 +39,7 @@ class EquipmentView extends Controller
         for ($i = 0; $i < $locationCount; $i++) {
             $locationStringArray[] = $this->getFullLocationPathAsString($equipmentItem, $i);
         }
-        return view('frontend.equipment.item', compact('equipmentItem','locationStringArray'));
+
+        return view('frontend.equipment.item', compact('equipmentItem','locationStringArray','locationCount'));
     }
 } 
