@@ -20,7 +20,7 @@ class ComponentItem extends Model implements Searchable
         return null;
     }
 
-    // reverse search depends on this. Change SearchController.php if you're chaning this
+    // reverse search depends on this. Change SearchController.php if you're changing this
     public function inventoryCode()
     {
         return $this->component_type->inventoryCode() . "/" . $this->id;

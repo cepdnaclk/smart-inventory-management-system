@@ -34,14 +34,14 @@ class MachinesController extends Controller
         $typeOptions = Machines::types();
         $availabilityOptions = Machines::availabilityOptions();
         $locations = Locations::pluck('location', 'id');
-        return view('backend.machines.create', compact('typeOptions', 'availabilityOptions','locations'));
+        return view('backend.machines.create', compact('typeOptions', 'availabilityOptions', 'locations'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse|\never|void
      */
     public function store(Request $request)
     {
@@ -69,12 +69,12 @@ class MachinesController extends Controller
             unset($filtered_data['location']);
             $machine = new Machines($filtered_data);
             $machine->save();
+
             $data_for_location = [
                 'item_id' => $machine->inventoryCode(),
                 'location_id' => $data['location']
             ];
             $location = new ItemLocations($data_for_location);
-
 
             $location->save();
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was created !');
@@ -106,10 +106,12 @@ class MachinesController extends Controller
     {
         $typeOptions = Machines::types();
         $availabilityOptions = Machines::availabilityOptions();
-        $this_item_location = ItemLocations::where('item_id',$machines->inventoryCode())->get()[0]['location_id'];
-//        dd($this_item_location);
+
+        $this_item_location = $machines->getLocations();
+
         $locations = Locations::pluck('location', 'id');
-        return view('backend.machines.edit', compact('machines', 'typeOptions', 'availabilityOptions','this_item_location','locations'));
+
+        return view('backend.machines.edit', compact('machines', 'typeOptions', 'availabilityOptions', 'this_item_location', 'locations'));
     }
 
     /**
@@ -138,7 +140,7 @@ class MachinesController extends Controller
             $machines->update($filtered_data);
 
 
-            $this_item_location = ItemLocations::where('item_id',$machines->inventoryCode())->get()[0];
+            $this_item_location = ItemLocations::where('item_id', $machines->inventoryCode())->get()[0];
             $new_location_data = [
                 'location_id' => $data['location']
             ];
@@ -176,7 +178,7 @@ class MachinesController extends Controller
             $machines->delete();
 
             //            delete location entry
-            $this_item_location = ItemLocations::where('item_id',$machines->inventoryCode())->get()[0];
+            $this_item_location = ItemLocations::where('item_id', $machines->inventoryCode())->get()[0];
             $this_item_location->delete();
 
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was deleted !');

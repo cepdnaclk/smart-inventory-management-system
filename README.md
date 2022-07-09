@@ -23,9 +23,26 @@ Laravel Boilerplate provides you with a massive head start on any size web appli
 
 ## Team of Developers
 - [Nuwan Jaliyagoda](http://github.com/NuwanJ)
+
+### Sprint 2A
 - [Tharmapalan Thanujan](http://github.com/thanujan96)
 - [Madhushan Ramalingam](https://github.com/DrMadhushan)
 - [Thilini Madushani](http://github.com/Thilini98)
+
+### Sprint 3A
+- [Ishan Fernando](https://github.com/ishanfdo18098)
+- [Adeepa Fernando](https://github.com/NipunFernando)
+- [Ridma Jayasundara ](https://github.com/ridmajayasundara)
+
+### Sprint 3B
+- [Sadia Jameel](https://github.com/SaadiaJameel)
+- [Sakuni Nimnadi](https://github.com/SakuniJayasinghe)
+- [Thamish Wanduragala](https://github.com/Thamish99)
+
+### Sprint 3C
+- [Karan R.](https://github.com/rasathuraikaran)
+- [Gowsigan A.](https://github.com/AnnalingamGowsigan)
+- [Muthuni De Alwis](https://github.com/muthuni-dealwis)
 
 
 ## Useful Commands and Instructions
