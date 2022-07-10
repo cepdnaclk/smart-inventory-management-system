@@ -31,7 +31,7 @@ class ItemLocations extends Model
             if (count($get_from_db) > 0) {
                 $item_to_return = $get_from_db[0];
             }
-        } elseif ($exploded[1] == "CS") {
+        } elseif ($exploded[0] == "CS") {
             $get_from_db = ConsumableItem::where('id', end($exploded))->get();
             if (count($get_from_db) > 0) {
                 $item_to_return = $get_from_db[0];
