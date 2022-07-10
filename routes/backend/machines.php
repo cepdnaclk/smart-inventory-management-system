@@ -44,6 +44,14 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Edit'));
         });
 
+    // Edit locations
+    Route::get('machines/edit/{machines}/locations', [MachinesController::class, 'editLocations'])
+        ->name('machines.edit.location')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Machines'), route('admin.machines.index'))
+                ->push(__('Edit Locations'));
+        });
 
     // Update
     Route::put('machines/{machines}', [MachinesController::class, 'update'])
