@@ -25,7 +25,7 @@ class LocationsController extends Controller
      */
     public function create()
     {
-        $locations = $this->getFullLocationStringFromPluck();
+        $locations = Locations::getFullLocationStringFromPluck();
         return view('backend.locations.create', compact('locations'));
     }
 
@@ -81,7 +81,7 @@ class LocationsController extends Controller
      */
     public function edit(Locations $location)
     {
-        $locations = $this->getFullLocationStringFromPluck();
+        $locations = Locations::getFullLocationStringFromPluck();
         return view('backend.locations.edit', compact('location', 'locations'));
     }
 
