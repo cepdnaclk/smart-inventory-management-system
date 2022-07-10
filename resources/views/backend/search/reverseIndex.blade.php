@@ -16,7 +16,6 @@
             @endif
 
             <x-slot name="body">
-
                 @if (session('Success'))
                     <div class="alert alert-success">
                         {{ session('Success') }}
@@ -32,11 +31,13 @@
                     </div>
                 @endif
                 {{ Form::open(array('route' => 'admin.search.reverse.results')) }}
-                <div class="d-flex col-md-6 align-content-center">
-                    {!! Form::select('location', $locations, null, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
-                    <span class="p-1">
-                    {!! Form::submit('Search') !!}
-                    </span>
+                <div class="row g-3 align-items-center">
+                    <div class="col-6">
+                        {!! Form::select('location', $locations, null, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
+                    </div>
+                    <div class="col-auto">
+                        {!! Form::submit('Search', ['class'=>'btn btn-primary float-right btn-150']) !!}
+                    </div>
                 </div>
                 {{ Form::close() }}
 

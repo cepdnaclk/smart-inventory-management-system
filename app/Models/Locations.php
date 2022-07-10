@@ -35,11 +35,11 @@ class Locations extends Model
     {
         $item = $this;
         $location = $this->location;
-        while ($item->get_parent_location()->first() != NULL) {
+        while (!($item->get_parent_location()->first() == NULL || $item->get_parent_location()->first()->id == 1)) {
             $item = $item->get_parent_location()->first();
             $location = $item->location . " > " . $location;
         }
-        return str($location);
+        return $location;
     }
 
     // Get the collection of children of the current location object
