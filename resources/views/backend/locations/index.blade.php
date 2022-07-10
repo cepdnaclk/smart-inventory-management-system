@@ -26,17 +26,17 @@
                             <th>Location Name</th>
                             <th>Actions</th>
                         </tr>
-                        @foreach($locations as $key => $value)
+                        @foreach($locations as $loc)
                             <tr>
-                                <td>{{ $value }}</td>
+                                <td>{{ $loc->getFullLocationAddress() }}</td>
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            @if ($value != "Makerspace Lab")
-                                                <a href=" {{route('admin.locations.edit', $key) }}"
+                                            @if ($loc->location != "MakerSpace")
+                                                <a href=" {{route('admin.locations.edit', $loc) }}"
                                                    class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                                 </a>
-                                                <a href="{{ route('admin.locations.delete', $key) }}"
+                                                <a href="{{ route('admin.locations.delete', $loc) }}"
                                                    class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                     title="Delete"></i>
                                                 </a>

@@ -15,9 +15,8 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = Locations::getFullLocationStringFromPluck();
-        $allLocations = Locations::pluck('id');
-        return view('backend.locations.index', compact('locations', 'allLocations'));
+        $locations = Locations::all();
+        return view('backend.locations.index', compact('locations'));
     }
 
     /**
