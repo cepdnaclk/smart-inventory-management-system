@@ -24,8 +24,7 @@ class LockerFactory extends Factory
     {
         return [
             'notes'=>$this->faker->text(),
-            'is_available'=>NULL,
-            'order_id' => Order::all()->random()->id,
+            'is_available'=>rand(0, 1),
         ];
     }
 }

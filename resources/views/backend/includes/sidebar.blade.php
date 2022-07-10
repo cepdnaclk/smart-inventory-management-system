@@ -65,8 +65,8 @@
             <li class="c-sidebar-nav-item">
                 <x-utils.link
                         class="c-sidebar-nav-link"
-                        :href="route('frontend.user.show.order')"
-                        :active="activeClass(Route::is('frontend.user.show.order'), 'c-active')"
+                        :href="route('frontend.user.orders.index')"
+                        :active="activeClass(Route::is('frontend.user.orders.index'), 'c-active')"
                         icon="c-sidebar-nav-icon cil-description"
                         :text="__('My orders')"></x-utils.link>
             </li>
@@ -347,15 +347,15 @@
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.equipment.items.index')"
+                            :href="route('admin.locker.details.index')"
                             class="c-sidebar-nav-link"
                             :text="__('Locker Details')"></x-utils.link>
                 </li>
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.equipment.types.index')"
+                            :href="route('admin.locker.ready_orders.index')"
                             class="c-sidebar-nav-link"
-                            :text="__('Available Lockers')"></x-utils.link>
+                            :text="__('Ready Orders')"></x-utils.link>
                 </li>
             </ul>
         </li>

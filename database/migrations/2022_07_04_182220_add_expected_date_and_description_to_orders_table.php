@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLockersTable extends Migration
+class AddExpectedDateAndDescriptionToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateLockersTable extends Migration
      */
     public function up()
     {
-        Schema::create('lockers', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('is_available')->default(0);
-            $table->text('notes')->nullable();
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->date("expected_date")->nullable();;
+            $table->text('description')->nullable();
+            //
         });
     }
 
@@ -28,6 +27,8 @@ class CreateLockersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lockers');
+        Schema::table('orders', function (Blueprint $table) {
+            //
+        });
     }
 }
