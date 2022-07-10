@@ -15,10 +15,10 @@ class LocationsFactory extends Factory
     {
         return [
             'location' => $this->faker->name(),
-            'parent_location' => '0',
-            'x' => $this->faker->numberBetween(0,100),
-            'y' => $this->faker->numberBetween(0,100),
-            'z' => $this->faker->numberBetween(0,100)
+            'parent_location' => '1',
+            'x' => $this->faker->numberBetween(0, 100),
+            'y' => $this->faker->numberBetween(0, 100),
+            'z' => $this->faker->numberBetween(0, 100)
         ];
     }
 }
