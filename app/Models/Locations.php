@@ -23,11 +23,14 @@ class Locations extends Model
     // Get array of all locations in their full path form ( root > child 1 > child 2 > child 3  etc...)
     public static function getFullLocationStringFromPluck()
     {
-        $locations = Locations::all()->map(function ($loc) {
-            return $loc->getFullLocationAddress();
-        })->all();
+        $locations = Locations::all();
 
-        return $locations;
+        $IDandFullPathArray = array();
+        foreach ($locations as $location) {
+            $IDandFullPathArray[$location->id] = $location->getFullLocationAddress();
+        }
+
+        return $IDandFullPathArray;
     }
 
     // Get the location address
