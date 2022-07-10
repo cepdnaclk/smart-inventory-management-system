@@ -42,20 +42,10 @@ class Locations extends Model
         return str($location);
     }
 
-    // Get array that has the hierarchy of the locations
-    public static function getChildLocations($location_id)
-    {
-        $locations = Locations::where('parent_location', $location_id)->get();
-        foreach ($locations as $location) {
-            $location->children = Locations::getChildLocations($location->id);
-        }
-        return $locations;
-    }
-
     // Get the collection of children of the current location object
     public function getChildrenLocations()
     {
-        return Locations::all()->where('parent_location', $this->id)->all();
+        return Locations::where('parent_location', $this->id)->get();
     }
 
 }
