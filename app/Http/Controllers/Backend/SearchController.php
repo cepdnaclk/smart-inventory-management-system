@@ -42,11 +42,34 @@ class SearchController extends Controller
 
     public function reverseSearchIndex()
     {
-        $locations = Locations::pluck('location', 'id');
-        foreach ($locations as $key => $value) {
-            $full_location_path_array = $this->getFullLocationPathByLocationID($key);
-            $locations[$key] = implode(' > ', array_reverse($full_location_path_array));
+        $loc = Locations::where('parent_location', 1)->get();
+        $locations = [];
+
+        // TODO: Make this better
+        // For now, only support upto 4 levels
+        // I think we can just extend this to like 10 levels or something like that ¯\_(ツ)_/¯
+        foreach ($loc as $key => $value) {
+            $locations[$key] = $value->location;
+            // Level 2
+            if ($value->getChildrenLocations()->count() > 0) {
+                foreach ($value->getChildrenLocations() as $l) {
+                    $locations[$l->id] = $l->getFullLocationAddress();
+                    // Level 3
+                    if ($l->getChildrenLocations()->count() > 0) {
+                        foreach ($l->getChildrenLocations() as $ll) {
+                            $locations[$ll->id] = $ll->getFullLocationAddress();
+                            // Level 4
+                            if ($ll->getChildrenLocations()->count() > 0) {
+                                foreach ($ll->getChildrenLocations() as $lll) {
+                                    $locations[$lll->id] = $lll->getFullLocationAddress();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+        // dd($locations);
         return view('backend.search.reverseIndex', compact('locations'));
     }
 
@@ -56,6 +79,9 @@ class SearchController extends Controller
 //        this function is going to very resource heavy I think
 //        TODO: optimize this. This will take a very long time if there are lots of items.
         $location = $request->location;
+
+//        dd($location);
+
         $full_location_path_array = $this->getFullLocationPathByLocationID($location);
         $locationName = implode(' > ', array_reverse($full_location_path_array));
 

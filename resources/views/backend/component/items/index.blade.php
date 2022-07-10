@@ -70,6 +70,10 @@
                                             <a href="{{ route('admin.component.items.edit', $cm)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
+                                            <a href="{{ route('admin.component.items.edit.location', $cm)}}"
+                                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker"
+                                                                                 title="Edit Location"></i>
+                                            </a>
                                             <a href="{{ route('admin.component.items.delete', $cm)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                 title="Delete"></i>

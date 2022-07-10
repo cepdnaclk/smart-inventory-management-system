@@ -15,9 +15,9 @@ Route::middleware(['editAccess'])->group(function () {
         });
 
 
-//consumable Items --------------------------------------------------------------------
+    //consumable Items --------------------------------------------------------------------
 
-//Index
+    //Index
     Route::get('consumables/items', [ConsumableItemController::class, 'index'])
         ->name('consumable.items.index')
         ->breadcrumbs(function (Trail $trail) {
@@ -26,7 +26,7 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Items'));
         });
 
-// Create
+    // Create
     Route::get('consumables/items/create', [ConsumableItemController::class, 'create'])
         ->name('consumable.items.create')
         ->breadcrumbs(function (Trail $trail) {
@@ -36,11 +36,11 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Create'));
         });
 
-// Store
+    // Store
     Route::post('consumables/items', [ConsumableItemController::class, 'store'])
         ->name('consumable.items.store');
 
-// Show
+    // Show
     Route::get('consumables/items/{consumableItem}', [ConsumableItemController::class, 'show'])
         ->name('consumable.items.show')
         ->breadcrumbs(function (Trail $trail) {
@@ -50,7 +50,7 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Show'));
         });
 
-// Edit
+    // Edit
     Route::get('consumables/items/edit/{consumableItem}', [ConsumableItemController::class, 'edit'])
         ->name('consumable.items.edit')
         ->breadcrumbs(function (Trail $trail) {
@@ -60,12 +60,22 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Edit'));
         });
 
+    // Edit location
+    Route::get('consumables/items/edit/location/{consumableItem}', [ConsumableItemController::class, 'editLocation'])
+        ->name('consumable.items.edit.location')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Consumables'), route('admin.consumable.index'))
+                ->push(__('Items'), route('admin.consumable.items.index'))
+                ->push(__('Edit Location'));
+        });
 
-// Update
+
+    // Update
     Route::put('consumables/items/{consumableItem}', [ConsumableItemController::class, 'update'])
         ->name('consumable.items.update');
 
-// Delete
+    // Delete
     Route::get('consumables/items/delete/{consumableItem}', [ConsumableItemController::class, 'delete'])
         ->name('consumable.items.delete')
         ->breadcrumbs(function (Trail $trail) {
@@ -75,13 +85,13 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Delete'));
         });
 
-// Destroy
+    // Destroy
     Route::delete('consumables/items/{consumableItem}', [ConsumableItemController::class, 'destroy'])
         ->name('consumable.items.destroy');
 
-// Consumable Types -------------------------------------------------------------
+    // Consumable Types -------------------------------------------------------------
 
-// Index
+    // Index
 
     Route::get('consumables/types', [ConsumableTypeController::class, 'index'])
         ->name('consumable.types.index')
@@ -91,7 +101,7 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Types'));
         });
 
-// Create
+    // Create
     Route::get('consumables/types/create', [ConsumableTypeController::class, 'create'])
         ->name('consumable.types.create')
         ->breadcrumbs(function (Trail $trail) {
@@ -101,11 +111,11 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Create'));
         });
 
-// Store
+    // Store
     Route::post('consumables/types/', [ConsumableTypeController::class, 'store'])
         ->name('consumable.types.store');
 
-// Show
+    // Show
     Route::get('consumables/types/{consumableType}', [ConsumableTypeController::class, 'show'])
         ->name('consumable.types.show')
         ->breadcrumbs(function (Trail $trail) {
@@ -115,7 +125,7 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Show'));
         });
 
-// Edit
+    // Edit
     Route::get('consumables/types/edit/{consumableType}', [ConsumableTypeController::class, 'edit'])
         ->name('consumable.types.edit')
         ->breadcrumbs(function (Trail $trail) {
@@ -125,11 +135,11 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Edit'));
         });
 
-// Update
+    // Update
     Route::put('consumables/types/{consumableType}', [ConsumableTypeController::class, 'update'])
         ->name('consumable.types.update');
 
-// Delete
+    // Delete
     Route::get('consumables/types/delete/{consumableType}', [ConsumableTypeController::class, 'delete'])
         ->name('consumable.types.delete')
         ->breadcrumbs(function (Trail $trail) {
@@ -139,7 +149,7 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Delete'));
         });
 
-// Destroy
+    // Destroy
     Route::delete('consumables/types/{consumableType}', [ConsumableTypeController::class, 'destroy'])
         ->name('consumable.types.destroy');
 });

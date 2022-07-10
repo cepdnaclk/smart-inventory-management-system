@@ -52,7 +52,8 @@
                                 <td>{{ \App\Models\Machines::types()[$machine->type] }}</td>
                                 <td>
                                     @if($machine->build_width != null && $machine->build_length != null && $machine->build_height!= null )
-                                        {{ $machine->build_width }} x {{ $machine->build_length }} x {{ $machine->build_height }} mm
+                                        {{ $machine->build_width }} x {{ $machine->build_length }}
+                                        x {{ $machine->build_height }} mm
                                     @else
                                         N/A
                                     @endif
@@ -68,6 +69,10 @@
 
                                             <a href="{{ route('admin.machines.edit', $machine)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                                            </a>
+                                            <a href="{{ route('admin.machines.edit.location', $machine)}}"
+                                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker"
+                                                                                 title="Edit Location"></i>
                                             </a>
                                             <a href="{{ route('admin.machines.delete', $machine)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash"

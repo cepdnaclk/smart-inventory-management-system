@@ -15,7 +15,7 @@ class CreateItemLocationsTable extends Migration
     {
         Schema::create('item_locations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('location_id')->constrained();
+            $table->foreignId('location_id')->constrained()->onDelete('cascade');
             $table->string("item_id");
             $table->integer("x")->nullable();
             $table->integer("y")->nullable();

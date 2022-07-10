@@ -5,6 +5,7 @@ namespace Tests\Feature\Backend\Component;
 use App\Domains\Auth\Models\User;
 use App\Models\ComponentItem;
 use App\Models\ItemLocations;
+use App\Models\Locations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -127,6 +128,48 @@ class ComponentItemTest extends TestCase
         $component = ComponentItem::factory()->create();
         $response = $this->delete('/admin/components/items/' . $component->id);
         $response->assertStatus(302);
+    }
+
+    /** @test */
+    public function single_location_shows_up()
+    {
+        $this->loginAsAdmin();
+        $component = ComponentItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $component->inventoryCode(),
+                'location_id' => 1
+            ]
+        );
+
+        $locationName = Locations::where('id', 1)->first()->location;
+        $response = $this->get('/admin/components/items/' . $component->id);
+        $response->assertSee($locationName);
+    }
+
+    /** @test */
+    public function multiple_locations_show_up()
+    {
+        $this->loginAsAdmin();
+        $component = ComponentItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $component->inventoryCode(),
+                'location_id' => 1
+            ]
+        );
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $component->inventoryCode(),
+                'location_id' => 2
+            ]
+        );
+
+        $locationName1 = Locations::where('id', 1)->first()->location;
+        $locationName2 = Locations::where('id', 2)->first()->location;
+        $response = $this->get('/admin/components/items/' . $component->id);
+        $response->assertSee($locationName1);
+        $response->assertSee($locationName2);
     }
 
 }

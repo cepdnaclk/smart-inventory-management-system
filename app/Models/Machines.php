@@ -13,10 +13,10 @@ class Machines extends Model implements Searchable
 
     protected $guarded = [];
 
-    // reverse search depends on this. Change SearchController.php if you're chaning this
+    // reverse search depends on this. Change SearchController.php if you're changing this
     public function inventoryCode()
     {
-        return sprintf("MC/%03d",$this->id);
+        return sprintf("MC/%03d", $this->id);
     }
 
     // Return the relative URL of the thumbnail
@@ -49,7 +49,12 @@ class Machines extends Model implements Searchable
     // Lifespan of the machine in hour and minute format
     public function lifespanString()
     {
-        return (intdiv($this->lifespan,60)) . " hours " . ($this->lifespan % 60) . " minutes";
+        return (intdiv($this->lifespan, 60)) . " hours " . ($this->lifespan % 60) . " minutes";
+    }
+
+    public function getLocations()
+    {
+        return ItemLocations::where('item_id', $this->inventoryCode())->get() || 1;
     }
 
     public function getSearchResult(): SearchResult

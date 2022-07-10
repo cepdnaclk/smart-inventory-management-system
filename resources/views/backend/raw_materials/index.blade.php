@@ -61,10 +61,13 @@
                                             <a href="{{ route('admin.raw_materials.edit', $cm)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.raw_materials.delete', $cm)}}"
-                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
-                                                                                title="Delete"></i>
-                                            </a>
+                                            <a href="{{ route('admin.raw_materials.edit.location', $cm)}}"
+                                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker"
+                                                                                 title="Edit Location"></i>
+                                                <a href="{{ route('admin.raw_materials.delete', $cm)}}"
+                                                   class="btn btn-danger btn-xs"><i class="fa fa-trash"
+                                                                                    title="Delete"></i>
+                                                </a>
                                         </div>
                                     </div>
                                 </td>
