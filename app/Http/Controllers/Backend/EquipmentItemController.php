@@ -139,8 +139,9 @@ class EquipmentItemController extends Controller
         })->all();
 
         $locations = Locations::all()->where('parent_location', 1)->all();
-//        dd($locations);
-
+        foreach ($locations as $location) {
+            $location->children = Locations::getChildLocations($location->id);
+        }
         return view('backend.equipment.items.edit-location', compact('equipmentItem', 'locations'));
     }
 

@@ -36,10 +36,20 @@ class Locations extends Model
         $item = $this;
         $location = $this->location;
         while ($item->get_parent_location()->first() != NULL) {
-            $location = $item->location . " > " . $location;
             $item = $item->get_parent_location()->first();
+            $location = $item->location . " > " . $location;
         }
         return str($location);
+    }
+
+    // Get array that has the hierarchy of the locations
+    public static function getChildLocations($location_id)
+    {
+        $locations = Locations::where('parent_location', $location_id)->get();
+        foreach ($locations as $location) {
+            $location->children = Locations::getChildLocations($location->id);
+        }
+        return $locations;
     }
 
     // Get the collection of children of the current location object

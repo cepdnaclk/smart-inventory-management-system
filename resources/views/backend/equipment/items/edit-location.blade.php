@@ -26,21 +26,7 @@
                 <ul>
                     {{-- TODO: Need to loop this in a recursive way to handle multiple levels in the tree --}}
                     @foreach($locations as $i => $loc)
-                        <li>
-                            @livewire('locations-toggler', ['locationID' => $loc->id, 'locationTitle'=> $loc->location,
-                            'itemModel' =>
-                            $equipmentItem])
-
-                            <ul>
-                                @foreach($loc->getChildrenLocations() as $l)
-                                    <li>
-                                        @livewire('locations-toggler', ['locationID' => $l->id, 'locationTitle'=>
-                                        $l->location, 'itemModel' =>
-                                        $equipmentItem])
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
+                        @include('backend.partials.location-hierarchy-for-edit-location', ['location' => $loc , '$equipmentItem' => $equipmentItem])
                     @endforeach
                 </ul>
                 <br>
