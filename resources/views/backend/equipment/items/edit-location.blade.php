@@ -24,9 +24,8 @@
                 <p> Change locations for <b>{{ $equipmentItem->title }}</b></p>
 
                 <ul>
-                    {{-- TODO: Need to loop this in a recursive way to handle multiple levels in the tree --}}
                     @foreach($locations as $i => $loc)
-                        @include('backend.partials.location-hierarchy-for-edit-location', ['location' => $loc , '$equipmentItem' => $equipmentItem])
+                        @include('backend.partials.location-hierarchy-for-edit-location', ['location' => $loc , 'itemModel' => $equipmentItem])
                     @endforeach
                 </ul>
                 <br>
