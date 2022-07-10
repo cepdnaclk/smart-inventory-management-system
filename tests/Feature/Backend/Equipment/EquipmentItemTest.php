@@ -5,8 +5,10 @@ namespace Tests\Feature\Backend\Equipment;
 use App\Domains\Auth\Models\User;
 use App\Models\EquipmentItem;
 use App\Models\ItemLocations;
+use App\Models\Locations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Torann\GeoIP\Location;
 
 /**
  * Class EquipmentItemTest.
@@ -134,4 +136,51 @@ class EquipmentItemTest extends TestCase
         $response->assertStatus(302);
     }
 
+    /** @test */
+    public function unauthorized_user_cannot_access_equipment_item_create_page()
+    {
+        $response = $this->get('/admin/equipment/items/create');
+        $response->assertStatus(302);
+    }
+
+    /** @test */
+    public function shows_single_location()
+    {
+        $this->loginAsAdmin();
+        $equipment = EquipmentItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $equipment->inventoryCode(),
+                'location_id' => 2,
+            ]
+        );
+
+        $locationName = Locations::where('id', 2)->first()->location;
+        $response = $this->get('/admin/equipment/items/' . $equipment->id);
+        $response->assertSee($locationName);
+    }
+
+    /** @test */
+    public function shows_multiple_locations()
+    {
+        $this->loginAsAdmin();
+        $equipment = EquipmentItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $equipment->inventoryCode(),
+                'location_id' => 2,
+            ]
+        );
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $equipment->inventoryCode(),
+                'location_id' => 3,
+            ]
+        );
+        $locationName1 = Locations::where('id', 2)->first()->location;
+        $locationName2 = Locations::where('id', 3)->first()->location;
+        $response = $this->get('/admin/equipment/items/' . $equipment->id);
+        $response->assertSee($locationName1);
+        $response->assertSee($locationName2);
+    }
 }
