@@ -32,11 +32,11 @@
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            @if ($value != "Makerspace Lab")
-                                                <a href=" {{route('admin.locations.edit', $key) }}"
+                                            @if ($value != "MakerSpace")
+                                                <a href=" {{route('admin.locations.edit', $allLocations[$key]) }}"
                                                    class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                                 </a>
-                                                <a href="{{ route('admin.locations.delete', $key) }}"
+                                                <a href="{{ route('admin.locations.delete', $allLocations[$key]) }}"
                                                    class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                     title="Delete"></i>
                                                 </a>
