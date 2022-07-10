@@ -58,6 +58,13 @@
 
 
             </x-slot>
+            
+            <x-slot name="footer">
+                <a type="submit" class="btn btn-primary"
+                   href="{{route('admin.search.reverse')}}">
+                    Back
+                </a>
+            </x-slot>
         </x-backend.card>
     </div>
 @endsection
