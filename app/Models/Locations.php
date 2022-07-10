@@ -36,8 +36,8 @@ class Locations extends Model
         $item = $this;
         $location = $this->location;
         while ($item->get_parent_location()->first() != NULL) {
-            $location = $item->location . " > " . $location;
             $item = $item->get_parent_location()->first();
+            $location = $item->location . " > " . $location;
         }
         return str($location);
     }
@@ -45,7 +45,7 @@ class Locations extends Model
     // Get the collection of children of the current location object
     public function getChildrenLocations()
     {
-        return Locations::all()->where('parent_location', $this->id)->all();
+        return Locations::where('parent_location', $this->id)->get();
     }
 
 }

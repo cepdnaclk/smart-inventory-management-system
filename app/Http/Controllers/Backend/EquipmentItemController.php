@@ -134,12 +134,7 @@ class EquipmentItemController extends Controller
      */
     public function editLocation(EquipmentItem $equipmentItem)
     {
-        $locations = Locations::all()->map(function ($loc, $key) {
-            return $loc->getFullLocationAddress();
-        })->all();
-
         $locations = Locations::all()->where('parent_location', 1)->all();
-//        dd($locations);
 
         return view('backend.equipment.items.edit-location', compact('equipmentItem', 'locations'));
     }
