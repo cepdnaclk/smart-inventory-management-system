@@ -36,7 +36,8 @@ class ReverseSearchTest extends TestCase
     }
 
     /** @test */
-    public function search_results_has_href(){
+    public function search_results_has_href()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
         $flag = false;
@@ -61,7 +62,8 @@ class ReverseSearchTest extends TestCase
     }
 
     /** @test */
-    public function new_equipment_will_appear_in_reverse_search(){
+    public function new_equipment_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/equipment/items', [
             'title' => 'Sample Equipment',
@@ -91,14 +93,14 @@ class ReverseSearchTest extends TestCase
     }
 
     /** @test */
-    public function new_component_will_appear_in_reverse_search(){
+    public function new_component_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/components/items', [
 
             'title' => 'Sample Component',
             'brand' => NULL,
             'productCode' => 'ICOA101',
-            'location'=>'1',
             'specifications' => 'UA741CP OpAmp 1MHz',
             'description' => 'The 741 Op Amp IC is a monolithic integrated circuit, comprising of a general purpose Operational Amplifier.',
             'instructions' => 'NO INSTRUCTION AVAILABLE',
@@ -110,12 +112,17 @@ class ReverseSearchTest extends TestCase
 
         ]);
         $createdItem = ComponentItem::where('title', 'Sample Component')->first();
+        ItemLocations::factory()->create([
+            'item_id' => $createdItem->inventoryCode(),
+            'location_id' => 1
+        ]);
         $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
         $response->assertSee($createdItem->title);
     }
 
     /** @test */
-    public function new_consumable_will_appear_in_reverse_search(){
+    public function new_consumable_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/consumables/items', [
             'title' => 'Sample consumable',
@@ -138,7 +145,8 @@ class ReverseSearchTest extends TestCase
     }
 
     /** @test */
-    public function new_machine_will_appear_in_reverse_search(){
+    public function new_machine_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/machines', [
             'title' => 'Sample Machine',
@@ -160,7 +168,8 @@ class ReverseSearchTest extends TestCase
     }
 
     /** @test */
-    public function new_raw_material_will_appear_in_reverse_search(){
+    public function new_raw_material_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/raw_materials', [
             'title' => 'Sample Raw Material',

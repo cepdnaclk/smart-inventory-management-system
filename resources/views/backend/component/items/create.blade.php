@@ -45,18 +45,6 @@
                     </div>
                 </div>
 
-                <!-- Location -->
-                <div class="form-group row">
-                    {!! Form::label('location_label', 'Location*', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::select('location', $locations, null, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
-                        @error('location')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
 
                 <div class="form-group row">
                     <!-- Brand -->
@@ -140,7 +128,7 @@
                         @enderror
                     </div>
                 </div>
-                
+
                 <!-- Price -->
                 <div class="form-group row">
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}

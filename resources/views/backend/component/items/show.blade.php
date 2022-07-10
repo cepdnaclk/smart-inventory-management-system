@@ -23,6 +23,9 @@
                             <a href="{{ route('admin.component.items.edit', $componentItem)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
+                            <a href="{{ route('admin.component.items.edit.location', $componentItem)}}"
+                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker" title="Edit Location"></i>
+                            </a>
                             <a href="{{ route('admin.component.items.delete', $componentItem)}}"
                                class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                 title="Delete"></i>
@@ -35,21 +38,21 @@
                         <td>Code (to be finalized)</td>
                         <td>{{ $componentItem->inventoryCode() }}</td>
                     </tr>
-                    <tr>
-                        <td>Location</td>
-                        <td>
-                            @if(count($locations_array) > 0)
-                                @foreach(array_reverse($locations_array) as $eachLocation)
-                                    {{ $eachLocation }}
-                                    @if(!($loop->last))
-                                        ->
-                                    @endif
+                    @if(count($locations_array) > 0)
+                        <tr>
+                            <td>Locations</td>
+                            <td>
+                                @foreach($locations_array as $eachLocation)
+                                    {{ $eachLocation }}<br>
                                 @endforeach
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>Location</td>
+                            <td>Not Available</td>
+                        </tr>
+                    @endif
                     <tr>
                         <td>Type</td>
                         <td>
@@ -79,14 +82,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Quantity </td>
-                        <td>{{ $componentItem->quantity }} 
+                        <td>Quantity</td>
+                        <td>{{ $componentItem->quantity }}
                         </td>
                     </tr>
-                    
+
                     <tr>
-                        <td>Size </td>
-                        <td>{{ $componentItem->size }} 
+                        <td>Size</td>
+                        <td>{{ $componentItem->size }}
                         </td>
                     </tr>
 
@@ -100,21 +103,21 @@
                     </tr>
                     <tr>
                         {{-- !have to be changed --}}
-                        <td>Is It Available ? </td>
+                        <td>Is It Available ?</td>
                         <td>
                             @if($componentItem->isAvailable=='1')
                                 <span>YES</span>
-                            @else 
+                            @else
                                 <span class="text-danger">NO</span>
                             @endif
                         </td>
                     </tr>
                     <tr>
-                        <td>Is It Electrical? ? </td>
+                        <td>Is It Electrical? ?</td>
                         <td>
                             @if($componentItem->isElectrical=='1')
                                 <span>YES</span>
-                            @else 
+                            @else
                                 <span class="text-danger">NO</span>
                             @endif
                         </td>

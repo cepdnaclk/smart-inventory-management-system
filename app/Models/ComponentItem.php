@@ -16,8 +16,8 @@ class ComponentItem extends Model implements Searchable
     // Link the Component Type table
     public function component_type()
     {
-        if ($this->component_type_id != null) return $this->belongsTo(ComponentType::class, 'component_type_id', 'id');
-        return null;
+        // do not change. Relationships are defined this way. do not return null. causes errors in livewire that are untraceable.
+        return $this->belongsTo(ComponentType::class, 'component_type_id', 'id');
     }
 
     // reverse search depends on this. Change SearchController.php if you're changing this
@@ -43,9 +43,9 @@ class ComponentItem extends Model implements Searchable
             $url
         );
     }
-    
+
     public function orders()
     {
-        return $this->belongsToMany(Order::class);   
+        return $this->belongsToMany(Order::class);
     }
 }
