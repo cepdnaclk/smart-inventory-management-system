@@ -12,18 +12,21 @@ use App\Models\RawMaterials;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ReverseSearchTest extends TestCase {
+class ReverseSearchTest extends TestCase
+{
     use RefreshDatabase;
 
     /** @test */
-    public function admin_can_load_reverse_search() {
+    public function admin_can_load_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->get('/admin/reverseSearch');
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function admin_can_search_for_items() {
+    public function admin_can_search_for_items()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => 1]);
         //        dd($response->content());
@@ -33,7 +36,8 @@ class ReverseSearchTest extends TestCase {
     }
 
     /** @test */
-    public function search_results_has_href() {
+    public function search_results_has_href()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
         $flag = false;
@@ -58,7 +62,8 @@ class ReverseSearchTest extends TestCase {
     }
 
     /** @test */
-    public function new_equipment_will_appear_in_reverse_search() {
+    public function new_equipment_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/equipment/items', [
             'title' => 'Sample Equipment',
@@ -88,7 +93,8 @@ class ReverseSearchTest extends TestCase {
     }
 
     /** @test */
-    public function new_component_will_appear_in_reverse_search() {
+    public function new_component_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/components/items', [
 
@@ -115,7 +121,8 @@ class ReverseSearchTest extends TestCase {
     }
 
     /** @test */
-    public function new_consumable_will_appear_in_reverse_search() {
+    public function new_consumable_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/consumables/items', [
             'title' => 'Sample consumable',
@@ -141,14 +148,14 @@ class ReverseSearchTest extends TestCase {
     }
 
     /** @test */
-    public function new_machine_will_appear_in_reverse_search() {
+    public function new_machine_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/machines', [
             'title' => 'Sample Machine',
             'type' => array_rand(Machines::types()),
             'build_width' => 30,
             'build_length' => 40,
-            'location' => 1,
             'build_height' => 50,
             'power' => rand(30, 100),
             'thumb' => NULL,
@@ -158,12 +165,17 @@ class ReverseSearchTest extends TestCase {
             'lifespan' => rand(10, 3000)
         ]);
         $createdItem = Machines::where('title', 'Sample Machine')->first();
+        ItemLocations::factory()->create([
+            'item_id' => $createdItem->inventoryCode(),
+            'location_id' => 1
+        ]);
         $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
         $response->assertSee($createdItem->title);
     }
 
     /** @test */
-    public function new_raw_material_will_appear_in_reverse_search() {
+    public function new_raw_material_will_appear_in_reverse_search()
+    {
         $this->loginAsAdmin();
         $response = $this->post('/admin/raw_materials', [
             'title' => 'Sample Raw Material',
