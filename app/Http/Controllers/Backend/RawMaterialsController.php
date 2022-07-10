@@ -33,7 +33,7 @@ class RawMaterialsController extends Controller
     {
         $availabilityOptions = RawMaterials::availabilityOptions();
         $locations = Locations::pluck('location', 'id');
-        return view('backend.raw_materials.create', compact('availabilityOptions','locations'));
+        return view('backend.raw_materials.create', compact('availabilityOptions', 'locations'));
     }
 
     /**
@@ -49,11 +49,10 @@ class RawMaterialsController extends Controller
             'title' => 'string|required',
             'color' => 'string|nullable',
             'description' => 'string|nullable',
-            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'quantity' => 'numeric|nullable',
             'unit' => 'string|nullable',
-            'availability' => Rule::in(['AVAILABLE','NOT_AVAILABLE','CONDITIONALLY_AVAILABLE']),
+            'availability' => Rule::in(['AVAILABLE', 'NOT_AVAILABLE', 'CONDITIONALLY_AVAILABLE']),
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
             'notes' => 'string|nullable',
         ]);
@@ -63,19 +62,9 @@ class RawMaterialsController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "raw_materials");
             }
 
-            $filtered_data = $data;
-            unset($filtered_data['location']);
-            $materials = new RawMaterials($filtered_data);
+            $materials = new RawMaterials($data);
             $materials->save();
-            $data_for_location = [
-                'item_id' => $materials->inventoryCode(),
-                'location_id' => $data['location']
-            ];
-            $location = new ItemLocations($data_for_location);
-
-
-            $location->save();
-            return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw Material was created !');
+            return redirect()->route('admin.raw_materials.edit.location', $materials)->with('Success', 'Raw Material was created !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -90,8 +79,13 @@ class RawMaterialsController extends Controller
      */
     public function show(RawMaterials $rawMaterials)
     {
-        $locations_array = $this->getFullLocationPathAsArray($rawMaterials,0);
-        return view('backend.raw_materials.show', compact('rawMaterials','locations_array'));
+        $locationCount = $this->getNumberOfLocationsForItem($rawMaterials);
+
+        $locations_array = array();
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locations_array[] = $this->getFullLocationPathAsString($rawMaterials, $i);
+        }
+        return view('backend.raw_materials.show', compact('rawMaterials', 'locations_array'));
     }
 
     /**
@@ -102,11 +96,19 @@ class RawMaterialsController extends Controller
      */
     public function edit(RawMaterials $rawMaterials)
     {
-        $this_item_location = ItemLocations::where('item_id',$rawMaterials->inventoryCode())->get()[0]['location_id'];
+        $this_item_location = ItemLocations::where('item_id', $rawMaterials->inventoryCode())->get()[0]['location_id'];
 //        dd($this_item_location);
         $locations = Locations::pluck('location', 'id');
-        return view('backend.raw_materials.edit', compact('rawMaterials','this_item_location','locations'));
+        return view('backend.raw_materials.edit', compact('rawMaterials', 'this_item_location', 'locations'));
     }
+
+    public function editLocations(RawMaterials $rawMaterials)
+    {
+        $locations = Locations::all()->where('parent_location', 1)->all();
+
+        return view('backend.raw_materials.edit-location', compact('rawMaterials', 'locations'));
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -125,10 +127,9 @@ class RawMaterialsController extends Controller
             'color' => 'string|nullable',
             'description' => 'string|nullable',
             'specifications' => 'string|nullable',
-            'location' => 'numeric|required',
             'quantity' => 'numeric|nullable',
             'unit' => 'string|nullable',
-            'availability' => Rule::in(['AVAILABLE','NOT_AVAILABLE','CONDITIONALLY_AVAILABLE']),
+            'availability' => Rule::in(['AVAILABLE', 'NOT_AVAILABLE', 'CONDITIONALLY_AVAILABLE']),
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
             'notes' => 'string|nullable',
         ]);
@@ -140,16 +141,8 @@ class RawMaterialsController extends Controller
                 $data['thumb'] = $this->uploadThumb($rawMaterials->thumbURL(), $request->thumb, "raw_materials");
             }
 
-            $filtered_data = $data;
-            unset($filtered_data['location']);
-            $rawMaterials->update($filtered_data);
+            $rawMaterials->update($data);
 
-
-            $this_item_location = ItemLocations::where('item_id',$rawMaterials->inventoryCode())->get()[0];
-            $new_location_data = [
-                'location_id' => $data['location']
-            ];
-            $this_item_location->update($new_location_data);
 
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw Material was updated !');
 
@@ -183,8 +176,7 @@ class RawMaterialsController extends Controller
             $rawMaterials->delete();
 
             //            delete location entry
-            $this_item_location = ItemLocations::where('item_id',$rawMaterials->inventoryCode())->get()[0];
-            $this_item_location->delete();
+            $this_item_location = ItemLocations::where('item_id', $rawMaterials->inventoryCode())->delete();
 
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw material was deleted !');
 

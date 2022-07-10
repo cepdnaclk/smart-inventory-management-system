@@ -183,12 +183,15 @@ class ReverseSearchTest extends TestCase
             'description' => 'Sample description',
             'specifications' => 'Not applicable',
             'quantity' => '10',
-            'location' => 1,
             'unit' => 'pcs',
             'availability' => 'AVAILABLE',
             'thumb' => NULL
         ]);
         $createdItem = RawMaterials::where('title', 'Sample Raw Material')->first();
+        ItemLocations::factory()->create([
+            'item_id' => $createdItem->inventoryCode(),
+            'location_id' => 1
+        ]);
         $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
         $response->assertSee($createdItem->title);
     }
