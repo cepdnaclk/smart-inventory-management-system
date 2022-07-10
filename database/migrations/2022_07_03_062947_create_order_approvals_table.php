@@ -26,13 +26,13 @@ class CreateOrderApprovalsTable extends Migration
             ->on('orders');
      
 
-            $table->foreignId('lecturer_id')
+            $table->foreignId('lecturer_id')->nullable()
             ->constrained()
             ->references('id')
             ->onDelete('cascade')
             ->on('users');
 
-            $table->foreignId('technical_officer_id')
+            $table->foreignId('technical_officer_id')->nullable()
             ->constrained()
             ->references('id')
             ->onDelete('cascade')

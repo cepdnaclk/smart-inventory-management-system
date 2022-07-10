@@ -100,7 +100,7 @@
                         <td> TechnicalOfficer  Name  </td>
                         <td>{{$order->orderApprovals->technicalOfficer->name}}</td>
                         
-                    </tr>
+                    </tr>         
                     
                     
                 </table>

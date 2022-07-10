@@ -72,4 +72,5 @@ class Order extends Model
         return Order::where('status', 'APPROVED')->orderBy('created_at','desc')->paginate(16);
     }
     
+    
 }

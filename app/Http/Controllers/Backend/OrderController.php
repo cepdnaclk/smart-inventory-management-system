@@ -145,16 +145,29 @@ class OrderController extends Controller
     {
         $id = auth()->user()->id;
 
-        $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', 0)->get();
+        $orderApproval = OrderApproval::where('lecturer_id', \Auth::user()->id)->where('is_approved_by_lecturer', '=', null)->get();
         //return response()->json($orderApproval, 200);
 
         return view('backend.orders.lecturer.index', compact('orderApproval'));
+    }
+    public function h_o_d_index()
+    {
+     
+
+        $orderApproval = OrderApproval::where('is_approved_by_lecturer', '=', 1)->get();
+        //return response()->json($orderApproval, 200);
+
+        return view('backend.orders.hod.request.index', compact('orderApproval'));
     }
 
 
     public function lecturer_show(Order $order)
     {
         return view('backend.orders.lecturer.show', compact('order'));
+    }
+    public function h_o_d_show(Order $order)
+    {
+        return view('backend.orders.hod.show', compact('order'));
     }
 
     //---------------------------------------------------------------------------------------------------------------------------------------
@@ -235,7 +248,7 @@ class OrderController extends Controller
     {
         //to update the accepted table 
         $order->orderApprovals->is_approved_by_lecturer = 1;
-        $order->status = "WAITING_TECHNICAL_OFFICER_APPROVAL";
+        $order->status = "WAITING_H_O_D_APPROVAL";
         $order->orderApprovals->save();
         $order->save();
 
@@ -252,7 +265,7 @@ class OrderController extends Controller
     {
         //to update the accepted table 
         $order->orderApprovals->is_approved_by_lecturer=0;
-        $order->status="REJECTED_BY_LECTURER";
+        $order->status="REJECTED";
         $order->orderApprovals->save();
         $order->save();
 
@@ -283,11 +296,63 @@ class OrderController extends Controller
         $id = auth()->user()->id;
     
         $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 0)->get();
-      //return response()->json($orderApproval, 200);
+        //return response()->json($orderApproval, 200);
       
         return view('backend.orders.lecturer.rejected.index', compact('orderApproval'));
     }
 
+    public function h_o_d_approve(Order $order)
+    {
+        //to update the accepted table 
+        
+        $order->status = "WAITING_TECHNICAL_OFFICER_APPROVAL";
+        
+        $order->save();
+
+        // TODO: The logic to be implemented
+        // Send an email to the student
+        // Send an email to the TO
+        // Update the status into 'PENDING_FABRICATION'
+        // Update timestamp details
+        return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have approved the order. you can view the order in accepted order list.');
+    }
+    public function h_o_d_reject(Order $order)
+    {
+        //to update the accepted table 
+        $order->orderApprovals->is_approved_by_lecturer=1;
+
+        $order->status ="REJECTED";
+        $order->save();
+        $order->orderApprovals->save();
+
+
+        // TODO: The logic to be implemented
+        // Send an email to the student
+        // Send an email to the TO
+        // Update the status into 'PENDING_FABRICATION'
+        // Update timestamp details
+        return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have approoved the order.you can view the order in accepted order list.');
+    }
+    public function h_o_d_accepted_index()
+    {
+
+     
+
+        $orders = Order::where('status', 'WAITING_TECHNICAL_OFFICER_APPROVAL')->get();
+        //return response()->json($orderApproval, 200);
+
+        return view('backend.orders.hod.accepted.index', compact('orders'));
+    }
+
+    public function h_o_d_rejected_index()
+    {
+      
     
+        $orderApproval=OrderApproval::where('is_approved_by_lecturer', '=', 1)->get();
+
+        //return response()->json($orderApproval, 200);
+      
+        return view('backend.orders.hod.rejected.index', compact('orderApproval'));
+    }
 
 }

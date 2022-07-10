@@ -24,7 +24,7 @@
 
                 <div class="container table-responsive pt-3">
               
-                    <h4 class="pb-3">Rejected Orders</h4>
+                    <h4 class="pb-3">Waiting for TechnicalOfficer Approval</h4>
                     <table class="table table-striped align-middle">
 
                         <tr>
@@ -36,32 +36,29 @@
                             <th>View </th>
                         </tr>
 
-                        @foreach($orderApproval as $order)
-                @if ($order->orders->status=="REJECTED")
-                <tr>
+                        @foreach($orders as $order)
+                
+                                <tr>
                                    
-                    <td>{{ $order->orders->id }}</td>
-                    <td>{{ $order->orders->user->name }}</td>
-                    <td>
-                        {{ $order->orders->status }}</td>
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->user->name }}</td>
+                                    <td>
+                                        {{ $order->status }}</td>
 
-                        <td>
-                            {{ $order->orders->ordered_date }}</td>
+                                        <td>
+                                            {{ $order->ordered_date }}</td>
 
-                            <td>
-                            </td>
-                            <td class="d-flex justify-content-end">
-                                <div class="btn-group" role="group">
-                                    <a href="{{ route('admin.orders.lecturer.show',$order->orders)}}"
-                                       class="btn btn-primary btn-xs">
-                                        <i class="fa fa-check" title="Approval"></i>
-                                    </a>
-                                  </td>
+                                            <td>
+                                            </td>
+                                            <td class="d-flex justify-content-end">
+                                                <div class="btn-group" role="group">
+                                                    <a href="{{ route('admin.orders.h_o_d.show',$order)}}"
+                                                       class="btn btn-primary btn-xs">
+                                                        <i class="fa fa-check" title="Approval"></i>
+                                                    </a>
+                                                  </td>
 
-                </tr>
-                    
-                @endif
-                               
+                                </tr>
                           
                         @endforeach
                     </table>
