@@ -16,8 +16,8 @@ class ConsumableTypeController extends Controller
      */
     public function index()
     {
-        $consumableTypes = ConsumableType::paginate(12);
-        return view('backend.consumable.types.index', compact('consumableTypes'));
+        //$consumableTypes = ConsumableType::paginate(12);
+        return view('backend.consumable.types.index');
     }
 
     /**
