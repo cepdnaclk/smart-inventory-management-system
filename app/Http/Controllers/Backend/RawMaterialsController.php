@@ -96,10 +96,10 @@ class RawMaterialsController extends Controller
      */
     public function edit(RawMaterials $rawMaterials)
     {
-        $this_item_location = ItemLocations::where('item_id', $rawMaterials->inventoryCode())->get()[0]['location_id'];
-//        dd($this_item_location);
-        $locations = Locations::pluck('location', 'id');
-        return view('backend.raw_materials.edit', compact('rawMaterials', 'this_item_location', 'locations'));
+//        $this_item_location = ItemLocations::where('item_id', $rawMaterials->inventoryCode())->get()[0]['location_id'];
+////        dd($this_item_location);
+//        $locations = Locations::pluck('location', 'id');
+        return view('backend.raw_materials.edit', compact('rawMaterials'));
     }
 
     public function editLocations(RawMaterials $rawMaterials)

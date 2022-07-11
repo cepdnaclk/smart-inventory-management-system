@@ -102,11 +102,7 @@ class MachinesController extends Controller
         $typeOptions = Machines::types();
         $availabilityOptions = Machines::availabilityOptions();
 
-        $this_item_location = $machines->getLocations();
-
-        $locations = Locations::pluck('location', 'id');
-
-        return view('backend.machines.edit', compact('machines', 'typeOptions', 'availabilityOptions', 'this_item_location', 'locations'));
+        return view('backend.machines.edit', compact('machines', 'typeOptions', 'availabilityOptions'));
     }
 
     public function editLocations(Machines $machines)

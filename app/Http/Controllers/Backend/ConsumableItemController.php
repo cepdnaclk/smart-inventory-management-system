@@ -20,8 +20,8 @@ class ConsumableItemController extends Controller {
      */
 
     public function index() {
-        $consumables = ConsumableItem::paginate(36);
-        return view("backend.consumable.items.index", compact('consumables'));
+        //$consumables = ConsumableItem::paginate(36);
+        return view("backend.consumable.items.index");
     }
 
     /**
@@ -92,10 +92,7 @@ class ConsumableItemController extends Controller {
      */
     public function edit(ConsumableItem $consumableItem) {
         $types = ConsumableType::pluck('title', 'id');
-        $this_item_location = ItemLocations::where('item_id', $consumableItem->inventoryCode())->get()[0]['location_id'];
-        //        dd($this_item_location);
-        $locations = Locations::pluck('location', 'id');
-        return view('backend.consumable.items.edit', compact('types', 'consumableItem', 'locations', 'this_item_location'));
+        return view('backend.consumable.items.edit', compact('types', 'consumableItem'));
     }
 
     public function editLocation(ConsumableItem $consumableItem) {
