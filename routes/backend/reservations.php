@@ -34,24 +34,5 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Show'));
         });
 
-    //User------------------------------------------------------------------------
-    // Index
-    Route::get('reservation/users', [ReservationController::class, 'indexUser'])
-        ->name('reservation.users.index')
-        ->breadcrumbs(function (Trail $trail) {
-            $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Reservation'), route('admin.reservation.indexmain'))
-                ->push(__('User'));
-        });
-  
-    // Show
-    Route::get('reservation/users/{reservation}', [ReservationController::class, 'showUser'])
-        ->name('reservation.users.show')
-        ->breadcrumbs(function (Trail $trail) {
-            $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Reservation'), route('admin.reservation.indexmain'))
-                ->push(__('User'), route('admin.reservation.users.index'))
-                ->push(__('Show'));
-        });
 
 });
