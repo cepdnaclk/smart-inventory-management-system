@@ -40,7 +40,7 @@ Route::get('/reservation/edit/{reservation}', [ReservationController::class , 'e
     });
 // Update
 Route::put('reservation/update/{reservation}', [ReservationController::class, 'update'])
-->name('reservation.update');
+    ->name('reservation.update');
 
 
 
@@ -54,7 +54,8 @@ Route::get('reservation/delete/{reservation}', [ReservationController::class, 'd
     });
 
 // Destroy
-Route::delete('reservation/destroy/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+Route::delete('reservation/destroy/{reservation}', [ReservationController::class, 'destroy'])
+    ->name('reservation.destroy');
 
 Route::post('reservations', [CalendarController::class, 'store'])->name('calendar.store');
 Route::patch('reservations/update/{id}', [CalendarController::class, 'update'])->name('calendar.update');
