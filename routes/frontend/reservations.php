@@ -15,13 +15,29 @@ Route::get('/stations/{station}/reservations/', [CalendarController::class, 'ind
     });
 
 //Index
-Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation.index');
+Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation.index')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->parent('frontend.index')
+        ->push(__('Reservations'));
+    });
+
 
 // Show
-Route::get('/reservation/{reservation}', [ReservationController::class, 'show'])->name('reservation.show');
+Route::get('/reservation/{reservation}', [ReservationController::class, 'show'])->name('reservation.show')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->parent('frontend.index')
+        ->push(__('Reservations'), route('frontend.reservation.index'))
+        ->push(__('Show'));
+    });
+    
 
 // Edit 
-Route::get('/reservation/edit/{reservation}', [ReservationController::class , 'edit'])->name('reservation.edit');
+Route::get('/reservation/edit/{reservation}', [ReservationController::class , 'edit'])->name('reservation.edit')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->parent('frontend.index')
+        ->push(__('Reservations'), route('frontend.reservation.index'))
+        ->push(__('Edit'));
+    });
 // Update
 Route::put('reservation/update/{reservation}', [ReservationController::class, 'update'])
 ->name('reservation.update');
@@ -30,7 +46,12 @@ Route::put('reservation/update/{reservation}', [ReservationController::class, 'u
 
 // Delete
 Route::get('reservation/delete/{reservation}', [ReservationController::class, 'delete'])
-    ->name('reservation.delete');
+    ->name('reservation.delete')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->parent('frontend.index')
+        ->push(__('Reservations'), route('frontend.reservation.index'))
+        ->push(__('Delete'));
+    });
 
 // Destroy
 Route::delete('reservation/destroy/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');

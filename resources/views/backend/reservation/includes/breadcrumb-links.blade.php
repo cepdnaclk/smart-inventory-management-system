@@ -9,7 +9,7 @@
 
 <x-utils.link
         class="c-subheader-nav-link"
-        :href="route('admin.reservation.users.index')"
+        :href="route('frontend.reservation.index')"
         :text="__('Reservation User')"
         {{--    permission="admin.access.user.reactivate"--}}
 ></x-utils.link>
