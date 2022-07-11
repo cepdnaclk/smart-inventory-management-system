@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('backend.layouts.app')
 
 @section('title', __('My Orders'))
 
@@ -9,7 +9,7 @@
     
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped ">
             <thead class="thead-dark"> 
                 <tr>
                     <th>Id</th>
@@ -62,7 +62,7 @@
                     
                     <td>
                         <a  href="{{ route('frontend.user.orders.show', $order)}} "
-                        class="btn btn-primary btn-xs"> Details
+                        class="btn btn-primary btn-xs"> <i class="fa fa-check" title="Approval"></i> Details    
                      </a>
                     </td>
 

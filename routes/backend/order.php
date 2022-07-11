@@ -97,12 +97,12 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
 
 
 
+
+
+
+
+
 });
-
-
-
-
-
 
 //----------------------H_O_D Routes--------------------------//
 
@@ -144,6 +144,9 @@ Route::get('/orders/hod/{order}/rejected/', [OrderController::class, 'h_o_d_reje
      $trail->push(__('Home'), route('admin.dashboard'))
          ->push(__('Requests'),);
  });
+
+
+
 
 
 //-----------------------------------------------------
