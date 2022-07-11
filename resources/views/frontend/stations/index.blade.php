@@ -14,11 +14,13 @@
                     <div class="row equal">
                         @foreach($stations as $station)
                             <div class="col-6 col-sm-3 col-md-2 p-1 d-flex">
+
                                 <div class="text-center card">
+
                                     <a class="text-decoration-none"
                                        href="{{ route('frontend.stations.station', $station) }}">
                                         <img class="img-fluid p-1 mx-auto" src="{{ $station->thumbURL() }}"
-                                             alt="{{ $station->stationName }}"/>
+                                            alt="{{ $station->stationName }}"/>
                                         <div class="p-0.5">
                                             {{ $station->stationName }}
                                             @if($station->capacity > 1)
