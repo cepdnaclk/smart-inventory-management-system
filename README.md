@@ -55,6 +55,9 @@ Please make sure you already created database user account.
 // Install PHP dependencies
 composer install
 
+// If you received mmap() error, use this command 
+// php -d memory_limit=-1 /usr/local/bin/composer install
+
 // Update PHP dependencies
 composer update
 
