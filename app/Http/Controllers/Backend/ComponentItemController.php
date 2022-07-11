@@ -106,10 +106,10 @@ class ComponentItemController extends Controller {
      */
     public function edit(ComponentItem $componentItem) {
         $types = ComponentType::pluck('title', 'id');
-        $this_item_location = ItemLocations::where('item_id', $componentItem->inventoryCode())->get()[0]['location_id'];
-        //        dd($this_item_location);
-        $locations = Locations::pluck('location', 'id');
-        return view('backend.component.items.edit', compact('types', 'componentItem', 'locations', 'this_item_location'));
+        //$this_item_location = ItemLocations::where('item_id', $componentItem->inventoryCode())->get()[0]['location_id'];
+        ////        dd($this_item_location);
+        //$locations = Locations::pluck('location', 'id');
+        return view('backend.component.items.edit', compact('types', 'componentItem'));
     }
 
     public function editLocation(ComponentItem $componentItem) {
