@@ -96,7 +96,9 @@ class ReservationController extends Controller
             
         ];
 
-        if($data['duration'] > 240){
+        if ($userLoggedin['id'] != $reservation->user_id){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not update this reservation');   
+        }elseif($data['duration'] > 240){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Reservation can not exceed 4 hours');           
         }elseif($flag){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Time slot not available');   
@@ -137,6 +139,40 @@ class ReservationController extends Controller
         
         // dd('hi4');
         return false;
+    }
+
+    /**
+     * Confirm to delete the specified resource from storage.
+     *
+     * @param \App\Models\EquipmentItem $equipmentItem
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function delete(Reservation $reservation)
+    {
+        $station = Stations::find($reservation->station_id);
+        return view('frontend.reservation.delete', compact('reservation', 'station'));
+    }
+
+    public function destroy(Reservation $reservation)
+    {
+        $userLoggedIn = auth()->user();
+        $booking = Reservation::find($reservation->id);
+
+
+        if (!$booking) {
+            return response()->json([
+                'error' => 'Unable to locate the event'
+            ], 404);
+        }
+
+        if($userLoggedIn['id'] == $booking->user_id){
+            $booking->delete();
+
+            return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was deleted !');
+        }else{
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not delete this reservation!');
+        }
+        
     }
 
     
