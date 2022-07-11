@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
-use App\Models\Order;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Mail\OrderRequest;
 use Mail;
+use App\Models\Order;
+use App\Mail\OrderRequest;
+use Illuminate\Http\Request;
+use App\Domains\Auth\Models\User;
+use App\Http\Controllers\Controller;
+use App\Models\OrderApproval;
 
 class OrderController extends Controller
 {
@@ -29,15 +31,31 @@ class OrderController extends Controller
      
         $id=$request->OrderID;
         $order=Order::where('id',$id)->first();
+        $orderApproval=new OrderApproval();
         
+        
+
+        
+       
+        $select_lecturerId=User::where('type','lecturer')->where('name',$request->selectLecturer)->first();
+        $orderApproval->lecturer_id=$select_lecturerId->id;
+        $orderApproval->order_id=$order->id;
+     
+        $orderApproval->save();
+       
         $order->description=$request->description;
         $order->expected_date=$request->expected_date;
-        $order->save(); 
+      
+  
+     
+   
+        $order->save();
+        
+        return response()->json(  $order->orderApprovals);
       
         
-      Mail::to('rasathuraikaran26@gmail.com')->send(new OrderRequest());
       
-        return response()->json($order);
+  
         return redirect()->back()->withSuccess('Email has been sent');
         return response()->json($order);
 

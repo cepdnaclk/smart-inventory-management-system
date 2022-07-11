@@ -40,11 +40,21 @@ class UserSeeder extends Seeder
                 'active' => true,
             ]);
 
+           
+
             $lecturer = User::create([
                 'type' => User::TYPE_LECTURER,
                 'name' => 'Lecturer User',
                 'email' => env('SEED_LECTURER_EMAIL', 'lecturer@example.com'),
                 'password' => env('SEED_LECTURER_PASSWORD', 'lecturer_user'),
+                'email_verified_at' => now(),
+                'active' => true,
+            ]);
+             User::create([
+                'type' => User::TYPE_LECTURER,
+                'name' => 'HOD User',
+                'email' => env('SEED_USER_EMAIL', 'hod@example.com'),
+                'password' => env('SEED_USER_PASSWORD', 'hod_user'),
                 'email_verified_at' => now(),
                 'active' => true,
             ]);

@@ -258,12 +258,22 @@
                     
                     
                     @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link
-                                :href="route('admin.orders.lecturer.index')"
-                                class="c-sidebar-nav-link"
-                                :text="__('Request-Lecturer')"></x-utils.link>
-                    </li>
+                  @if ($logged_in_user->isHOD() )
+                  <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.orders.h_o_d.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Request-Lecturer')"></x-utils.link>
+                </li>  
+                  @else
+                  <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.orders.lecturer.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Request-Lecturer')"></x-utils.link>
+                </li>
+                  @endif
+                  
                     @endif
                     
                     
@@ -278,6 +288,16 @@
                     @endif
                     
                     @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
+                    @if ($logged_in_user->isHOD())
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                             
+                        :href="route('admin.orders.h_o_d.accepted.index')"
+                    
+                                class="c-sidebar-nav-link"
+                                :text="__('Accepted - Lecturer')"></x-utils.link>
+                    </li> 
+                    @else
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
                              
@@ -285,7 +305,9 @@
                     
                                 class="c-sidebar-nav-link"
                                 :text="__('Accepted - Lecturer')"></x-utils.link>
-                    </li>
+                    </li> 
+                    @endif
+                    
                     @endif
 
                     @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
@@ -297,14 +319,26 @@
                         </li>
                     @endif
                     @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link
-                             
-                        :href="route('admin.orders.lecturer.rejected.index')"
-                    
-                                class="c-sidebar-nav-link"
-                                :text="__('Rejected - Lecturer')"></x-utils.link>
-                    </li>
+                 @if ($logged_in_user->isHOD())
+                 <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                         
+                    :href="route('admin.orders.h_o_d.rejected.index')"
+                
+                            class="c-sidebar-nav-link"
+                            :text="__('Rejected - Lecturer')"></x-utils.link>
+                </li>  
+                 @else
+                 <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                         
+                    :href="route('admin.orders.lecturer.rejected.index')"
+                
+                            class="c-sidebar-nav-link"
+                            :text="__('Rejected - Lecturer')"></x-utils.link>
+                </li>
+                     
+                 @endif
                     @endif
                     
                  
