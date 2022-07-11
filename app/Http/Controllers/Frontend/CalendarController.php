@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use DateTime;
 use Carbon\Carbon;
 use App\Models\Stations;
 use App\Models\Reservation;
@@ -100,46 +101,59 @@ class CalendarController extends Controller
             ], 404);
         }
 
-        // $booking = Reservation::create([
-
-        //     'email' => $userLoggedin['email'],
-        //     'start_date' => $request->start_date,
-        //     'end_date' => $request->end_date,
-        //     'station_id' => $station->id,
-        //     'E_numbers' => $request->title,
-        // ]);
-
-
-        // $color = null;
-
-        // if($booking->title == 'Try'){
-        //     $color = '#33C0FF';
-        // }
-        // return response()->json([
-        //     'id' => $booking->id,
-        //     'start' => $booking->start_date,
-        //     'end' => $booking->end_date,
-        //     'title' => $booking->title,
-        //     'station_id' => $station->id,
-        //     'color' => $color ? $color: '',
-
-        // ]);
+        
     }
 
     public function update(Request $request, $id)
     {
+
+        // $station = $request['station_id'];
+        // dd('11');
+        $station = Session::get('station');
+        // dd($station->id);
+        $userLoggedin = auth()->user();   
+
+       
         $booking = Reservation::find($id);
+
+        //See whether update is made on the same day
+        $dateOriginal = (new DateTime($booking->start_date))->format('Y-m-d');
+        $dateNew = (new DateTime($request['start_date']))->format('Y-m-d');
+
+        $date1 = Carbon::createFromFormat('Y-m-d',$dateOriginal);
+        $date2 = Carbon::createFromFormat('Y-m-d', $dateNew);
+
+        $result = $date1->eq($date2);
+
+        $date = $request->begin;
+        // dd($date);
+
+        // See if the user has already made a reservation on that day for this station
+        $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->where('station_id', $station->id)->get();
+        // dd($bookings1);        
+
         if (!$booking) {
             return response()->json([
                 'error' => 'Unable to locate the event'
             ], 404);
         }
 
-        $booking->update([
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-        ]);
-        return response()->json('Event updated');
+        if(($result && (count($bookings1) == 1)) || (!$result && (count($bookings1) == 0)) ){
+
+            $booking->update([
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+            ]);
+            return response()->json('Event updated');
+
+        }else{
+            // Print message
+            return response()->json([
+                'error' => 'Unable to locate the event'
+            ], 404);
+        }
+
+        
 
     }
 
