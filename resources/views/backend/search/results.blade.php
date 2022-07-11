@@ -38,7 +38,7 @@
                     <br><br>
                     @foreach($searchResults->groupByType() as $type => $modelSearchResults)
 {{--                        <h2>{{ $type }}</h2>--}}
-
+                            
 
                         @foreach($modelSearchResults as $searchResult)
                             <ul>

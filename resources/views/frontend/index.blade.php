@@ -63,6 +63,7 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+
     </style>
     @stack('after-styles')
 </head>
@@ -90,8 +91,28 @@
         @endauth
     </div><!--top-right-->
 
+    
     <div class="content">
         @include('includes.partials.messages')
+        <div class="flex-center position-ref app" > 
+            {{ Form::open(array('route' => '###')) }}
+            {!! Form::text('keywords', null, array('style' => 'font-size: 17px;
+                    border: 1px solid b8b8b8;
+                    border-radius : 4px;
+                    float: left;
+                    width: 80%;
+                    background: #f1f1f1;')) !!}
+            {!! Form::submit('Search',array('style'=> 'width: 20%;
+                    padding: 4px;
+                    background: #929b94;
+                    color: white;
+                    border: 1px solid grey;
+                    border-radius : 4px;
+                    border-left: none;
+                    cursor: pointer;')) !!}
+            {{ Form::close() }}
+        </div>
+        
 
         <div class="title m-b-md">
             {{ config('app.name', 'Laravel') }}
