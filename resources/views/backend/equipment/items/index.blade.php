@@ -48,7 +48,7 @@
                             <th>&nbsp;</th>
                         </tr>
                         
-                        @foreach($equipment as $eq)
+                        @foreach($equipment as $eq) 
                             <tr>
                                 <td>{{ $eq->inventoryCode()  }}</td>
                                 <td>{{ $eq->title  }}</td>
