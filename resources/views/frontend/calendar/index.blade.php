@@ -325,8 +325,8 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3 class="text-center mt-5">Schedule Reservation - {{ $station->stationName }}</h3>
-                <br>
+                <h3 class="text-center mt-5"><b>Schedule Reservation - {{ $station->stationName }} </b><br></h3>
+                <h6 class="text-center">*Click and drag time period as required</h6>
 
                 <div class="col-md-11 offset-1 mt-5 mb-5">
                     <div id="calendar">

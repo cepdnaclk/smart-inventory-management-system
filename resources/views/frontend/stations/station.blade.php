@@ -139,7 +139,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h5 class="text-center mt-20">Current Reservations</h5>
+                    <h5 class="text-center mt-20"><u>Current Reservations</u></h5>
                     <br>
     
                     <div class="col-md-8 offset-2 mt-20 mb-5">
