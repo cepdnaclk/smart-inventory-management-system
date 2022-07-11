@@ -40,30 +40,5 @@ class ReservationController extends Controller
        return view('backend.reservation.show', compact('reservation'));
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexUser()
-    {
-        dd('hi');
-        $reservation = Reservation::orderBy('station_id')->paginate(16);
-        // dd($reservation);
-        return view('backend.reservation.user.index', compact('reservation'));
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-    public function showUser(Reservation $reservation)
-    {
-       return view('backend.reservation.user.show', compact('reservation'));
-    }
 
 }
