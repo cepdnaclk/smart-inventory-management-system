@@ -95,7 +95,7 @@
     <div class="content">
         @include('includes.partials.messages')
         <div class="flex-center position-ref app" > 
-            {{ Form::open(array('route' => '###')) }}
+            {{ Form::open(array('route' => 'admin.search.results')) }}
             {!! Form::text('keywords', null, array('style' => 'font-size: 17px;
                     border: 1px solid b8b8b8;
                     border-radius : 4px;
