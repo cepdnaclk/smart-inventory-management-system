@@ -10,5 +10,6 @@ use Tabuna\Breadcrumbs\Trail;
             $trail->push(__('Home'), route('frontend.index'))
                 ->push(__('Results'), route('frontSearch.results'));
         });
+        //might have to edit the breadcrumbs - routes ^ are wrong ?
 
    

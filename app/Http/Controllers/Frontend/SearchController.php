@@ -35,7 +35,7 @@ class SearchController extends Controller
             ->search($keywords);
 
         //create a view to show results on frontend and add the view below
-        return view('backend.search.results', compact('searchResults', 'keywords'));
+        return view('frontend.search.results', compact('searchResults', 'keywords'));
     }
 }
 
