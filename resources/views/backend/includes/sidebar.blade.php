@@ -241,19 +241,19 @@
             <ul class="c-sidebar-nav-dropdown-items">
                 
 
-                @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin() || $logged_in_user->isTechOfficer())
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link
-                                :href="route('admin.reservation.index')"
-                                class="c-sidebar-nav-link"
-                                :text="__('Reservations - Maintainer')"></x-utils.link>
-                    </li>
-
+                @if ($logged_in_user->isMaintainer() || $logged_in_user->isAdmin() || $logged_in_user->isTechOfficer())
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
                                 :href="route('admin.station.index')"
                                 class="c-sidebar-nav-link"
                                 :text="__('Stations')"></x-utils.link>
+                    </li>
+
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.reservation.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Reservations - Maintainer')"></x-utils.link>
                     </li>
 
                     <li class="c-sidebar-nav-item">
