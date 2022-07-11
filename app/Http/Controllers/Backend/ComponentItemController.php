@@ -21,8 +21,8 @@ class ComponentItemController extends Controller {
      */
 
     public function index() {
-        $components = ComponentItem::paginate(16);
-        return view("backend.component.items.index", compact('components'));
+        //$components = ComponentItem::paginate(16);
+        return view("backend.component.items.index");
     }
 
     /**
