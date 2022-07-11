@@ -74,7 +74,7 @@
                             var end_date = $.fullCalendar.formatDate(end, "YYYY-MM-DD HH:mm:ss");
                             var loggedIn = @json($userLoggedin);
                             var user = loggedIn['email'];
-                            var begin = moment(start).format('YYYY-MM-DD');
+                            var begin = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
 
                             // console.log(start, end);
                             console.log(start_date, end_date);
@@ -137,16 +137,29 @@
 
                 eventResize: function (event) {
 
+                    
+
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
 
-                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
-                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
+                    var start_date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-DD HH:MM:SS');
+                    var end_date = $.fullCalendar.formatDate(event.end, 'YYYY-MM-DD HH:MM:SS');
 
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+                    // console.log(start_date, end_date);
+
+                    // count hours
+                    const date1 = new Date(start_date);
+                    const date2 = new Date(end_date);
+
+                    
+                    var ms = date2.getTime() - date1.getTime();
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
+                    
+
+                    var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
+                    
 
                     const time_limit = 300;
 
@@ -159,6 +172,7 @@
                                 data: {
                                     start_date,
                                     end_date,
+                                    begin,
                                 },
                                 success: function (response) {
 
@@ -189,12 +203,21 @@
                     var id = event.id;
 
                     // TODO: Update this without moment
-                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
-                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+                    var start_date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-DD HH:MM:SS');
+                    var end_date = $.fullCalendar.formatDate(event.end, 'YYYY-MM-DD HH:MM:SS');
+
+
+                    // count hours
+                    const date1 = new Date(start_date);
+                    const date2 = new Date(end_date);
+
+                    var ms = date2.getTime() - date1.getTime();
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
 
+
+                    var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
+                    
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
 
@@ -207,7 +230,7 @@
                                 url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
                                 type: "PATCH",
                                 dataType: 'json',
-                                data: {start_date, end_date},
+                                data: {start_date, end_date, begin},
                                 success: function (response) {
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
@@ -215,10 +238,12 @@
 
                                 },
                                 error: function (error) {
-                                    // if(error.responseJSON.errors) {
-                                    //     $('#titleError').html(error.responseJSON.errors.title);
-                                    // }
-                                    console.log(error)
+                                    if(error.responseJSON.errors) {
+                                        $('#titleError').html(error.responseJSON.errors.title);
+                                    }else{
+                                        swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                    }
+                                    // console.log(error)
                                 },
                             });
                         } else {
@@ -267,6 +292,10 @@
                 }
             });
 
+            
+
+            // $('#calendar').fullCalendar('gotoDate', '2022-10-12');
+
             $("#bookingModal").on("hidden.bs.modal", function () {
                 $('#saveBtn').unbind();
             });
@@ -297,6 +326,7 @@
             }
             return false;
         }
+
     </script>
 @endpush
 

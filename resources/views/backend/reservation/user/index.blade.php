@@ -6,7 +6,7 @@
     @include('backend.reservation.includes.breadcrumb-links')
 @endsection 
 
-@section('content') 
+@section('content')
     <div>
         <x-backend.card>
             <x-slot name="header">
@@ -27,9 +27,9 @@
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
-                            <!-- <th>User ID</th> -->
+                            <th>User ID</th>
                             <th>User Name</th>
-                            <!-- <th>Station ID</th> -->
+                            <th>Station ID</th>
                             <th>Station Name</th>
                             <th>Start Date & Time</th>
                             <th>End Date & Time</th>
@@ -40,14 +40,14 @@
                         
                         @foreach($reservation as $res)
                             <tr>
-                                <!-- <td>{{ $res->user_id  }}</td> -->
+                                <td>{{ $res->user_id  }}</td>
                                 
                                 <td>
                                         @if($res->res_info() != null)
                                             {{ $res->res_info['name'] }}
                                         @endif
                                 </td>
-                                <!-- <td>{{ $res->station_id }}</td> -->
+                                <td>{{ $res->station_id }}</td>
                                 <td>
                                         @if($res->st_info() != null)
                                             {{ $res->st_info['stationName'] }}
@@ -62,7 +62,7 @@
 
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.reservation.show', $res)}}"
+                                            <a href="{{ route('admin.reservation.users.show', $res)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
