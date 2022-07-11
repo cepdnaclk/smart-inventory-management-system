@@ -7,7 +7,7 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Reservation: {{ $userLoggedin['name'] }}
+                Reservations: {{ $userLoggedin['name'] }}
             </x-slot>
 
             <x-slot name="body">

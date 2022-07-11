@@ -41,7 +41,7 @@ class ReservationController extends Controller
 
 
         $dateOriginal = (new DateTime($reservation->start_date))->format('Y-m-d');
-
+        
         // dd($dateOriginal);
 
         $userLoggedin = auth()->user();
@@ -67,6 +67,20 @@ class ReservationController extends Controller
         $end = new DateTime($request['end_date']);
         $diff = $start->diff($end);
         $minutes = ($diff->h*60) + ($diff->s/60) + ($diff->i) + ($diff->d*24*60) + ($diff->m*30*24*60) + ($diff->y*365*24*60);
+
+        //For overlap check
+        $res = Reservation::whereDate('start_date', $start)->where('station_id', $data['station_id'])->get();
+
+        $flag = false;
+        foreach($res as $r){
+            if($r->user_id != $userLoggedin['id']){
+                $flag = $this->isAnOverlapEvent($start, $end, $r);
+            }   
+        }
+        
+        
+        
+
        
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $start)->where('user_id', $userLoggedin['id'])->where('station_id', $data['station_id'])->get();
@@ -83,18 +97,46 @@ class ReservationController extends Controller
         ];
 
         if($data['duration'] > 240){
-            return redirect()->route('frontend.reservation.index')->with('Error', 'Station was not updated! Reservation can not exceed 4 hours');           
-        }elseif((count($bookings1) == 1) && $result){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Reservation can not exceed 4 hours');           
+        }elseif($flag){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Time slot not available');   
+        }elseif((count($bookings1) == 1) && $result && !$flag){
             $reservation->update($data);
-            return redirect()->route('frontend.reservation.index')->with('Success', 'Station was updated !');            
-        }elseif((count($bookings1) == 0)){
+            return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');            
+        }elseif((count($bookings1) == 0 && !$flag)){
             $reservation->update($data);
-            return redirect()->route('frontend.reservation.index')->with('Success', 'Station was updated !'); 
+            return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !'); 
         }elseif((count($bookings1) == 1) && !$result){
-            return redirect()->route('frontend.reservation.index')->with('Error', 'Station was not updated! Can not make multiple reservations in one day');   
+            return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Can not make multiple reservations in one day');   
         }
         
 
+    }
+
+    public function isAnOverlapEvent(DateTime $eventStartDay, DateTime $eventEndDay, Reservation $res) {
+        // var events = $('#calendar').fullCalendar('clientEvents');
+            $resStart = new DateTime($res->start_date);    
+            $resEnd = new DateTime($res->end_date);
+
+            // dd($eventStartDay, $res->start_date);      
+            // start-time in between any of the events
+            if ($eventStartDay > $resStart && $eventStartDay < $resEnd ) {
+                // dd('hi1');
+                return true;
+            }
+            //end-time in between any of the events
+            if ($eventEndDay > $resStart && $eventEndDay < $resEnd) {
+                // dd('hi2');
+                return true;
+            }
+            //any of the events in between/on the start-time and end-time
+            if ($eventStartDay <= $resStart && $eventEndDay >= $resEnd) {
+                // dd('hi3');
+                return true;
+            }
+        
+        // dd('hi4');
+        return false;
     }
 
     

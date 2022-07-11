@@ -258,7 +258,7 @@
 
                     <li class="c-sidebar-nav-item">
                         <x-utils.link
-                                :href="route('admin.reservation.users.index')"
+                                :href="route('frontend.reservation.index')"
                                 class="c-sidebar-nav-link"
                                 :text="__('Reservations - User')"></x-utils.link>
                     </li>
