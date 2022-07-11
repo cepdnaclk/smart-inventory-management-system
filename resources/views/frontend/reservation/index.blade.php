@@ -66,7 +66,11 @@
                                             <a href="{{ route('frontend.reservation.edit', $res)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
-                                            
+
+                                            <a href="{{ route('frontend.reservation.delete', $res)}}"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
+                                                                                title="Delete"></i>
+                                            </a>
                                             
                                         </div>
                                     </div>

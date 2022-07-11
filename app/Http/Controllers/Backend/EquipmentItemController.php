@@ -185,7 +185,7 @@ class EquipmentItemController extends Controller
         } catch (\Exception $ex) {
             return abort(500);
         }
-    }
+    } 
 
     /**
      * Confirm to delete the specified resource from storage.
