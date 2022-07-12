@@ -207,13 +207,14 @@ class EquipmentItemController extends Controller
      */
     public function destroy(EquipmentItem $equipmentItem)
     {
+       
         try {
             // Delete the thumbnail form the file system
             $this->deleteThumb($equipmentItem->thumbURL());
 
             $equipmentItem->delete();
 
-            //            delete location entry
+            // delete location entry
             $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get()[0];
             $this_item_location->delete();
 

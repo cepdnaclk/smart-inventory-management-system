@@ -51,7 +51,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        'admin' => [
+        'admin' => [ 
             /*
              * This is configurable, disable boilerplate.access.user.admin_requires_2fa instead of removing this
              */

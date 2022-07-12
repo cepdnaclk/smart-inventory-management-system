@@ -9,6 +9,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
 class CalendarController extends Controller
@@ -42,6 +43,8 @@ class CalendarController extends Controller
                 'color' => $color,
             ];
         }
+
+        // $response = Http::get('https://api.ce.pdn.ac.lk/people/v1/students/E18/379/');
 
         return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin]);
     }
