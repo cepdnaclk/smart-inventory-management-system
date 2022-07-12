@@ -40,6 +40,7 @@
             var booking = @json($events);
 
             $('#calendar').fullCalendar({
+                
                 defaultView: 'agendaWeek',
                 header: {
                     left: 'prev, next today',
@@ -111,10 +112,12 @@
                                             'color': response.color,
                                             'auth': response.auth,
                                         });
+                                        
                                         swal("Done!", "Event Created!", "success");
-
-                                        // TODO: This is a temporary fix. Find a better way to this
                                         refreshPage();
+                                        // TODO: This is a temporary fix. Find a better way to this
+                                        
+                                        
                                     },
                                     error: function (error) {
                                         if (error.responseJSON.errors) {
@@ -178,6 +181,7 @@
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
+                                    refreshPage();
                                 },
                                 error: function (error) {
                                     // if(error.responseJSON.errors) {
@@ -235,6 +239,7 @@
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
+                                    refreshPage();
 
                                 },
                                 error: function (error) {
@@ -270,6 +275,7 @@
                                 success: function (response) {
                                     $('#calendar').fullCalendar('removeEvents', response);
                                     swal("Done!", "Event Deleted!", "success");
+                                    refreshPage();
 
                                 },
                                 error: function (error) {

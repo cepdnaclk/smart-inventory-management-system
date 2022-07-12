@@ -11,6 +11,7 @@ use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class CalendarController extends Controller
 {
@@ -44,7 +45,7 @@ class CalendarController extends Controller
             ];
         }
 
-        // $response = Http::get('https://api.ce.pdn.ac.lk/people/v1/students/E18/379/');
+        $response = Http::get('https://api.ce.pdn.ac.lk/people/v1/students/E18/379/');
 
         return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin]);
     }
@@ -96,6 +97,16 @@ class CalendarController extends Controller
                 'color' => $color ? $color : '',
 
             ]);
+
+            // return Redirect::back()->response()->json([
+            //     'id' => $booking->id,
+            //     'start' => $booking->start_date,
+            //     'end' => $booking->end_date,
+            //     'title' => $booking->title,
+            //     'station_id' => $station->id,
+            //     'color' => $color ? $color : '',
+
+            // ]);
 
         } else {
             // Print message
