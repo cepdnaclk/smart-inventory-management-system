@@ -15,11 +15,14 @@ Route::prefix('stations')->group(function () {
                 ->push(__('Stations'), route('frontend.stations.index'));
         });
 
-    Route::get('/list', [StationController::class, 'sidebarIndex'])
-        ->name('stations.list');
+    Route::middleware(['auth'])->group(function () {
 
-    Route::get('/list/{station}', [StationController::class, 'show'])
-        ->name('station.show');
+        Route::get('/list', [StationController::class, 'sidebarIndex'])
+            ->name('stations.list');
+
+        Route::get('/list/{station}', [StationController::class, 'show'])
+            ->name('station.show');
+    });
 
     Route::get('/{station}', [StationController::class, 'viewStation'])
         ->name('stations.station')
