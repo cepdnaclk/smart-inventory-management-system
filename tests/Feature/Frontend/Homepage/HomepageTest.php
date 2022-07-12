@@ -37,6 +37,14 @@ class HomepageTest extends TestCase
     }
 
     /** @test */
+    public function homepage_has_link_to_stations()
+    {
+        $response = $this->get('/');
+        $response->assertSee("Stations");
+        $response->assertSee("/stations");
+    }
+
+    /** @test */
     public function homepage_has_link_to_consumables()
     {
         $response = $this->get('/');

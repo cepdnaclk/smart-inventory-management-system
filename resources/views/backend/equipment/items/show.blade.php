@@ -6,7 +6,7 @@
     @include('backend.equipment.includes.breadcrumb-links')
 @endsection
 
-@section('content')
+@section('content') 
     <div>
         <x-backend.card>
             <x-slot name="header">
