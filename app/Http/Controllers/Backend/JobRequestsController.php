@@ -163,8 +163,8 @@ class JobRequestsController extends Controller
 
     public function officer_index()
     {
-        $jobs = JobRequests::jobsForTechOfficer();
-        return view('backend.jobs.technical-officer.index', compact('jobs'));
+        //$jobs = JobRequests::jobsForTechOfficer();
+        return view('backend.jobs.technical-officer.index');
     }
 
     public function officer_show(JobRequests $jobRequests)
