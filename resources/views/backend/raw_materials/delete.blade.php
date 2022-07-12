@@ -16,6 +16,8 @@
             <x-slot name="body">
                 <p>Are you sure you want to delete
                     <strong><i>{{ $rawMaterials->title  }}</i></strong> ?
+                    <br>
+                    Note : You will not be able to delete if this raw material is being used in any fabrications.
                 </p>
 
                 <div class="d-flex">

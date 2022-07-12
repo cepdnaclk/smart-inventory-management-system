@@ -59,6 +59,16 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Edit'));
         });
 
+    // Edit location
+    Route::get('equipment/items/edit/location/{equipmentItem}', [EquipmentItemController::class, 'editLocation'])
+        ->name('equipment.items.edit.location')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Equipment'), route('admin.equipment.index'))
+                ->push(__('Items'), route('admin.equipment.items.index'))
+                ->push(__('Edit Location'));
+        });
+
     // Update
     Route::put('equipment/items/{equipmentItem}', [EquipmentItemController::class, 'update'])
         ->name('equipment.items.update');

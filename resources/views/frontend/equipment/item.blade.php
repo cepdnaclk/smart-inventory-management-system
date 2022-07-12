@@ -5,7 +5,7 @@
 @push('after-styles')
     <style>
         td {
-        padding: 1px 12px 1px 0;
+            padding: 1px 12px 1px 0;
         }
     </style>
 @endpush
@@ -67,7 +67,6 @@
                                 : <b>{{ $equipmentItem->productCode }}({{ $equipmentItem->brand }})</b>
                             </td>
                         </tr>
-
                         <tr>
                             <td>Available Quantity</td>
                             <td>
@@ -101,6 +100,25 @@
                         </tr>
                     </table>
                 </div>
+
+                {{-- Location info --}}
+                @if($locationCount > 1)
+                    <div class="pt-3">
+                        <u>Locations</u>
+                        <ul>
+                            @foreach($locationStringArray as $eachLocation)
+                                <li>{{$eachLocation}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @elseif ($locationCount == 1)
+                    <div class="pt-3">
+                        <u>Location</u>
+                        <ul>
+                            <li>{{$locationStringArray[0]}}</li>
+                        </ul>
+                    </div>
+                @endif
 
                 @if($equipmentItem->isElectrical && $equipmentItem->powerRating != null)
                     <div class="pt-3">

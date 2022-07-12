@@ -16,7 +16,7 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string("location");
-            $table->foreignId("parent_location")->nullable()->references("id")->on("locations");
+            $table->foreignId("parent_location")->nullable()->references("id")->on("locations")->onDelete("cascade");
             $table->integer("x")->nullable();
             $table->integer("y")->nullable();
             $table->integer("z")->nullable();
