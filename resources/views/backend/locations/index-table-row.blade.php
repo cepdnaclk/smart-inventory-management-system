@@ -3,7 +3,7 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
-    {{ $row->location }}
+    {{ $row->getFullLocationAddress() }}
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
