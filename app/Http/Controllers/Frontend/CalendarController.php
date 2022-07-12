@@ -46,8 +46,6 @@ class CalendarController extends Controller
             ];
         }
 
-        // $response = Http::get('https://api.ce.pdn.ac.lk/people/v1/students/E18/379/');
-
         return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin]);
     }
 
