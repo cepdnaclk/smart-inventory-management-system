@@ -20,8 +20,8 @@ class MachinesController extends Controller
      */
     public function index()
     {
-        $machines = Machines:: paginate(16);
-        return view('backend.machines.index', compact('machines'));
+        //$machines = Machines:: paginate(16);
+        return view('backend.machines.index');
     }
 
     /**
