@@ -114,7 +114,7 @@ class CalendarController extends Controller
                 
                 //send mail
                 Mail::to($email)
-                    ->send(new StationReservationMail(auth()->user()));
+                    ->send(new StationReservationMail(auth()->user(), $station, $booking));
             }
 
             //**********mails****************
