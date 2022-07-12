@@ -3,14 +3,20 @@
 @section('title', __('My Orders'))
 
 @section('content')  
+<div>
+    <x-backend.card>
+        <x-slot name="header">
+        My Orders
+        </x-slot>
 
+        <x-slot name="body">
 
-<div class="container ">
+<div class="table-responsive pt-3">
     
-<div class="row">
-    <div class="col-md-12">
+
         <table class="table table-striped ">
-            <thead class="thead-dark"> 
+
+            <thead > 
                 <tr>
                     <th>Id</th>
                     
@@ -74,10 +80,12 @@
             </tbody>
 
         </table>
+    </x-slot>
+</x-backend.card>
 
-    </div>
 
-</div>
+
+
 
 </div>
 
