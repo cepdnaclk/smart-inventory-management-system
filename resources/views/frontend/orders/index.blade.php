@@ -1,16 +1,22 @@
-@extends('frontend.layouts.app')
+@extends('backend.layouts.app')
 
 @section('title', __('My Orders'))
 
 @section('content')  
+<div>
+    <x-backend.card>
+        <x-slot name="header">
+        My Orders
+        </x-slot>
 
+        <x-slot name="body">
 
-<div class="container ">
+<div class="table-responsive pt-3">
     
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark"> 
+
+        <table class="table table-striped ">
+
+            <thead > 
                 <tr>
                     <th>Id</th>
                     
@@ -62,7 +68,7 @@
                     
                     <td>
                         <a  href="{{ route('frontend.user.orders.show', $order)}} "
-                        class="btn btn-primary btn-xs"> Details
+                        class="btn btn-primary btn-xs"> <i class="fa fa-check" title="Approval"></i> Details    
                      </a>
                     </td>
 
@@ -74,10 +80,12 @@
             </tbody>
 
         </table>
+    </x-slot>
+</x-backend.card>
 
-    </div>
 
-</div>
+
+
 
 </div>
 

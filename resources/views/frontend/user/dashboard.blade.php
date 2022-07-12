@@ -76,6 +76,14 @@
 
 
 @section('content')
+@if (Session::has('success'))
+<div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="fa fa-times"></i>
+    </button>
+    <strong>Success !</strong> {{ session('success') }}
+</div>
+@endif
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12">

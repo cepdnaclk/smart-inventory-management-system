@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
         ]);
 
         if (app()->environment(['local', 'testing'])) {
-            User::create([
+           User::create([
                 'type' => User::TYPE_USER,
                 'name' => 'Test User',
                 'email' => env('SEED_USER_EMAIL', 'user@example.com'),

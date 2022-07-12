@@ -18,7 +18,7 @@ trait UserMethod
     }
     public function isHOD(): bool
     {
-        return $this->id === 4;
+        return $this->id === 4 ;
     }
 
     /**
