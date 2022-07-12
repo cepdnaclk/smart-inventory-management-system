@@ -27,7 +27,7 @@ class OrderController extends Controller
      public function store(Request $request){
  
      //dd($request->OrderID);
-    $request->validate(['name'=>'required','enumber'=>'required','expected_date'=>'required','description'=>'required','selectLecturer'=>'required']);
+        $request->validate(['name'=>'required','enumber'=>'required','expected_date'=>'required','description'=>'required','selectLecturer'=>'required']);
      
         $id=$request->OrderID;
         $order=Order::where('id',$id)->first();
@@ -50,7 +50,11 @@ class OrderController extends Controller
      
    
         $order->save();
-        
+        $cart = session()->get('cart', []);
+        if ($cart != null)
+        $cart = [];
+        session()->put('cart', $cart);
+        return redirect()->route('frontend.user.products')->with('success', 'Order has been sent sucessfully.');        
         return response()->json(  $order->orderApprovals);
       
         

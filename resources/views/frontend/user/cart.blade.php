@@ -4,13 +4,18 @@
 
 
 @section('content')  
+<x-backend.card>
+    <x-slot name="header">
+    My Cart
+    </x-slot>
 
-<table id="cart" class="table table-hover table-condensed">
+    <x-slot name="body">
+<table id="cart" class="table  ">
     <thead>
         <tr>
             <th style="width:50%">Product</th>            
-            <th style="width:8%">Quantity</th>           
-            <th style="width:10%"></th>
+            <th style="width:7%">Quantity</th>           
+            <th style="width:2%"></th>
         </tr>
     </thead>
     <tbody>
@@ -37,7 +42,8 @@
                       
                     
                     <td class="actions" data-th="">
-                        <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i>Remove</button>
+                      <a  class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i> </a>
+
                     </td>
                 </tr>
             @endforeach
@@ -64,17 +70,19 @@
                     <br> 
                     
                    
-                    <button class="btn btn-success" type="submit">
-                        Place reservation
-                        </button>               
+                        <input type="submit"  class="btn btn-success  "  value="Place reservation">
+                        
+                                
                     
                 </form>
             </td>
         </tr>
     </tfoot>
 </table>
-
+</x-slot>
+</x-backend.card>
 @endsection
+
 
 @section('scripts')
 
