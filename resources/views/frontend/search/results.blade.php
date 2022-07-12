@@ -27,10 +27,15 @@
                     @foreach($searchResults->groupByType() as $type => $modelSearchResults)
 {{--                        <h2>{{ $type }}</h2>--}}
                             
-
                         @foreach($modelSearchResults as $searchResult)
                             <ul>
                                 <li><a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a></li>
+                                {{get_class($searchResult->searchable)}}
+                                @if (get_class($searchResult->searchable) == 'App\Models\RawMaterials') 
+                                @foreach ( $searchResult->searchable->getLocation() as $eachLocation )
+                                    {{  $eachLocation }} <br>
+                                @endforeach
+                                    @endif
                             </ul>
                         @endforeach
                     @endforeach
