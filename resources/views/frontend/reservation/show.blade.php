@@ -21,6 +21,18 @@
                             @endif
                         </h4>
                     </div>
+
+                    <div class="d-flex px-0 mt-0 mb-0 ml-auto">
+                        <div class="btn-group" role="group" aria-label="Modify Buttons">
+                            <a href="{{ route('frontend.reservation.edit', $reservation)}}"
+                               class="btn btn-info btn-xs "><i class="fa fa-pencil" title="Edit"></i>
+                            </a>
+                            <a href="{{ route('frontend.reservation.delete', $reservation)}}"
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
+                                                                title="Delete"></i>
+                            </a>
+                        </div>
+                    </div>
                    
                 </div>
                 <table class="table">
