@@ -66,10 +66,14 @@ class Order extends Model
     {
         return Order::where('status', 'READY')->orderBy('locker_id')->paginate(16);
     }
-
+    
     public static function getApprovedOrders()
     {
-        return Order::where('status', 'APPROVED')->orderBy('created_at','desc')->paginate(16);
+        return Order::where('status', 'APPROVED')->orderBy('id')->paginate(16);
     }
-    
+
+    public static function getSubmittedOrders()
+    {
+        return Order::where('status', 'SUBMITTED')->orderBy('id')->paginate(16);
+    }
 }

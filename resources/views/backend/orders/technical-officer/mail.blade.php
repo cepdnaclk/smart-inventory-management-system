@@ -13,10 +13,9 @@
                    'files'=>true,
                    'enctype'=>'multipart/form-data'
        ]) !!}
-
         <x-backend.card>
             <x-slot name="header">
-                Mail Detail : Order ID - {{ $approvedOrder->id }}
+                Mail Detail : Order ID - {{ $orderRequest->id }}
             </x-slot>
 
             <x-slot name="body">
@@ -26,7 +25,7 @@
                     {!! Form::label('email', 'Email To', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::email('email', $approvedOrder->user->email, ['class'=>'form-control']) !!} {{--,'readonly'--}}
+                        {!! Form::email('email', $orderRequest->user->email, ['class'=>'form-control']) !!} {{--,'readonly'--}}
                         @error('email')
                         <strong>{{ $message }}</strong>
                         @enderror
@@ -38,7 +37,7 @@
                     {!! Form::label('body', 'Email Body', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::textarea('body','', ['class'=>'form-control', 'rows'=>3, 'required'=>true, 'placeholder'=>"Please enter your email body here..." ]) !!}
+                        {!! Form::textarea('body','', ['class'=>'form-control', 'rows'=>6, 'required'=>true, 'placeholder'=>"Please enter your email body here..." ]) !!}
                         @error('body')
                         <strong>{{ $message }}</strong>
                         @enderror

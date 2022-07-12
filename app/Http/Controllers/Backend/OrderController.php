@@ -160,30 +160,58 @@ class OrderController extends Controller
     //---------------------------------------------------------------------------------------------------------------------------------------
     //technical-officer
 
+    //index
     public function officer_index()
     {
-        $approvedOrders = Order::getApprovedOrders();
+        $orderRequests = Order::getApprovedOrders();
 
-        return view('backend.orders.technical-officer.index', compact('approvedOrders'));
+        return view('backend.orders.technical-officer.index', compact('orderRequests'));
     }
 
-    public function officer_show(Order $approvedOrder)
+    //approved orders by students
+    public function officer_index_for_approved_orders()
     {
-        return view('backend.orders.technical-officer.show', compact('approvedOrder'));
+        $orderRequests = Order::getApprovedOrders();
+
+        return view('backend.orders.technical-officer.approved.index', compact('orderRequests'));
     }
 
-    public function officer_confirm(Order $approvedOrder)
+    //submitted orders by students
+    public function officer_submitted_orders_index()
     {
+        $orderRequests = Order::getSubmittedOrders();
+
+        return view('backend.orders.technical-officer.submitted.index', compact('orderRequests'));
+    }
+
+    public function officer_show(Order $orderRequest)
+    {
+        return view('backend.orders.technical-officer.show', compact('orderRequest'));
+    }
+
+    public function officer_confirm_for_approved_orders(Order $orderRequest)
+    {   
         $availableLockers = Locker::getAvailableLockers()->pluck('id','id');
-        if ($approvedOrder->status == 'APPROVED') {
-            return view('backend.orders.technical-officer.confirm', compact('approvedOrder','availableLockers'));
+
+        if ($orderRequest->status == 'APPROVED') {
+            return view('backend.orders.technical-officer.approved.confirm', compact('orderRequest','availableLockers'));
         } else {
-            $id = $approvedOrder->id;
+            $id = $orderRequest->id;
             return redirect()->route('admin.orders.officer.index')->with('Success', 'The Order request #' . $id . ' already ready !');
         }
     }
 
-    public function officer_ready(Request $request, Order $approvedOrder)
+    public function officer_confirm_for_submitted_orders(Order $orderRequest)
+    {
+        if ($orderRequest->status == 'SUBMITTED') {
+            return view('backend.orders.technical-officer.submitted.confirm', compact('orderRequest'));
+        } else {
+            $id = $orderRequest->id;
+            return redirect()->route('admin.orders.officer.submitted.index')->with('Success', 'The Order request #' . $id . ' already finished !');
+        }
+    }
+
+    public function officer_ready(Request $request, Order $orderRequest)
     {
         $data = request()->validate([
             'locker_id' => 'numeric|required',
@@ -191,17 +219,31 @@ class OrderController extends Controller
         ]);
 
         try {
-            $approvedOrder->update($data);
+            $orderRequest->update($data);
 
             // Change the status
-            $approvedOrder->status = 'READY';
-            $approvedOrder->save();
+            $orderRequest->status = 'READY';
+            $orderRequest->save();
 
             //Update Locker isAvailable field
-            $approvedOrder->locker->is_available = false;
-            $approvedOrder->locker->save();
+            $orderRequest->locker->is_available = false;
+            $orderRequest->locker->save();
             
-            return view('backend.orders.technical-officer.mail', compact('approvedOrder'));
+            return view('backend.orders.technical-officer.mail', compact('orderRequest'));
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
+    }
+
+    public function officer_finish(Order $orderRequest)
+    {
+        try {
+            // Change the status
+            $orderRequest->status = 'FINISHED';
+            $orderRequest->save();
+
+            return view('backend.orders.technical-officer.mail', compact('orderRequest'));
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -211,22 +253,18 @@ class OrderController extends Controller
     public function officer_mail(Request $request)
     {   $data = request()->validate([
             'email' => 'required|email',
-            'body' => 'string|required',
+            'body' => 'required|string',
         ]);
 
-        Mail::to($data['email'])->send(new TechnicalOfficerMail($data));
-
-        return redirect()->route('admin.orders.officer.index')->with('Success', 'Email has been sent!');
+        try {
+            Mail::to($data['email'])->send(new TechnicalOfficerMail($data));
+            return redirect()->route('admin.orders.officer.index')->with('Success', 'Email has been sent!');
+        
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
     }
     
-    public function officer_finish(Order $approvedOrder)
-    {
-        dd("Finished");
-        // TODO: Finish the order
-        // Send emails to Student and Lecturer about the finish notice
-        // Update machine timed, material usage, etc...
-        return redirect()->route('admin.jobs.officer.index');
-    }
 //---------------------------------------------------------------------------------------------------------------------------------------
     
 

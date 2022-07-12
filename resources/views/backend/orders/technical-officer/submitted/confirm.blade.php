@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Order Requests - Technical Officer View'))
+@section('title', __('Fabrications'))
 
 @section('breadcrumb-links')
 @endsection
@@ -9,8 +9,7 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Order Request by
-                    <b>{{ $orderRequest->user['name'] }}</b>
+                Orders : Confirm | Order #{{ $orderRequest->id  }}
             </x-slot>
 
             <x-slot name="body">
@@ -18,7 +17,16 @@
                     <div class="d-flex">
                         <h4>Order #{{ $orderRequest->id }}</h4>
                     </div>
+                    <div class="d-flex px-0 mt-0 mb-0 ml-auto">
+                        <div class="btn-group" role="group" aria-label="Modify Buttons">
+                            <a href="{{ route('admin.orders.officer.finish', $orderRequest)}}"
+                               class="btn btn-primary btn-xs me-2"><i class="fa fa-check" title="Approve"></i>
+                               Confirm and Email to student
+                            </a>
+                        </div>
+                    </div>
                 </div>
+                
                 <table class="table">
                     <tr>
                         <td>Status</td>
@@ -134,6 +142,7 @@
                         @endif
                     </tr>
                 </table>
+
             </x-slot>
         </x-backend.card>
     </div>
