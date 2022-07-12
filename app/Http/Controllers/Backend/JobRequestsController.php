@@ -129,8 +129,8 @@ class JobRequestsController extends Controller
 
     public function supervisor_index()
     {
-        $jobs = JobRequests::where('supervisor', \Auth::user()->id)->get()->reverse();
-        return view('backend.jobs.supervisor.index', compact('jobs'));
+        //$jobs = JobRequests::where('supervisor', \Auth::user()->id)->get()->reverse();
+        return view('backend.jobs.supervisor.index');
     }
 
     public function supervisor_show(JobRequests $jobRequests)

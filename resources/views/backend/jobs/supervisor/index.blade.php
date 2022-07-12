@@ -80,50 +80,51 @@
 
                 <div class="container table-responsive pt-5">
                     <h4 class="pb-3">Pending Fabrication</h4>
-                    <table class="table table-striped align-middle">
-                        <tr>
-                            <th>ID</th>
-                            <th>Status</th>
-                            <th>Machine</th>
-                            <th>Material</th>
-                            <th>Student</th>
-                            <th>&nbsp;</th>
-                        </tr>
+                    <livewire:backend.fabrications-supervisor-pending-fabrication-table/>
+{{--                    <table class="table table-striped align-middle">--}}
+{{--                        <tr>--}}
+{{--                            <th>ID</th>--}}
+{{--                            <th>Status</th>--}}
+{{--                            <th>Machine</th>--}}
+{{--                            <th>Material</th>--}}
+{{--                            <th>Student</th>--}}
+{{--                            <th>&nbsp;</th>--}}
+{{--                        </tr>--}}
 
-                        @foreach($jobs as $job)
-                            @if($job->status == 'PENDING_FABRICATION')
-                                <tr>
-                                    <td>Job #{{ $job->id }}</td>
-                                    <td>{{ \App\Models\JobRequests::job_status()[$job->status]  }}</td>
-                                    <td>
-                                        @if($job->machine_info() != null)
-                                            <a href="{{ route('admin.machines.show', $job->machine) }}" target="_blank">
-                                                {{ $job->machine_info['title'] }}
-                                            </a>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($job->material_info() != null)
-                                            <a href="{{ route('admin.raw_materials.show', $job->material) }}"
-                                               target="_blank">
-                                                {{ $job->material_info['title'] }}
-                                            </a>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($job->student_info() != null)
-                                            {{ $job->student_info['name'] }}
-                                        @endif
-                                    </td>
+{{--                        @foreach($jobs as $job)--}}
+{{--                            @if($job->status == 'PENDING_FABRICATION')--}}
+{{--                                <tr>--}}
+{{--                                    <td>Job #{{ $job->id }}</td>--}}
+{{--                                    <td>{{ \App\Models\JobRequests::job_status()[$job->status]  }}</td>--}}
+{{--                                    <td>--}}
+{{--                                        @if($job->machine_info() != null)--}}
+{{--                                            <a href="{{ route('admin.machines.show', $job->machine) }}" target="_blank">--}}
+{{--                                                {{ $job->machine_info['title'] }}--}}
+{{--                                            </a>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        @if($job->material_info() != null)--}}
+{{--                                            <a href="{{ route('admin.raw_materials.show', $job->material) }}"--}}
+{{--                                               target="_blank">--}}
+{{--                                                {{ $job->material_info['title'] }}--}}
+{{--                                            </a>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        @if($job->student_info() != null)--}}
+{{--                                            {{ $job->student_info['name'] }}--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
 
-                                    <td class="d-flex justify-content-end">
-                                        &nbsp;
-                                    </td>
+{{--                                    <td class="d-flex justify-content-end">--}}
+{{--                                        &nbsp;--}}
+{{--                                    </td>--}}
 
-                                </tr>
-                            @endif
-                        @endforeach
-                    </table>
+{{--                                </tr>--}}
+{{--                            @endif--}}
+{{--                        @endforeach--}}
+{{--                    </table>--}}
                 </div>
             </x-slot>
         </x-backend.card>
