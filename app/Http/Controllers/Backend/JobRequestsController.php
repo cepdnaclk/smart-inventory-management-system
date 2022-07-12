@@ -24,8 +24,8 @@ class JobRequestsController extends Controller
         // $jobs = JobRequests::paginate(16);
         // return view('backend.jobs.student.index', compact('jobs'));
 
-        $jobs = JobRequests::where('student', \Auth::user()->id)->get()->reverse();
-        return view('backend.jobs.student.index', compact('jobs'));
+        //$jobs = JobRequests::where('student', \Auth::user()->id)->get()->reverse();
+        return view('backend.jobs.student.index');
     }
 
     public function student_create()
