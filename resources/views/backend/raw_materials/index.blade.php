@@ -34,50 +34,51 @@
                     </div>
                 @endif
 
-                <div class="container table-responsive pt-3">
-                    <table class="table table-striped">
-                        <tr>
-                            <th>Title</th>
-                            <th>Color</th>
-                            <th>Quantity</th>
-                            <th>Availability</th>
-                            <th>&nbsp;</th>
-                        </tr>
+                <livewire:backend.raw-materials-table />
+{{--                <div class="container table-responsive pt-3">--}}
+{{--                    <table class="table table-striped">--}}
+{{--                        <tr>--}}
+{{--                            <th>Title</th>--}}
+{{--                            <th>Color</th>--}}
+{{--                            <th>Quantity</th>--}}
+{{--                            <th>Availability</th>--}}
+{{--                            <th>&nbsp;</th>--}}
+{{--                        </tr>--}}
 
-                        @foreach($raw_materials as $cm)
+{{--                        @foreach($raw_materials as $cm)--}}
 
-                            <tr>
-                                <td>{{ $cm->title  }}</td>
-                                <td>{{ $cm->color }}</td>
-                                <td>{{ $cm->quantity }} {{ $cm->unit }}</td>
-                                <td>{{ $cm->availability }}</td>
-                                <td>
-                                    <div class="d-flex px-0 mt-0 mb-0">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.raw_materials.show', $cm)}}"
-                                               class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
-                                            </a>
+{{--                            <tr>--}}
+{{--                                <td>{{ $cm->title  }}</td>--}}
+{{--                                <td>{{ $cm->color }}</td>--}}
+{{--                                <td>{{ $cm->quantity }} {{ $cm->unit }}</td>--}}
+{{--                                <td>{{ $cm->availability }}</td>--}}
+{{--                                <td>--}}
+{{--                                    <div class="d-flex px-0 mt-0 mb-0">--}}
+{{--                                        <div class="btn-group" role="group" aria-label="Basic example">--}}
+{{--                                            <a href="{{ route('admin.raw_materials.show', $cm)}}"--}}
+{{--                                               class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>--}}
+{{--                                            </a>--}}
 
-                                            <a href="{{ route('admin.raw_materials.edit', $cm)}}"
-                                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
-                                            </a>
-                                            <a href="{{ route('admin.raw_materials.edit.location', $cm)}}"
-                                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker"
-                                                                                 title="Edit Location"></i>
-                                                <a href="{{ route('admin.raw_materials.delete', $cm)}}"
-                                                   class="btn btn-danger btn-xs"><i class="fa fa-trash"
-                                                                                    title="Delete"></i>
-                                                </a>
-                                        </div>
-                                    </div>
-                                </td>
+{{--                                            <a href="{{ route('admin.raw_materials.edit', $cm)}}"--}}
+{{--                                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <a href="{{ route('admin.raw_materials.edit.location', $cm)}}"--}}
+{{--                                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker"--}}
+{{--                                                                                 title="Edit Location"></i>--}}
+{{--                                                <a href="{{ route('admin.raw_materials.delete', $cm)}}"--}}
+{{--                                                   class="btn btn-danger btn-xs"><i class="fa fa-trash"--}}
+{{--                                                                                    title="Delete"></i>--}}
+{{--                                                </a>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
 
-                            </tr>
-                        @endforeach
-                    </table>
+{{--                            </tr>--}}
+{{--                        @endforeach--}}
+{{--                    </table>--}}
 
-                    {{ $raw_materials->links() }}
-                </div>
+{{--                    {{ $raw_materials->links() }}--}}
+{{--                </div>--}}
             </x-slot>
         </x-backend.card>
     </div>

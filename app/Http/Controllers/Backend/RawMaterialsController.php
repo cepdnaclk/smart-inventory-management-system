@@ -20,8 +20,8 @@ class RawMaterialsController extends Controller
      */
     public function index()
     {
-        $raw_materials = RawMaterials::paginate(16);
-        return view('backend.raw_materials.index', compact('raw_materials'));
+        //$raw_materials = RawMaterials::paginate(16);
+        return view('backend.raw_materials.index');
     }
 
     /**
