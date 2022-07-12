@@ -26,8 +26,15 @@ class LocationsMenuTest extends TestCase
         $response = $this->get('/admin/locations');
 
         $allLocations = Locations::all();
+        $count = 0;
         foreach ($allLocations as $location) {
             $response->assertSee($location->location);
+
+            //pagination only shows 10 items at page 1
+            if ($count >9) {
+                break;
+            }
+            $count++;
         }
     }
 
@@ -51,8 +58,11 @@ class LocationsMenuTest extends TestCase
             'parentLocation' => 1
         ]);
         $response->assertStatus(302);
-        $response = $this->get('/admin/locations');
-        $response->assertSee('Test Location');
+        $this->assertDatabaseHas('locations', [
+            'location' => 'Test Location',
+            'parent_location' => 1
+        ]);
+        // TODO: check if location is shown on index page. not on the database
     }
 
     /** @test */
@@ -67,8 +77,11 @@ class LocationsMenuTest extends TestCase
         ]);
 
         $response->assertStatus(302);
-        $response = $this->get('/admin/locations');
-        $response->assertSee('Name change');
+        $this->assertDatabaseHas('locations', [
+            'id' => $createdLocation->id,
+            'location' => 'Name change'
+        ]);
+        // TODO: check if location is changed on index page. not on the database
     }
 
     /** @test */
@@ -81,7 +94,12 @@ class LocationsMenuTest extends TestCase
         $response->assertStatus(302);
         
         $response = $this->get('/admin/locations');
-        $response->assertDontSee($createdLocation->location);
+        $this->assertDatabaseMissing('locations', [
+            'id' => $createdLocation->id,
+            'location' => $createdLocation->location,
+        ]);
+        // TODO: check if location is missing on index page. not on the database
+
     }
 
 
