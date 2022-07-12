@@ -9,6 +9,9 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
+use App\Mail\StationReservationMail;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class CalendarController extends Controller
@@ -84,6 +87,38 @@ class CalendarController extends Controller
             if ($booking->title == 'Try') {
                 $color = '#33C0FF';
             }
+
+            //***********mails****************
+
+            $enums = explode(',',$request->title);
+
+            foreach ($enums as $enum){
+            
+                //get enumber
+                $enum1=explode('/',$enum);
+                $batch=$enum1[1];
+                $regnum=$enum1[2];
+
+                //set api url
+                $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
+
+                //api call
+                $response = Http::withoutVerifying()
+                    ->get($apiurl);
+                
+                //extract email address
+                $email=($response['emails']['personal']['name'].'@'.$response['emails']['personal']['domain']);
+
+                //get user
+                $user = auth()->user();
+                
+                //send mail
+                Mail::to($email)
+                    ->send(new StationReservationMail(auth()->user()));
+            }
+
+            //**********mails****************
+
             return response()->json([
                 'id' => $booking->id,
                 'start' => $booking->start_date,
