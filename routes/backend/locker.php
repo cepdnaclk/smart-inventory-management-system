@@ -4,7 +4,7 @@ use App\Http\Controllers\Backend\ComponentItemController;
 use App\Http\Controllers\Backend\LockerController;
 use Tabuna\Breadcrumbs\Trail;
 
-Route::middleware(['editAccess'])->group(function () {
+Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
 
     Route::get('/locker', function () {
         return view('backend.locker.index');

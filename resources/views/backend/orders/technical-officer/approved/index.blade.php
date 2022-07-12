@@ -51,9 +51,8 @@
                                 <td>
                                     @foreach($orderRequest->componentItems as $componentItem)
                                             <a href="{{ route('admin.component.items.show', $componentItem) }}">
-                                                {{ $componentItem->title }}
+                                                <li>{{ $componentItem->title }} - </li>
                                             </a>
-                                            <br>
                                     @endforeach
                                 </td>
 

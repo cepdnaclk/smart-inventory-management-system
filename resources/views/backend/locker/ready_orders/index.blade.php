@@ -38,7 +38,8 @@
                         <tr>
                             <th>Locker Id</th>
                             <th>Order Id</th>
-                            <th>Components<br/>& Quantity</th>
+                            <th>Components</th>
+                            <th>Quantity</th>
                             <th>Stauts</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -46,35 +47,38 @@
                         @foreach($orders as $order)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.locker.details.show', $order) }}">
-                                    {{ $order->locker_id }}</td>
-                                    </a>
+                                    {{ $order->locker_id }}
+                                </td>
+
                                 <td>
-                                    <a href="{{ route('admin.orders.show', $order) }}">
-                                        {{ $order->id }}
-                                    </a>
+                                    {{ $order->id }}
+                                </td>
+
+                                {{-- SHOW EVERY COMPONENTS AND THEIR QUANTITY --}}
+                                <td>
+                                    @foreach($order->componentItems as $componentItem)
+                                            <a href="{{ route('admin.component.items.show', $componentItem) }}">
+                                                <li>{{ $componentItem->title }} - </li>
+                                            </a>
+                                    @endforeach
                                 </td>
 
                                 <td>
                                     @foreach($order->componentItems as $componentItem)
-                                        <a href="{{ route('admin.component.items.show', $componentItem) }}">
-                                            {{ $componentItem->title }}
-                                        </a>
-
                                         @if($componentItem->pivot_quantity == null)
-                                           - 0
-                                        @else
-                                           - {{ $componentItem ->pivot_quantity }}
+                                            0
+                                            @else
+                                            {{ $componentItem ->pivot_quantity }}
                                         @endif
-                                        <br/>
+                                        <br>
                                     @endforeach
-
                                 </td>
+
                                 <td>{{ $order->status }}</td>
                                 <td>
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.orders.show', $order)}}"
+                                            <a href="{{ route('admin.orders.officer.show', $order)}}"
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
                                         </div>

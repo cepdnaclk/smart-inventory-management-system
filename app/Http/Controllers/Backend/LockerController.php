@@ -50,7 +50,6 @@ class LockerController extends Controller
 
             // Update checkbox condition
             $locker->is_available = $request->input('is_available') ? true : false;
-            $locker->order_id = NULL; 
 
             $locker->save();
             return redirect()->route('admin.locker.details.index')->with('Success', 'locker was created !');

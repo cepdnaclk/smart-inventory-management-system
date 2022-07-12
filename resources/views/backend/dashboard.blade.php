@@ -152,6 +152,26 @@
                         </a>
                     </div>
                     @endif
+
+                    @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+                        <div class="col-md-3">
+                            <a class="text-decoration-none" href="{{ route('admin.orders.officer.index') }}">
+                                <div class="card-counter request">
+                                    <span class="count-numbers">Orders</span>
+                                    <span class="count-name">Technical Officer</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a class="text-decoration-none" href="{{ route('admin.locker.index') }}">
+                                <div class="card-counter info">
+                                    <span class="count-numbers">Lockers</span>
+                                    <span class="count-name">Technical Officer</span>
+                                </div>
+                            </a>
+                        </div>
+                    @endif
                    
                 </div>
             </div>
