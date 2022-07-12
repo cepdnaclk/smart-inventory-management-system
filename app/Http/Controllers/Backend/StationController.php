@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Stations;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Models\EquipmentItem;
 use App\Http\Controllers\Controller;
@@ -17,18 +20,18 @@ class StationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
-        $station = Stations::orderBy('id')->paginate(16);
-        return view('backend.station.index', compact('station'));
+        //$station = Stations::orderBy('id')->paginate(16);
+        return view('backend.station.index');
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -41,7 +44,7 @@ class StationController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -62,7 +65,7 @@ class StationController extends Controller
             return redirect()->route('admin.station.index')->with('Success', 'Station was created !');
 
         } catch (\Exception $ex) {
-            dd($ex);
+            //dd($ex);
             return abort(500);
         }
 
@@ -72,7 +75,7 @@ class StationController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     /*
     public function show(Stations $station)
@@ -89,7 +92,7 @@ class StationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function edit(Stations $station)
     {
@@ -102,7 +105,7 @@ class StationController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Stations $station)
     {
@@ -130,7 +133,7 @@ class StationController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function delete(Stations $station)
     {
