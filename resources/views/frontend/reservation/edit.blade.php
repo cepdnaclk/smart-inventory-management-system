@@ -24,7 +24,7 @@
                     {!! Form::label('station_id', 'Station*', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
-                        {!! Form::select('station_id', $stations, null , ['class'=>'form-control', 'required'=>true, 'placeholder' => $station->StationName]) !!}
+                        {!! Form::select('station_id', $stations, $station->stationName , ['class'=>'form-control', 'required'=>true, 'placeholder' => $station->stationName]) !!}
                         @error('station_id')
                         <strong>{{ $message }}</strong>
                         @enderror
