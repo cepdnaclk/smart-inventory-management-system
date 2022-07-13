@@ -65,8 +65,8 @@ class ReservationController extends Controller
             elseif ($request->thumb_after != null) {
                 $data['thumb_after'] = $this->uploadThumb($reservation->thumbURL_after(), $request->thumb_after, "reservations");
             }
-            $reservation->update($data);
-            return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');
+            // $reservation->update($data);
+            // return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');
 
      
 
@@ -109,6 +109,8 @@ class ReservationController extends Controller
             'end_date' => $request['end_date'],
             'E_numbers' => $request['E_numbers'],
             'duration' => $minutes,
+            'thumb' => $request->thumb,
+            'thumb_after' => $request->thumb_after,
             
         ];
 

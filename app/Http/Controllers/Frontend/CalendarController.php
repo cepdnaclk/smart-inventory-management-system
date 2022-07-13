@@ -91,32 +91,32 @@ class CalendarController extends Controller
 
             //***********mails****************
 
-            $enums = explode(',',$request->title);
+            // $enums = explode(',',$request->title);
 
-            foreach ($enums as $enum){
+            // foreach ($enums as $enum){
             
-                //get enumber
-                $enum1=explode('/',$enum);
-                $batch=$enum1[1];
-                $regnum=$enum1[2];
+            //     //get enumber
+            //     $enum1=explode('/',$enum);
+            //     $batch=$enum1[1];
+            //     $regnum=$enum1[2];
 
-                //set api url
-                $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
+            //     //set api url
+            //     $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
 
-                //api call
-                $response = Http::withoutVerifying()
-                    ->get($apiurl);
+            //     //api call
+            //     $response = Http::withoutVerifying()
+            //         ->get($apiurl);
                 
-                //extract email address
-                $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
+            //     //extract email address
+            //     $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
 
-                //get user
-                $user = auth()->user();
+            //     //get user
+            //     $user = auth()->user();
                 
-                //send mail
-                Mail::to($email)
-                    ->send(new StationReservationMail(auth()->user(), $station, $booking));
-            }
+            //     //send mail
+            //     Mail::to($email)
+            //         ->send(new StationReservationMail(auth()->user(), $station, $booking));
+            // }
 
             //**********mails****************
 
