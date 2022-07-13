@@ -13,10 +13,6 @@ class CreateReservationsTable extends Migration
      */
     public function up()
     {
-        // Schema::create('reservations', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
 
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
@@ -33,6 +29,8 @@ class CreateReservationsTable extends Migration
                 ->on('stations');
             $table->string('E_numbers');
             $table->string('duration');
+            $table->string('thumb')->nullable();  
+            $table->string('thumb_after')->nullable();  
             $table->timestamps();
             
             
