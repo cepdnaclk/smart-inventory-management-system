@@ -4,6 +4,14 @@
 
 @section('content')
     <div>
+
+        <x-backend.card>
+            <div class='p-3'> 
+            <x-slot name="header">
+                Search
+            </x-slot>
+        </div>
+        
         
                 @if (session('Success'))
                     <div class="alert alert-success">
@@ -16,7 +24,8 @@
 
                     {{--<h1>Search</h1>--}}
 
-
+                    <x-slot name="body">
+                        <div class='container'> 
                     You are searching for '{{$keywords}}'. <br>
                     There are {{ $searchResults->count() }} results.
 
@@ -63,8 +72,9 @@
                             </ul>
                         @endforeach
                     @endforeach
-
-          
+                </div>
+                </x-slot>
+                </x-backend.card>
     </div>
 
 @endsection
