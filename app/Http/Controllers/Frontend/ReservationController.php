@@ -54,19 +54,21 @@ class ReservationController extends Controller
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'end_date' => 'required|date_format:Y-m-d H:i:s',
             'E_numbers' => 'string|required',
-            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
+            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
+            'thumb_after' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
         ]);
 
-        try {
+
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($reservation->thumbURL(), $request->thumb, "reservations");
+            }
+            elseif ($request->thumb_after != null) {
+                $data['thumb_after'] = $this->uploadThumb($reservation->thumbURL_after(), $request->thumb_after, "reservations");
             }
             $reservation->update($data);
             return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');
 
-        } catch (\Exception $ex) {
-            return abort(500);
-        }
+     
 
         $dateNew = (new DateTime($data['start_date']))->format('Y-m-d');
 
@@ -173,6 +175,7 @@ class ReservationController extends Controller
         $booking = Reservation::find($reservation->id);
 
         $this->deleteThumb($reservation->thumbURL());
+        $this->deleteThumb($reservation->thumbURL_after());
 
         if (!$booking) {
             return response()->json([
