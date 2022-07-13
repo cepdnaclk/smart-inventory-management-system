@@ -104,10 +104,11 @@ class CalendarController extends Controller
                 $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
 
                 //api call
-                $response = Http::get($apiurl);
+                $response = Http::withoutVerifying()
+                    ->get($apiurl);
                 
                 //extract email address
-                $email=($response['emails']['personal']['name'].'@'.$response['emails']['personal']['domain']);
+                $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
 
                 //get user
                 $user = auth()->user();
