@@ -6,6 +6,7 @@ use DateTime;
 use Carbon\Carbon;
 use App\Models\Stations;
 use App\Models\Reservation;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
@@ -56,10 +57,48 @@ class CalendarController extends Controller
         $station = Session::get('station');
         $userLoggedin = auth()->user();
 
+        $stringLength = Str::length($request['title']);
+       
+        
+
+        /********************Enumber check *****************************/
+        $first = 1;
+        $second = 4;
+        $third = 8;
+        $flag = true;
+
+        for($index = 0; $index < $stringLength; $index++){
+            if($index == 0 && ($request['title'][$index] != 'E')){
+                // dd('hi1');
+                $flag = false;
+            }elseif(($index == 1 || $index == $first+10) && ($request['title'][$index] != '/')){
+                // dd('hi2');
+                $first = $index;
+                $flag = false;
+
+            }elseif(($index == 4 || $index == $second+10) && ($request['title'][$index] != '/')){
+                // dd('hi3');
+                $second = $index;
+                $flag = false;
+
+            }elseif(($index == 8 || $index == $third+10) && ($request['title'][$index] != ',')){
+                // dd('hi4');
+                $third = $index;
+                $flag = false;
+
+            }
+        }
+
+        /********************Enumber check *****************************/
+
+        if(!$flag){
+            $request['title'] = null;
+        }
 
         $request->validate([
             'title' => 'required|string'
         ]);
+
 
         $date = $request->begin;
 
@@ -70,7 +109,7 @@ class CalendarController extends Controller
         // $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->get();
 
         // If the user has not made a reservation before
-        if ($bookings1->isEmpty()) {
+        if ($bookings1->isEmpty() && $flag) {
 
             $booking = Reservation::create([
 
