@@ -108,7 +108,7 @@ class CalendarController extends Controller
                     ->get($apiurl);
                 
                 //extract email address
-                $email=($response['emails']['personal']['name'].'@'.$response['emails']['personal']['domain']);
+                $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
 
                 //get user
                 $user = auth()->user();
