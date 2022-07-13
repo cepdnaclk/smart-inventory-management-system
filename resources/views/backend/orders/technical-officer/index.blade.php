@@ -13,6 +13,15 @@
             </x-slot>
 
             <x-slot name="body">
+                @if (session('Success'))
+                    <div class="alert alert-success">
+                        {{ session('Success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
                 <a class="btn btn-secondary btn-150" href="{{ route('admin.orders.officer.approved.index') }}">Approved <br> Orders</a>
                 <a class="btn btn-secondary btn-150" href="{{ route('admin.orders.officer.submitted.index') }}">Submitted <br> Orders</a>
             </x-slot>

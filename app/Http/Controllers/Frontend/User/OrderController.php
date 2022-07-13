@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
-use Mail;
 use App\Models\Order;
 use App\Mail\OrderRequest;
 use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMailForUsers;
 use App\Models\OrderApproval;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -54,23 +55,22 @@ class OrderController extends Controller
         if ($cart != null)
         $cart = [];
         session()->put('cart', $cart);
-        return redirect()->route('frontend.user.products')->with('success', 'Order has been sent sucessfully.');        
-        return response()->json(  $order->orderApprovals);
-      
+        return view('frontend.mails.student_order_mail', compact('order'));
+    }
+
+    public function mail(Request $request)
+    {   
+        $data = request()->validate([
+            'email' => 'required|email',
+            'body' => 'required|string',
+        ]);
         
-      
-  
-        return redirect()->back()->withSuccess('Email has been sent');
-        return response()->json($order);
-
-
-
-
-       
-
-
+        try {
+            Mail::to($data['email'])->send(new OrderMailForUsers($data));
+            return redirect()->route('frontend.user.products')->with('success', 'Order Request mail has been sent sucessfully.');
         
-
-
-     }
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
+    }
 }
