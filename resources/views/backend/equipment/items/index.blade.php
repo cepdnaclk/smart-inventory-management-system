@@ -37,6 +37,7 @@
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
+                            <th>Code</th>
                             <th>Title</th>
                             <th>Product Code<br/>and Brand</th>
                             <th>Quantity</th>
@@ -47,8 +48,9 @@
                             <th>&nbsp;</th>
                         </tr>
                         
-                        @foreach($equipment as $eq)
+                        @foreach($equipment as $eq) 
                             <tr>
+                                <td>{{ $eq->inventoryCode()  }}</td>
                                 <td>{{ $eq->title  }}</td>
                                 <td>{{ $eq->productCode ?? 'N/A' }} ({{ $eq->brand ?? 'N/A' }})</td>
                                 <td>{{ $eq->quantity }}</td>
@@ -74,7 +76,7 @@
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
                                             <a href="{{ route('admin.equipment.items.delete', $eq)}}"
-                                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                 title="Delete"></i>
                                             </a>
                                         </div>

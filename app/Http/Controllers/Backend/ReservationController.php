@@ -23,6 +23,7 @@ class ReservationController extends Controller
     public function index()
     {
         $reservation = Reservation::orderBy('station_id')->paginate(16);
+        // dd($reservation);
         return view('backend.reservation.index', compact('reservation'));
     }
 

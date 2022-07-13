@@ -24,11 +24,6 @@
         }
     </script>
 
-    {{--  Maybe override the inbuild js functions --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-            integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-            crossorigin="anonymous"></script>
-
     <script>
         $(document).ready(function () {
             $.ajaxSetup({
@@ -45,6 +40,7 @@
             var booking = @json($events);
 
             $('#calendar').fullCalendar({
+                
                 defaultView: 'agendaWeek',
                 header: {
                     left: 'prev, next today',
@@ -79,7 +75,7 @@
                             var end_date = $.fullCalendar.formatDate(end, "YYYY-MM-DD HH:mm:ss");
                             var loggedIn = @json($userLoggedin);
                             var user = loggedIn['email'];
-                            var begin = moment(start).format('YYYY-MM-DD');
+                            var begin = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
 
                             // console.log(start, end);
                             console.log(start_date, end_date);
@@ -116,10 +112,12 @@
                                             'color': response.color,
                                             'auth': response.auth,
                                         });
-                                        swal("Done!", "Event Created!", "success");
 
-                                        // TODO: This is a temporary fix. Find a better way to this
+                                        swal("Done!", "Event Created!", "success");
                                         refreshPage();
+                                        // TODO: This is a temporary fix. Find a better way to this
+                                        
+                                        
                                     },
                                     error: function (error) {
                                         if (error.responseJSON.errors) {
@@ -142,16 +140,29 @@
 
                 eventResize: function (event) {
 
+                    
+
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
 
-                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
-                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
+                    var start_date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-DD HH:MM:SS');
+                    var end_date = $.fullCalendar.formatDate(event.end, 'YYYY-MM-DD HH:MM:SS');
 
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+                    // console.log(start_date, end_date);
+
+                    // count hours
+                    const date1 = new Date(start_date);
+                    const date2 = new Date(end_date);
+
+                    
+                    var ms = date2.getTime() - date1.getTime();
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
+                    
+
+                    var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
+                    
 
                     const time_limit = 300;
 
@@ -164,11 +175,13 @@
                                 data: {
                                     start_date,
                                     end_date,
+                                    begin,
                                 },
                                 success: function (response) {
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
+                                    refreshPage();
                                 },
                                 error: function (error) {
                                     // if(error.responseJSON.errors) {
@@ -194,12 +207,21 @@
                     var id = event.id;
 
                     // TODO: Update this without moment
-                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
-                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+                    var start_date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-DD HH:MM:SS');
+                    var end_date = $.fullCalendar.formatDate(event.end, 'YYYY-MM-DD HH:MM:SS');
+
+
+                    // count hours
+                    const date1 = new Date(start_date);
+                    const date2 = new Date(end_date);
+
+                    var ms = date2.getTime() - date1.getTime();
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
 
+
+                    var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
+                    
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
 
@@ -212,18 +234,21 @@
                                 url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
                                 type: "PATCH",
                                 dataType: 'json',
-                                data: {start_date, end_date},
+                                data: {start_date, end_date, begin},
                                 success: function (response) {
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
+                                    refreshPage();
 
                                 },
                                 error: function (error) {
-                                    // if(error.responseJSON.errors) {
-                                    //     $('#titleError').html(error.responseJSON.errors.title);
-                                    // }
-                                    console.log(error)
+                                    if(error.responseJSON.errors) {
+                                        $('#titleError').html(error.responseJSON.errors.title);
+                                    }else{
+                                        swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                    }
+                                    // console.log(error)
                                 },
                             });
                         } else {
@@ -250,6 +275,7 @@
                                 success: function (response) {
                                     $('#calendar').fullCalendar('removeEvents', response);
                                     swal("Done!", "Event Deleted!", "success");
+                                    refreshPage();
 
                                 },
                                 error: function (error) {
@@ -271,6 +297,10 @@
                     return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcOffset(false), 'day');
                 }
             });
+
+            
+
+            // $('#calendar').fullCalendar('gotoDate', '2022-10-12');
 
             $("#bookingModal").on("hidden.bs.modal", function () {
                 $('#saveBtn').unbind();
@@ -302,6 +332,7 @@
             }
             return false;
         }
+
     </script>
 @endpush
 
@@ -330,8 +361,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3 class="text-center mt-5">Schedule Reservation - {{ $station->stationName }}</h3>
-                <br>
+                <h3 class="text-center mt-5"><b>Schedule Reservation - {{ $station->stationName }} </b><br></h3>
+                <h6 class="text-center">*Click and drag time period as required.<br>Click reservation to delete.
+                <br>Edit reservation by click and drag.</h6>
 
                 <div class="col-md-11 offset-1 mt-5 mb-5">
                     <div id="calendar">

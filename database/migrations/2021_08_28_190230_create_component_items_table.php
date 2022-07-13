@@ -20,7 +20,7 @@ class CreateComponentItemsTable extends Migration
             $table->string("title");
             $table->string("brand")->nullable();
             $table->string("productCode")->nullable();
-            $table->integer("quantity")->nullable();
+            $table->integer("quantity")->nullable()->default(0);
 
             $table->text("specifications")->nullable();
             $table->text("description")->nullable();
@@ -36,6 +36,7 @@ class CreateComponentItemsTable extends Migration
             // Physical size in terms of appearance [small, medium, large] kind of
             //!tendable
             $table->enum('size', ['very small', 'small',  'medium','regular', 'large', 'very large']);
+
             $table->timestamps();
 
             $table->foreignId('component_type_id')

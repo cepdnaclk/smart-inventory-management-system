@@ -15,6 +15,15 @@ Route::prefix('stations')->group(function () {
                 ->push(__('Stations'), route('frontend.stations.index'));
         });
 
+    Route::middleware(['auth'])->group(function () {
+
+        Route::get('/list', [StationController::class, 'sidebarIndex'])
+            ->name('stations.list');
+
+        Route::get('/list/{station}', [StationController::class, 'show'])
+            ->name('station.show');
+    });
+
     Route::get('/{station}', [StationController::class, 'viewStation'])
         ->name('stations.station')
         ->breadcrumbs(function (Trail $trail, $station) {
@@ -25,6 +34,8 @@ Route::prefix('stations')->group(function () {
                 ->push($stations->stationName, route('frontend.stations.station', $stations->stationName));
         });
 
+    
+ 
 });
 
 
