@@ -78,7 +78,7 @@
                             var begin = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
 
                             // console.log(start, end);
-                            console.log(start_date, end_date);
+                            //console.log(start_date, end_date);
 
                             // count hours
                             const date1 = new Date(start_date);
@@ -90,7 +90,7 @@
 
                             const time_limit = 300;
 
-                            console.log(ms, d, m);
+                            //console.log(ms, d, m);
 
                             // TODO: Validate the E Numbers
 
