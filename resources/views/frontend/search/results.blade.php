@@ -31,11 +31,28 @@
                             <ul>
                                 <li><a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a></li>
                                 {{get_class($searchResult->searchable)}}
+
                                 @if (get_class($searchResult->searchable) == 'App\Models\RawMaterials') 
-                                @foreach ( $searchResult->searchable->getLocation() as $eachLocation )
-                                    {{  $eachLocation }} <br>
-                                @endforeach
-                                    @endif
+                                    @foreach ( $searchResult->searchable->getLocation() as $eachLocation )
+                                        {{  $eachLocation }} <br>
+                                    @endforeach
+                                @endif
+
+                                @if (get_class($searchResult->searchable) == 'App\Models\EquipmentItem') 
+                                    
+                                @endif
+
+                                @if (get_class($searchResult->searchable) == 'App\Models\ConsumableItem')
+
+                                @endif
+
+                                @if (get_class($searchResult->searchable) == 'App\Models\ComponentItem')
+
+                                @endif
+
+
+
+
                             </ul>
                         @endforeach
                     @endforeach

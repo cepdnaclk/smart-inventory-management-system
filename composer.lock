@@ -4414,16 +4414,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.14.2",
+            "version": "1.14.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "c8d48852fbc052454af42f6de27635ddd916b959"
+                "reference": "31d8ee46d0215108df16a8527c7438e96a4d7735"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/c8d48852fbc052454af42f6de27635ddd916b959",
-                "reference": "c8d48852fbc052454af42f6de27635ddd916b959",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/31d8ee46d0215108df16a8527c7438e96a4d7735",
+                "reference": "31d8ee46d0215108df16a8527c7438e96a4d7735",
                 "shasum": ""
             },
             "require": {
@@ -4475,9 +4475,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.14.2"
+                "source": "https://github.com/php-http/discovery/tree/1.14.3"
             },
-            "time": "2022-05-25T07:26:05+00:00"
+            "time": "2022-07-11T14:04:40+00:00"
         },
         {
             "name": "php-http/message-factory",
@@ -8387,23 +8387,23 @@
         },
         {
             "name": "torann/geoip",
-            "version": "3.0.2",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Torann/laravel-geoip.git",
-                "reference": "f16d5df66ecb6ba4ffaef52abef519fbc19596d3"
+                "reference": "3d730ae7470b86ae828b4128b1757a96156fd941"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Torann/laravel-geoip/zipball/f16d5df66ecb6ba4ffaef52abef519fbc19596d3",
-                "reference": "f16d5df66ecb6ba4ffaef52abef519fbc19596d3",
+                "url": "https://api.github.com/repos/Torann/laravel-geoip/zipball/3d730ae7470b86ae828b4128b1757a96156fd941",
+                "reference": "3d730ae7470b86ae828b4128b1757a96156fd941",
                 "shasum": ""
             },
             "require": {
-                "illuminate/cache": "^8.0",
-                "illuminate/console": "^8.0",
-                "illuminate/support": "^8.0",
-                "php": "^7.2 || ^8.0"
+                "illuminate/cache": "^8.0|^9.0",
+                "illuminate/console": "^8.0|^9.0",
+                "illuminate/support": "^8.0|^9.0",
+                "php": "^8.0"
             },
             "require-dev": {
                 "geoip2/geoip2": "~2.1",
@@ -8461,9 +8461,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Torann/laravel-geoip/issues",
-                "source": "https://github.com/Torann/laravel-geoip/tree/3.0.2"
+                "source": "https://github.com/Torann/laravel-geoip/tree/3.0.4"
             },
-            "time": "2020-12-21T19:12:11+00:00"
+            "time": "2022-02-09T14:48:24+00:00"
         },
         {
             "name": "treeware/plant",
@@ -8726,30 +8726,29 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v3.6.8",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "814b36a08a60f4159cdcbb1c466a6a0027440b6c"
+                "reference": "3372ed65e6d2039d663ed19aa699956f9d346271"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/814b36a08a60f4159cdcbb1c466a6a0027440b6c",
-                "reference": "814b36a08a60f4159cdcbb1c466a6a0027440b6c",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/3372ed65e6d2039d663ed19aa699956f9d346271",
+                "reference": "3372ed65e6d2039d663ed19aa699956f9d346271",
                 "shasum": ""
             },
             "require": {
-                "illuminate/routing": "^6|^7|^8|^9",
-                "illuminate/session": "^6|^7|^8|^9",
-                "illuminate/support": "^6|^7|^8|^9",
+                "illuminate/routing": "^7|^8|^9",
+                "illuminate/session": "^7|^8|^9",
+                "illuminate/support": "^7|^8|^9",
                 "maximebf/debugbar": "^1.17.2",
-                "php": ">=7.2",
-                "symfony/debug": "^4.3|^5|^6",
-                "symfony/finder": "^4.3|^5|^6"
+                "php": ">=7.2.5",
+                "symfony/finder": "^5|^6"
             },
             "require-dev": {
                 "mockery/mockery": "^1.3.3",
-                "orchestra/testbench-dusk": "^4|^5|^6|^7",
+                "orchestra/testbench-dusk": "^5|^6|^7",
                 "phpunit/phpunit": "^8.5|^9.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
@@ -8795,7 +8794,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
-                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.6.8"
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -8807,7 +8806,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-08T15:03:05+00:00"
+            "time": "2022-07-11T09:26:42+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -8957,16 +8956,16 @@
         },
         {
             "name": "brianium/paratest",
-            "version": "v6.5.1",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paratestphp/paratest.git",
-                "reference": "41fc4cc01422dae2d6bf6a0ce39756f57ac7d8a9"
+                "reference": "bce7b965a5fe5028a53c3151042ca12777600acd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/41fc4cc01422dae2d6bf6a0ce39756f57ac7d8a9",
-                "reference": "41fc4cc01422dae2d6bf6a0ce39756f57ac7d8a9",
+                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/bce7b965a5fe5028a53c3151042ca12777600acd",
+                "reference": "bce7b965a5fe5028a53c3151042ca12777600acd",
                 "shasum": ""
             },
             "require": {
@@ -8981,18 +8980,18 @@
                 "phpunit/php-timer": "^5.0.3",
                 "phpunit/phpunit": "^9.5.21",
                 "sebastian/environment": "^5.1.4",
-                "symfony/console": "^5.4.9 || ^6.1.1",
+                "symfony/console": "^5.4.9 || ^6.1.2",
                 "symfony/process": "^5.4.8 || ^6.1.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0.0",
                 "ext-pcov": "*",
                 "ext-posix": "*",
-                "infection/infection": "^0.26.12",
+                "infection/infection": "^0.26.13",
                 "malukenho/mcbumpface": "^1.1.5",
                 "squizlabs/php_codesniffer": "^3.7.1",
                 "symfony/filesystem": "^5.4.9 || ^6.1.0",
-                "vimeo/psalm": "^4.23.0"
+                "vimeo/psalm": "^4.24.0"
             },
             "bin": [
                 "bin/paratest",
@@ -9033,7 +9032,7 @@
             ],
             "support": {
                 "issues": "https://github.com/paratestphp/paratest/issues",
-                "source": "https://github.com/paratestphp/paratest/tree/v6.5.1"
+                "source": "https://github.com/paratestphp/paratest/tree/v6.6.0"
             },
             "funding": [
                 {
@@ -9045,7 +9044,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2022-06-24T16:02:27+00:00"
+            "time": "2022-07-12T07:15:58+00:00"
         },
         {
             "name": "composer/pcre",
@@ -9104,12 +9103,16 @@
             },
             "funding": [
                 {
-                    "url": "https://github.com/sponsors/Slamdunk",
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
                     "type": "github"
                 },
                 {
-                    "url": "https://paypal.me/filippotessarotto",
-                    "type": "paypal"
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
                 }
             ],
             "time": "2022-02-25T20:21:48+00:00"
@@ -9129,7 +9132,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0"
+                "php": "^5.3.2 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.4",
@@ -9143,7 +9146,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Composer\\Pcre\\": "src"
+                    "Composer\\Semver\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -9152,17 +9155,27 @@
             ],
             "authors": [
                 {
+                    "name": "Nils Adermann",
+                    "email": "naderman@naderman.de",
+                    "homepage": "http://www.naderman.de"
+                },
+                {
                     "name": "Jordi Boggiano",
                     "email": "j.boggiano@seld.be",
                     "homepage": "http://seld.be"
+                },
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com",
+                    "homepage": "http://robbast.nl"
                 }
             ],
-            "description": "PCRE wrapping library that offers type-safe preg_* replacements.",
+            "description": "Semver library that offers utilities, version constraint parsing and validation.",
             "keywords": [
-                "PCRE",
-                "preg",
-                "regex",
-                "regular expression"
+                "semantic",
+                "semver",
+                "validation",
+                "versioning"
             ],
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
@@ -11449,12 +11462,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "bc4d989050885c9c2138e0da74519efaad597076"
+                "reference": "142c350dd23588666546a92de0d4cd4cafdad2c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/bc4d989050885c9c2138e0da74519efaad597076",
-                "reference": "bc4d989050885c9c2138e0da74519efaad597076",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/142c350dd23588666546a92de0d4cd4cafdad2c5",
+                "reference": "142c350dd23588666546a92de0d4cd4cafdad2c5",
                 "shasum": ""
             },
             "conflict": {
@@ -11516,7 +11529,7 @@
                 "contao/managed-edition": "<=1.5",
                 "craftcms/cms": "<3.7.36",
                 "croogo/croogo": "<3.0.7",
-                "cuyz/valinor": ">=0.5,<0.7",
+                "cuyz/valinor": "<0.12",
                 "czproject/git-php": "<4.0.3",
                 "darylldoyle/safe-svg": "<1.9.10",
                 "datadog/dd-trace": ">=0.30,<0.30.2",
@@ -11613,6 +11626,7 @@
                 "illuminate/view": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
                 "impresscms/impresscms": "<=1.4.3",
                 "in2code/femanager": "<5.5.1|>=6,<6.3.1",
+                "in2code/lux": "<17.6.1|>=18,<24.0.2",
                 "intelliants/subrion": "<=4.2.1",
                 "ivankristianto/phpwhois": "<=4.3",
                 "jackalope/jackalope-doctrine-dbal": "<1.7.4",
@@ -11840,7 +11854,7 @@
                 "thinkcmf/thinkcmf": "<=5.1.7",
                 "tinymce/tinymce": "<5.10",
                 "titon/framework": ">=0,<9.9.99",
-                "topthink/framework": "<6.0.12",
+                "topthink/framework": "<=6.0.12",
                 "topthink/think": "<=6.0.9",
                 "topthink/thinkphp": "<=3.2.3",
                 "tribalsystems/zenario": "<9.2.55826",
@@ -11946,7 +11960,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-06T08:13:54+00:00"
+            "time": "2022-07-12T23:04:17+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -12913,75 +12927,6 @@
             "time": "2020-09-28T06:39:44+00:00"
         },
         {
-            "name": "symfony/debug",
-            "version": "v4.4.41",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/debug.git",
-                "reference": "6637e62480b60817b9a6984154a533e8e64c6bd5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/6637e62480b60817b9a6984154a533e8e64c6bd5",
-                "reference": "6637e62480b60817b9a6984154a533e8e64c6bd5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "psr/log": "^1|^2|^3"
-            },
-            "conflict": {
-                "symfony/http-kernel": "<3.4"
-            },
-            "require-dev": {
-                "symfony/http-kernel": "^3.4|^4.0|^5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Debug\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides tools to ease debugging PHP code",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/debug/tree/v4.4.41"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "abandoned": "symfony/error-handler",
-            "time": "2022-04-12T15:19:55+00:00"
-        },
-        {
             "name": "symfony/filesystem",
             "version": "v5.4.9",
             "source": {
@@ -13306,5 +13251,5 @@
         "php": "^7.4|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
