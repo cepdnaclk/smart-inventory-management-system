@@ -12,7 +12,7 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'start_date', 'end_date','station_id', 'E_numbers', 'duration'];
+    protected $fillable = ['user_id', 'start_date', 'end_date','station_id', 'E_numbers', 'duration', 'thumb', 'thumb_after'];
 
     public function res_info()
     {
@@ -25,6 +25,14 @@ class Reservation extends Model
         if ($this->station_id != null) return $this->belongsTo(Stations::class, 'station_id', 'id');
         return null;
     }
+
+    // Return the relative URL of the thumbnail
+    public function thumbURL()
+    {
+        if ($this->thumb != null) return '/img/reservations/' . $this->thumb;
+        return null;
+    }
+
 }
 
- 
+  

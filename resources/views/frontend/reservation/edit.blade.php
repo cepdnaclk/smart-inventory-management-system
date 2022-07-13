@@ -69,7 +69,19 @@
                     </div>
                 </div>
 
-                
+                <!-- Thumbnail Image before Usage -->
+                <div class="form-group row">
+                    {!! Form::label('thumb', 'Thumbnail Before Usage', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-10">
+                        <img src="{{ $reservation->thumbURL() }}" alt="" width="64">
+                        {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
+                        image)
+                        @error('thumb')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
 
             </x-slot>
             <x-slot name="footer">
