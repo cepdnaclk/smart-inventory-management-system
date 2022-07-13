@@ -76,4 +76,6 @@ class Order extends Model
     {
         return Order::where('status', 'SUBMITTED')->orderBy('id')->paginate(16);
     }
+    
+    
 }

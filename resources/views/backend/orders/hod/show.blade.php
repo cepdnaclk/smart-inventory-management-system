@@ -20,15 +20,15 @@
                     <div class="d-flex">
                         <h4>Order#{{ $order->id }}</h4>
                     </div>
-                    @if ($order->orderApprovals->is_approved_by_lecturer==0 && $order->status=="WAITING_LECTURER_APPROVAL")
+                    @if ($order->orderApprovals->is_approved_by_lecturer == 1 && $order->status=="WAITING_H_O_D_APPROVAL")
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
                         <div class="btn-group" role="group" aria-label="Modify Buttons">
-                            <a href="{{ route('admin.orders.lecturer.approve', $order)}}"
+                            <a href="{{ route('admin.orders.h_o_d.approve', $order)}}"
                             class="btn btn-primary btn-xs me-2"><i class="fa fa-check" title="Approve"></i>
                              Approve
                             </a>
 
-                            <a  href="{{ route('admin.orders.lecturer.rejected', $order)}}"
+                            <a  href="{{ route('admin.orders.h_o_d.rejected', $order)}}"
                                class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i>
                                 Reject
                             </a>
@@ -48,10 +48,17 @@
                         <td> {{$order->user->email }}</td>
                     </tr>
                     <tr>
+                        <td>Lecturer Name</td>
+                        <td>{{$order->orderApprovals->lecturer->name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Lecturer Email</td>
+                        <td>{{$order->orderApprovals->lecturer->email }}</td>
+                    </tr>
+                    <tr>
                         <td>Status</td>
                         <td><b>{{$order->status }}</b></td>
                     </tr>
-
                 
 
                     <tr>

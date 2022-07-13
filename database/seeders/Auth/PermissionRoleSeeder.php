@@ -46,6 +46,7 @@ class PermissionRoleSeeder extends Seeder
             'type' => User::TYPE_MAINTAINER,
             'name' => 'Maintainer',
         ]);
+     
 
         // Non Grouped Permissions
         //

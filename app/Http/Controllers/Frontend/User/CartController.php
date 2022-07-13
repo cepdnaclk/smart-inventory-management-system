@@ -46,7 +46,7 @@ class CartController
     public function addToCart($id)
     {
         $componentItem = ComponentItem::findOrFail($id);
-        $cart = session()->get('cart', []);
+        $cart = session()->get('cart', []); 
 
         if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
@@ -96,7 +96,7 @@ class CartController
         $data['ordered_date'] = Carbon::now()->format('Y-m-d');
         $data['user_id'] = $request->user()->id;
         $order = new Order($data);
-        $order->save();
+      $order->save();
 
         for ($i = 0; $i < count($web['product']); $i++) {
             $order->componentItems()->attach($web['product'][$i], ['quantity' => $request->quantity[$i]]);

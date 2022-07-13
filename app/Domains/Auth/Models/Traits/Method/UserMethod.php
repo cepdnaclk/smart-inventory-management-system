@@ -16,6 +16,10 @@ trait UserMethod
     {
         return $this->id === 1;
     }
+    public function isHOD(): bool
+    {
+        return $this->id === 4 ;
+    }
 
     /**
      * @return mixed
@@ -138,4 +142,7 @@ trait UserMethod
     {
         return 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=' . config('boilerplate.avatar.size', $size) . '&d=mp';
     }
+
+
+  
 }

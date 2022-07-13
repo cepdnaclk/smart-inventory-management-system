@@ -93,6 +93,8 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
          ->push(__('Requests'),);
  });
 
+
+
  // Show
  Route::get('/orders/lecturer/{order}/view/', [OrderController::class, 'lecturer_show'])
  ->name('orders.lecturer.show')
@@ -124,8 +126,67 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
          ->push(__('Requests'),);
  });
 
+
+
+
+
+
+
+
 });
 //----------------------------------------------------------------------------------------------------------------
+
+//----------------------H_O_D Routes--------------------------//
+
+
+
+Route::get('/orders/hod', [OrderController::class, 'h_o_d_index'])
+->name('orders.h_o_d.index')
+->breadcrumbs(function (Trail $trail) {
+    $trail->push(__('Home'), route('admin.dashboard'))
+        ->push(__('Requests'),);
+});
+
+ // Show
+ Route::get('/orders/hod/{order}/view/', [OrderController::class, 'h_o_d_show'])
+ ->name('orders.h_o_d.show')
+ ->breadcrumbs(function (Trail $trail) {
+     $trail->push(__('Home'), route('admin.dashboard'))
+         ->push(__('Requests'), route('admin.orders.h_o_d.index'))
+         ->push(__('Show'));
+ });
+// Store the different types of updates
+Route::get('/orders/hod/{order}/approve/', [OrderController::class, 'h_o_d_approve'])
+->name('orders.h_o_d.approve');
+Route::get('/orders/hod/{order}/rejected/', [OrderController::class, 'h_o_d_reject'])
+->name('orders.h_o_d.rejected');
+
+      // accepted index
+      Route::get('/orders/hod/accepted', [OrderController::class, 'h_o_d_accepted_index'])
+      ->name('orders.h_o_d.accepted.index')
+      ->breadcrumbs(function (Trail $trail) {
+          $trail->push(__('Home'), route('admin.dashboard'))
+              ->push(__('Requests'),);
+      });
+
+       //Rejected index
+ Route::get('/orders/hod/rejected', [OrderController::class, 'h_o_d_rejected_index'])
+ ->name('orders.h_o_d.rejected.index')
+ ->breadcrumbs(function (Trail $trail) {
+     $trail->push(__('Home'), route('admin.dashboard'))
+         ->push(__('Requests'),);
+ });
+
+
+
+
+
+//-----------------------------------------------------
+
+
+
+
+
 
 Route::get('/orders', [OrderController::class, 'index'])
 ->name('orders.index')

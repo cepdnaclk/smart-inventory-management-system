@@ -1,13 +1,21 @@
-@extends('frontend.layouts.cart_view') 
-@section('title', __('My Cart'))
-@section('content')  
 
-<table id="cart" class="table table-hover table-condensed">
+@extends('backend.layouts.cart_view') 
+@section('title', __('My Cart'))
+
+
+@section('content')  
+<x-backend.card>
+    <x-slot name="header">
+    My Cart
+    </x-slot>
+
+    <x-slot name="body">
+<table id="cart" class="table  ">
     <thead>
         <tr>
             <th style="width:50%">Product</th>            
-            <th style="width:8%">Quantity</th>           
-            <th style="width:10%"></th>
+            <th style="width:7%">Quantity</th>           
+            <th style="width:2%"></th>
         </tr>
     </thead>
     <tbody>
@@ -18,19 +26,24 @@
                 <tr data-id="{{ $id }}">
                     <td data-th="Product">
                         <div class="row">
-                            <div class="col-sm-3 hidden-xs"><img src="{{ $details['image'] }}" width="100" height="100" class="img-responsive"/></div>
+
                             <div class="col-sm-9">
-                                <h4 class="nomargin">{{ $details['name'] }}</h4>
+                               {{ $details['name'] }}
                             </div>
                         </div>
                     </td>
                    
                     <td data-th="Quantity">
-                        <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
+                     
+                     <input type="number" value="{{ $details['quantity'] }}"  />
                     </td>
+                   
+                    
+                      
                     
                     <td class="actions" data-th="">
-                        <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i>Remove</button>
+                      <a  class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i> </a>
+
                     </td>
                 </tr>
             @endforeach
@@ -57,17 +70,19 @@
                     <br> 
                     
                    
-                    <button class="btn btn-success" type="submit">
-                        Place reservation
-                        </button>               
+                        <input type="submit"  class="btn btn-success  "  value="Place reservation">
+                        
+                                
                     
                 </form>
             </td>
         </tr>
     </tfoot>
 </table>
-
+</x-slot>
+</x-backend.card>
 @endsection
+
 
 @section('scripts')
 

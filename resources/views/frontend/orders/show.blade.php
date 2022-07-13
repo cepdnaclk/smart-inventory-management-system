@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('backend.layouts.app')
 
 @section('title', __('Orders'))
 
@@ -93,14 +93,15 @@
                     </tr>
                     <tr>
                         <td> Lecturer Name  </td>
+                        @if ($order->orderApprovals->lecturer->name!=null)
                         <td>{{$order->orderApprovals->lecturer->name}}</td>
+                        @else
+                        <td>Not assigned</td>
+                        @endif
+                      
                         
                     </tr>
-                    <tr>
-                        <td> TechnicalOfficer  Name  </td>
-                        <td>{{$order->orderApprovals->technicalOfficer->name}}</td>
-                        
-                    </tr>
+                             
                     
                     
                 </table>
