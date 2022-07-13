@@ -29,25 +29,32 @@
                             
                         @foreach($modelSearchResults as $searchResult)
                             <ul>
-                                <li><a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a></li>
-                                {{get_class($searchResult->searchable)}}
-
                                 @if (get_class($searchResult->searchable) == 'App\Models\RawMaterials') 
+                                {{ $searchResult->title }} <br>
+                                Locations : <br>
+                                    @foreach ( $searchResult->searchable->getLocation() as $eachLocation )
+                                        {{  $eachLocation }} <br>
+                                    @endforeach
+                                @endif
+
+                                @if (get_class($searchResult->searchable) == 'App\Models\Machines')
+                                {{ $searchResult->title }} <br>
+                                Locations : <br>
                                     @foreach ( $searchResult->searchable->getLocation() as $eachLocation )
                                         {{  $eachLocation }} <br>
                                     @endforeach
                                 @endif
 
                                 @if (get_class($searchResult->searchable) == 'App\Models\EquipmentItem') 
-                                    
+                                    <li><a href="{{route('frontend.equipment.item',$searchResult->searchable)}}">{{ $searchResult->title }}</a></li>
                                 @endif
 
                                 @if (get_class($searchResult->searchable) == 'App\Models\ConsumableItem')
-
+                                    <li><a href="{{route('frontend.consumable.item',$searchResult->searchable)}}">{{ $searchResult->title }}</a></li>
                                 @endif
 
                                 @if (get_class($searchResult->searchable) == 'App\Models\ComponentItem')
-
+                                    <li><a href="{{route('frontend.component.item',$searchResult->searchable)}}">{{ $searchResult->title }}</a></li>
                                 @endif
 
 

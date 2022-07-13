@@ -14,8 +14,6 @@ class CreateLocationsTable extends Migration
     public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            //  1 Makerspace
-            // 2 Desk ----- parentlocation 1
             $table->id();
             $table->string("location");
             $table->foreignId("parent_location")->nullable()->references("id")->on("locations")->onDelete("cascade");
