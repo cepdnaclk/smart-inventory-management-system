@@ -12,6 +12,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         html, body {
             background-color: #fff;
@@ -64,6 +65,44 @@
             margin-bottom: 30px;
         }
 
+                body {
+            font-family: Arial;
+            }
+
+            * {
+            box-sizing: border-box;
+            }
+
+            .searchBar {
+            float: center;
+            padding: 10px;
+            font-size: 17px;
+            border: 1px solid grey;
+            float: left;
+            width: 80%;
+            background: #f1f1f1;
+            border-radius : 4px;
+            }
+
+            .searchBars  {
+            float: center;
+            width: 20%;
+            padding: 10px;
+            background: #A8A8A8;
+            color: white;
+            font-size: 17px;
+            border: 1px solid grey;
+            border-left: none;
+            cursor: pointer;
+            border-radius : 4px;
+            }
+
+            .searchBars:hover {
+            background: #888888;
+            }
+
+
+
     </style>
     @stack('after-styles')
 </head>
@@ -94,27 +133,14 @@
     
     <div class="content">
         @include('includes.partials.messages')
-        <div class="flex-center position-ref app" > 
-            {{ Form::open(array('route' => 'frontend.frontSearch.results')) }}
-            {!! Form::text('keywords', null, array('style' => 'font-size: 17px;
-                    border: 1px solid b8b8b8;
-                    border-radius : 4px;
-                    float: left;
-                    width: 80%;
-                    background: #f1f1f1;')) !!}
-            {!! Form::submit('Search',array('style'=> 'width: 20%;
-                    padding: 4px;
-                    background: #929b94;
-                    color: white;
-                    border: 1px solid grey;
-                    border-radius : 4px;
-                    border-left: none;
-                    cursor: pointer;')) !!}
+        <div class="flex row g-3 align-items-center float-right" > 
+            {!! Form::open(array('route'=>'frontend.frontSearch.results'),['class' => 'searchBar']) !!}
+            {!! Form::text('keywords', '', ['class'=>'searchBar']) !!}   
+            {!! Form::submit('Search', ['class'=>'searchBars']) !!}
             {{ Form::close() }}
         </div>
-        
 
-        <div class="title m-b-md">
+        <div class="title m-b-md" id='cesmart'>
             {{ config('app.name', 'Laravel') }}
         </div><!--title-->
 
