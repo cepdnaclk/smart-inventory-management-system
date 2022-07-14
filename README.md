@@ -92,6 +92,11 @@ php artisan serve --host=0.0.0.0 --port=8000
 // To work with Vue components
 npm run watch
 ```
+#### Run all above commands from bash sc
+
+```
+// 
+```
 
 #### Cache and optimization
 ```
