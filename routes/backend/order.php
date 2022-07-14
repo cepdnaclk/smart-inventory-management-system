@@ -126,12 +126,13 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
          ->push(__('Requests'),);
  });
 
+ // Rejected mail
+ Route::post('/orders/lecturer/reject_mail/', [OrderController::class, 'lecturer_reject_mail'])
+ ->name('orders.lecturer.reject_mail');
 
-
-
-
-
-
+ // Approve mail
+ Route::post('/orders/lecturer/approve_mail/', [OrderController::class, 'lecturer_approve_mail'])
+ ->name('orders.lecturer.approve_mail');
 
 });
 //----------------------------------------------------------------------------------------------------------------

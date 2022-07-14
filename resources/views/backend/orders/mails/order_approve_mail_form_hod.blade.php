@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <p>{{ $details['body'] }}</p>
+    <p>dear student,</p>
+    <p>your order is approved by hod.</p>
+    <p>Thank you</p>
 </body>
 </html>

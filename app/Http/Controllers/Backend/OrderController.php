@@ -7,10 +7,14 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\OrderApproval;
 use App\Http\Controllers\Controller;
+use App\Mail\Orders\OrderApproveMailForHOD;
+use App\Mail\Orders\OrderApproveMailForLecturer;
+use App\Mail\Orders\OrderMailForTechnicalOfficer;
+use App\Mail\Orders\OrderRejectMailForHOD;
+use App\Mail\Orders\OrderRejectMailForLecturer;
 use App\Models\Locker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\TechnicalOfficerMail;
 
 class OrderController extends Controller
 {
@@ -264,13 +268,14 @@ class OrderController extends Controller
     }
 
     public function officer_mail(Request $request)
-    {   $data = request()->validate([
+    {   
+        $data = request()->validate([
             'email' => 'required|email',
             'body' => 'required|string',
         ]);
 
         try {
-            Mail::to($data['email'])->send(new TechnicalOfficerMail($data));
+            Mail::to($data['email'])->send(new OrderMailForTechnicalOfficer($data));
             return redirect()->route('admin.orders.officer.index')->with('Success', 'Email has been sent!');
         
         } catch (\Exception $ex) {
@@ -290,14 +295,24 @@ class OrderController extends Controller
         $order->orderApprovals->save();
         $order->save();
 
-        // TODO: The logic to be implemented
-        // Send an email to the student
-        // Send an email to the TO
-        // Update the status into 'PENDING_FABRICATION'
-        // Update timestamp details
-        return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order. you can view the order in accepted order list.');
+        return view('backend.orders.lecturer.approve_mail', compact('order'));
     }
 
+    public function lecturer_approve_mail(Request $request)
+    {   
+        $data = request()->validate([
+            'email' => 'required|email',
+            'body' => 'required|string',
+        ]);
+
+        try {
+            Mail::to($data['email'])->send(new OrderApproveMailForLecturer($data));
+            return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in rejected order list.');
+        
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
+    }
 
     public function lecturer_reject(Order $order)
     {
@@ -307,13 +322,24 @@ class OrderController extends Controller
         $order->orderApprovals->save();
         $order->save();
 
+        return view('backend.orders.lecturer.reject_mail', compact('order'));
+        
+    }
 
-        // TODO: The logic to be implemented
-        // Send an email to the student
-        // Send an email to the TO
-        // Update the status into 'PENDING_FABRICATION'
-        // Update timestamp details
-        return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approoved the order.you can view the order in accepted order list.');
+    public function lecturer_reject_mail(Request $request)
+    {   
+        $data = request()->validate([
+            'email' => 'required|email',
+            'body' => 'required|string',
+        ]);
+
+        try {
+            Mail::to($data['email'])->send(new OrderRejectMailForLecturer($data));
+            return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have rejected the order.you can view the order in rejected order list.');
+        
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
     }
 
 
@@ -339,23 +365,27 @@ class OrderController extends Controller
         return view('backend.orders.lecturer.rejected.index', compact('orderApproval'));
     }
 
+    
+    
     public function h_o_d_approve(Order $order)
-    {
+    {   try {
         //to update the accepted table 
         
-        $order->status = "WAITING_TECHNICAL_OFFICER_APPROVAL";
+        $order->status = "APPROVED";
         
         $order->save();
-
-        // TODO: The logic to be implemented
-        // Send an email to the student
-        // Send an email to the TO
-        // Update the status into 'PENDING_FABRICATION'
-        // Update timestamp details
-        return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have approved the order. you can view the order in accepted order list.');
+        
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderApproveMailForHOD());
+            return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have approved the order. you can view the order in accepted order list.');
+        
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
     }
+
+
     public function h_o_d_reject(Order $order)
-    {
+    {   try {
         //to update the accepted table 
         $order->orderApprovals->is_approved_by_lecturer=1;
 
@@ -363,14 +393,18 @@ class OrderController extends Controller
         $order->save();
         $order->orderApprovals->save();
 
+        
 
-        // TODO: The logic to be implemented
-        // Send an email to the student
-        // Send an email to the TO
-        // Update the status into 'PENDING_FABRICATION'
-        // Update timestamp details
-        return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have approoved the order.you can view the order in accepted order list.');
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderRejectMailForHOD());
+
+            return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have rejected the order.you can view the order in rejected order list.');
+        
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
     }
+
+    
     public function h_o_d_accepted_index()
     {
 

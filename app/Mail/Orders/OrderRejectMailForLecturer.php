@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Orders;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderMailForUsers extends Mailable
+class OrderRejectMailForLecturer extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,6 +29,6 @@ class OrderMailForUsers extends Mailable
      */
     public function build()
     {
-        return $this->subject('Order Request from CE Smart Inventory')->view('frontend.mails.from_user_to_lecture_mail');
+        return $this->subject('Order request rejected by lecture from CE Smart Inventory')->view('backend.orders.mails.order_reject_mail_form_lecturer');
     }
 }

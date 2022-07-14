@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
 use App\Mail\OrderMailForUsers;
+use App\Mail\Orders\OrderRequestMailForUsers;
 use App\Models\OrderApproval;
 use Illuminate\Support\Facades\Mail;
 
@@ -66,7 +67,7 @@ class OrderController extends Controller
         ]);
         
         try {
-            Mail::to($data['email'])->send(new OrderMailForUsers($data));
+            Mail::to($data['email'])->send(new OrderRequestMailForUsers($data));
             return redirect()->route('frontend.user.products')->with('success', 'Order Request mail has been sent sucessfully.');
         
         } catch (\Exception $ex) {
