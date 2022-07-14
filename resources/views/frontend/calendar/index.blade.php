@@ -121,7 +121,7 @@
                                     },
                                     error: function (error) {
                                         if (error.responseJSON.errors) {
-                                            $('#titleError').html('Title required in the format E/xx/xxx, E/xx/xxx, ...');
+                                            $('#titleError').html('Title required in the format E/xx/xxx, E/xx/xxx, ... where x is a digit');
                                         } else {
                                             $('#bookingModal').modal('hide')
                                             swal("Denied!", "Can not make multiple reservations in a day!", "warning");

@@ -62,31 +62,45 @@ class CalendarController extends Controller
         
 
         /********************Enumber check *****************************/
+        $naught = 0;
         $first = 1;
         $second = 4;
         $third = 8;
+        $space = 9;
         $flag = true;
 
         for($index = 0; $index < $stringLength; $index++){
-            if($index == 0 && ($request['title'][$index] != 'E')){
-                // dd('hi1');
-                $flag = false;
-            }elseif(($index == 1 || $index == $first+10) && ($request['title'][$index] != '/')){
-                // dd('hi2');
+            if($index == 0 || $index == $naught + 10){
+                $naught = $index;
+                if(($request['title'][$index] != 'E')){
+                    $flag = false;
+                }             
+            }elseif(($index == 1 || $index == $first+10)){
                 $first = $index;
-                $flag = false;
-
-            }elseif(($index == 4 || $index == $second+10) && ($request['title'][$index] != '/')){
-                // dd('hi3');
+                if(($request['title'][$index] != '/')){
+                    $flag = false;
+                }  
+            }elseif(($index == 4 || $index == $second+10)){
                 $second = $index;
-                $flag = false;
-
-            }elseif(($index == 8 || $index == $third+10) && ($request['title'][$index] != ',')){
-                // dd('hi4');
+                if(($request['title'][$index] != '/')){
+                    $flag = false;
+                }
+            }elseif(($index == 8 || $index == $third+10)){
                 $third = $index;
-                $flag = false;
-
+                if(($request['title'][$index] != ',')){
+                    $flag = false;
+                }
+            }elseif(($index == 9 || $index == $space+10)){
+                $space = $index;
+                if(($request['title'][$index] != ' ')){
+                    $flag = false;
+                }
+            }else{
+                if(!(is_numeric($request['title'][$index]))){
+                    $flag = false;
+                }
             }
+
         }
 
         /********************Enumber check *****************************/
