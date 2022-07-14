@@ -8,7 +8,7 @@
 </head>
 <body>
     <p>dear student,</p>
-    <p>{{ $details['body'] }}</p>
+    <p>your order is rejeted by hod</p>
     <p>Thank you</p>
 </body>
 </html>
