@@ -38,10 +38,11 @@
         <div class="row ">
             <div class="col-lg-12 col-sm-12 col-12 main-section">
                 <div class="dropdown">
-                    <button type="button " class="btn btn-secondary " data-toggle="dropdown">
+                    <button type="button " class="btn btn-primary  btn-200" data-toggle="dropdown">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                     </button>
                     <div class="dropdown-menu pre-scrollable">
+
                         <div class="row total-header-section">
                             <div class="col-lg-5 col-sm-5 col-5">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
@@ -73,6 +74,7 @@
                                 <a href="{{ route('frontend.user.cart') }}" class="btn btn-primary btn-block">View all</a>
                             </div>
                         </div>
+                  
                     </div>
                 </div>
             </div>
