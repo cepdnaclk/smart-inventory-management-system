@@ -7,7 +7,7 @@
 
 @section('content')
     <div>
-        {!! Form::open(['url' => route('admin.orders.officer.mail'),
+        {!! Form::open(['url' => route('frontend.user.order.mail'),
                    'method' => 'post',
                    'class' => 'container',
                    'files'=>true,
@@ -15,17 +15,16 @@
        ]) !!}
         <x-backend.card>
             <x-slot name="header">
-                Mail Detail : Order ID - {{ $orderRequest->id }}
+                Mail Detail : Order ID - {{ $order->id }}
             </x-slot>
 
             <x-slot name="body">
-
                 <!-- Email input-->
                 <div class="form-group row">
                     {!! Form::label('email', 'Email To', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::email('email', $orderRequest->user->email, ['class'=>'form-control']) !!} {{--,'readonly'--}}
+                        {!! Form::email('email', $order->orderApprovals->lecturer["email"], ['class'=>'form-control']) !!} {{--,'readonly'--}}
                         @error('email')
                         <strong>{{ $message }}</strong>
                         @enderror

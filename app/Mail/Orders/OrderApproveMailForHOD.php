@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Orders;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TechnicalOfficerMail extends Mailable
+class OrderApproveMailForHOD extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,10 +16,8 @@ class TechnicalOfficerMail extends Mailable
      *
      * @return void
      */
-    public $details;
-    public function __construct($data)
+    public function __construct()
     {
-        $this->details = $data;
     }
 
     /**
@@ -29,6 +27,6 @@ class TechnicalOfficerMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Order Approvel from CE Smart Inventory')->view('backend.orders.technical-officer.from_TO_to_STUDENT_mail');
+        return $this->subject('Order Approved by head of the department from CE Smart Inventory')->view('backend.orders.mails.order_approve_mail_form_hod');
     }
 }

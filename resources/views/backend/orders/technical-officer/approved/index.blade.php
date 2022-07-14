@@ -1,29 +1,19 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Lockers'))
+@section('title', __('Order Requests - Technical Officer View'))
 
 @section('breadcrumb-links')
+    @include('backend.component.includes.breadcrumb-links')
 @endsection
 
 @section('content')
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Ready Orders
+                Approved Orders - Technical Officer View
             </x-slot>
 
-            {{--            @if ($logged_in_user->hasAllAccess())--}}
-                <x-slot name="headerActions">
-                    <x-utils.link
-                    icon="c-icon cil-plus"
-                    class="card-header-action"
-                    :href="route('admin.locker.details.create')"
-                    :text="__('Create Locker Detail')"></x-utils.link>
-                </x-slot>
-            {{--            @endif--}}
-
             <x-slot name="body">
-
                 @if (session('Success'))
                     <div class="alert alert-success">
                         {{ session('Success') }}
@@ -34,29 +24,32 @@
                 @endif
 
                 <div class="container table-responsive pt-3">
+                    
+                    <h4 class="pb-3">Waiting for Technical Officer Approval</h4>
+
                     <table class="table table-striped">
                         <tr>
-                            <th>Locker Id</th>
                             <th>Order Id</th>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                            <th>Orderd Date</th>
                             <th>Components</th>
                             <th>Quantity</th>
-                            <th>Stauts</th>
                             <th>&nbsp;</th>
                         </tr>
 
-                        @foreach($orders as $order)
+                        @foreach($orderRequests as $orderRequest)
                             <tr>
+                                <td>{{ $orderRequest->id }}</td>
                                 <td>
-                                    {{ $order->locker_id }}
+                                    {{ $orderRequest->user['name'] }}
                                 </td>
-
-                                <td>
-                                    {{ $order->id }}
-                                </td>
+                                <th>{{ $orderRequest->status }}</th>
+                                <td>{{ $orderRequest->ordered_date }}</td>
 
                                 {{-- SHOW EVERY COMPONENTS AND THEIR QUANTITY --}}
                                 <td>
-                                    @foreach($order->componentItems as $componentItem)
+                                    @foreach($orderRequest->componentItems as $componentItem)
                                             <a href="{{ route('admin.component.items.show', $componentItem) }}">
                                                 <li>{{ $componentItem->title }} - </li>
                                             </a>
@@ -64,7 +57,7 @@
                                 </td>
 
                                 <td>
-                                    @foreach($order->componentItems as $componentItem)
+                                    @foreach($orderRequest->componentItems as $componentItem)
                                         @if($componentItem->pivot_quantity == null)
                                             0
                                             @else
@@ -74,22 +67,23 @@
                                     @endforeach
                                 </td>
 
-                                <td>{{ $order->status }}</td>
-                                <td>
-                                    <div class="d-flex px-0 mt-0 mb-0">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.orders.officer.show', $order)}}"
-                                               class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
-                                            </a>
-                                        </div>
+                                <td class="d-flex justify-content-end">
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ route('admin.orders.officer.approved.confirm', $orderRequest)}}"
+                                            class="btn btn-primary btn-xs">
+                                            <i class="fa fa-check" title="Approval"></i>
+                                        </a>
+                                        
+                                        <a href="{{ route('admin.orders.officer.show', $orderRequest)}}"
+                                           class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
+                                        </a>
                                     </div>
                                 </td>
-
                             </tr>
-                        @endforeach
-                    </table>
+                         @endforeach
 
-                    {{ $orders->links() }}
+                    </table>
+                    {{ $orderRequests->links() }}
                 </div>
             </x-slot>
         </x-backend.card>
