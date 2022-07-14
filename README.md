@@ -92,6 +92,15 @@ php artisan serve --host=0.0.0.0 --port=8000
 // To work with Vue components
 npm run watch
 ```
+#### Run all above commands from bash script
+
+```
+// Enable execution of bash script (for Linux)
+chmod +x Start.sh
+
+// Run bash script
+./Start.sh
+```
 
 #### Cache and optimization
 ```
@@ -132,12 +141,12 @@ php artisan test
 
 #### Resource Routes
 
-|Verb	|URI	|Action	|Route Name |
-|:------|:------|:------|:----------|
-|GET	|/photos/{photo}/comments	|index	|photos.comments.index|
-|GET	|/photos/{photo}/comments/create	|create	|photos.comments.create
-|POST	|/photos/{photo}/comments	|store	|photos.comments.store
-|GET	|/comments/{comment}	|show	|comments.show
-|GET	|/comments/{comment}/edit	|edit	|comments.edit
-|PUT/PATCH	|/comments/{comment}	|update	|comments.update
-|DELETE	|/comments/{comment}	|destroy	|comments.destroy
+| Verb	      | URI	                             | Action	  | Route Name             |
+|:-----------|:---------------------------------|:---------|:-----------------------|
+| GET	       | /photos/{photo}/comments	        | index	   | photos.comments.index  |
+| GET	       | /photos/{photo}/comments/create	 | create	  | photos.comments.create |
+| POST	      | /photos/{photo}/comments	        | store	   | photos.comments.store  |
+| GET	       | /comments/{comment}	             | show	    | comments.show          |
+| GET	       | /comments/{comment}/edit	        | edit	    | comments.edit          |
+| PUT/PATCH	 | /comments/{comment}	             | update	  | comments.update        |
+| DELETE	    | /comments/{comment}	             | destroy	 | comments.destroy       |
