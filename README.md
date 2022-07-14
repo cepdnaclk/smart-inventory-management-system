@@ -141,12 +141,12 @@ php artisan test
 
 #### Resource Routes
 
-|Verb	|URI	|Action	|Route Name |
-|:------|:------|:------|:----------|
-|GET	|/photos/{photo}/comments	|index	|photos.comments.index|
-|GET	|/photos/{photo}/comments/create	|create	|photos.comments.create
-|POST	|/photos/{photo}/comments	|store	|photos.comments.store
-|GET	|/comments/{comment}	|show	|comments.show
-|GET	|/comments/{comment}/edit	|edit	|comments.edit
-|PUT/PATCH	|/comments/{comment}	|update	|comments.update
-|DELETE	|/comments/{comment}	|destroy	|comments.destroy
+| Verb	      | URI	                             | Action	  | Route Name             |
+|:-----------|:---------------------------------|:---------|:-----------------------|
+| GET	       | /photos/{photo}/comments	        | index	   | photos.comments.index  |
+| GET	       | /photos/{photo}/comments/create	 | create	  | photos.comments.create |
+| POST	      | /photos/{photo}/comments	        | store	   | photos.comments.store  |
+| GET	       | /comments/{comment}	             | show	    | comments.show          |
+| GET	       | /comments/{comment}/edit	        | edit	    | comments.edit          |
+| PUT/PATCH	 | /comments/{comment}	             | update	  | comments.update        |
+| DELETE	    | /comments/{comment}	             | destroy	 | comments.destroy       |
