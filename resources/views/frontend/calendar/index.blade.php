@@ -85,14 +85,9 @@
                             const date2 = new Date(end_date);
 
                             var ms = date2.getTime() - date1.getTime();
-                            var d = moment.duration(ms);
-                            var m = d.asMinutes();
-
+                            m = ms/60000;
+               
                             const time_limit = 300;
-
-                            //console.log(ms, d, m);
-
-                            // TODO: Validate the E Numbers
 
                             //Send to the database
                             if (m < time_limit) {  //limit maximum time
@@ -114,9 +109,7 @@
                                         });
 
                                         swal("Done!", "Event Created!", "success");
-                                        refreshPage();
-                                        // TODO: This is a temporary fix. Find a better way to this
-                                        
+                                        refreshPage();                                      
                                         
                                     },
                                     error: function (error) {
@@ -157,9 +150,7 @@
 
                     
                     var ms = date2.getTime() - date1.getTime();
-                    var d = moment.duration(ms);
-                    var m = d.asMinutes();
-                    
+                    m = ms/60000;
 
                     var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
                     
@@ -206,19 +197,15 @@
                 eventDrop: function (event) {
                     var id = event.id;
 
-                    // TODO: Update this without moment
                     var start_date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-DD HH:MM:SS');
                     var end_date = $.fullCalendar.formatDate(event.end, 'YYYY-MM-DD HH:MM:SS');
-
 
                     // count hours
                     const date1 = new Date(start_date);
                     const date2 = new Date(end_date);
 
                     var ms = date2.getTime() - date1.getTime();
-                    var d = moment.duration(ms);
-                    var m = d.asMinutes();
-
+                    m = ms/60000;
 
                     var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
                     
@@ -265,7 +252,6 @@
                     var user = loggedIn['id'];
 
                     if (event.auth === user) {
-                        // TODO: It may ne nice if you can use a swal() like popup menu to get the confirmation
 
                         if (confirm('Are you sure you want to delete this event?')) {
                             $.ajax({
@@ -315,17 +301,17 @@
                 const eventA = events[i];
 
                 // start-time in between any of the events
-                if (moment(eventStartDay).isAfter(eventA.start) && moment(eventStartDay).isBefore(eventA.end)) {
+                if (eventStartDay>(eventA.start) && eventStartDay<(eventA.end)) {
                     swal("Time Unavailable!", "Please choose another slot", "error");
                     return true;
                 }
                 //end-time in between any of the events
-                if (moment(eventEndDay).isAfter(eventA.start) && moment(eventEndDay).isBefore(eventA.end)) {
+                if (eventEndDay>(eventA.start) && eventEndDay<(eventA.end)) {
                     swal("Time Unavailable!", "Please choose another slot", "error");
                     return true;
                 }
-                //any of the events in between/on the start-time and end-time
-                if (moment(eventStartDay).isSameOrBefore(eventA.start) && moment(eventEndDay).isSameOrAfter(eventA.end)) {
+                //any of the events in between/on the start-time and end-time              
+                if (eventStartDay<=(eventA.start) && eventEndDay>=(eventA.end)) {
                     swal("Time Unavailable!", "Please choose another slot", "error");
                     return true;
                 }
