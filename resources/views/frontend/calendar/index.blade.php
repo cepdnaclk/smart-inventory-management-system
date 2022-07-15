@@ -114,7 +114,7 @@
                                     },
                                     error: function (error) {
                                         if (error.responseJSON.errors) {
-                                            $('#titleError').html(error.responseJSON.errors.title);
+                                            $('#titleError').html('Title required in the format E/xx/xxx, E/xx/xxx, ... where x is a digit');
                                         } else {
                                             $('#bookingModal').modal('hide')
                                             swal("Denied!", "Can not make multiple reservations in a day!", "warning");
@@ -333,7 +333,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control" id="title">
+                    <input type="text" class="form-control" id="title" placeholder="E/XX/XXX, E/XX/XXX, ...">
                     <span id="titleError" class="text-danger"></span>
                 </div>
                 <div class="modal-footer">
