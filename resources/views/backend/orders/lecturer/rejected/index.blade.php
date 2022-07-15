@@ -32,7 +32,9 @@
                             <th>User Name</th>
                             <th>status</th>
                             <th>OrderedDate</th>
-                            <th>Describtion</th>
+                            @if ($logged_in_user->isAdmin())
+                            <th>Lecturer Name</th>
+                            @endif
                             <th>View </th>
                         </tr>
 
@@ -48,8 +50,9 @@
                         <td>
                             {{ $order->orders->ordered_date }}</td>
 
-                            <td>
-                            </td>
+                            @if ($logged_in_user->isAdmin())
+                            <td>{{ $order->lecturer->name }}</td>
+                            @endif
                             <td class="d-flex justify-content-end">
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('admin.orders.lecturer.show',$order->orders)}}"

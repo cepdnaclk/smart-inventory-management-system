@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Locker;
 use Illuminate\Http\Request;
 use App\Models\OrderApproval;
+use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
-use App\Mail\Orders\OrderApproveMailForHOD;
-use App\Mail\Orders\OrderApproveMailForLecturer;
-use App\Mail\Orders\OrderMailForTechnicalOfficer;
-use App\Mail\Orders\OrderRejectMailForHOD;
-use App\Mail\Orders\OrderRejectMailForLecturer;
-use App\Models\Locker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\Orders\OrderRejectMailForHOD;
+use App\Mail\Orders\OrderApproveMailForHOD;
+use App\Mail\Orders\OrderRejectMailForLecturer;
+use App\Mail\Orders\OrderApproveMailForLecturer;
+use App\Mail\Orders\OrderMailForTechnicalOfficer;
 
 class OrderController extends Controller
 {
@@ -148,8 +149,15 @@ class OrderController extends Controller
     public function lecturer_index()
     {
         $id = auth()->user()->id;
+        $user=User::where('id',$id);
+        if(auth()->user()->isAdmin()){
+            $orderApproval=OrderApproval::where('is_approved_by_lecturer', '=', null)->get(); 
+        }
+        else{
+            $orderApproval = OrderApproval::where('lecturer_id', \Auth::user()->id)->where('is_approved_by_lecturer', '=', null)->get();
 
-        $orderApproval = OrderApproval::where('lecturer_id', \Auth::user()->id)->where('is_approved_by_lecturer', '=', null)->get();
+        }
+
         //return response()->json($orderApproval, 200);
 
         return view('backend.orders.lecturer.index', compact('orderApproval'));
@@ -347,8 +355,13 @@ class OrderController extends Controller
     {
 
         $id = auth()->user()->id;
+        if(auth()->user()->isAdmin()){
+            $orderApproval=OrderApproval::where('is_approved_by_lecturer', '=', 1)->get(); 
+        }
+        else{
+            $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', 1)->get();
 
-        $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', 1)->get();
+        }
         //return response()->json($orderApproval, 200);
 
         return view('backend.orders.lecturer.accepted.index', compact('orderApproval'));
@@ -358,8 +371,13 @@ class OrderController extends Controller
     {
       
         $id = auth()->user()->id;
-    
-        $orderApproval=OrderApproval::where('lecturer_id',$id)->where('is_approved_by_lecturer', '=', 0)->get();
+        if(auth()->user()->isAdmin()){
+            $orderApproval=OrderApproval::where('is_approved_by_lecturer', '=', 0)->get(); 
+        }
+        else{
+            $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', 0)->get();
+
+        }
         //return response()->json($orderApproval, 200);
       
         return view('backend.orders.lecturer.rejected.index', compact('orderApproval'));
