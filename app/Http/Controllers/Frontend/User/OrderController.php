@@ -7,6 +7,7 @@ use App\Mail\OrderRequest;
 use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
+use App\Mail\Frontend\OrderMail;
 use App\Mail\OrderMailForUsers;
 use App\Mail\Orders\OrderRequestMailForUsers;
 use App\Models\OrderApproval;
@@ -56,20 +57,17 @@ class OrderController extends Controller
         if ($cart != null)
         $cart = [];
         session()->put('cart', $cart);
-        return view('frontend.mails.student_order_mail', compact('order'));
-    }
-
-    public function mail(Request $request)
-    {   
-        $data = request()->validate([
-            'email' => 'required|email',
-            'body' => 'required|string',
-        ]);
         
         try {
-            Mail::to($data['email'])->send(new OrderRequestMailForUsers($data));
+            $details = [
+                "title" => "Order request.",
+                "body"  => "you want to approve this Order request."
+            ];
+            //Mail::to($orderApproval->lecturer['email'])->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            
             return redirect()->route('frontend.user.products')->with('success', 'Order Request mail has been sent sucessfully.');
-        
+            
         } catch (\Exception $ex) {
             return abort(500);
         }
