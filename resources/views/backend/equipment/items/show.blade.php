@@ -25,10 +25,11 @@
                             </a>
                             <a href="{{ route('admin.equipment.items.edit.location', $equipmentItem)}}"
                                class="btn btn-warning btn-xs"><i class="fa fa-map-marker" title="Edit Location"></i>
-                                <a href="{{ route('admin.equipment.items.delete', $equipmentItem)}}"
-                                   class="btn btn-danger btn-xs"><i class="fa fa-trash"
-                                                                    title="Delete"></i>
-                                </a>
+                            </a>
+                            <a href="{{ route('admin.equipment.items.delete', $equipmentItem)}}"
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
+                                                                title="Delete"></i>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -23,8 +23,8 @@ class EquipmentItemController extends Controller
      */
     public function index()
     {
-        $equipment = EquipmentItem::orderBy('id', 'asc')->paginate(16);
-        return view('backend.equipment.items.index', compact('equipment'));
+        //$equipment = EquipmentItem::orderBy('id', 'asc')->paginate(16);
+        return view('backend.equipment.items.index');
     }
 
     /**
@@ -114,15 +114,15 @@ class EquipmentItemController extends Controller
     public function edit(EquipmentItem $equipmentItem)
     {
         $types = EquipmentType::pluck('title', 'id');
-        $this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
-        if ($this_item_location->count() > 0) {
-            $this_item_location = $this_item_location->first()->location_id;
-        } else {
-            $this_item_location = null;
-        }
+        //$this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
+        //if ($this_item_location->count() > 0) {
+        //    $this_item_location = $this_item_location->first()->location_id;
+        //} else {
+        //    $this_item_location = null;
+        //}
 //        dd($this_item_location);
-        $locations = Locations::pluck('location', 'id');
-        return view('backend.equipment.items.edit', compact('types', 'equipmentItem', 'this_item_location', 'locations'));
+//        $locations = Locations::pluck('location', 'id');
+        return view('backend.equipment.items.edit', compact('types', 'equipmentItem'));
     }
 
 

@@ -24,8 +24,8 @@ class JobRequestsController extends Controller
         // $jobs = JobRequests::paginate(16);
         // return view('backend.jobs.student.index', compact('jobs'));
 
-        $jobs = JobRequests::where('student', \Auth::user()->id)->get()->reverse();
-        return view('backend.jobs.student.index', compact('jobs'));
+        //$jobs = JobRequests::where('student', \Auth::user()->id)->get()->reverse();
+        return view('backend.jobs.student.index');
     }
 
     public function student_create()
@@ -129,8 +129,8 @@ class JobRequestsController extends Controller
 
     public function supervisor_index()
     {
-        $jobs = JobRequests::where('supervisor', \Auth::user()->id)->get()->reverse();
-        return view('backend.jobs.supervisor.index', compact('jobs'));
+        //$jobs = JobRequests::where('supervisor', \Auth::user()->id)->get()->reverse();
+        return view('backend.jobs.supervisor.index');
     }
 
     public function supervisor_show(JobRequests $jobRequests)
@@ -163,8 +163,8 @@ class JobRequestsController extends Controller
 
     public function officer_index()
     {
-        $jobs = JobRequests::jobsForTechOfficer();
-        return view('backend.jobs.technical-officer.index', compact('jobs'));
+        //$jobs = JobRequests::jobsForTechOfficer();
+        return view('backend.jobs.technical-officer.index');
     }
 
     public function officer_show(JobRequests $jobRequests)

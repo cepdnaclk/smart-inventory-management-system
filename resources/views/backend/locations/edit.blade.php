@@ -28,7 +28,7 @@
                 <div class="form-group row">
                     {!! Form::label('parentLocation', 'Parent Location*', ['class' => 'col-md-2 col-form-label']) !!}
                     <div class="col-md-10">
-                        {!! Form::select('parentLocation', $locations, $location->parent_location, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
+                        {!! Form::select('parentLocation', $locations, $location->get_parent_location->id, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
                         @error('equipment_type_id')
                         <strong>{{ $message }}</strong>
                         @enderror

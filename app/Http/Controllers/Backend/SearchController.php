@@ -47,8 +47,9 @@ class SearchController extends Controller
 
         // TODO: Make this better
         // For now, only support upto 4 levels
+        // I think we can just extend this to like 10 levels or something like that ¯\_(ツ)_/¯
         foreach ($loc as $key => $value) {
-            $locations[$key] = $value->location;
+            $locations[$value->id] = $value->location;
             // Level 2
             if ($value->getChildrenLocations()->count() > 0) {
                 foreach ($value->getChildrenLocations() as $l) {
