@@ -280,6 +280,9 @@ class CalendarController extends Controller
             ], 404);
         }
 
+        // TODO: If the start end times changed, it will be better to send the users an email
+        // saying the time is changed (remind Google Calender events !)
+
         if (($result && (count($bookings1) == 1)) || (!$result && (count($bookings1) == 0))) {
             $booking->update([
                 'start_date' => $request->start_date,
@@ -298,7 +301,6 @@ class CalendarController extends Controller
     public function destroy($id)
     {
         $booking = Reservation::find($id);
-
 
         if (!$booking) {
             return response()->json([
