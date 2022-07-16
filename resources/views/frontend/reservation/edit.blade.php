@@ -24,7 +24,9 @@
                     {!! Form::label('station_id', 'Station*', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
-                        {!! Form::select('station_id', $stations, null , ['class'=>'form-control', 'required'=>true, 'placeholder' => $station->StationName]) !!}
+
+                        {!! Form::select('station_id', $stations, null , ['class'=>'form-control', 'required'=>true, 'placeholder' => $station->stationName]) !!}
+
                         @error('station_id')
                         <strong>{{ $message }}</strong>
                         @enderror
@@ -69,8 +71,33 @@
                     </div>
                 </div>
 
-                
+                <!-- Thumbnail Image before Usage -->
+                <div class="form-group row">
+                    {!! Form::label('thumb', 'Thumbnail Before Usage', ['class' => 'col-md-2 col-form-label']) !!}
 
+                    <div class="col-md-10">
+                        <img src="{{ $reservation->thumbURL() }}" alt="" width="64">
+                        {!! Form::file('thumb', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
+                        image)
+                        @error('thumb')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Thumbnail Image after Usage -->
+                <div class="form-group row">
+                    {!! Form::label('thumb_after', 'Thumbnail After Usage', ['class' => 'col-md-2 col-form-label']) !!}
+
+                    <div class="col-md-10">
+                        <img src="{{ $reservation->thumbURL_after() }}" alt="" width="64">
+                        {!! Form::file('thumb_after', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
+                        image)
+                        @error('thumb_after')
+                        <strong>{{ $message }}</strong>
+                        @enderror
+                    </div>
+                </div>
             </x-slot>
             <x-slot name="footer">
                 {!! Form::submit('Update', ['class'=>'btn btn-primary float-right']) !!}

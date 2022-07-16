@@ -8,6 +8,8 @@ use App\Models\Stations;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class ReservationController extends Controller
 {
@@ -51,8 +53,22 @@ class ReservationController extends Controller
             'station_id' => 'numeric|required',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'end_date' => 'required|date_format:Y-m-d H:i:s',
-            'E_numbers' => 'string|required'
+            'E_numbers' => 'string|required',
+            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
+            'thumb_after' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048'
         ]);
+
+
+            if ($request->thumb != null) {
+                $data['thumb'] = $this->uploadThumb($reservation->thumbURL(), $request->thumb, "reservations");
+            }
+            elseif ($request->thumb_after != null) {
+                $data['thumb_after'] = $this->uploadThumb($reservation->thumbURL_after(), $request->thumb_after, "reservations");
+            }
+            // $reservation->update($data);
+            // return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');
+
+     
 
         $dateNew = (new DateTime($data['start_date']))->format('Y-m-d');
 
@@ -93,6 +109,8 @@ class ReservationController extends Controller
             'end_date' => $request['end_date'],
             'E_numbers' => $request['E_numbers'],
             'duration' => $minutes,
+            'thumb' => $request->thumb,
+            'thumb_after' => $request->thumb_after,
             
         ];
 
@@ -158,6 +176,8 @@ class ReservationController extends Controller
         $userLoggedIn = auth()->user();
         $booking = Reservation::find($reservation->id);
 
+        $this->deleteThumb($reservation->thumbURL());
+        $this->deleteThumb($reservation->thumbURL_after());
 
         if (!$booking) {
             return response()->json([
@@ -175,6 +195,30 @@ class ReservationController extends Controller
         
     }
 
+    
+    private function deleteThumb($currentURL)
+    {
+        if ($currentURL != null) {
+            $oldImage = public_path($currentURL);
+            if (File::exists($oldImage)) unlink($oldImage);
+        }
+    }
+
+    // Private function to handle thumb images
+    private function uploadThumb($currentURL, $newImage, $folder)
+    {
+
+        // Delete the existing image
+        $this->deleteThumb($currentURL);
+
+        $imageName = time() . '.' . $newImage->extension();
+        $newImage->move(public_path('img/' . $folder), $imageName);
+        $imagePath = "/img/$folder/" . $imageName;
+        $image = Image::make(public_path($imagePath))->fit(360, 360);
+        $image->save();
+
+        return $imageName;
+    }
     
 
     

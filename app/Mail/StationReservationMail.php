@@ -39,7 +39,7 @@ class StationReservationMail extends Mailable
     {   
 
         return $this->markdown('emails.reservation.reservationmade')
-            ->subject('MarkerSpace Lab Reservation');
+            ->subject('MakerSpace Lab Reservation');
 
     }
 }

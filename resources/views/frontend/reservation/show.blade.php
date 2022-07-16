@@ -82,6 +82,29 @@
                         <td>{{ $reservation->E_numbers }}</td>
                     </tr>
 
+                    <tr>
+                        <td>Thumbnail Before Usage</td>
+                        <td>
+                            @if( $reservation->thumb != null )
+                                <img src="{{ $reservation->thumbURL() }}" alt="{{ $reservation->station_id}}"
+                                     class="img img-thumbnail">
+                            @else
+                                <span>[Not Available]</span>
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Thumbnail After Usage</td>
+                        <td>
+                            @if( $reservation->thumb_after != null )
+                                <img src="{{ $reservation->thumbURL_after() }}" alt="{{ $reservation->station_id}}"
+                                     class="img img-thumbnail">
+                            @else
+                                <span>[Not Available]</span>
+                            @endif
+                        </td>
+                    </tr>                    
                 </table>
             </x-slot>
         </x-backend.card>
