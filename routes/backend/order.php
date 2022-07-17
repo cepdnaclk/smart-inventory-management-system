@@ -69,16 +69,13 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
         });
 
     // Ready
-    Route::put('/orders/officer/{orderRequest}/ready/', [OrderController::class, 'officer_ready'])
+    Route::post('/orders/officer/{orderRequest}/ready/', [OrderController::class, 'officer_ready'])
         ->name('orders.officer.ready');
 
     // Finish
     Route::get('/orders/officer/{orderRequest}/finish', [OrderController::class, 'officer_finish'])
     ->name('orders.officer.finish');
 
-    // Mail
-    Route::post('/orders/officer/mail/', [OrderController::class, 'officer_mail'])
-    ->name('orders.officer.mail');
 });
 //-----------------------------------------------------------------------------------------------------------
 
@@ -125,14 +122,6 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
      $trail->push(__('Home'), route('admin.dashboard'))
          ->push(__('Requests'),);
  });
-
- // Rejected mail
- Route::post('/orders/lecturer/reject_mail/', [OrderController::class, 'lecturer_reject_mail'])
- ->name('orders.lecturer.reject_mail');
-
- // Approve mail
- Route::post('/orders/lecturer/approve_mail/', [OrderController::class, 'lecturer_approve_mail'])
- ->name('orders.lecturer.approve_mail');
 
 });
 //----------------------------------------------------------------------------------------------------------------

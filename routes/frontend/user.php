@@ -60,10 +60,7 @@ Route::post('store-request', [OrderController::class, 'store'])->name('store.req
 
     Route::get("users/{componentItem}/ordercomp",[OrderCompController::class,'orderComponent'])->name('ordercomp');
     
-//Mail
-Route::post('order/mail', [OrderController::class, 'mail'])
-->name('order.mail');
-    
+
 });
 
 
