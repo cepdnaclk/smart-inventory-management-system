@@ -123,8 +123,10 @@ class ReservationController extends Controller
 
         // See whether the reservation is bein made too early
 
-        $todayDate = date('Y-m-d');
+        $todayDate = date('Y-m-d H:i:s');
         $today = new DateTime($todayDate);
+
+        // dd($today <= $start);
 
         $resDiff = $today->diff($start);
         $minutesDiff = ($resDiff->h*60) + ($resDiff->s/60) + ($resDiff->i) + ($resDiff->d*24*60) + ($resDiff->m*30*24*60) + ($resDiff->y*365*24*60);
@@ -151,6 +153,8 @@ class ReservationController extends Controller
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Reservation can not exceed 4 hours');           
         }elseif($flag){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Time slot not available');   
+        }elseif($today >= $start && !$result){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! You can not make a reservation for a date that has passed'); 
         }elseif((count($bookings1) == 1) && $result && !$flag && ($minutesDiff < 43200)){
             $reservation->update($data);
             return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');            
