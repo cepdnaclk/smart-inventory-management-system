@@ -77,6 +77,10 @@
                             const dateBegin = new Date(begin); 
                             const dateToday = new Date(todayDate);
 
+                            var ms1 = dateBegin.getTime() - dateToday.getTime();
+                            var d1 = moment.duration(ms1);
+                            var mins = d1.asMinutes();
+
                             console.log("Event Select");
                             console.log(start, end);
                             console.log(start_date, end_date);
