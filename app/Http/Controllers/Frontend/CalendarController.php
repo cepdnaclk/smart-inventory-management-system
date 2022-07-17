@@ -60,94 +60,8 @@ class CalendarController extends Controller
 
         $stringLength = Str::length($request['title']);
 
-
-        /********************Enumber check *****************************/
-        // TODO: Try to use regex method. It is much easier than this and simple
-
-        $naught = 0;
-        $first = 1;
-        $second = 4;
-        $third = 8;
-        $space = 9;
-        $flag1 = true;
-
-        for ($index = 0; $index < $stringLength; $index++) {
-            if ($index == 0 || $index == $naught + 10) {
-                $naught = $index;
-                if (($request['title'][$index] != 'E')) {
-                    $flag1 = false;
-                }
-            } elseif (($index == 1 || $index == $first + 10)) {
-                $first = $index;
-                if (($request['title'][$index] != '/')) {
-                    $flag1 = false;
-                }
-            } elseif (($index == 4 || $index == $second + 10)) {
-                $second = $index;
-                if (($request['title'][$index] != '/')) {
-                    $flag1 = false;
-                }
-            } elseif (($index == 8 || $index == $third + 10)) {
-                $third = $index;
-                if (($request['title'][$index] != ',')) {
-                    $flag1 = false;
-                }
-            } elseif (($index == 9 || $index == $space + 10)) {
-                $space = $index;
-                if (($request['title'][$index] != ' ')) {
-                    $flag1 = false;
-                }
-            } else {
-                if (!(is_numeric($request['title'][$index]))) {
-                    $flag1 = false;
-                }
-            }
-        }
-
-        $naught = 0;
-        $first = 1;
-        $second = 4;
-        $third = 8;
-        $flag = true;
-
-        if (!$flag1) {
-            for ($index = 0; $index < $stringLength; $index++) {
-                if ($index == 0 || $index == $naught + 9) {
-                    $naught = $index;
-                    if (($request['title'][$index] != 'E')) {
-                        $flag = false;
-                    }
-                } elseif (($index == 1 || $index == $first + 9)) {
-                    $first = $index;
-                    if (($request['title'][$index] != '/')) {
-                        $flag = false;
-                    }
-                } elseif (($index == 4 || $index == $second + 9)) {
-                    $second = $index;
-                    if (($request['title'][$index] != '/')) {
-                        $flag = false;
-                    }
-                } elseif (($index == 8 || $index == $third + 9)) {
-                    $third = $index;
-                    if (($request['title'][$index] != ',')) {
-                        $flag = false;
-                    }
-                } else {
-                    if (!(is_numeric($request['title'][$index]))) {
-                        $flag = false;
-                    }
-                }
-            }
-        }
-        /********************Enumber check *****************************/
-
-        if (!$flag) {
-            $request['title'] = null;
-        }
-
         $request->validate([
-            // 'title' => 'required|string'
-            'title' => 'required|regex:/^[E/\d{2}/\d{3}]+$',
+            'title' => 'required|regex:^E/\d{2}/\d{3}$^',
         ]);
 
 
@@ -160,7 +74,7 @@ class CalendarController extends Controller
         // $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->get();
 
         // If the user has not made a reservation before
-        if ($bookings1->isEmpty() && $flag) {
+        if ($bookings1->isEmpty()) {
             $booking = Reservation::create([
 
                 'user_id' => $userLoggedin['id'],
