@@ -32,16 +32,12 @@
                 }
             });
 
-            // TODO: Change the color of the other users in different color like Gray
-            // You can do it in the CalendarController
-            // Guide: https://fullcalendar.io/docs/event-source-object
-
             // TODO: Only load the events from last week to the future. Otherwise this can be a huge list in someday
             var booking = @json($events);
             var todayDate = @json($today);
 
             $('#calendar').fullCalendar({
-                
+
                 defaultView: 'agendaWeek',
                 header: {
                     left: 'prev, next today',
@@ -81,12 +77,9 @@
                             const dateBegin = new Date(begin); 
                             const dateToday = new Date(todayDate);
 
-                            var diff = dateBegin.getTime()- dateToday.getTime();
-                            var duration = moment.duration(diff);
-                            var mins = duration.asMinutes();
-
-                            // console.log(m1);
-                            //console.log(start_date, end_date);
+                            console.log("Event Select");
+                            console.log(start, end);
+                            console.log(start_date, end_date);
 
                             // count hours
                             const date1 = new Date(start_date);
@@ -159,30 +152,26 @@
 
                 eventResize: function (event) {
 
-                    
-
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
 
-                    var start_date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-DD HH:MM:SS');
-                    var end_date = $.fullCalendar.formatDate(event.end, 'YYYY-MM-DD HH:MM:SS');
+                    var start_date = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD HH:mm:ss");
+                    var end_date = $.fullCalendar.formatDate(event.end, "YYYY-MM-DD HH:mm:ss");
 
-                    // console.log(start_date, end_date);
+                    console.log("Event Resize");
+                    console.log(event.start, event.end);
+                    console.log(start_date, end_date);
 
                     // count hours
                     const date1 = new Date(start_date);
                     const date2 = new Date(end_date);
 
-                    
                     var ms = date2.getTime() - date1.getTime();
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
-                    
 
                     var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
-                    
-
                     const time_limit = 300;
 
                     if (event.auth === user) {
@@ -200,7 +189,7 @@
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
-                                    refreshPage();
+                                    // refreshPage();
                                 },
                                 error: function (error) {
                                     // if(error.responseJSON.errors) {
@@ -222,25 +211,22 @@
                 },
 
                 //editable: true,
-                eventDrop: function (event) {
+                eventDrop: function (event, delta, revertFunc) {
+                    // https://fullcalendar.io/docs/v3/eventDrop
+
                     var id = event.id;
+                    // console.log(event);
+                    // console.log(delta.asMinutes());
+                    // console.log(event.start.format());
 
-                    // TODO: Update this without moment
-                    var start_date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-DD HH:MM:SS');
-                    var end_date = $.fullCalendar.formatDate(event.end, 'YYYY-MM-DD HH:MM:SS');
+                    console.log("Event Drop");
+                    var start_date = event.start.format();
+                    var end_date = event.end.format()
 
+                    console.log(start_date, end_date);
 
-                    // count hours
-                    const date1 = new Date(start_date);
-                    const date2 = new Date(end_date);
-
-                    var ms = date2.getTime() - date1.getTime();
-                    var d = moment.duration(ms);
-                    var m = d.asMinutes();
-
-
+                    var m = delta.asMinutes();
                     var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
-                    
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
 
@@ -255,25 +241,25 @@
                                 dataType: 'json',
                                 data: {start_date, end_date, begin},
                                 success: function (response) {
-
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
-                                    refreshPage();
-
+                                    // refreshPage();
                                 },
                                 error: function (error) {
-                                    if(error.responseJSON.errors) {
+                                    if (error.responseJSON.errors) {
                                         $('#titleError').html(error.responseJSON.errors.title);
-                                    }else{
+                                    } else {
+                                        revertFunc(); // TODO: Check is this works ?
                                         swal("Denied!", "Can not make multiple reservations in a day!", "warning");
                                     }
-                                    // console.log(error)
                                 },
                             });
                         } else {
+                            revertFunc(); // TODO: Check is this works ?
                             swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
                         }
                     } else {
+                        revertFunc(); // TODO: Check is this works ?
                         swal("Permission Denied!", "You can not update this event!", "warning");
                     }
 
@@ -317,7 +303,6 @@
                 }
             });
 
-            
 
             // $('#calendar').fullCalendar('gotoDate', '2022-10-12');
 
@@ -348,6 +333,7 @@
                     swal("Time Unavailable!", "Please choose another slot", "error");
                     return true;
                 }
+
             }
             return false;
         }
@@ -382,7 +368,7 @@
             <div class="col-12">
                 <h3 class="text-center mt-5"><b>Schedule Reservation - {{ $station->stationName }} </b><br></h3>
                 <h6 class="text-center">*Click and drag time period as required.<br>Click reservation to delete.
-                <br>Edit reservation by click and drag.</h6>
+                    <br>Edit reservation by click and drag.</h6>
 
                 <div class="col-md-11 offset-1 mt-5 mb-5">
                     <div id="calendar">
