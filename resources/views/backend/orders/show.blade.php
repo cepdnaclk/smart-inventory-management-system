@@ -34,6 +34,11 @@
                 </div>
                 <table class="table">
                     <tr>
+                        <td>status </td>
+                        <td><b>{{ $order->status }}</b> 
+                        </td>
+                    </tr>
+                    <tr>
                         <td>
                       
                             Ordered-Date
@@ -94,11 +99,7 @@
                             <td> Not Returned Yet! </td>
                         @endif
                     </tr>
-                    <tr>
-                        <td>status </td>
-                        <td>{{ $order->status }} 
-                        </td>
-                    </tr>
+                   
                     
                     
                 </table>
