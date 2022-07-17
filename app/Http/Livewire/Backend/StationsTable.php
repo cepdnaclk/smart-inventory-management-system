@@ -13,15 +13,13 @@ class StationsTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("ID", "id")
+            Column::make("Code", "id")
                 ->sortable(),
             Column::make("Station Name", "stationName")
                 ->sortable()
                 ->searchable(),
-            Column::make("Description", "description")
-                ->sortable(),
-            Column::make("Capacity", "capacity")
-                ->sortable(),
+            Column::make("Description", "description"),
+            Column::make("Capacity", "capacity"),
             Column::make("Actions")
         ];
     }

@@ -11,6 +11,8 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class ConsumableItemTable extends DataTableComponent
 {
+    public array $perPageAccepted = [25, 50, 100, 200];
+    public bool $perPageAll = true;
 
     public function columns(): array
     {
