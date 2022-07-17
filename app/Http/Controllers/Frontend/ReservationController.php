@@ -197,7 +197,7 @@ class ReservationController extends Controller
         $imagePath = "/img/$folder/" . $imageName;
 
         // TODO: Maybe we should not crop the images in here
-        $image = Image::make(public_path($imagePath))->fit(360, 360);
+        $image = Image::make(public_path($imagePath));
         $image->save();
 
         return $imageName;
