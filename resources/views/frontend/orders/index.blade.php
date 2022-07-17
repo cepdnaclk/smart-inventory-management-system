@@ -67,9 +67,19 @@
 
                     
                     <td>
-                        <a  href="{{ route('frontend.user.orders.show', $order)}} "
-                        class="btn btn-primary btn-xs"> <i class="fa fa-check" title="Approval"></i> Details    
+                        <div class="row justify-content-between">
+                        <a  href="{{ route('frontend.user.orders.show', $order)}} " 
+                        class="btn btn-primary"> <i class="fa fa-check" title="Approval"></i> Details    
                      </a>
+                   
+                     <form action="{{ route('frontend.user.orders.change.staus', $order)}} " method="POST">
+                        @csrf
+                        @method('PUT')
+                     <input type="submit" {{ ( $order->status =="WAITING_H_O_D_APPROVAL") ? '' : 'disabled' }} value="PICKED"  class="btn btn-primary">
+                     </form>
+
+               
+                    </div>
                     </td>
 
                 </tr>

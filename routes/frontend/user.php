@@ -40,6 +40,10 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
     Route::post('place-order', [CartController::class, 'placeOrder'])->name('place.order');
 
   
+   
+    Route::put('orders/{order}', [OrderController::class, 'change_status'])->name('orders.change.staus')
+    ;
+
     Route::get('show-my-order',[OrderController::class, 'index'])->name('orders.index')  ->breadcrumbs(function (Trail $trail) {
         $trail->parent('frontend.index')
             ->push(__('My Orders'), route('frontend.user.account'));
