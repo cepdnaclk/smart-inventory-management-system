@@ -29,10 +29,10 @@ class OrderController extends Controller
      public function store(Request $request){
  
      //dd($request->OrderID);
-        $request->validate(['name'=>'required','enumber'=>'required','expected_date'=>'required','description'=>'required','selectLecturer'=>'required']);
-     
-        $id=$request->OrderID;
-        $order=Order::where('id',$id)->first();
+        $request->validate(['name'=>'required|string','enumber'=>'required','expected_date'=>'required','description'=>'required|string','selectLecturer'=>'required']);
+  
+       $id=$request->OrderID;
+       $order=Order::where('id',$id)->first();
         $orderApproval=new OrderApproval();
         
         
@@ -73,5 +73,12 @@ class OrderController extends Controller
         } catch (\Exception $ex) {
             return abort(500);
         }
+    }
+    public function change_status(Order $order){
+        $order->status="PICKED";
+        $order->update();
+       
+               return redirect()->route('frontend.user.orders.index')->with('Success', 'Status was updated !');
+
     }
 }

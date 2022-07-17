@@ -138,8 +138,14 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         try {
+          
             $order->delete();
-            return redirect()->route('admin.orders.index')->with('Success', 'Order was deleted !');
+            
+            if(auth()->user()->isAdmin()){
+                return redirect()->route('admin.orders.index')->with('Success', 'Order was deleted !');
+            }
+            else {  return view('frontend.user.cart');}
+           
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -428,7 +434,7 @@ class OrderController extends Controller
 
      
 
-        $orders = Order::where('status', 'WAITING_TECHNICAL_OFFICER_APPROVAL')->get();
+        $orders = Order::where('status', 'APPROVED')->get();
         //return response()->json($orderApproval, 200);
 
         return view('backend.orders.hod.accepted.index', compact('orders'));

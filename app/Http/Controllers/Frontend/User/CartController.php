@@ -92,7 +92,7 @@ class CartController
             'product' => 'required|array|min:1', // TODO: Validate properly
             'quantity' => 'required|array|min:1',
         ]);
-
+       
         $data['ordered_date'] = Carbon::now()->format('Y-m-d');
         $data['user_id'] = $request->user()->id;
         $order = new Order($data);
