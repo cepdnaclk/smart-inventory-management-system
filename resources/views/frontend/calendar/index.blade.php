@@ -230,7 +230,14 @@
 
                     console.log(start_date, end_date);
 
-                    var m = delta.asMinutes();
+                    // count hours
+                    const date1 = new Date(start_date);
+                    const date2 = new Date(end_date);
+
+                    var ms = date2.getTime() - date1.getTime();
+                    var d = moment.duration(ms);
+                    var m = d.asMinutes();
+                    
                     var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
