@@ -3,7 +3,7 @@
 use App\Models\Stations;
 use Tabuna\Breadcrumbs\Trail;
 use App\Http\Controllers\Frontend\CalendarController;
-use App\Http\Controllers\frontend\ReservationController;
+use App\Http\Controllers\Backend\ReservationController;
 
 Route::middleware(['auth'])->group(function () {
 
@@ -17,7 +17,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
     //Index
-    Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation.index')
+    Route::get('/reservation', [ReservationController::class, 'index_user'])->name('reservation.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->parent('frontend.index') 
             ->push(__('Reservations'));
@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     // Show
-    Route::get('/reservation/{reservation}', [ReservationController::class, 'show'])->name('reservation.show')
+    Route::get('/reservation/{reservation}', [ReservationController::class, 'show_user'])->name('reservation.show')
         ->breadcrumbs(function (Trail $trail) {
             $trail->parent('frontend.index')
             ->push(__('Reservations'), route('frontend.reservation.index'))
