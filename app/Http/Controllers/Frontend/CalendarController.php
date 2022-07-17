@@ -140,8 +140,6 @@ class CalendarController extends Controller
     
             }
         }
-
-
         /********************Enumber check *****************************/
 
         if(!$flag){
@@ -183,32 +181,40 @@ class CalendarController extends Controller
 
             //***********mails****************
 
-            // $enums = explode(',',$request->title);
+            $enums = explode(',',$request->title);
 
-            // foreach ($enums as $enum){
+            foreach ($enums as $enum){
             
-            //     //get enumber
-            //     $enum1=explode('/',$enum);
-            //     $batch=$enum1[1];
-            //     $regnum=$enum1[2];
+                //get enumber
+                $enum1=explode('/',$enum);
+                $batch=$enum1[1];
+                $regnum=$enum1[2];
 
-            //     //set api url
-            //     $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
+                //set api url
+                $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
 
-            //     //api call
-            //     $response = Http::withoutVerifying()
-            //         ->get($apiurl);
+                //api call
+                try{
+
+                    $response = Http::withoutVerifying()
+                    ->get($apiurl);
+                    
+                    //extract email address
+                    $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
+
+                    //get user
+                    $user = auth()->user();
                 
-            //     //extract email address
-            //     $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
+                    //send mail
+                    Mail::to($email)
+                        ->send(new StationReservationMail(auth()->user(), $station, $booking));
 
-            //     //get user
-            //     $user = auth()->user();
-                
-            //     //send mail
-            //     Mail::to($email)
-            //         ->send(new StationReservationMail(auth()->user(), $station, $booking));
-            // }
+                }catch(\Exception $e){
+                    return response()->json([
+                        'error' => 'enumber null'
+                    ], 404);
+                }
+            }
 
             //**********mails****************
 

@@ -122,9 +122,20 @@
                                     error: function (error) {
                                         if (error.responseJSON.errors) {
                                             $('#titleError').html('Title required in the format E/xx/xxx, E/xx/xxx, ... where x is a digit');
+                                            $('#bookingModal').find("input[type=text], textarea").val("");
+                                            $('#bookingModal').find("input[type=text], textarea").focus();
+
                                         } else {
-                                            $('#bookingModal').modal('hide')
-                                            swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                            var jsonData = error.responseJSON;
+                                            var msg = jsonData.error;
+
+                                            if(msg=="enumber null"){
+                                                $('#bookingModal').modal('hide')
+                                                swal("Denied!", "Enumber does not exist.", "warning");
+                                            }else{
+                                                $('#bookingModal').modal('hide')
+                                                swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                            }
                                         }
                                         console.log(error);
                                     },
@@ -329,6 +340,7 @@
                     swal("Time Unavailable!", "Please choose another slot", "error");
                     return true;
                 }
+
             }
             return false;
         }
