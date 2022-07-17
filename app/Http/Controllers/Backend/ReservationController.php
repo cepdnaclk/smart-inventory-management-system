@@ -79,7 +79,7 @@ class ReservationController extends Controller
             'station_id' => 'numeric|required',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'end_date' => 'required|date_format:Y-m-d H:i:s',
-            'E_numbers' => 'string|required', // TODO: Validate E-Numbers
+            'E_numbers' => 'required|regex:^E/\d{2}/\d{3}$^', // TODO: Validate E-Numbers
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:4096', // TODO: Maybe we need to increase the file size
             'thumb_after' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:4096' // TODO: Maybe we need to increase the file size
         ]);
@@ -106,7 +106,7 @@ class ReservationController extends Controller
         $start = new DateTime($request['start_date']);
         $end = new DateTime($request['end_date']);
         $diff = $start->diff($end);
-        $data['duration'] = ($diff->h * 60) + ($diff->s / 60) + ($diff->i) + ($diff->d * 24 * 60) + ($diff->m * 30 * 24 * 60) + ($diff->y * 365 * 24 * 60);
+        $minutes = ($diff->h * 60) + ($diff->s / 60) + ($diff->i) + ($diff->d * 24 * 60) + ($diff->m * 30 * 24 * 60) + ($diff->y * 365 * 24 * 60);
 
         //For overlap check
         $res = Reservation::whereDate('start_date', $start)->where('station_id', $data['station_id'])->get();
@@ -129,6 +129,7 @@ class ReservationController extends Controller
         $resDiff = $today->diff($start);
         $minutesDiff = ($resDiff->h*60) + ($resDiff->s/60) + ($resDiff->i) + ($resDiff->d*24*60) + ($resDiff->m*30*24*60) + ($resDiff->y*365*24*60);
     
+        
 
         $data = [
             'station_id' => $request['station_id'],
@@ -140,6 +141,7 @@ class ReservationController extends Controller
             'thumb_after' => $request->thumb_after,
             
         ];
+        
 
         if ($userLoggedin['id'] != $reservation->user_id){
             return redirect()->route('frontend.reservation.index')->with('Error', 'You can not update this reservation');   
