@@ -38,6 +38,7 @@
 
             // TODO: Only load the events from last week to the future. Otherwise this can be a huge list in someday
             var booking = @json($events);
+            var todayDate = @json($today);
 
             $('#calendar').fullCalendar({
                 
@@ -76,8 +77,15 @@
                             var loggedIn = @json($userLoggedin);
                             var user = loggedIn['email'];
                             var begin = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
+                            
+                            const dateBegin = new Date(begin); 
+                            const dateToday = new Date(todayDate);
 
-                            // console.log(start, end);
+                            var diff = dateBegin.getTime()- dateToday.getTime();
+                            var duration = moment.duration(diff);
+                            var mins = duration.asMinutes();
+
+                            // console.log(m1);
                             //console.log(start_date, end_date);
 
                             // count hours
@@ -95,42 +103,53 @@
                             // TODO: Validate the E Numbers
 
                             //Send to the database
-                            if (m < time_limit) {  //limit maximum time
-                                $.ajax({
-                                    url: "{{ route('frontend.calendar.store') }}",
-                                    type: "POST",
-                                    dataType: 'json',
-                                    data: {title, start_date, end_date, begin, m},
-                                    success: function (response) {
+                            if(mins < 43200){
+                                if (m < time_limit) {  //limit maximum time
+                                    // if(m1 < 43200){
+                                    $.ajax({
+                                        url: "{{ route('frontend.calendar.store') }}",
+                                        type: "POST",
+                                        dataType: 'json',
+                                        data: {title, start_date, end_date, begin, m},
+                                        success: function (response) {
 
-                                        //fill the calendar when event is entered instantaneously
-                                        $('#bookingModal').modal('hide')
-                                        $('#calendar').fullCalendar('renderEvent', {
-                                            'title': response.title,
-                                            'start': response.start,
-                                            'end': response.end,
-                                            'color': response.color,
-                                            'auth': response.auth,
-                                        });
-
-                                        swal("Done!", "Event Created!", "success");
-                                        refreshPage();
-                                        // TODO: This is a temporary fix. Find a better way to this
-                                        
-                                        
-                                    },
-                                    error: function (error) {
-                                        if (error.responseJSON.errors) {
-                                            $('#titleError').html('Title required in the format E/xx/xxx, E/xx/xxx, ... where x is a digit');
-                                        } else {
+                                            //fill the calendar when event is entered instantaneously
                                             $('#bookingModal').modal('hide')
-                                            swal("Denied!", "Can not make multiple reservations in a day!", "warning");
-                                        }
-                                        console.log(error);
-                                    },
-                                });
-                            } else {
-                                swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
+                                            $('#calendar').fullCalendar('renderEvent', {
+                                                'title': response.title,
+                                                'start': response.start,
+                                                'end': response.end,
+                                                'color': response.color,
+                                                'auth': response.auth,
+                                            });
+
+                                            swal("Done!", "Event Created!", "success");
+                                            refreshPage();
+                                            // TODO: This is a temporary fix. Find a better way to this
+                                            
+                                            
+                                        },
+                                        error: function (error) {
+                                            if (error.responseJSON.errors) {
+                                                $('#titleError').html('Title required in the format E/xx/xxx, E/xx/xxx, ... where x is a digit');
+                                            } else {
+                                                $('#bookingModal').modal('hide')
+                                                swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                            }
+                                            console.log(error);
+                                        },
+                                    });
+                                    // }else{
+                                    //     $('#bookingModal').modal('hide');
+                                    //     swal("Permission Denied!", "You can not make the reservation this early!", "warning");
+                                    // }
+                                } else {
+                                    $('#bookingModal').modal('hide');
+                                    swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
+                                }
+                            }else{
+                                $('#bookingModal').modal('hide');
+                                swal("Permission Denied!", "You can not make a reservation for that date this early", "warning");
                             }
                         });
                     }

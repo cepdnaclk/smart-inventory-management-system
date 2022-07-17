@@ -48,7 +48,9 @@ class CalendarController extends Controller
             ];
         }
 
-        return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin]);
+        $today = date('Y-m-d');
+
+        return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin, 'today' => $today]);
     }
 
     public function store(Request $request)
@@ -107,7 +109,6 @@ class CalendarController extends Controller
         $first = 1;
         $second = 4;
         $third = 8;
-        $space = 9;
         $flag = true;
 
         if(!$flag1){
@@ -149,7 +150,8 @@ class CalendarController extends Controller
         }
 
         $request->validate([
-            'title' => 'required|string'
+            // 'title' => 'required|string'
+            'title' => 'required|regex:/^[E/\d{2}/\d{3}]+$',
         ]);
 
 

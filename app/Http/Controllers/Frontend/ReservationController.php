@@ -20,7 +20,7 @@ class ReservationController extends Controller
         $userLoggedin = auth()->user();
         // dd($userLoggedin);
         $reservation = Reservation::where('user_id', $userLoggedin['id'])->get();
-        return view('frontend.reservation.index', compact('reservation', 'userLoggedin'));
+        return view('backend.reservation.user.index', compact('reservation', 'userLoggedin'));
     }
 
     public function edit(Reservation $reservation)
@@ -30,12 +30,12 @@ class ReservationController extends Controller
         // dd($dateOriginal);
         $stations = Stations::pluck('stationName', 'id');
         $station = Stations::find($reservation->station_id);
-        return view('frontend.reservation.edit', compact('reservation', 'stations', 'station'));
+        return view('backend.reservation.user.edit', compact('reservation', 'stations', 'station'));
     }
 
     public function show(Reservation $reservation)
     {
-       return view('frontend.reservation.show', compact('reservation'));
+       return view('backend.reservation.user.show', compact('reservation'));
     }
 
     public function update(Request $request, Reservation $reservation)
@@ -93,15 +93,18 @@ class ReservationController extends Controller
                 $flag = $this->isAnOverlapEvent($start, $end, $r);
             }   
         }
-        
-        
-        
-
        
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $start)->where('user_id', $userLoggedin['id'])->where('station_id', $data['station_id'])->get();
 
-        // dd(count($bookings1));
+        // See whether the reservation is bein made too early
+
+        $todayDate = date('Y-m-d');
+        $today = new DateTime($todayDate);
+
+        $resDiff = $today->diff($start);
+        $minutesDiff = ($resDiff->h*60) + ($resDiff->s/60) + ($resDiff->i) + ($resDiff->d*24*60) + ($resDiff->m*30*24*60) + ($resDiff->y*365*24*60);
+    
 
         $data = [
             'station_id' => $request['station_id'],
@@ -116,14 +119,16 @@ class ReservationController extends Controller
 
         if ($userLoggedin['id'] != $reservation->user_id){
             return redirect()->route('frontend.reservation.index')->with('Error', 'You can not update this reservation');   
+        }elseif(($minutesDiff > 43200)){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not make a reservation for that date this early');   
         }elseif($data['duration'] > 240){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Reservation can not exceed 4 hours');           
         }elseif($flag){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Time slot not available');   
-        }elseif((count($bookings1) == 1) && $result && !$flag){
+        }elseif((count($bookings1) == 1) && $result && !$flag && ($minutesDiff < 43200)){
             $reservation->update($data);
             return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');            
-        }elseif((count($bookings1) == 0 && !$flag)){
+        }elseif((count($bookings1) == 0 && !$flag && ($minutesDiff < 43200))){
             $reservation->update($data);
             return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !'); 
         }elseif((count($bookings1) == 1) && !$result){
@@ -168,7 +173,7 @@ class ReservationController extends Controller
     public function delete(Reservation $reservation)
     {
         $station = Stations::find($reservation->station_id);
-        return view('frontend.reservation.delete', compact('reservation', 'station'));
+        return view('backend.reservation.user.delete', compact('reservation', 'station'));
     }
 
     public function destroy(Reservation $reservation)

@@ -25,7 +25,7 @@
 
                     <div class="col-md-4">
 
-                        {!! Form::select('station_id', $stations, null , ['class'=>'form-control', 'required'=>true, 'placeholder' => $station->stationName]) !!}
+                        {!! Form::select('station_id', $stations, $reservation->station_id , ['class'=>'form-control', 'required'=>true, 'placeholder' => $station->stationName]) !!}
 
                         @error('station_id')
                         <strong>{{ $message }}</strong>

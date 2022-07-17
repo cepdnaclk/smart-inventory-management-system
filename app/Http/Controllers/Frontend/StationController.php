@@ -21,13 +21,13 @@ class StationController extends Controller
     // Listing for the side bar
     public function sidebarIndex(){
         $stations = Stations::all();
-        return view('frontend.stations.sidebar.index', compact('stations'));
+        return view('backend.station.user.index', compact('stations'));
     }
 
     // Station view from sidebar
     public function show(Stations $station)
     {
-        return view('frontend.stations.sidebar.show', compact('station'));
+        return view('backend.station.user.show', compact('station'));
     }
 
 
