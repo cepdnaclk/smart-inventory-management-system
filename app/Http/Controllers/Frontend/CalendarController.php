@@ -201,8 +201,6 @@ class CalendarController extends Controller
                         $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
 
                         //api call
-                    
-
                         $response = Http::withoutVerifying()
                         ->get($apiurl);
 
@@ -215,13 +213,17 @@ class CalendarController extends Controller
                         //send mail
                         Mail::to($email)
                             ->send(new StationReservationMail(auth()->user(), $station, $booking));
+                    }
 
                     }catch(\Exception $e){
                         return response()->json([
                             'error' => 'enumber null'
                         ], 404);
                     }
+
                 }
+            
+                
 
             //**********mails****************
 
