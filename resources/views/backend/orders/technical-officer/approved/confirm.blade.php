@@ -9,7 +9,7 @@
     <div>
         {!! Form::open(['url' => route('admin.orders.officer.ready',
                    compact('orderRequest')),
-                   'method' => 'put',
+                   'method' => 'post',
                    'class' => 'container',
                    'files'=>true,
                    'enctype'=>'multipart/form-data'

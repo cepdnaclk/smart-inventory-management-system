@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 use App\Models\OrderApproval;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
+
+use App\Mail\Backend\OrderMail;
+use App\Models\Locker;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Orders\OrderRejectMailForHOD;
@@ -16,6 +22,7 @@ use App\Mail\Orders\OrderApproveMailForHOD;
 use App\Mail\Orders\OrderRejectMailForLecturer;
 use App\Mail\Orders\OrderApproveMailForLecturer;
 use App\Mail\Orders\OrderMailForTechnicalOfficer;
+
 
 class OrderController extends Controller
 {
@@ -243,18 +250,30 @@ class OrderController extends Controller
             'due_date_to_return' => 'date|required',
         ]);
 
+        $orderRequest->update($data);
+
+        // Update the status
+        $orderRequest->status = 'READY';
+        $orderRequest->save();
+
+        //Update Locker isAvailable field
+        $orderRequest->locker->is_available = false;
+        $orderRequest->locker->save();
+        
+        //update technical officer id who ready this oder
+        $orderRequest->orderApprovals->technical_officer_id = auth()->user()->id;
+        $orderRequest->orderApprovals->save();
+
+        // Send an email to the student
         try {
-            $orderRequest->update($data);
+            $details = [
+                "title" => "your order request is ready.",
+                "body"  => "you can collect your order at CE Smart Inventory."
+            ];
+            //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
-            // Change the status
-            $orderRequest->status = 'READY';
-            $orderRequest->save();
-
-            //Update Locker isAvailable field
-            $orderRequest->locker->is_available = false;
-            $orderRequest->locker->save();
-            
-            return view('backend.orders.technical-officer.mail', compact('orderRequest'));
+            return redirect()->route('admin.orders.officer.approved.index')->with('Success', 'Email has been sent!');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -263,34 +282,30 @@ class OrderController extends Controller
 
     public function officer_finish(Order $orderRequest)
     {
-        try {
-            // Change the status
-            $orderRequest->status = 'FINISHED';
-            $orderRequest->save();
+      
+        // Update the status
+        $orderRequest->status = 'FINISHED';
+        $orderRequest->save();
 
-            return view('backend.orders.technical-officer.mail', compact('orderRequest'));
+        //TODO
+        //do we want to change componets count in this phase
+
+        // Send an email to the student
+        try {
+            $details = [
+                "title" => "your order request is finished.",
+                "body"  => "your submitted order components are correct."
+            ];
+            //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+
+            return redirect()->route('admin.orders.officer.submitted.index')->with('Success', 'Email has been sent!');
 
         } catch (\Exception $ex) {
             return abort(500);
         }
     }
 
-    public function officer_mail(Request $request)
-    {   
-        $data = request()->validate([
-            'email' => 'required|email',
-            'body' => 'required|string',
-        ]);
-
-        try {
-            Mail::to($data['email'])->send(new OrderMailForTechnicalOfficer($data));
-            return redirect()->route('admin.orders.officer.index')->with('Success', 'Email has been sent!');
-        
-        } catch (\Exception $ex) {
-            return abort(500);
-        }
-    }
-    
 //---------------------------------------------------------------------------------------------------------------------------------------
     
 
@@ -303,20 +318,17 @@ class OrderController extends Controller
         $order->orderApprovals->save();
         $order->save();
 
-        return view('backend.orders.lecturer.approve_mail', compact('order'));
-    }
-
-    public function lecturer_approve_mail(Request $request)
-    {   
-        $data = request()->validate([
-            'email' => 'required|email',
-            'body' => 'required|string',
-        ]);
-
+        // Send an email to the HOD
         try {
-            Mail::to($data['email'])->send(new OrderApproveMailForLecturer($data));
+            $details = [
+                "title" => "your order request is approved by lecturer",
+                "body" =>""
+            ];
+            //Mail::to($order->HOD->email)->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            
             return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in rejected order list.');
-        
+
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -330,26 +342,22 @@ class OrderController extends Controller
         $order->orderApprovals->save();
         $order->save();
 
-        return view('backend.orders.lecturer.reject_mail', compact('order'));
-        
-    }
-
-    public function lecturer_reject_mail(Request $request)
-    {   
-        $data = request()->validate([
-            'email' => 'required|email',
-            'body' => 'required|string',
-        ]);
-
+        // Send an email to the student
         try {
-            Mail::to($data['email'])->send(new OrderRejectMailForLecturer($data));
+            $details = [
+                "title" => "your order request is rejected by lecturer",
+                "body"  => ""
+            ];
+            //Mail::to($order->user->email)->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+
             return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have rejected the order.you can view the order in rejected order list.');
-        
+            
         } catch (\Exception $ex) {
             return abort(500);
         }
+        
     }
-
 
     public function lecturer_accepted_index()
     {
@@ -386,16 +394,24 @@ class OrderController extends Controller
     
     
     public function h_o_d_approve(Order $order)
-    {   try {
+    {   
         //to update the accepted table 
         
         $order->status = "APPROVED";
         
         $order->save();
         
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderApproveMailForHOD());
+        // Send an email to the student
+        try {
+            $details = [
+                "title" => "your order request is approved by Head of the Department",
+                "body" =>""
+            ];
+            //Mail::to($order->user->email)->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+
             return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have approved the order. you can view the order in accepted order list.');
-        
+            
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -403,7 +419,7 @@ class OrderController extends Controller
 
 
     public function h_o_d_reject(Order $order)
-    {   try {
+    {   
         //to update the accepted table 
         $order->orderApprovals->is_approved_by_lecturer=1;
 
@@ -411,15 +427,21 @@ class OrderController extends Controller
         $order->save();
         $order->orderApprovals->save();
 
-        
-
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderRejectMailForHOD());
+        // Send an email to the student
+        try {
+            $details = [
+                "title" => "your order request is rejected by Head of the Department",
+                "body" =>""
+            ];
+            //Mail::to($order->user->email)->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
             return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have rejected the order.you can view the order in rejected order list.');
-        
+            
         } catch (\Exception $ex) {
             return abort(500);
         }
+        
     }
 
     
