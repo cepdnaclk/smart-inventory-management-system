@@ -138,8 +138,6 @@ class CalendarController extends Controller
                 }
             }
         }
-
-
         /********************Enumber check *****************************/
 
         if (!$flag) {
@@ -183,27 +181,33 @@ class CalendarController extends Controller
             // Nuwan: This part is working. So I added a 'if condition' to this in such a way that
             // it will be only executed in a web server.
             // Environment can be setup in the .env file
-
+            
+            
             if (App::environment(['local', 'staging'])) {
                 // dd('Not sending emails');
             } else {
-                try {
-                    $enums = explode(',', $request->title);
-                    foreach ($enums as $enum) {
+                
+                try{
+                    $enums = explode(',',$request->title);
+
+                    foreach ($enums as $enum){
+
                         //get enumber
-                        $enum1 = explode('/', $enum);
-                        $batch = $enum1[1];
-                        $regnum = $enum1[2];
+                        $enum1=explode('/',$enum);
+                        $batch=$enum1[1];
+                        $regnum=$enum1[2];
 
                         //set api url
-                        $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E' . '' . $batch . '/' . $regnum . '/';
+                        $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
 
                         //api call
+                    
+
                         $response = Http::withoutVerifying()
-                            ->get($apiurl);
+                        ->get($apiurl);
 
                         //extract email address
-                        $email = ($response['emails']['faculty']['name'] . '@' . $response['emails']['faculty']['domain']);
+                        $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
 
                         //get user
                         $user = auth()->user();
@@ -211,13 +215,14 @@ class CalendarController extends Controller
                         //send mail
                         Mail::to($email)
                             ->send(new StationReservationMail(auth()->user(), $station, $booking));
+
+                    }catch(\Exception $e){
+                        return response()->json([
+                            'error' => 'enumber null'
+                        ], 404);
                     }
-                } catch (\Exception $ex) {
-                    return response()->json([
-                        'error' => 'An error occurred while sending the emails !', // TODO: Handle this type of error in calender JS script
-                    ], 404);
                 }
-            }
+
             //**********mails****************
 
             return response()->json([
