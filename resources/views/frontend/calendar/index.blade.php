@@ -34,6 +34,7 @@
 
             // TODO: Only load the events from last week to the future. Otherwise this can be a huge list in someday
             var booking = @json($events);
+            var todayDate = @json($today);
 
             $('#calendar').fullCalendar({
 
@@ -72,6 +73,13 @@
                             var loggedIn = @json($userLoggedin);
                             var user = loggedIn['email'];
                             var begin = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
+                            
+                            const dateBegin = new Date(begin); 
+                            const dateToday = new Date(todayDate);
+
+                            var ms1 = dateBegin.getTime() - dateToday.getTime();
+                            var d1 = moment.duration(ms1);
+                            var mins = d1.asMinutes();
 
                             console.log("Event Select");
                             console.log(start, end);
@@ -91,54 +99,55 @@
 
                             // TODO: Validate the E Numbers
 
-                            //Send to the database
-                            if (m < time_limit) {  //limit maximum time
-                                $.ajax({
-                                    url: "{{ route('frontend.calendar.store') }}",
-                                    type: "POST",
-                                    dataType: 'json',
-                                    data: {title, start_date, end_date, begin, m},
-                                    success: function (response) {
+                            if(moment(dateBegin).isAfter(dateToday)){
+                                if(mins < 43200){
+                                    if (m < time_limit) {  //limit maximum time
+                                        // if(m1 < 43200){
+                                        $.ajax({
+                                            url: "{{ route('frontend.calendar.store') }}",
+                                            type: "POST",
+                                            dataType: 'json',
+                                            data: {title, start_date, end_date, begin, m},
+                                            success: function (response) {
 
-                                        //fill the calendar when event is entered instantaneously
-                                        $('#bookingModal').modal('hide')
-                                        $('#calendar').fullCalendar('renderEvent', {
-                                            'title': response.title,
-                                            'start': response.start,
-                                            'end': response.end,
-                                            'color': response.color,
-                                            'auth': response.auth,
+                                                //fill the calendar when event is entered instantaneously
+                                                $('#bookingModal').modal('hide')
+                                                $('#calendar').fullCalendar('renderEvent', {
+                                                    'title': response.title,
+                                                    'start': response.start,
+                                                    'end': response.end,
+                                                    'color': response.color,
+                                                    'auth': response.auth,
+                                                });
+
+                                                swal("Done!", "Event Created!", "success");
+                                                refreshPage();
+                                                // TODO: This is a temporary fix. Find a better way to this
+                                                
+                                                
+                                            },
+                                            error: function (error) {
+                                                if (error.responseJSON.errors) {
+                                                    $('#titleError').html('Title required in the format E/xx/xxx, E/xx/xxx, ... where x is a digit');
+                                                } else {
+                                                    $('#bookingModal').modal('hide')
+                                                    swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                                }
+                                                console.log(error);
+                                            },
                                         });
-
-                                        swal("Done!", "Event Created!", "success");
-                                        refreshPage();
-                                        // TODO: This is a temporary fix. Find a better way to this
-
-
-                                    },
-                                    error: function (error) {
-                                        if (error.responseJSON.errors) {
-                                            $('#titleError').html('Title required in the format E/xx/xxx, E/xx/xxx, ... where x is a digit');
-                                            $('#bookingModal').find("input[type=text], textarea").val("");
-                                            $('#bookingModal').find("input[type=text], textarea").focus();
-
-                                        } else {
-                                            var jsonData = error.responseJSON;
-                                            var msg = jsonData.error;
-
-                                            if(msg=="enumber null"){
-                                                $('#bookingModal').modal('hide')
-                                                swal("Denied!", "Enumber does not exist.", "warning");
-                                            }else{
-                                                $('#bookingModal').modal('hide')
-                                                swal("Denied!", "Can not make multiple reservations in a day!", "warning");
-                                            }
-                                        }
-                                        console.log(error);
-                                    },
-                                });
-                            } else {
-                                swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
+                                        
+                                    } else {
+                                        $('#bookingModal').modal('hide');
+                                        swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
+                                    }
+                                }else{
+                                    $('#bookingModal').modal('hide');
+                                    swal("Permission Denied!", "You can not make a reservation for that date this early", "warning");
+                                }
+                            }else{
+                                $('#bookingModal').modal('hide');
+                                swal("Permission Denied!", "You can not make a reservation for a date that has passed", "warning");
                             }
                         });
                     }
@@ -221,7 +230,14 @@
 
                     console.log(start_date, end_date);
 
-                    var m = delta.asMinutes();
+                    // count hours
+                    const date1 = new Date(start_date);
+                    const date2 = new Date(end_date);
+
+                    var ms = date2.getTime() - date1.getTime();
+                    var d = moment.duration(ms);
+                    var m = d.asMinutes();
+                    
                     var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
