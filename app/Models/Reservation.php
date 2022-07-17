@@ -36,7 +36,7 @@ class Reservation extends Model
     // Return the relative URL of the thumbnail after 
     public function thumbURL_after()
     {
-        if ($this->thumb_after != null) return '/img/reservations/' . $this->thumb_after;
+        if ($this->thumb_after != null) return '/img/reservations_after/' . $this->thumb_after;
         return null;
     }
 }

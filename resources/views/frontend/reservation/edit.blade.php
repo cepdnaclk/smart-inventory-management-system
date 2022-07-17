@@ -5,17 +5,17 @@
 
 @section('content')
     <div>
-    {!! Form::open(['url' => route('frontend.reservation.update',
-                  compact('reservation')),
-                  'method' => 'put',
-                  'class' => 'container',
-                  'files'=>true,
-                  'enctype'=>'multipart/form-data'
-      ]) !!}
+        {!! Form::open(['url' => route('frontend.reservation.update',
+                      compact('reservation')),
+                      'method' => 'put',
+                      'class' => 'container',
+                      'files'=>true,
+                      'enctype'=>'multipart/form-data'
+          ]) !!}
 
         <x-backend.card>
             <x-slot name="header">
-                Reservation : Edit 
+                Reservation : Edit
             </x-slot>
 
             <x-slot name="body">
@@ -25,7 +25,7 @@
 
                     <div class="col-md-4">
 
-                        {!! Form::select('station_id', $stations, null , ['class'=>'form-control', 'required'=>true, 'placeholder' => $station->stationName]) !!}
+                        {!! Form::select('station_id', $stations, $reservation->station_id , ['class'=>'form-control', 'required'=>true]) !!}
 
                         @error('station_id')
                         <strong>{{ $message }}</strong>
@@ -91,7 +91,8 @@
 
                     <div class="col-md-10">
                         <img src="{{ $reservation->thumbURL_after() }}" alt="" width="64">
-                        {!! Form::file('thumb_after', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use square
+                        {!! Form::file('thumb_after', ["accept"=>".jpeg,.png,.jpg,.gif,.svg"]);  !!} (Max: 2MB, use
+                        square
                         image)
                         @error('thumb_after')
                         <strong>{{ $message }}</strong>
