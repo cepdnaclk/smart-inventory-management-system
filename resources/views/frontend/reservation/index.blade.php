@@ -27,18 +27,16 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-
                 @endif
 
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
-                            
                             <th>Station Name</th>
                             <th>Start Date & Time</th>
                             <th>End Date & Time</th>
-                            <th>Duration</th>                           
-                            <th>E numbers</th>                          
+                            <th>Duration<br>(in minutes)</th>
+                            <th>Team</th>
                             <th>&nbsp;</th>
                         </tr>
 
@@ -60,14 +58,17 @@
 
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
+                                            {{-- Move this route to the backend folder --}}
                                             <a href="{{ route('frontend.reservation.show', $res)}}"
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
+                                            {{-- Move this route to the backend folder --}}
                                             <a href="{{ route('frontend.reservation.edit', $res)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
 
+                                            {{-- Move this route to the backend folder --}}
                                             <a href="{{ route('frontend.reservation.delete', $res)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                 title="Delete"></i>
@@ -79,8 +80,6 @@
 
                             </tr>
                         @endforeach
-                        
-                        
                     </table>
 
                 </div>

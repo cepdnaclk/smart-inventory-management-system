@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use DateTime;
-use Carbon\Carbon;
-use App\Models\Stations;
-use App\Models\Reservation;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 use App\Http\Controllers\Controller;
 use App\Mail\StationReservationMail;
+use App\Models\Reservation;
+use App\Models\Stations;
+use Carbon\Carbon;
+use DateTime;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class CalendarController extends Controller
 {
@@ -22,7 +23,7 @@ class CalendarController extends Controller
     {
         // Get the model of the user logged in
         $userLoggedin = auth()->user();
-        $events = array();
+        $events = [];
 
         // Get all the reservations for that particular station
         $bookings = Reservation::where('station_id', $station->id)->where('start_date', '>', Carbon::now()->subDays(8))->get();
@@ -30,10 +31,9 @@ class CalendarController extends Controller
         $color = null;
 
         foreach ($bookings as $booking) {
-
-            if($booking->user_id != $userLoggedin['id']){
+            if ($booking->user_id != $userLoggedin['id']) {
                 $color = '#435258';
-            }else{
+            } else {
                 $color = '#3E9CC2';
             }
             $userVar = User::find($booking->user_id);
@@ -53,15 +53,15 @@ class CalendarController extends Controller
 
     public function store(Request $request)
     {
-
         $station = Session::get('station');
         $userLoggedin = auth()->user();
 
         $stringLength = Str::length($request['title']);
-       
-        
+
 
         /********************Enumber check *****************************/
+        // TODO: Try to use regex method. It is much easier than this and simple
+
         $naught = 0;
         $first = 1;
         $second = 4;
@@ -69,38 +69,37 @@ class CalendarController extends Controller
         $space = 9;
         $flag1 = true;
 
-        for($index = 0; $index < $stringLength; $index++){
-            if($index == 0 || $index == $naught + 10){
+        for ($index = 0; $index < $stringLength; $index++) {
+            if ($index == 0 || $index == $naught + 10) {
                 $naught = $index;
-                if(($request['title'][$index] != 'E')){
+                if (($request['title'][$index] != 'E')) {
                     $flag1 = false;
-                }             
-            }elseif(($index == 1 || $index == $first+10)){
+                }
+            } elseif (($index == 1 || $index == $first + 10)) {
                 $first = $index;
-                if(($request['title'][$index] != '/')){
+                if (($request['title'][$index] != '/')) {
                     $flag1 = false;
-                }  
-            }elseif(($index == 4 || $index == $second+10)){
+                }
+            } elseif (($index == 4 || $index == $second + 10)) {
                 $second = $index;
-                if(($request['title'][$index] != '/')){
+                if (($request['title'][$index] != '/')) {
                     $flag1 = false;
                 }
-            }elseif(($index == 8 || $index == $third+10)){
+            } elseif (($index == 8 || $index == $third + 10)) {
                 $third = $index;
-                if(($request['title'][$index] != ',')){
+                if (($request['title'][$index] != ',')) {
                     $flag1 = false;
                 }
-            }elseif(($index == 9 || $index == $space+10)){
+            } elseif (($index == 9 || $index == $space + 10)) {
                 $space = $index;
-                if(($request['title'][$index] != ' ')){
+                if (($request['title'][$index] != ' ')) {
                     $flag1 = false;
                 }
-            }else{
-                if(!(is_numeric($request['title'][$index]))){
+            } else {
+                if (!(is_numeric($request['title'][$index]))) {
                     $flag1 = false;
                 }
             }
-
         }
 
         $naught = 0;
@@ -110,44 +109,43 @@ class CalendarController extends Controller
         $space = 9;
         $flag = true;
 
-        if(!$flag1){
-            for($index = 0; $index < $stringLength; $index++){
-                if($index == 0 || $index == $naught + 9){
+        if (!$flag1) {
+            for ($index = 0; $index < $stringLength; $index++) {
+                if ($index == 0 || $index == $naught + 9) {
                     $naught = $index;
-                    if(($request['title'][$index] != 'E')){
+                    if (($request['title'][$index] != 'E')) {
                         $flag = false;
-                    }             
-                }elseif(($index == 1 || $index == $first+9)){
+                    }
+                } elseif (($index == 1 || $index == $first + 9)) {
                     $first = $index;
-                    if(($request['title'][$index] != '/')){
+                    if (($request['title'][$index] != '/')) {
                         $flag = false;
-                    }  
-                }elseif(($index == 4 || $index == $second+9)){
+                    }
+                } elseif (($index == 4 || $index == $second + 9)) {
                     $second = $index;
-                    if(($request['title'][$index] != '/')){
+                    if (($request['title'][$index] != '/')) {
                         $flag = false;
                     }
-                }elseif(($index == 8 || $index == $third+9)){
+                } elseif (($index == 8 || $index == $third + 9)) {
                     $third = $index;
-                    if(($request['title'][$index] != ',')){
+                    if (($request['title'][$index] != ',')) {
                         $flag = false;
                     }
-                }else{
-                    if(!(is_numeric($request['title'][$index]))){
+                } else {
+                    if (!(is_numeric($request['title'][$index]))) {
                         $flag = false;
                     }
                 }
-    
             }
         }
         /********************Enumber check *****************************/
 
-        if(!$flag){
+        if (!$flag) {
             $request['title'] = null;
         }
 
         $request->validate([
-            'title' => 'required|string'
+            'title' => 'required|string',
         ]);
 
 
@@ -156,12 +154,11 @@ class CalendarController extends Controller
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->where('station_id', $station->id)->get();
 
-        
+
         // $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->get();
 
         // If the user has not made a reservation before
         if ($bookings1->isEmpty() && $flag) {
-
             $booking = Reservation::create([
 
                 'user_id' => $userLoggedin['id'],
@@ -181,40 +178,50 @@ class CalendarController extends Controller
 
             //***********mails****************
 
-            $enums = explode(',',$request->title);
-
-            foreach ($enums as $enum){
+            // Nuwan: This part is working. So I added a 'if condition' to this in such a way that
+            // it will be only executed in a web server.
+            // Environment can be setup in the .env file
             
-                //get enumber
-                $enum1=explode('/',$enum);
-                $batch=$enum1[1];
-                $regnum=$enum1[2];
-
-                //set api url
-                $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
-
-                //api call
-                try{
-
-                    $response = Http::withoutVerifying()
-                    ->get($apiurl);
-                    
-                    //extract email address
-                    $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
-
-                    //get user
-                    $user = auth()->user();
+            
+            if (App::environment(['local', 'staging'])) {
+                // dd('Not sending emails');
+            } else {
                 
-                    //send mail
-                    Mail::to($email)
-                        ->send(new StationReservationMail(auth()->user(), $station, $booking));
+                try{
+                    $enums = explode(',',$request->title);
 
-                }catch(\Exception $e){
-                    return response()->json([
-                        'error' => 'enumber null'
-                    ], 404);
+                    foreach ($enums as $enum){
+
+                        //get enumber
+                        $enum1=explode('/',$enum);
+                        $batch=$enum1[1];
+                        $regnum=$enum1[2];
+
+                        //set api url
+                        $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
+
+                        //api call
+                    
+
+                        $response = Http::withoutVerifying()
+                        ->get($apiurl);
+
+                        //extract email address
+                        $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
+
+                        //get user
+                        $user = auth()->user();
+
+                        //send mail
+                        Mail::to($email)
+                            ->send(new StationReservationMail(auth()->user(), $station, $booking));
+
+                    }catch(\Exception $e){
+                        return response()->json([
+                            'error' => 'enumber null'
+                        ], 404);
+                    }
                 }
-            }
 
             //**********mails****************
 
@@ -225,7 +232,6 @@ class CalendarController extends Controller
                 'title' => $booking->title,
                 'station_id' => $station->id,
                 'color' => $color ? $color : '',
-
             ]);
 
             // return Redirect::back()->response()->json([
@@ -237,15 +243,12 @@ class CalendarController extends Controller
             //     'color' => $color ? $color : '',
 
             // ]);
-
         } else {
             // Print message
             return response()->json([
-                'error' => 'Unable to locate the event'
+                'error' => 'Unable to locate the event',
             ], 404);
         }
-
-        
     }
 
     public function update(Request $request, $id)
@@ -255,16 +258,16 @@ class CalendarController extends Controller
         // dd('11');
         $station = Session::get('station');
         // dd($station->id);
-        $userLoggedin = auth()->user();   
+        $userLoggedin = auth()->user();
 
-       
+
         $booking = Reservation::find($id);
 
         //See whether update is made on the same day
         $dateOriginal = (new DateTime($booking->start_date))->format('Y-m-d');
         $dateNew = (new DateTime($request['start_date']))->format('Y-m-d');
 
-        $date1 = Carbon::createFromFormat('Y-m-d',$dateOriginal);
+        $date1 = Carbon::createFromFormat('Y-m-d', $dateOriginal);
         $date2 = Carbon::createFromFormat('Y-m-d', $dateNew);
 
         $result = $date1->eq($date2);
@@ -274,41 +277,39 @@ class CalendarController extends Controller
 
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->where('station_id', $station->id)->get();
-        // dd($bookings1);        
+        // dd($bookings1);
 
         if (!$booking) {
             return response()->json([
-                'error' => 'Unable to locate the event'
+                'error' => 'Unable to locate the event',
             ], 404);
         }
 
-        if(($result && (count($bookings1) == 1)) || (!$result && (count($bookings1) == 0)) ){
+        // TODO: If the start end times changed, it will be better to send the users an email
+        // saying the time is changed (remind Google Calender events !)
 
+        if (($result && (count($bookings1) == 1)) || (!$result && (count($bookings1) == 0))) {
             $booking->update([
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
             ]);
-            return response()->json('Event updated');
 
-        }else{
+            return response()->json('Event updated');
+        } else {
             // Print message
             return response()->json([
-                'error' => 'Unable to locate the event'
+                'error' => 'Unable to locate the event',
             ], 404);
         }
-
-        
-
     }
 
     public function destroy($id)
     {
         $booking = Reservation::find($id);
 
-
         if (!$booking) {
             return response()->json([
-                'error' => 'Unable to locate the event'
+                'error' => 'Unable to locate the event',
             ], 404);
         }
 
