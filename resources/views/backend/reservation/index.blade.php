@@ -38,14 +38,14 @@
 
                         @foreach($reservation as $res)
                             <tr>
-                            <!-- <td>{{ $res->user_id  }}</td> -->
+                           
 
                                 <td>
                                     @if($res->res_info() != null)
                                         {{ $res->res_info['name'] }}
                                     @endif
                                 </td>
-                            <!-- <td>{{ $res->station_id }}</td> -->
+
                                 <td>
                                     @if($res->st_info() != null)
                                         {{ $res->st_info['stationName'] }}
