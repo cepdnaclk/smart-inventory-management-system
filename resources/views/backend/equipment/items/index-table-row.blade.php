@@ -26,13 +26,13 @@
         {{ $row->price }}
 </x-livewire-tables::table.cell>
 
-<x-livewire-tables::table.cell>
-    {{ $row->width }} x {{ $row->height }} x {{ $row->length }}
-</x-livewire-tables::table.cell>
+{{--<x-livewire-tables::table.cell>--}}
+{{--    {{ $row->width }} x {{ $row->height }} x {{ $row->length }}--}}
+{{--</x-livewire-tables::table.cell>--}}
 
-<x-livewire-tables::table.cell>
-    {{ $row->weight }}
-</x-livewire-tables::table.cell>
+{{--<x-livewire-tables::table.cell>--}}
+{{--    {{ $row->weight }}--}}
+{{--</x-livewire-tables::table.cell>--}}
 
 <x-livewire-tables::table.cell>
         <div class="d-flex px-0 mt-0 mb-0">

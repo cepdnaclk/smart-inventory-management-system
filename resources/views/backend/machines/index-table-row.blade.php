@@ -1,5 +1,5 @@
 <x-livewire-tables::table.cell>
-    {{ $row->id }}
+    {{ $row->inventoryCode() }}
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
@@ -7,7 +7,7 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
-    {{ \App\Models\Machines::types()[$row->type] }}
+    {{ $row->types()[$row->type] }}
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
@@ -20,7 +20,7 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
-    {{ \App\Models\Machines::availabilityOptions()[$row->status] }}
+    {{ $row->availabilityOptions()[$row->status] }}
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
