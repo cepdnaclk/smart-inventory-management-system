@@ -28,9 +28,9 @@ Route::prefix('equipment')->group(function () {
             $trail->parent('frontend.index')
                 ->push(__('Equipment'), route('frontend.equipment.index'));
 
-            if ($equipmentType->parent() != null) {
-                if ($equipmentType->parent()->parent() != null) {
-                    if ($equipmentType->parent()->parent()->parent() != null) {
+            if ($equipmentType->parent_id() != null) {
+                if ($equipmentType->parent()->parent_id() != null) {
+                    if ($equipmentType->parent()->parent()->parent()->parent_id() != null) {
                         $trail->push($equipmentType->parent()->parent()->parent()->title, route('frontend.equipment.category',
                             $equipmentType->parent()->parent()->parent()));
                     }
@@ -54,9 +54,9 @@ Route::prefix('equipment')->group(function () {
             if ($equipmentItem->equipment_type() != null) {
                 $type = $equipmentItem->equipment_type;
 
-                if ($type->parent() != null) {
-                    if ($type->parent()->parent() != null) {
-                        if ($type->parent()->parent()->parent() != null) {
+                if ($type->parent_id() != null) {
+                    if ($type->parent()->parent_id() != null) {
+                        if ($type->parent()->parent()->parent_id() != null) {
                             $trail->push($type->parent()->parent()->parent()->title, route('frontend.equipment.category',
                                 $type->parent()->parent()->parent()));
                         }

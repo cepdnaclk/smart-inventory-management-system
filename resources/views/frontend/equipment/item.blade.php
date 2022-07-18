@@ -49,9 +49,9 @@
                         <tr>
                             <td>Category</td>
                             <td>
-                                : @if($equipmentItem->equipment_type->parent() != null)
-                                    <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type->parent() ) }}">
-                                        {{ $equipmentItem->equipment_type->parent()->title }}
+                                : @if($equipmentItem->equipment_type->parent_id() != null)
+                                    <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type->parent()->first() ) }}">
+                                        {{ $equipmentItem->equipment_type->parent()->first()->title }}
                                     </a> &gt;
                                 @endif
 

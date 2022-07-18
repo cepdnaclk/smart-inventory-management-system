@@ -36,7 +36,7 @@ class ItemLocations extends Model
             if (count($get_from_db) > 0) {
                 $item_to_return = $get_from_db[0];
             }
-        } elseif ($exploded[0] == "RW") {
+        } elseif ($exploded[0] == "RM") {
             $get_from_db = RawMaterials::where('id', (int)end($exploded))->get();
             if (count($get_from_db) > 0) {
                 $item_to_return = $get_from_db[0];

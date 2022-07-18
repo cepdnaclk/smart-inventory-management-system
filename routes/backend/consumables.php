@@ -7,7 +7,7 @@ use Tabuna\Breadcrumbs\Trail;
 
 Route::middleware(['editAccess'])->group(function () {
     Route::get('/consumables', function () {
-        return view('backend.consumable.index');
+        return view('backend.consumables.index');
     })->name('consumable.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))

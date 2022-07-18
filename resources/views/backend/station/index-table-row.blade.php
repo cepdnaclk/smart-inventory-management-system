@@ -1,5 +1,5 @@
 <x-livewire-tables::table.cell>
-    {{ $row->id }}
+    {{ $row->inventoryCode() }}
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>

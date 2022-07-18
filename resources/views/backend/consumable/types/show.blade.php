@@ -10,7 +10,7 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Component Types : Show {{ $consumableType->title  }}
+                Consumable Types : Show {{ $consumableType->title  }}
             </x-slot>
 
             <x-slot name="body">
