@@ -68,6 +68,29 @@ class ReservationController extends Controller
        return view('backend.reservation.user.show', compact('reservation'));
     }
 
+    public function confirm(Reservation $reservation)
+    {
+      //  dd('Approved');
+      return view('backend.reservation.confirm', compact('reservation'));
+    }
+    
+
+    public function approve(Request $request, Reservation $reservation)
+    {
+        $data = request()->validate([
+            'comments' => 'string|nullable',
+            'status' => 'string|required'
+        ]);
+
+        $data = [
+            'comments' => $request->comments,
+            'status' => $request->status,
+            
+        ];
+            return redirect()->route('admin.reservation.index')->with('Success', 'Reservation was approved !');
+    }
+
+
     public function update(Request $request, Reservation $reservation)
     {
         $dateOriginal = (new DateTime($reservation->start_date))->format('Y-m-d');
@@ -253,6 +276,7 @@ class ReservationController extends Controller
         return $imageName;
     }
 
+ 
     // TODO: Move the methods related to the admin dashboard into this file such as image upload methods, etc...
     // It is ok to have frontend related store, update and destroy methods in there,
     // and smae methods related to backend in here
