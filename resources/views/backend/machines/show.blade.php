@@ -23,6 +23,10 @@
                             <a href="{{ route('admin.machines.edit', $machines)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
+                            <a href="{{ route('admin.machines.edit.location', $machines)}}"
+                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker"
+                                                                 title="Edit Location"></i>
+                            </a>
                             <a href="{{ route('admin.machines.delete', $machines)}}"
                                class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                 title="Delete"></i>
@@ -35,21 +39,23 @@
                         <td>Code (to be finalized)</td>
                         <td>{{ $machines->inventoryCode() }}</td>
                     </tr>
-                    <tr>
-                        <td>Location</td>
-                        <td>
-                            @if(count($locations_array) > 0)
-                                @foreach(array_reverse($locations_array) as $eachLocation)
-                                    {{ $eachLocation }}
-                                    @if(!($loop->last))
-                                        ->
-                                    @endif
+
+                    @if(count($locations_array) > 0)
+                        <tr>
+                            <td>Locations</td>
+                            <td>
+                                @foreach($locations_array as $eachLocation)
+                                    {{ $eachLocation }}<br>
                                 @endforeach
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>Location</td>
+                            <td>Not Available</td>
+                        </tr>
+                    @endif
+
                     <tr>
                         <td>Type</td>
                         <td>{{ \App\Models\Machines::types()[$machines->type] }}
@@ -59,11 +65,12 @@
                         <td>Build Size (W x L x H)</td>
 
                         <td>
-                        @if($machines->build_width != null && $machines->build_length != null && $machines->build_height!= null )
-                            {{ $machines->build_width }} x {{ $machines->build_length }} x {{ $machines->build_height }} mm
-                        @else
-                            N/A
-                        @endif
+                            @if($machines->build_width != null && $machines->build_length != null && $machines->build_height!= null )
+                                {{ $machines->build_width }} x {{ $machines->build_length }}
+                                x {{ $machines->build_height }} mm
+                            @else
+                                N/A
+                            @endif
                         </td>
                     </tr>
 

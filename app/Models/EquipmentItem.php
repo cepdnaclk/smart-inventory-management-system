@@ -16,8 +16,8 @@ class EquipmentItem extends Model implements Searchable
     // Link the Equipment Type table
     public function equipment_type()
     {
-        if ($this->equipment_type_id != null) return $this->belongsTo(EquipmentType::class, 'equipment_type_id', 'id');
-        return null;
+        // Do not change.
+        return $this->belongsTo(EquipmentType::class, 'equipment_type_id', 'id');
     }
 
     // reverse search depends on this. Change SearchController.php if you're changing this

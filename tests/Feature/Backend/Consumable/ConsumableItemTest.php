@@ -5,6 +5,7 @@ namespace Tests\Feature\Backend\Consumable;
 use App\Domains\Auth\Models\User;
 use App\Models\ConsumableItem;
 use App\Models\ItemLocations;
+use App\Models\Locations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -104,7 +105,7 @@ class ConsumableItemTest extends TestCase
         $consumable->title = 'New consumable Title';
         $consumable_array = $consumable->toArray();
         $consumable_array['location'] = 2;
-        $response = $this->put("/admin/consumables/items/{$consumable->id}",$consumable_array );
+        $response = $this->put("/admin/consumables/items/{$consumable->id}", $consumable_array);
         $response->assertStatus(302);
 
         $this->assertDatabaseHas('consumable_items', [
@@ -136,6 +137,48 @@ class ConsumableItemTest extends TestCase
         $consumable = ConsumableItem::factory()->create();
         $response = $this->delete('/admin/consumables/items/' . $consumable->id);
         $response->assertStatus(302);
+    }
+
+    /** @test */
+    public function shows_single_location()
+    {
+        $this->loginAsAdmin();
+        $consumable = ConsumableItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $consumable->inventoryCode(),
+                'location_id' => 1,
+            ]
+        );
+
+        $locationName = Locations::where('id', 1)->first()->location;
+        $response = $this->get('/admin/consumables/items/' . $consumable->id);
+        $response->assertSee($locationName);
+    }
+
+    /** @test */
+    public function shows_multiple_locations()
+    {
+        $this->loginAsAdmin();
+        $consumable = ConsumableItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $consumable->inventoryCode(),
+                'location_id' => 1,
+            ]
+        );
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $consumable->inventoryCode(),
+                'location_id' => 2,
+            ]
+        );
+
+        $locationName = Locations::where('id', 1)->first()->location;
+        $response = $this->get('/admin/consumables/items/' . $consumable->id);
+        $response->assertSee($locationName);
+        $locationName = Locations::where('id', 2)->first()->location;
+        $response->assertSee($locationName);
     }
 
 }
