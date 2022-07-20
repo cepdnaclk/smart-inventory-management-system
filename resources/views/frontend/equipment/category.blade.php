@@ -35,6 +35,9 @@
                                                 {{ $item->title }}<br>({{ $item->inventoryCode() }})
                                             </div>
                                         </a>
+                                        {{-- <a class="btn btn-primary btn-sm" href="{{ route('frontend.equipment.category', $item->equipment_type) }}">--}}
+                                        {{--    {{ $item->equipment_type->title }}--}}
+                                        {{-- </a>--}}
                                     </div>
                                 </div>
                             @endforeach
