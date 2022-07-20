@@ -7,7 +7,7 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Equipment : Delete | {{ $reservation->id  }}
+                Reservation : Delete | {{ $reservation->id  }}
             </x-slot>
 
             <x-slot name="body">

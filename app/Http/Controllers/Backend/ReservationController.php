@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Reservation;
+use DateTime;
 
+use DateInterval;
+use Carbon\Carbon;
+use App\Models\Stations;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+
+
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-
-
-
-use DateTime;
-use Carbon\Carbon;
-use App\Models\Stations;
 
 
 class ReservationController extends Controller
@@ -68,10 +69,33 @@ class ReservationController extends Controller
        return view('backend.reservation.user.show', compact('reservation'));
     }
 
+    public function confirm(Reservation $reservation)
+    {
+      //  dd('Approved');
+      return view('backend.reservation.confirm', compact('reservation'));
+    }
+    
+
+    public function approve(Request $request, Reservation $reservation)
+    {
+        $data = request()->validate([
+            'comments' => 'string|nullable',
+            'status' => 'string|required'
+        ]);
+
+        $data = [
+            'comments' => $request->comments,
+            'status' => $request->status,
+            
+        ];
+            return redirect()->route('admin.reservation.index')->with('Success', 'Reservation was approved !');
+    }
+
+
     public function update(Request $request, Reservation $reservation)
     {
         $dateOriginal = (new DateTime($reservation->start_date))->format('Y-m-d');
-        // dd($dateOriginal);
+        $dateOriginal1 = (new DateTime($reservation->start_date))->format('Y-m-d H:i:s');
 
         $userLoggedin = auth()->user();
 
@@ -96,6 +120,7 @@ class ReservationController extends Controller
         // return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');
 
         $dateNew = (new DateTime($data['start_date']))->format('Y-m-d');
+        $dateNew1 = (new DateTime($data['start_date']))->format('Y-m-d H:i:s');
 
         $date1 = Carbon::createFromFormat('Y-m-d', $dateOriginal);
         $date2 = Carbon::createFromFormat('Y-m-d', $dateNew);
@@ -121,10 +146,17 @@ class ReservationController extends Controller
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $start)->where('user_id', $userLoggedin['id'])->where('station_id', $data['station_id'])->get();
 
-        // See whether the reservation is bein made too early
+        // See whether the reservation is being made too early
 
-        $todayDate = date('Y-m-d');
+        $todayDate = date('Y-m-d H:i:s');
         $today = new DateTime($todayDate);
+        $today->add(new DateInterval('PT5H30M'));
+
+        $date3 = Carbon::createFromFormat('Y-m-d H:i:s', $dateOriginal1);
+        $date4 = Carbon::createFromFormat('Y-m-d H:i:s', $dateNew1);
+        $result1 = $date3->eq($date4);
+
+        // dd($start);
 
         $resDiff = $today->diff($start);
         $minutesDiff = ($resDiff->h*60) + ($resDiff->s/60) + ($resDiff->i) + ($resDiff->d*24*60) + ($resDiff->m*30*24*60) + ($resDiff->y*365*24*60);
@@ -151,6 +183,8 @@ class ReservationController extends Controller
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Reservation can not exceed 4 hours');           
         }elseif($flag){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Time slot not available');   
+        }elseif($today >= $start && !$result1 ){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! You can not make a reservation for a date that has passed'); 
         }elseif((count($bookings1) == 1) && $result && !$flag && ($minutesDiff < 43200)){
             $reservation->update($data);
             return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');            
@@ -249,6 +283,7 @@ class ReservationController extends Controller
         return $imageName;
     }
 
+ 
     // TODO: Move the methods related to the admin dashboard into this file such as image upload methods, etc...
     // It is ok to have frontend related store, update and destroy methods in there,
     // and smae methods related to backend in here
