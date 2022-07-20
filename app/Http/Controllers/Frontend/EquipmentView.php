@@ -27,13 +27,18 @@ class EquipmentView extends Controller
     public function viewCategory(EquipmentType $equipmentType)
     {
         $items = $equipmentType->hasMany(EquipmentItem::class)->paginate(36);;
-        // ->paginate(16);
         return view('frontend.equipment.category', compact('items', 'equipmentType'));
     }
 
     // Equipment Item Page
     public function viewItem(EquipmentItem $equipmentItem)
     {
-        return view('frontend.equipment.item', compact('equipmentItem'));
+        $locationCount = $this->getNumberOfLocationsForItem($equipmentItem);
+        $locationStringArray = array();
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locationStringArray[] = $this->getFullLocationPathAsString($equipmentItem, $i);
+        }
+
+        return view('frontend.equipment.item', compact('equipmentItem','locationStringArray','locationCount'));
     }
 } 

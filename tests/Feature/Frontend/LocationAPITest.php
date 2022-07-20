@@ -2,7 +2,11 @@
 
 namespace Tests\Feature\Frontend;
 
+use App\Models\ComponentItem;
 use App\Models\EquipmentItem;
+use App\Models\ItemLocations;
+use App\Models\Machines;
+use App\Models\RawMaterials;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -36,6 +40,11 @@ class LocationAPITest extends TestCase
     /** @test */
     public function location_service_api_returns_equipment_items()
     {
+        $equipmentItem = EquipmentItem::factory()->create();
+        ItemLocations::factory()->create([
+            'item_id' => $equipmentItem->inventoryCode(),
+            'location_id' => 1,
+        ]);
         $response = $this->get('/api/v1/locations/');
         $response->assertSee("EquipmentItem");
     }
@@ -43,6 +52,11 @@ class LocationAPITest extends TestCase
     /** @test */
     public function location_service_api_returns_component_items()
     {
+        $componentItem = ComponentItem::factory()->create();
+        ItemLocations::factory()->create([
+            'item_id' => $componentItem->inventoryCode(),
+            'location_id' => 1,
+        ]);
         $response = $this->get('/api/v1/locations/');
         $response->assertSee("ComponentItem");
     }
@@ -50,6 +64,11 @@ class LocationAPITest extends TestCase
     /** @test */
     public function location_service_api_returns_consumable_items()
     {
+        $consumableItem = ComponentItem::factory()->create();
+        ItemLocations::factory()->create([
+            'item_id' => $consumableItem->inventoryCode(),
+            'location_id' => 1,
+        ]);
         $response = $this->get('/api/v1/locations/');
         $response->assertSee("ComponentItem");
     }
@@ -57,6 +76,11 @@ class LocationAPITest extends TestCase
     /** @test */
     public function location_service_api_returns_raw_materials()
     {
+        $rawMaterial = RawMaterials::factory()->create();
+        ItemLocations::factory()->create([
+            'item_id' => $rawMaterial->inventoryCode(),
+            'location_id' => 1,
+        ]);
         $response = $this->get('/api/v1/locations/');
         $response->assertSee("RawMaterials");
     }
@@ -64,8 +88,13 @@ class LocationAPITest extends TestCase
     /** @test */
     public function location_service_api_returns_machines()
     {
+        $machine = Machines::factory()->create();
+        ItemLocations::factory()->create([
+            'item_id' => $machine->inventoryCode(),
+            'location_id' => 1,
+        ]);
         $response = $this->get('/api/v1/locations/');
         $response->assertSee("Machines");
     }
-                    
+
 }

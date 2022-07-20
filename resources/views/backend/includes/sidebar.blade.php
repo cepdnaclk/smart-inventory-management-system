@@ -206,15 +206,21 @@
             </ul>
         </li>
 
-        {{-- Search --}}
+        {{-- Location Service --}}
         <li class="c-sidebar-nav-dropdown">
             <x-utils.link
                     href="#"
                     icon="c-sidebar-nav-icon cil-list"
                     class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Search')"></x-utils.link>
+                    :text="__('Location Service')"></x-utils.link>
 
             <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.locations.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Locations')"></x-utils.link>
+                </li>
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
                             :href="route('admin.search.index')"

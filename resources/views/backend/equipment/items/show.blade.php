@@ -23,6 +23,9 @@
                             <a href="{{ route('admin.equipment.items.edit', $equipmentItem)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
+                            <a href="{{ route('admin.equipment.items.edit.location', $equipmentItem)}}"
+                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker" title="Edit Location"></i>
+                            </a>
                             <a href="{{ route('admin.equipment.items.delete', $equipmentItem)}}"
                                class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                 title="Delete"></i>
@@ -35,21 +38,23 @@
                         <td>Code (to be finalized)</td>
                         <td>{{ $equipmentItem->inventoryCode() }}</td>
                     </tr>
-                    <tr>
-                        <td>Location</td>
-                        <td>
-                            @if(count($locations_array) > 0)
-                                @foreach(array_reverse($locations_array) as $eachLocation)
-                                    {{ $eachLocation }}
-                                        @if(!($loop->last))
-                                            ->
-                                        @endif
+
+                    @if(count($locations_array) > 0)
+                        <tr>
+                            <td>Locations</td>
+                            <td>
+                                @foreach($locations_array as $eachLocation)
+                                    {{ $eachLocation }}<br>
                                 @endforeach
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>Location</td>
+                            <td>Not Available</td>
+                        </tr>
+                    @endif
+
                     <tr>
                         <td>Type</td>
                         <td>

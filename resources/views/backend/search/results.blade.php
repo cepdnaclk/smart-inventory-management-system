@@ -27,7 +27,7 @@
                 @endif
 
                     {{--<h1>Search</h1>--}}
-
+                    {{--  TODO: Add a back button or give an option to change the search text like in Google  --}}
 
                     You are searching for '{{$keywords}}'. <br>
                     There are {{ $searchResults->count() }} results.

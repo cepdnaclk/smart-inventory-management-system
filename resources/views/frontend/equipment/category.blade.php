@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
- 
+
 @section('title', $equipmentType->title )
 
 @section('content')
@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <h3>{{ $equipmentType->title }}</h3>
- 
+
                 @if($equipmentType->children()->count() != 0)
                     <div class="container pt-2">Sub-Categories</div>
                     <div class="container pt-2">
@@ -32,8 +32,7 @@
                                             <img class="img-fluid p-2 mx-auto" src="{{ $item->thumbURL() }}"
                                                  alt="{{ $item->title }}"/>
                                             <div class="p-1">
-                                                {{ $item->title }}<br>
-                                                ({{ $item->inventoryCode() }})
+                                                {{ $item->title }}<br>({{ $item->inventoryCode() }})
                                             </div>
                                         </a>
                                         {{-- <a class="btn btn-primary btn-sm" href="{{ route('frontend.equipment.category', $item->equipment_type) }}">--}}
