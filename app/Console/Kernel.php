@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('activitylog:clean')->daily();
 
 //*********************Send mails 30 minutes before end time***************************************
+
         $schedule->call(function () {
         
             $bookings = Reservation::where('start_date','<',Carbon::now())
