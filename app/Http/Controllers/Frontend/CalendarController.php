@@ -28,6 +28,7 @@ class CalendarController extends Controller
         // Get all the reservations for that particular station
         $bookings = Reservation::where('station_id', $station->id)->where('start_date', '>', Carbon::now()->subDays(8))->get();
 
+
         $color = null;
 
         foreach ($bookings as $booking) {
@@ -46,7 +47,7 @@ class CalendarController extends Controller
                 'auth' => $booking->user_id,
                 'color' => $color,
             ];
-        }
+        }   
 
         $today = date('Y-m-d');
 
