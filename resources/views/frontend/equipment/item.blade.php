@@ -40,6 +40,9 @@
                             <a target="_blank" href="{{ route('admin.equipment.items.edit', $equipmentItem)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
+                            <a href="{{ route('admin.equipment.items.edit.location', $equipmentItem)}}"
+                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker" title="Edit Location"></i>
+                            </a>
                         @endif
                     </div>
                 </div>
@@ -49,15 +52,17 @@
                         <tr>
                             <td>Category</td>
                             <td>
-                                : @if($equipmentItem->equipment_type->parent_id() != null)
+                                : @if($equipmentItem->equipment_type->parent()->first() != null)
                                     <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type->parent()->first() ) }}">
                                         {{ $equipmentItem->equipment_type->parent()->first()->title }}
-                                    </a> &gt;
+                                    </a>
                                 @endif
 
                                 <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type) }}">
                                     {{ $equipmentItem->equipment_type['title'] }}
                                 </a>
+
+
                             </td>
                         </tr>
 
