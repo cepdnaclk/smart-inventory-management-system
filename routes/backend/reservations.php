@@ -34,5 +34,18 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Show'));
         });
 
+    // Confirm 
+    Route::get('reservation/{reservation}/confirm', [ReservationController::class, 'confirm'])
+        ->name('reservation.confirm')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Reservations'), route('admin.reservation.indexmain'))
+                ->push(__('Maintainer'), route('admin.reservation.index'))
+                ->push(__('Confirm'));
+        });
 
+    // Approve
+    Route::put('reservation/{reservation}', [ReservationController::class, 'approve'])
+        ->name('reservation.approve');
+ 
 });

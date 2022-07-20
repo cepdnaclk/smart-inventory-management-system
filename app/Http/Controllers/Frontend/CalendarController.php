@@ -49,8 +49,9 @@ class CalendarController extends Controller
             ];
         }   
 
-        $today = date('Y-m-d');
-
+        $today = date('Y-m-d H:i:s');
+        // $today = Carbon::now()->addMinutes(330);
+        // dd($today);
         return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin, 'today' => $today]);
     }
 

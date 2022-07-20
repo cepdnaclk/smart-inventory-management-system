@@ -31,6 +31,8 @@ class CreateReservationsTable extends Migration
             $table->string('duration');
             $table->string('thumb')->nullable();  
             $table->string('thumb_after')->nullable();  
+            $table->string('status')->nullable();  
+            $table->text('comments')->nullable();  
             $table->timestamps();
             
             
