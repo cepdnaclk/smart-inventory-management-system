@@ -3,6 +3,7 @@
 namespace App\Console;
 
 
+use App\Mail\ReservationReminder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -34,11 +35,15 @@ class Kernel extends ConsoleKernel
 //*********************Send mails 30 minutes before end time***************************************
 
         $schedule->call(function () {
-        
-            $bookings = Reservation::where('start_date','<',Carbon::now())
-            ->where('end_date','>',Carbon::now())
-            ->where('end_date','<',Carbon::now()->addMinutes(30))
-            ->get();
+            
+
+            $dat=(new DateTime(Carbon::now()->addMinutes(360)))->format('Y-m-d H:i:s');
+            $dat2=(new DateTime(Carbon::now()->addMinutes(420)))->format('Y-m-d H:i:s');
+
+            $bookings = Reservation::where('start_date','<',$dat)
+                    ->where('end_date','>',$dat)
+                    ->where('end_date','<',$dat2)
+                    ->get();
 
             foreach($bookings as $booking){
                 try{
@@ -66,7 +71,7 @@ class Kernel extends ConsoleKernel
 
                         //send mail
                         Mail::to($email)
-                            ->send(new StationReservationMail(auth()->user(), $station, $booking));
+                            ->send(new ReservationReminder($booking, $station));
                     }
 
                 }catch(\Exception $e){
@@ -74,7 +79,7 @@ class Kernel extends ConsoleKernel
             }
         })->hourly();
 
-//************************************************************************* */
+//******************************************************************************************* */
     }
 
     /**

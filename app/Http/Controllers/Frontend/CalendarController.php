@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use DateTime;
+use Carbon\Carbon;
+use App\Models\Stations;
+use App\Models\Reservation;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
+use App\Mail\ReservationReminder;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\Mail\StationReservationMail;
-use App\Models\Reservation;
-use App\Models\Stations;
-use Carbon\Carbon;
-use DateTime;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
 
 class CalendarController extends Controller
 {
@@ -27,7 +28,6 @@ class CalendarController extends Controller
 
         // Get all the reservations for that particular station
         $bookings = Reservation::where('station_id', $station->id)->where('start_date', '>', Carbon::now()->subDays(8))->get();
-
 
         $color = null;
 
