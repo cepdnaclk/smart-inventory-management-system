@@ -25,6 +25,8 @@ class StationReservationMail extends Mailable
      */
     public function __construct(User $reserver, Stations $station, Reservation $booking)
     {
+        // TODO: Try to add the list of E Numbers as team
+
         $this->reserver=$reserver;
         $this->station=$station;
         $this->booking=$booking;
@@ -38,7 +40,7 @@ class StationReservationMail extends Mailable
     public function build()
     {   
 
-        return $this->markdown('emails.reservation.reservationmade')
+        return $this->markdown('emails.reservation.reservation_made')
             ->subject('MakerSpace Lab Reservation');
 
     }

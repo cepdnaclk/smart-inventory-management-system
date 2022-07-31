@@ -1,7 +1,8 @@
 @component('mail::message')
 <u>Station Reservation</u>
 
-{{ $reserver->name}} made a reservation.
+{{ $reserver->name}} made a reservation
+{{-- For the team of ....... --}}
 
 Station: <b>{{ $station->stationName}} </b><br>
 Date and Time: <b>{{explode(' ',$booking->start_date)[0]}} 
