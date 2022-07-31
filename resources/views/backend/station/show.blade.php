@@ -23,7 +23,7 @@
                             <a href="{{ route('admin.station.edit', $station)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" stationName="Edit"></i>
                             </a>
-                            <a href="{{ route('admin.station.edit', $station)}}"
+                            <a href="{{ route('admin.station.delete', $station)}}"
                                class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                stationName="Delete"></i>
                             </a>
