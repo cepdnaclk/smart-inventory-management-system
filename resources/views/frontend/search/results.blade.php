@@ -36,9 +36,13 @@
                     @foreach($searchResults->groupByType() as $type => $modelSearchResults)
 {{--                        <h2>{{ $type }}</h2>--}}
                             
+                    <div class="container pt-2">
+                    <div class="row equal">
                         @foreach($modelSearchResults as $searchResult)
-                            <ul>
-                                @if (get_class($searchResult->searchable) == 'App\Models\RawMaterials') 
+                        <div class="col-3 col-sm-3 col-md-2 p-1 d-flex">
+                            @if (get_class($searchResult->searchable) == 'App\Models\RawMaterials') 
+                                <img class="img-fluid p-2 mx-auto" src="{{ $searchResult->searchable->thumbURL() }}"
+                                    alt="{{ $searchResult->title }}"/>
                                 {{ $searchResult->title }} <br>
                                 Locations : <br>
                                     @foreach ( $searchResult->searchable->getLocation() as $eachLocation )
@@ -47,6 +51,8 @@
                                 @endif
 
                                 @if (get_class($searchResult->searchable) == 'App\Models\Machines')
+                                <img class="img-fluid p-2 mx-auto" src="{{ $searchResult->searchable->thumbURL() }}"
+                                    alt="{{ $searchResult->title }}"/>
                                 {{ $searchResult->title }} <br>
                                 Locations : <br>
                                     @foreach ( $searchResult->searchable->getLocation() as $eachLocation )
@@ -55,22 +61,53 @@
                                 @endif
 
                                 @if (get_class($searchResult->searchable) == 'App\Models\EquipmentItem') 
-                                    <li><a href="{{route('frontend.equipment.item',$searchResult->searchable)}}">{{ $searchResult->title }}</a></li>
+                                    <div class="text-center card">
+                                        <a class="text-decoration-none"
+                                           href="{{ route('frontend.equipment.item', $searchResult->searchable) }}">
+                                            <img class="img-fluid p-2 mx-auto" src="{{ $searchResult->searchable->thumbURL() }}"
+                                                 alt="{{ $searchResult->title }}"/>
+                                            <div class="p-1">
+                                                {{ $searchResult->title }}<br>({{ $searchResult->searchable->inventoryCode() }})
+                                            </div>
+                                        </a>
+                                    </div>
                                 @endif
-
+                                
                                 @if (get_class($searchResult->searchable) == 'App\Models\ConsumableItem')
-                                    <li><a href="{{route('frontend.consumable.item',$searchResult->searchable)}}">{{ $searchResult->title }}</a></li>
+                                    <div class="text-center card">
+                                        <a class="text-decoration-none"
+                                           href="{{ route('frontend.consumable.item', $searchResult->searchable) }}">
+                                            <img class="img-fluid p-2 mx-auto" src="{{ $searchResult->searchable->thumbURL() }}"
+                                                 alt="{{ $searchResult->title }}"/>
+                                            <div class="p-1">
+                                                {{ $searchResult->title }}<br>({{ $searchResult->searchable->inventoryCode() }})
+                                            </div>
+                                        </a>
+                                    </div>
                                 @endif
+                                
 
                                 @if (get_class($searchResult->searchable) == 'App\Models\ComponentItem')
-                                    <li><a href="{{route('frontend.component.item',$searchResult->searchable)}}">{{ $searchResult->title }}</a></li>
+                                    <div class="text-center card">
+                                        <a class="text-decoration-none"
+                                           href="{{ route('frontend.component.item', $searchResult->searchable) }}">
+                                            <img class="img-fluid p-2 mx-auto" src="{{ $searchResult->searchable->thumbURL() }}"
+                                                 alt="{{ $searchResult->title }}"/>
+                                            <div class="p-1">
+                                                {{ $searchResult->title }}<br>({{ $searchResult->searchable->inventoryCode() }})
+                                            </div>
+                                        </a>
+                                    </div>
                                 @endif
 
 
 
 
-                            </ul>
+                            </div>  
                         @endforeach
+                        </div>
+                    </div>
+                        
                     @endforeach
                 </div>
                 </x-slot>

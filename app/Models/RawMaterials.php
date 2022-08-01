@@ -34,6 +34,9 @@ class RawMaterials extends Model implements Searchable
 
     //get location
     public function getLocation(){
+        if ($this == null || $this->location == null) {
+            return ['No Infomation'];
+        }
         $locationID = ItemLocations::where('item_id',$this->inventoryCode())->get()->first()->location_id;
         if ($locationID == null){
             return null;

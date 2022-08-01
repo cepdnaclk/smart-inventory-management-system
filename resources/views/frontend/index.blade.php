@@ -142,7 +142,7 @@
         <div class="flex row g-3 align-items-center float-right" > 
             {!! Form::open(array('route'=>'frontend.frontSearch.results'),['class' => 'searchBar']) !!}
             {!! Form::text('keywords', '', ['class'=>'searchBar']) !!}   
-            {!! Form::submit('Search', ['class'=>'searchBars']) !!}
+           {!! Form::submit('Search', ['class'=>'searchBars']) !!} 
             {{ Form::close() }}
         </div>
 
