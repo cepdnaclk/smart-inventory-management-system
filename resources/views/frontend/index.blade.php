@@ -133,6 +133,12 @@
     
     <div class="content">
         @include('includes.partials.messages')
+        
+
+        <div class="title m-b-md" id='cesmart'>
+            {{ config('app.name', 'Laravel') }}
+        </div><!--title-->
+
         <div class="flex row g-3 align-items-center float-right" > 
             {!! Form::open(array('route'=>'frontend.frontSearch.results'),['class' => 'searchBar']) !!}
             {!! Form::text('keywords', '', ['class'=>'searchBar']) !!}   
@@ -140,11 +146,8 @@
             {{ Form::close() }}
         </div>
 
-        <div class="title m-b-md" id='cesmart'>
-            {{ config('app.name', 'Laravel') }}
-        </div><!--title-->
 
-        <div class="links">
+        <div class="links p-5">
             {{--            <a href="http://laravel-boilerplate.com" target="_blank"><i class="fa fa-book"></i> @lang('Docs')</a>--}}
             <a href="https://github.com/cepdnaclk/smart-inventory-management-system" target="_blank"><i
                         class="fab fa-github"></i>
