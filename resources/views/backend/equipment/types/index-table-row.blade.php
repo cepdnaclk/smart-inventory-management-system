@@ -7,9 +7,9 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
-     @if( $row->parent() !== null)
-        <a href="{{ route('admin.equipment.types.show', $row->parent()->id) }}">
-            {{ $row->parent()->title }}
+     @if( $row->parent_id() != null)
+        <a href="{{ route('admin.equipment.types.show', $row->parent_id() ) }}">
+            {{ $row->parent()->first()->title }}
         </a>
      @else
         N/A

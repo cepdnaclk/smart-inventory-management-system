@@ -18,5 +18,9 @@ class Stations extends Model
         return null;
     }
 
+    public function inventoryCode()
+    {
+        return sprintf("ST/%03d", $this->id);
+    }
 
 }

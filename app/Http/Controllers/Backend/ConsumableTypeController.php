@@ -54,6 +54,7 @@ class ConsumableTypeController extends Controller
 
             $type = new ConsumableType($data);
             $type->save();
+
             return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was created !');
 
         } catch (\Exception $ex) {

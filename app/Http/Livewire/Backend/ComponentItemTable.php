@@ -21,7 +21,9 @@ class ComponentItemTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
             Column::make("Product Code and Brand"),
-            Column::make("Category"),
+            Column::make("Category")
+                ->sortable()
+                ->searchable(),
             Column::make("Size", 'size'),
             Column::make("Actions")
         ];

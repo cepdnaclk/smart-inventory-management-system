@@ -1,5 +1,5 @@
 <x-livewire-tables::table.cell>
-    {{ $row->id }}
+    {{ $row->inventoryCode() }}
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
@@ -15,7 +15,7 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
-    {{ $row->availability }}
+    {{ $row->availabilityOptions()[$row->availability] }}
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>

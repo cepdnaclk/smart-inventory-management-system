@@ -16,7 +16,7 @@ class RawMaterials extends Model implements Searchable
     // reverse search depends on this. Change SearchController.php if you're changing this
     public function inventoryCode()
     {
-        return sprintf("RW/%03d", $this->id);
+        return sprintf("RM/%03d", $this->id);
     }
 
     // Return the relative URL of the thumbnail
