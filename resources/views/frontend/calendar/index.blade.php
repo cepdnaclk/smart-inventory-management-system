@@ -133,6 +133,15 @@
                                                 } else {
                                                     $('#bookingModal').modal('hide')
                                                     swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                                    var jsonData = error.responseJSON;
+                                                    var msg = jsonData.error;
+                                                    if(msg=="enumber null"){
+                                                        $('#bookingModal').modal('hide')
+                                                        swal("Denied!", "Enumber does not exist.", "warning");
+                                                    }else{
+                                                        $('#bookingModal').modal('hide')
+                                                        swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                                    }
                                                 }
                                                 console.log(error);
                                             },

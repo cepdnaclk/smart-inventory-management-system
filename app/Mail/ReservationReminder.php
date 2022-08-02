@@ -6,30 +6,26 @@ use App\Models\Stations;
 use App\Models\Reservation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Domains\Auth\Models\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class StationReservationMail extends Mailable
+class ReservationReminder extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $reserver;
-    public $station;
-    public $booking;
 
+    public $booking;
+    public $station;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $reserver, Stations $station, Reservation $booking)
+    public function __construct(Reservation $booking, Stations $station)
     {
-        // TODO: Try to add the list of E Numbers as team
-
-        $this->reserver=$reserver;
-        $this->station=$station;
+        //
         $this->booking=$booking;
+        $this->station=$station;
     }
 
     /**
@@ -38,10 +34,8 @@ class StationReservationMail extends Mailable
      * @return $this
      */
     public function build()
-    {   
-
-        return $this->markdown('emails.reservation.reservation_made')
-            ->subject('MakerSpace Lab Reservation');
-
+    {
+        return $this->markdown('emails.reservation.reservationreminder')
+                    ->subject('Image  of station after use');
     }
 }
