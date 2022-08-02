@@ -51,7 +51,14 @@ class ReservationController extends Controller
         return view('backend.reservation.user.edit', compact('reservation', 'stations', 'station'));
     }
 
-
+    public function edit_main(Reservation $reservation)
+    {
+        // $dateOriginal = $reservation->start_date;
+        // dd($dateOriginal);
+        $stations = Stations::pluck('stationName', 'id');
+        $station = Stations::find($reservation->station_id);
+        return view('backend.reservation.edit', compact('reservation', 'stations', 'station'));
+    }
     /**
      * Display the specified resource.
      *
@@ -72,7 +79,9 @@ class ReservationController extends Controller
     public function confirm(Reservation $reservation)
     {
       //  dd('Approved');
-      return view('backend.reservation.confirm', compact('reservation'));
+      $stations = Stations::pluck('stationName', 'id');
+      $station = Stations::find($reservation->station_id);
+      return view('backend.reservation.confirm', compact('reservation', 'stations', 'station'));
     }
     
 
@@ -98,7 +107,7 @@ class ReservationController extends Controller
         $dateOriginal1 = (new DateTime($reservation->start_date))->format('Y-m-d H:i:s');
 
         $userLoggedin = auth()->user();
-
+ 
         $data = request()->validate([
             'station_id' => 'numeric|required',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
@@ -106,6 +115,7 @@ class ReservationController extends Controller
             'E_numbers' => 'required|regex:^E/\d{2}/\d{3}$^', // TODO: Validate E-Numbers
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:4096', // TODO: Maybe we need to increase the file size
             'thumb_after' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:4096' // TODO: Maybe we need to increase the file size
+
         ]);
 
         if ($request->thumb != null) {
@@ -171,7 +181,6 @@ class ReservationController extends Controller
             'duration' => $minutes,
             'thumb' => $request->thumb,
             'thumb_after' => $request->thumb_after,
-            
         ];
         
 
@@ -194,6 +203,26 @@ class ReservationController extends Controller
         } elseif ((count($bookings1) == 1) && !$result) {
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Can not make multiple reservations in one day');
         }
+    }
+
+    public function update_main(Request $request, Reservation $reservation)
+    {
+        $data = request()->validate([
+            'status' => 'string|nullable',
+            'comments' => 'string|nullable'
+        ]);
+
+        $data = [
+            'status' => $request['status'],
+            'comments' => $request['comments'],
+            
+        ];
+
+            $reservation->update($data);
+            return redirect()->route('admin.reservation.index')->with('Success', 'Reservation status was saved !');            
+     
+
+
     }
 
     public function isAnOverlapEvent(DateTime $eventStartDay, DateTime $eventEndDay, Reservation $res)

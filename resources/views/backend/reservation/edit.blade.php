@@ -8,17 +8,17 @@
 
 @section('content')
     <div>
-    {!! Form::open(['url' => route('admin.reservation.approve',
-                  compact('reservation')),
-                  'method' => 'put',
-                  'class' => 'container',
-                  'files'=>true,
-                  'enctype'=>'multipart/form-data'
-      ]) !!}
+        {!! Form::open(['url' => route('admin.reservation.update',
+                      compact('reservation')),
+                      'method' => 'put',
+                      'class' => 'container',
+                      'files'=>true,
+                      'enctype'=>'multipart/form-data'
+          ]) !!}
 
         <x-backend.card>
             <x-slot name="header">
-                Reservation : Confirm 
+                Reservation : Edit
             </x-slot>
 
             <x-slot name="body">
@@ -34,22 +34,25 @@
                         @enderror
                     </div>
                 </div>    
-                
+
                 <!-- Status -->
                 <div class="form-group row">
-                    {!! Form::label('status', 'Status*', ['class' => 'col-md-2 col-form-label']) !!}
-
+                    {!! Form::label('status', 'Status*', ['class' => 'col-md-2 form-check-label']) !!}
                     <div class="col-md-10">
-                        {!! Form::text('status', $reservation->status, ['class'=>'form-control', 'required'=>true]) !!}
+                        <select name="status" id="status" $reservation->status>
+                            <option value="approved" >Approve</option>
+                            <option value="rejected" >Reject</option>
+                        </select>
                         @error('status')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
-                </div>                         
 
+                </div>
             </x-slot>
+
             <x-slot name="footer">
-                {!! Form::submit('Update', ['class'=>'btn btn-primary float-right']) !!}
+                {!! Form::submit('Save', ['class'=>'btn btn-primary float-right']) !!}
             </x-slot>
 
 
