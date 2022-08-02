@@ -27,7 +27,7 @@
                     </div>
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
                         <div class="btn-group" role="group" aria-label="Modify Buttons">
-                            <a href="{{ route('admin.reservation.confirm', $reservation)}}"
+                            <a href="{{ route('admin.reservation.edit', $reservation)}}"
                                class="btn btn-primary btn-xs me-2"><i class="fa fa-check" title="Approve"></i>
                                 Approve
                             </a>
