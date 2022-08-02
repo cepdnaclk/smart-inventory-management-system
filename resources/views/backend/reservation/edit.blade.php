@@ -114,20 +114,24 @@
                         @enderror
                     </div>
                 </div>    
-                
+
                 <!-- Status -->
                 <div class="form-group row">
-                    {!! Form::label('status', 'Status*', ['class' => 'col-md-2 col-form-label']) !!}
-
+                    {!! Form::label('status', 'Status*', ['class' => 'col-md-2 form-check-label']) !!}
                     <div class="col-md-10">
-                        {!! Form::text('status', $reservation->status, ['class'=>'form-control', 'required'=>true]) !!}
+                        <!-- {!! Form::text('status', $reservation->status, ['class'=>'form-control', 'required'=>true]) !!} -->
+                        <select name="status" id="status" $reservation->status>
+                            <option value="approved" >Approve</option>
+                            <option value="rejected" >Reject</option>
+                        </select>
                         @error('status')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
-                </div>                         
 
+                </div>
             </x-slot>
+
             <x-slot name="footer">
                 {!! Form::submit('Save', ['class'=>'btn btn-primary float-right']) !!}
             </x-slot>
