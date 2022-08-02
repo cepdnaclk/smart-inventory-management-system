@@ -63,9 +63,7 @@
                                         <span class="text-danger">Rejected</span>                                        
                                     @endif
                                 </td>
-
                                 
-
                                 <td>
 
                                     <div class="d-flex px-0 mt-0 mb-0">
