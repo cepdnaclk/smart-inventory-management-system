@@ -300,6 +300,8 @@
                     }else{
                         $('#bookingModal').modal('hide');
                         swal("Permission Denied!", "You can not make a reservation for a date that has passed", "warning");
+                        revertFunc(); 
+
                     }
 
                 },
