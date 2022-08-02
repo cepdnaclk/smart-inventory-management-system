@@ -61,6 +61,8 @@
                                         <span class="text-success">Approved</span>
                                     @elseif($res->status == "rejected")
                                         <span class="text-danger">Rejected</span>                                        
+                                    @else
+                                        <span class="text-primary">Pending</span>                                        
                                     @endif
                                 </td>
                                 
