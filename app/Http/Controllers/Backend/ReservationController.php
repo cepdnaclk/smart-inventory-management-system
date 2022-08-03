@@ -112,9 +112,9 @@ class ReservationController extends Controller
             'station_id' => 'numeric|required',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'end_date' => 'required|date_format:Y-m-d H:i:s',
-            'E_numbers' => 'required|regex:^E/\d{2}/\d{3}$^', // TODO: Validate E-Numbers
-            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:4096', // TODO: Maybe we need to increase the file size
-            'thumb_after' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:4096' // TODO: Maybe we need to increase the file size
+            'E_numbers' => 'required|regex:^E/\d{2}/\d{3}$^', 
+            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:5120', 
+            'thumb_after' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:5120' 
 
         ]);
         
@@ -303,15 +303,11 @@ class ReservationController extends Controller
         $newImage->move(public_path('img/' . $folder), $imageName);
         $imagePath = "/img/$folder/" . $imageName;
 
-        // TODO: Maybe we should not crop the images in here
-        $image = Image::make(public_path($imagePath))->fit(360, 360);
+
+        $image = Image::make(public_path($imagePath));
         $image->save();
 
         return $imageName;
     }
 
- 
-    // TODO: Move the methods related to the admin dashboard into this file such as image upload methods, etc...
-    // It is ok to have frontend related store, update and destroy methods in there,
-    // and smae methods related to backend in here
 }
