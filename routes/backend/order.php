@@ -9,12 +9,12 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
     
     //index
     Route::get('/orders/officer/index', [OrderController::class, 'officer_index'])
-    ->name('orders.officer.index')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('admin.dashboard'))
-            ->push(__('Orders'), route('admin.orders.index'))
-            ->push(__('Technical Officer'), route('admin.orders.officer.index'));
-    });
+        ->name('orders.officer.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Orders'), route('admin.orders.index'))
+                ->push(__('Technical Officer'), route('admin.orders.officer.index'));
+        });
 
     // approved orders index
     Route::get('/orders/officer/approved', [OrderController::class, 'officer_index_for_approved_orders'])
@@ -26,25 +26,35 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
             ->push(__('Approved Orders'), route('admin.orders.officer.approved.index'));
         });
 
-    // submitted orders index
-    Route::get('/orders/officer/submitted', [OrderController::class, 'officer_submitted_orders_index'])
-        ->name('orders.officer.submitted.index')
+    // ready orders index
+    Route::get('/orders/officer/ready', [OrderController::class, 'officer_index_for_ready_orders'])
+    ->name('orders.officer.ready.index')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->push(__('Home'), route('admin.dashboard'))
+        ->push(__('Orders'), route('admin.orders.index'))
+        ->push(__('Technical Officer'), route('admin.orders.officer.index'))
+        ->push(__('Ready Orders'), route('admin.orders.officer.ready.index'));
+    });
+
+    // picked orders index
+    Route::get('/orders/officer/picked', [OrderController::class, 'officer_index_for_picked_orders'])
+        ->name('orders.officer.picked.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Orders'), route('admin.orders.index'))
             ->push(__('Technical Officer'), route('admin.orders.officer.index'))
-            ->push(__('Submitted Orders'), route('admin.orders.officer.submitted.index'));
+            ->push(__('Picked Orders'), route('admin.orders.officer.picked.index'));
         });
 
     // Show
     Route::get('/orders/officer/{orderRequest}/view', [OrderController::class, 'officer_show'])
-    ->name('orders.officer.show')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('admin.dashboard'))
-            ->push(__('Orders'), route('admin.orders.index'))
-            ->push(__('Technical Officer'), route('admin.orders.officer.index'))
-            ->push(__('Show'));
-    });
+        ->name('orders.officer.show')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Orders'), route('admin.orders.index'))
+                ->push(__('Technical Officer'), route('admin.orders.officer.index'))
+                ->push(__('Show'));
+        });
 
     // approved order confirm
     Route::get('orders/officer/approved/{orderRequest}/confirm/', [OrderController::class, 'officer_confirm_for_approved_orders'])
@@ -57,23 +67,38 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
                 ->push(__('Confirm'));
         });
 
-    // submitted order confirm
-    Route::get('orders/officer/submitted/{orderRequest}/confirm/', [OrderController::class, 'officer_confirm_for_submitted_orders'])
-        ->name('orders.officer.submitted.confirm')
+    // picked order confirm
+    Route::get('orders/officer/ready/{orderRequest}/confirm/', [OrderController::class, 'officer_confirm_for_ready_orders'])
+        ->name('orders.officer.ready.confirm')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
                 ->push(__('Orders'), route('admin.orders.index'))
                 ->push(__('Technical Officer'), route('admin.orders.officer.index'))
-                ->push(__('Submitted Orders'), route('admin.orders.officer.submitted.index'))
+                ->push(__('Ready Orders'), route('admin.orders.officer.ready.index'))
+                ->push(__('Confirm'));
+        });
+
+    // submitted order confirm
+    Route::get('orders/officer/picked/{orderRequest}/confirm/', [OrderController::class, 'officer_confirm_for_picked_orders'])
+        ->name('orders.officer.picked.confirm')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Orders'), route('admin.orders.index'))
+                ->push(__('Technical Officer'), route('admin.orders.officer.index'))
+                ->push(__('Picked Orders'), route('admin.orders.officer.picked.index'))
                 ->push(__('Confirm'));
         });
 
     // Ready
-    Route::post('/orders/officer/{orderRequest}/ready/', [OrderController::class, 'officer_ready'])
+    Route::post('/orders/officer/{orderRequest}/ready', [OrderController::class, 'officer_ready'])
         ->name('orders.officer.ready');
 
+    // Picked
+    Route::post('/orders/officer/{orderRequest}/picked', [OrderController::class, 'officer_picked'])
+    ->name('orders.officer.picked');
+
     // Finish
-    Route::get('/orders/officer/{orderRequest}/finish', [OrderController::class, 'officer_finish'])
+    Route::post('/orders/officer/{orderRequest}/finish', [OrderController::class, 'officer_finish'])
     ->name('orders.officer.finish');
 
 });
