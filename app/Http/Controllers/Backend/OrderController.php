@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
 use App\Models\Order;
-use App\Models\Locker;
 use Illuminate\Http\Request;
 use App\Models\OrderApproval;
 use App\Domains\Auth\Models\User;
@@ -16,8 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use phpDocumentor\Reflection\PseudoTypes\True_;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\Orders\OrderRejectMailForHOD;
 use App\Mail\Orders\OrderApproveMailForHOD;
 use App\Mail\Orders\OrderRejectMailForLecturer;

@@ -58,10 +58,10 @@
 
                                 <td>
                                     @foreach($orderRequest->componentItems as $componentItem)
-                                        @if($componentItem->pivot_quantity == null)
+                                        @if($componentItem->pivot->quantity == null)
                                             0
                                             @else
-                                            {{ $componentItem ->pivot_quantity }}
+                                            {{ $componentItem ->pivot->quantity }}
                                         @endif
                                         <br>
                                     @endforeach

@@ -59,12 +59,28 @@ class OrderController extends Controller
         session()->put('cart', $cart);
         
         try {
-            $details = [
-                "title" => "Order request.",
-                "body"  => "you want to approve this Order request."
+            $msgForLecture = [
+                "title" => "New Order Request From CE Smart Inventory",
+                "body"  =>  $order->user->name . " make a request to receive this components.
+                            Can you please visit the dashboard and approve it.",
+                "url"   => "http://127.0.0.1:8000/login",
+
+                "components" => $order->componentItems
+
             ];
-            //Mail::to($orderApproval->lecturer['email'])->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            //Mail::to($orderApproval->lecturer['email'])->send(new OrderMail($msgForLecture));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForLecture));
+
+            $msgForStudent = [
+                "title" => "Your Order Request From CE Smart Inventory",
+                "body"  => "You made order request with this components in CE Smart Inventory.
+                            your order request is waiting for lecturer approvel.",
+                "url"   => "http://127.0.0.1:8000/login",
+
+                "components" => $order->componentItems
+            ];
+            //Mail::to($order->user->email)->send(new OrderMail($msgForStudent));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForStudent));
             
             return redirect()->route('frontend.user.products')->with('success', 'Order Request mail has been sent sucessfully.');
             

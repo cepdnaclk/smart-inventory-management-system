@@ -68,10 +68,10 @@
                                 <a href="{{ route('admin.component.items.show', $componentItem) }}">
                                     {{ $componentItem->title }}
                                 </a>
-                                @if($componentItem->pivot_quantity == null)
+                                @if($componentItem->pivot->quantity == null)
                                     - 0
                                 @else
-                                    - {{ $componentItem ->pivot_quantity }}
+                                    - {{ $componentItem ->pivot->quantity }}
                                 @endif
                                 <br>
                         @endforeach
