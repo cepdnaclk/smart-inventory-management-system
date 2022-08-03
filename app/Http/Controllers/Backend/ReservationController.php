@@ -44,17 +44,24 @@ class ReservationController extends Controller
 
     public function edit(Reservation $reservation)
     {
-        // $dateOriginal = $reservation->start_date;
-        // dd($dateOriginal);
+
+        $userLoggedin = auth()->user();
+
+
         $stations = Stations::pluck('stationName', 'id');
         $station = Stations::find($reservation->station_id);
-        return view('backend.reservation.user.edit', compact('reservation', 'stations', 'station'));
+
+        if ($userLoggedin['id'] != $reservation->user_id){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not view that reservation for updating!');
+        }else{
+            return view('backend.reservation.user.edit', compact('reservation', 'stations', 'station'));
+        }
+        
     }
 
     public function edit_main(Reservation $reservation)
     {
-        // $dateOriginal = $reservation->start_date;
-        // dd($dateOriginal);
+       
         $stations = Stations::pluck('stationName', 'id');
         $station = Stations::find($reservation->station_id);
         return view('backend.reservation.edit', compact('reservation', 'stations', 'station'));
@@ -78,7 +85,7 @@ class ReservationController extends Controller
 
     public function confirm(Reservation $reservation)
     {
-      //  dd('Approved');
+      
       $stations = Stations::pluck('stationName', 'id');
       $station = Stations::find($reservation->station_id);
       return view('backend.reservation.confirm', compact('reservation', 'stations', 'station'));
@@ -103,11 +110,13 @@ class ReservationController extends Controller
 
     public function update(Request $request, Reservation $reservation)
     {
+        $userLoggedin = auth()->user();
+        
         $dateOriginal = (new DateTime($reservation->start_date))->format('Y-m-d');
         $dateOriginal1 = (new DateTime($reservation->start_date))->format('Y-m-d H:i:s');
 
-        $userLoggedin = auth()->user();
- 
+        
+
         $data = request()->validate([
             'station_id' => 'numeric|required',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
@@ -151,7 +160,7 @@ class ReservationController extends Controller
                 $flag = $this->isAnOverlapEvent($start, $end, $r);
             }
         }
-       
+    
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $start)->where('user_id', $userLoggedin['id'])->where('station_id', $data['station_id'])->get();
 
@@ -160,9 +169,6 @@ class ReservationController extends Controller
         $today = new DateTime($todayDate);
         $today->add(new DateInterval('PT5H30M'));
 
-        // $date3 = Carbon::createFromFormat('Y-m-d H:i:s', $dateOriginal1);
-        // $date4 = Carbon::createFromFormat('Y-m-d H:i:s', $dateNew1);
-        // $result1 = $date3->eq($date4);
 
         $resDiff = $today->diff($start);
         $minutesDiff = ($resDiff->h*60) + ($resDiff->s/60) + ($resDiff->i) + ($resDiff->d*24*60) + ($resDiff->m*30*24*60) + ($resDiff->y*365*24*60);
@@ -202,6 +208,7 @@ class ReservationController extends Controller
         } elseif ((count($bookings1) == 1) && !$result) {
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Can not make multiple reservations in one day');
         }
+        
     }
 
     public function update_main(Request $request, Reservation $reservation)
@@ -230,24 +237,19 @@ class ReservationController extends Controller
         $resStart = new DateTime($res->start_date);
         $resEnd = new DateTime($res->end_date);
 
-        // dd($eventStartDay, $res->start_date);
         // start-time in between any of the events
         if ($eventStartDay > $resStart && $eventStartDay < $resEnd) {
-            // dd('hi1');
             return true;
         }
         //end-time in between any of the events
         if ($eventEndDay > $resStart && $eventEndDay < $resEnd) {
-            // dd('hi2');
             return true;
         }
         //any of the events in between/on the start-time and end-time
         if ($eventStartDay <= $resStart && $eventEndDay >= $resEnd) {
-            // dd('hi3');
             return true;
         }
 
-        // dd('hi4');
         return false;
     }
 
@@ -259,8 +261,15 @@ class ReservationController extends Controller
      */
     public function delete(Reservation $reservation)
     {
+        $userLoggedIn = auth()->user();
         $station = Stations::find($reservation->station_id);
-        return view('backend.reservation.user.delete', compact('reservation', 'station'));
+
+        if ($userLoggedIn['id'] == $reservation->user_id) {
+            return view('backend.reservation.user.delete', compact('reservation', 'station'));
+        } else {
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not delete this reservation!');
+        }
+        
     }
 
     public function destroy(Reservation $reservation)
