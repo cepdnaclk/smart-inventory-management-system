@@ -10,7 +10,7 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Submitted Orders - Technical Officer View
+                Ready Orders - Technical Officer View
             </x-slot>
 
             <x-slot name="body">
@@ -34,8 +34,8 @@
                             <th>Status</th>
                             <th>Components</th>
                             <th>Quantity</th>
+                            <th>Ordered Date</th>
                             <th>Due Date</th>
-                            <th>Returned Date</th>
                             <th>&nbsp;</th>
                         </tr>
 
@@ -68,6 +68,14 @@
                                 </td>
 
                                 <td>
+                                    @if( $orderRequest->ordered_date != null )
+                                        {{ $orderRequest->ordered_date }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+
+                                <td>
                                     @if( $orderRequest->due_date_to_return != null )
                                         {{ $orderRequest->due_date_to_return }}
                                     @else
@@ -75,17 +83,9 @@
                                     @endif
                                 </td>
 
-                                <td>
-                                    @if( $orderRequest->returned_date != null )
-                                        {{ $orderRequest->returned_date }}
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
-
                                 <td class="d-flex justify-content-end">
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('admin.orders.officer.submitted.confirm', $orderRequest)}}"
+                                        <a href="{{ route('admin.orders.officer.ready.confirm', $orderRequest)}}"
                                             class="btn btn-primary btn-xs">
                                             <i class="fa fa-check" title="Approval"></i>
                                         </a>

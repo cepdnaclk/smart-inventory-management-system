@@ -64,7 +64,7 @@ class Order extends Model
 
     public static function getReadyOrders()
     {
-        return Order::where('status', 'READY')->orderBy('locker_id')->paginate(16);
+        return Order::where('status', 'READY')->orderBy('id')->paginate(16);
     }
     
     public static function getApprovedOrders()
@@ -72,9 +72,9 @@ class Order extends Model
         return Order::where('status', 'APPROVED')->orderBy('id')->paginate(16);
     }
 
-    public static function getSubmittedOrders()
+    public static function getPickedOrders()
     {
-        return Order::where('status', 'SUBMITTED')->orderBy('id')->paginate(16);
+        return Order::where('status', 'PICKED')->orderBy('id')->paginate(16);
     }
     
     

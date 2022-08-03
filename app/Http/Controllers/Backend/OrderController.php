@@ -11,6 +11,7 @@ use App\Mail\Backend\OrderMail;
 use App\Models\Locker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use phpDocumentor\Reflection\PseudoTypes\True_;
 
 class OrderController extends Controller
 {
@@ -176,12 +177,10 @@ class OrderController extends Controller
     //index
     public function officer_index()
     {
-        $orderRequests = Order::getApprovedOrders();
-
-        return view('backend.orders.technical-officer.index', compact('orderRequests'));
+        return view('backend.orders.technical-officer.index');
     }
 
-    //approved orders by students
+    //approved orders
     public function officer_index_for_approved_orders()
     {
         $orderRequests = Order::getApprovedOrders();
@@ -189,12 +188,20 @@ class OrderController extends Controller
         return view('backend.orders.technical-officer.approved.index', compact('orderRequests'));
     }
 
-    //submitted orders by students
-    public function officer_submitted_orders_index()
+    //ready orders
+    public function officer_index_for_ready_orders()
     {
-        $orderRequests = Order::getSubmittedOrders();
+        $orderRequests = Order::getReadyOrders();
 
-        return view('backend.orders.technical-officer.submitted.index', compact('orderRequests'));
+        return view('backend.orders.technical-officer.ready.index', compact('orderRequests'));
+    }
+
+    //picked orders
+    public function officer_index_for_picked_orders()
+    {
+        $orderRequests = Order::getPickedOrders();
+
+        return view('backend.orders.technical-officer.picked.index', compact('orderRequests'));
     }
 
     public function officer_show(Order $orderRequest)
@@ -210,17 +217,27 @@ class OrderController extends Controller
             return view('backend.orders.technical-officer.approved.confirm', compact('orderRequest','availableLockers'));
         } else {
             $id = $orderRequest->id;
-            return redirect()->route('admin.orders.officer.index')->with('Success', 'The Order request #' . $id . ' already ready !');
+            return redirect()->route('admin.orders.officer.approved.index')->with('Success', 'The Order request #' . $id . ' already ready !');
         }
     }
 
-    public function officer_confirm_for_submitted_orders(Order $orderRequest)
-    {
-        if ($orderRequest->status == 'SUBMITTED') {
-            return view('backend.orders.technical-officer.submitted.confirm', compact('orderRequest'));
+    public function officer_confirm_for_ready_orders(Order $orderRequest)
+    {   
+        if ($orderRequest->status == 'READY') {
+            return view('backend.orders.technical-officer.ready.confirm', compact('orderRequest'));
         } else {
             $id = $orderRequest->id;
-            return redirect()->route('admin.orders.officer.submitted.index')->with('Success', 'The Order request #' . $id . ' already finished !');
+            return redirect()->route('admin.orders.officer.ready.index')->with('Success', 'The Order request #' . $id . ' already handed over !');
+        }
+    }
+
+    public function officer_confirm_for_picked_orders(Order $orderRequest)
+    {
+        if ($orderRequest->status == 'PICKED') {
+            return view('backend.orders.technical-officer.picked.confirm', compact('orderRequest'));
+        } else {
+            $id = $orderRequest->id;
+            return redirect()->route('admin.orders.officer.picked.index')->with('Success', 'The Order request #' . $id . ' already finished !');
         }
     }
 
@@ -261,9 +278,46 @@ class OrderController extends Controller
         }
     }
 
+    public function officer_picked(Order $orderRequest)
+    {
+        $data = request()->validate([
+            'picked_date' => 'date|required',
+        ]);
+
+        $orderRequest->update($data);
+
+        // Update the status
+        $orderRequest->status = 'PICKED';
+        $orderRequest->save();
+
+        //Update Locker isAvailable field
+        $orderRequest->locker->is_available = true;
+        $orderRequest->locker->save();
+        
+        // Send an email to the student
+        try {
+            $details = [
+                "title" => "your order request is picked.",
+                "body"  => "your submitted order components are correct."
+            ];
+            //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+
+            return redirect()->route('admin.orders.officer.ready.index')->with('Success', 'Email has been sent!');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
+    }
+
     public function officer_finish(Order $orderRequest)
     {
-      
+        $data = request()->validate([
+            'returned_date' => 'date|required',
+        ]);
+
+        $orderRequest->update($data);
+
         // Update the status
         $orderRequest->status = 'FINISHED';
         $orderRequest->save();
@@ -280,7 +334,7 @@ class OrderController extends Controller
             //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
-            return redirect()->route('admin.orders.officer.submitted.index')->with('Success', 'Email has been sent!');
+            return redirect()->route('admin.orders.officer.picked.index')->with('Success', 'Email has been sent!');
 
         } catch (\Exception $ex) {
             return abort(500);
