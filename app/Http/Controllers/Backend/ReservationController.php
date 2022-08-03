@@ -126,9 +126,8 @@ class ReservationController extends Controller
             $data['thumb_after'] = $this->uploadThumb($reservation->thumbURL_after(), $request->thumb_after, "reservations_after");
         }
 
-        // $reservation->update($data);
-        // return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');
-
+        
+        /*************  Check whether any changes were made to the date ********/
         $dateNew = (new DateTime($data['start_date']))->format('Y-m-d');
         $dateNew1 = (new DateTime($data['start_date']))->format('Y-m-d H:i:s');
 
@@ -136,8 +135,9 @@ class ReservationController extends Controller
         $date2 = Carbon::createFromFormat('Y-m-d', $dateNew);
         $result = $date1->eq($date2);
 
-        // dd($result);
+        /*****************************************************************************/
 
+        // Calculate the duration of the reservation in minutes
         $start = new DateTime($request['start_date']);
         $end = new DateTime($request['end_date']);
         $diff = $start->diff($end);
@@ -145,7 +145,6 @@ class ReservationController extends Controller
 
         //For overlap check
         $res = Reservation::whereDate('start_date', $start)->where('station_id', $data['station_id'])->get();
-
         $flag = false;
         foreach ($res as $r) {
             if ($r->user_id != $userLoggedin['id']) {
@@ -157,20 +156,20 @@ class ReservationController extends Controller
         $bookings1 = Reservation::whereDate('start_date', $start)->where('user_id', $userLoggedin['id'])->where('station_id', $data['station_id'])->get();
 
         // See whether the reservation is being made too early
-
         $todayDate = date('Y-m-d H:i:s');
         $today = new DateTime($todayDate);
         $today->add(new DateInterval('PT5H30M'));
 
-        $date3 = Carbon::createFromFormat('Y-m-d H:i:s', $dateOriginal1);
-        $date4 = Carbon::createFromFormat('Y-m-d H:i:s', $dateNew1);
-        $result1 = $date3->eq($date4);
-
-        // dd($start);
+        // $date3 = Carbon::createFromFormat('Y-m-d H:i:s', $dateOriginal1);
+        // $date4 = Carbon::createFromFormat('Y-m-d H:i:s', $dateNew1);
+        // $result1 = $date3->eq($date4);
 
         $resDiff = $today->diff($start);
         $minutesDiff = ($resDiff->h*60) + ($resDiff->s/60) + ($resDiff->i) + ($resDiff->d*24*60) + ($resDiff->m*30*24*60) + ($resDiff->y*365*24*60);
     
+        if($today>$start){
+            $minutesDiff = -1;
+        }
         
 
         $data = [
@@ -186,14 +185,14 @@ class ReservationController extends Controller
 
         if ($userLoggedin['id'] != $reservation->user_id){
             return redirect()->route('frontend.reservation.index')->with('Error', 'You can not update this reservation');   
-        }elseif(($minutesDiff > 43200)){
-            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not make a reservation for that date this early');   
+        }elseif($today >= $start ){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! You can not make/edit a reservation for a date that has passed.'); 
+        }elseif(($minutesDiff > 43200) && $start>$today){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not make a reservation for that date this early.');   
         }elseif($data['duration'] > 240){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Reservation can not exceed 4 hours');           
         }elseif($flag){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Time slot not available');   
-        }elseif($today >= $start && !$result1 ){
-            return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! You can not make a reservation for a date that has passed'); 
         }elseif((count($bookings1) == 1) && $result && !$flag && ($minutesDiff < 43200)){
             $reservation->update($data);
             return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');            
