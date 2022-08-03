@@ -27,6 +27,45 @@ class OrderController extends Controller
        return view('frontend.orders.index', compact('orders'));
     
      }
+     public function update(Request $request,Order $order){
+        $data =  request()->validate(['description'=>'string','selectLecturer'=>'string']);
+        try {
+
+
+
+            $select_lecturerId=User::where('type','lecturer')->where('name',$request->selectLecturer)->first();
+            $order->orderApprovals->lecturer_id=$select_lecturerId->id;
+            $order->orderApprovals->order_id=$order->id;
+
+            $order-> description=$request->input('description');
+
+            $order->save();
+            $order->orderApprovals->save();
+            //$order->update();
+            $id = auth()->user()->id; //getting current user id 
+            $orders=Order::where('user_id',$id)->get();
+            $orders=$orders->reverse();
+            return view('frontend.orders.index', compact('orders'))->with('success', 'locker was updated !');
+
+            //return view('frontend.orders.show', compact('order'));
+
+         // return redirect()->route('frontend.orders.index')->with('Success', 'locker was updated !');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
+      
+
+    
+     }
+
+     public function edit(Order $order){
+       // return response()->json($order->orderApprovals->lecturer, 200);
+
+        $lecturers=User::where('type','lecturer')->get();
+
+        return view('frontend.orders.edit', compact('order','lecturers'));
+     }
      public function store(Request $request){
  
      //dd($request->OrderID);
@@ -60,11 +99,11 @@ class OrderController extends Controller
         
         try {
             $details = [
-                "title" => "Order request.",
-                "body"  => "you want to approve this Order request."
+                "title" => "Your Order has been sent succesfully  ",
+                "body"  => "Please wait for  selected lecturer approval!!."
             ];
             //Mail::to($orderApproval->lecturer['email'])->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to("e18168@eng.pdn.ac.lk")->send(new OrderMail($details));
             
             return redirect()->route('frontend.user.products')->with('success', 'Order Request mail has been sent sucessfully.');
             

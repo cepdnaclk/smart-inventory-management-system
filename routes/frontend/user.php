@@ -56,6 +56,21 @@ Route::get('orders/{order}', [OrderController::class, 'show'])
             ->push(__('My Orders'),route('frontend.user.orders.index'))
             ->push(__('Show'));
 });
+
+// edit
+Route::get('orders/edit/{order}', [OrderController::class, 'edit'])
+    ->name('orders.edit')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->push(__('Home'), route('frontend.user.dashboard'))
+            ->push(__('My Orders'),route('frontend.user.orders.index'))
+            ->push(__('Edit'));
+});
+
+
+// Update
+
+Route::put('orders/{order}', [OrderController::class, 'update'])
+->name('orders.update');
 Route::post('store-request', [OrderController::class, 'store'])->name('store.request');
 
     Route::get("users/{componentItem}/ordercomp",[OrderCompController::class,'orderComponent'])->name('ordercomp');

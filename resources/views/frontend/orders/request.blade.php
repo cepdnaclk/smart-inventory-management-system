@@ -1,7 +1,14 @@
 @extends('backend.layouts.app')
 
 @section('title', __('My Order request'))
-@section('content')  
+@section('content') 
+<div>
+  <x-backend.card>
+    <x-slot name="header">
+      Order Request Form
+          
+  </x-slot>
+  <x-slot name="body">
 <div class="container mt-4">
     @if(session('status'))
     <div class="alert alert-success">
@@ -81,8 +88,9 @@
 
     {!! Form::close() !!}
 </div>
-
-
+</div>
+</x-slot>
+</x-backend.card>
 </div>
 
 @endsection

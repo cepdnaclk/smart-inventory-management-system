@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
 use App\Models\Order;
-use App\Models\Locker;
+
 use Illuminate\Http\Request;
 use App\Models\OrderApproval;
 use App\Domains\Auth\Models\User;
@@ -15,8 +15,7 @@ use App\Models\Locker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+
 use App\Mail\Orders\OrderRejectMailForHOD;
 use App\Mail\Orders\OrderApproveMailForHOD;
 use App\Mail\Orders\OrderRejectMailForLecturer;
@@ -95,7 +94,9 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return view('backend.orders.edit', compact('order'));
+        $lecturers=User::where('type','lecturer')->get();
+
+        return view('backend.orders.edit', compact('order','lecturers'));
     }
 
     /**
@@ -117,7 +118,6 @@ class OrderController extends Controller
 
         try {
             $order->update($data);
-            return redirect()->route('admin.orders.index')->with('Success', 'Order was updated !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -331,9 +331,9 @@ class OrderController extends Controller
                 "body" =>""
             ];
             //Mail::to($order->HOD->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to("e18168@eng.pdn.ac.lk")->send(new OrderMail($details));
             
-            return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in rejected order list.');
+            return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in accepted order list.');
 
         } catch (\Exception $ex) {
             return abort(500);

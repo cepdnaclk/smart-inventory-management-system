@@ -11,6 +11,14 @@
 
         <x-slot name="body">
 
+            @if (Session::has('success'))
+<div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="fa fa-times"></i>
+    </button>
+    <strong>Success !</strong> {{ session('success') }}
+</div>
+@endif
 <div class="table-responsive pt-3">
     
 
@@ -69,14 +77,11 @@
                     <td>
                         <div class="row justify-content-between">
                         <a  href="{{ route('frontend.user.orders.show', $order)}} " 
-                        class="btn btn-primary"> <i class="fa fa-check" title="Approval"></i> Details    
+                        class="btn btn-primary"> <i class="fa fa-check" title="Approval"></i>     
                      </a>
-                   
-                     <form action="{{ route('frontend.user.orders.change.staus', $order)}} " method="POST">
-                        @csrf
-                        @method('PUT')
-                     <input type="submit" {{ ( $order->status =="WAITING_H_O_D_APPROVAL") ? '' : 'disabled' }} value="PICKED"  class="btn btn-primary">
-                     </form>
+                     <a href="{{ route('frontend.user.orders.edit', $order)}}"
+                     class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                  </a>
 
                
                     </div>
