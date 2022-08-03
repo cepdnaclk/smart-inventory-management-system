@@ -40,7 +40,7 @@ class StationReservationMail extends Mailable
     public function build()
     {   
 
-        return $this->markdown('emails.reservation.reservation_made')
+        return $this->markdown('emails.reservation.reservationmade')
             ->subject('MakerSpace Lab Reservation');
 
     }

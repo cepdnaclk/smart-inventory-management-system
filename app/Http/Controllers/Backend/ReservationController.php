@@ -29,7 +29,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservation = Reservation::orderBy('station_id')->paginate(16);
+        $reservation = Reservation::orderBy('start_date','desc')->paginate(16);
         // dd($reservation);
         return view('backend.reservation.index', compact('reservation'));
     }
@@ -38,7 +38,7 @@ class ReservationController extends Controller
     {
         $userLoggedin = auth()->user();
         // dd($userLoggedin);
-        $reservation = Reservation::where('user_id', $userLoggedin['id'])->get();
+        $reservation = Reservation::where('user_id', $userLoggedin['id'])->orderBy('start_date','desc')->paginate(16);
         return view('backend.reservation.user.index', compact('reservation', 'userLoggedin'));
     }
 
