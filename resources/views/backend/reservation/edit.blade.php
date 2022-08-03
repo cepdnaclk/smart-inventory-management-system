@@ -21,7 +21,7 @@
                 Reservation : Edit
             </x-slot>
 
-            <x-slot name="body">
+            <x-slot name="body"> 
 
                 <!-- Comments -->
                 <div class="form-group row">
@@ -40,7 +40,7 @@
                     {!! Form::label('status', 'Status*', ['class' => 'col-md-2 form-check-label']) !!}
                     <div class="col-md-10">
                         <select name="status" id="status" $reservation->status>
-                            <option value="approved" >Approve</option>
+                            <option value="approved">Approve</option>
                             <option value="rejected" >Reject</option>
                         </select>
                         @error('status')

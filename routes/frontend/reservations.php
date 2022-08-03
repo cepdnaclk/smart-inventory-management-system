@@ -64,3 +64,4 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('reservations/destroy/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
 
 });
+
