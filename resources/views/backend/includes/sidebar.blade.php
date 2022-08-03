@@ -299,16 +299,9 @@
                     
                     @endif
 
-                    @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
-                        <li class="c-sidebar-nav-item">
-                            <x-utils.link
-                                
-                            :href="route('admin.orders.lecturer.rejected.index')"
-                        
-                                    class="c-sidebar-nav-link"
-                                    :text="__('Rejected - Lecturer')"></x-utils.link>
-                        </li>
-                    @endif
+                 
+
+            
                     
                     @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
                         <li class="c-sidebar-nav-item">
