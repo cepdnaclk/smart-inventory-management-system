@@ -3,6 +3,7 @@
 namespace App\Domains\Auth\Models\Traits\Method;
 
 use Illuminate\Support\Collection;
+use App\Domains\Auth\Models\Permission;
 
 /**
  * Trait UserMethod.
@@ -18,7 +19,15 @@ trait UserMethod
     }
     public function isHOD(): bool
     {
-        return $this->id === 4;
+        $userCount= $this->permissions->where('name','lecturer.access.hod' )->count();
+        if ($userCount!=0)
+{
+  // object exists
+  return true;
+} else {
+  // object not found
+  return false;
+}
     }
 
     /**

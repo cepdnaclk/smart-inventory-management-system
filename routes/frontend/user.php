@@ -40,6 +40,10 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
     Route::post('place-order', [CartController::class, 'placeOrder'])->name('place.order');
 
   
+   
+    Route::put('orders/{order}', [OrderController::class, 'change_status'])->name('orders.change.staus')
+    ;
+
     Route::get('show-my-order',[OrderController::class, 'index'])->name('orders.index')  ->breadcrumbs(function (Trail $trail) {
         $trail->parent('frontend.index')
             ->push(__('My Orders'), route('frontend.user.account'));
@@ -52,8 +56,27 @@ Route::get('orders/{order}', [OrderController::class, 'show'])
             ->push(__('My Orders'),route('frontend.user.orders.index'))
             ->push(__('Show'));
 });
+
+// edit
+Route::get('orders/edit/{order}', [OrderController::class, 'edit'])
+    ->name('orders.edit')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->push(__('Home'), route('frontend.user.dashboard'))
+            ->push(__('My Orders'),route('frontend.user.orders.index'))
+            ->push(__('Edit'));
+});
+
+
+// Update
+
+Route::put('orders/{order}', [OrderController::class, 'update'])
+->name('orders.update');
 Route::post('store-request', [OrderController::class, 'store'])->name('store.request');
 
     Route::get("users/{componentItem}/ordercomp",[OrderCompController::class,'orderComponent'])->name('ordercomp');
     
+
 });
+
+
+

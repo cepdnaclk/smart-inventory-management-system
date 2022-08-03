@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Frontend;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderRequest extends Mailable
+class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,9 +16,10 @@ class OrderRequest extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $details;
+    public function __construct($details)
     {
-        //
+        $this->details = $details;
     }
 
     /**
@@ -28,6 +29,7 @@ class OrderRequest extends Mailable
      */
     public function build()
     {
-        return $this ->from("rasathuraikaran26@gmail.com")->subject('Your order request sent')->view('email.order_request');
+        return $this->subject('Order request to CE Smart Inventory')
+                    ->markdown('frontend.orders.mails.mail_template');
     }
 }

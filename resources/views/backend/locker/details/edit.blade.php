@@ -38,7 +38,7 @@
                     {!! Form::label('is_available', 'Available?', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4 d-flex align-items-center">
-                        {!!Form::checkbox('is_available',true,  $lockerDetail->is_available); !!}
+                        {!!Form::checkbox('is_available', true, ($lockerDetail->is_available)?true:false); !!}
                         @error('is_available')
                         <strong>{{ $message }}</strong>
                         @enderror
@@ -58,7 +58,7 @@
                 </div>
 
                 <!-- Order Id -->
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     {!! Form::label('order_id', 'Order Id', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
@@ -67,7 +67,7 @@
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
             </x-slot>
 
             <x-slot name="footer">

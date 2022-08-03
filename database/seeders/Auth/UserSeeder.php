@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
         ]);
 
         if (app()->environment(['local', 'testing'])) {
-            User::create([
+           User::create([
                 'type' => User::TYPE_USER,
                 'name' => 'Test User',
                 'email' => env('SEED_USER_EMAIL', 'user@example.com'),
@@ -50,11 +50,12 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'active' => true,
             ]);
-             User::create([
+            
+            $hod = User::create([
                 'type' => User::TYPE_LECTURER,
                 'name' => 'HOD User',
-                'email' => env('SEED_USER_EMAIL', 'hod@example.com'),
-                'password' => env('SEED_USER_PASSWORD', 'hod_user'),
+                'email' => env('SEED_HOD_EMAIL', 'hod@example.com'),
+                'password' => env('SEED_HOD_PASSWORD', 'hod_user'),
                 'email_verified_at' => now(),
                 'active' => true,
             ]);
