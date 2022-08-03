@@ -104,6 +104,25 @@
                             @endif
                         </td>
                     </tr>
+
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            @if($reservation->status == "approved")
+                                <span class="text-success">Approved</span>
+                            @elseif($reservation->status == "rejected")
+                                <span class="text-danger">Rejected</span>                                        
+                            @else
+                                <span class="text-primary">Pending</span>                                        
+                            @endif
+                        </td>                        
+                    </tr>
+
+                    <tr>
+                        <td>Remarks</td>
+                        <td>{{ $reservation->comments }}</td>
+                    </tr>
+
                 </table>
             </x-slot>
         </x-backend.card>
