@@ -22,7 +22,7 @@
                     
                          <a class="text-decoration-none"
                          href="{{ route('frontend.user.ordercomp', $product) }}">
-                            <img src="{{ $product->thumbURL() }}" alt="{{ $product->title }}" width="255px" height="255px"
+                            <img style="height: 255px;width: 255px;"  src="{{ $product->thumbURL() }}" alt="{{ $product->title }}" width="255px" height="255px"
                             class="img img-thumbnail" >
                         </a>
                 @else

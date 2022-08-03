@@ -32,8 +32,8 @@
                             <th>User Name</th>
                             <th>status</th>
                             <th>OrderedDate</th>
-                            <th>Describtion</th>
-                            <th>View </th>
+                        
+                            <th>&nbsp; </th>
                         </tr>
 
                         @foreach($orders as $order)
@@ -42,14 +42,13 @@
                                    
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->user->name }}</td>
-                                    <td>
-                                        {{ $order->status }}</td>
+                                    <td><b> {{ $order->status }}</b></td>
+
 
                                         <td>
                                             {{ $order->ordered_date }}</td>
 
-                                            <td>
-                                            </td>
+                                           
                                             <td class="d-flex justify-content-end">
                                                 <div class="btn-group" role="group">
                                                     <a href="{{ route('admin.orders.h_o_d.show',$order)}}"
