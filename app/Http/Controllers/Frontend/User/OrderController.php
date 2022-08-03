@@ -27,13 +27,52 @@ class OrderController extends Controller
        return view('frontend.orders.index', compact('orders'));
     
      }
+     public function update(Request $request,Order $order){
+        $data =  request()->validate(['description'=>'string','selectLecturer'=>'string']);
+        try {
+
+
+
+            $select_lecturerId=User::where('type','lecturer')->where('name',$request->selectLecturer)->first();
+            $order->orderApprovals->lecturer_id=$select_lecturerId->id;
+            $order->orderApprovals->order_id=$order->id;
+
+            $order-> description=$request->input('description');
+
+            $order->save();
+            $order->orderApprovals->save();
+            //$order->update();
+            $id = auth()->user()->id; //getting current user id 
+            $orders=Order::where('user_id',$id)->get();
+            $orders=$orders->reverse();
+            return view('frontend.orders.index', compact('orders'))->with('success', 'locker was updated !');
+
+            //return view('frontend.orders.show', compact('order'));
+
+         // return redirect()->route('frontend.orders.index')->with('Success', 'locker was updated !');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
+      
+
+    
+     }
+
+     public function edit(Order $order){
+       // return response()->json($order->orderApprovals->lecturer, 200);
+
+        $lecturers=User::where('type','lecturer')->get();
+
+        return view('frontend.orders.edit', compact('order','lecturers'));
+     }
      public function store(Request $request){
  
      //dd($request->OrderID);
-        $request->validate(['name'=>'required','enumber'=>'required','expected_date'=>'required','description'=>'required','selectLecturer'=>'required']);
-     
-        $id=$request->OrderID;
-        $order=Order::where('id',$id)->first();
+        $request->validate(['name'=>'required|string','enumber'=>'required','expected_date'=>'required','description'=>'required|string','selectLecturer'=>'required']);
+  
+       $id=$request->OrderID;
+       $order=Order::where('id',$id)->first();
         $orderApproval=new OrderApproval();
         
         
@@ -87,5 +126,12 @@ class OrderController extends Controller
         } catch (\Exception $ex) {
             return abort(500);
         }
+    }
+    public function change_status(Order $order){
+        $order->status="PICKED";
+        $order->update();
+       
+               return redirect()->route('frontend.user.orders.index')->with('Success', 'Status was updated !');
+
     }
 }

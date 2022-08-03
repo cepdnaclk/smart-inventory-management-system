@@ -125,17 +125,17 @@
                 
             </div>
 
-            <div class="col-md-8 col-sm-12 col-12 mb-4">
+            <div class=" col-sm-12 col-12 mb-5">
                 <!-- <div class="pt-3">
                     <label for="quantity">No. of components reserving:</label>
                     <input type="number" id="quantity" name="quantity" min="1"><br>
                 </div> -->
 
-                <div  class="pt-3  ">
+                <div  class="pt-3">
                  
-                        <a href="{{ route('frontend.user.addToCart', $componentItem->id) }}" class="btn btn-warning" role="button"  > <i class="fa fa-angle-left"></i>Add to cart</a>
+                        <a href="{{ route('frontend.user.addToCart', $componentItem->id) }}" class="btn btn-warning" role="button" style="float: right;" > <i class="fa fa-angle-down"></i>Add to cart</a>
                   
-                       <a href="{{ route('frontend.user.products') }}" class="btn btn-warning " role="button"><i class="fa fa-angle-left"></i> Back to components</a>
+                       <a href="{{ route('frontend.user.products') }}" class="btn btn-dark " role="button" style="float: left;"><i class="fa fa-angle-left"></i> Back to components</a>
 
                 </div>
 

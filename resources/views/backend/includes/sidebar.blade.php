@@ -242,8 +242,10 @@
                         icon="c-sidebar-nav-icon cil-list"
                         class="c-sidebar-nav-dropdown-toggle"
                         :text="__('Order Requests')"></x-utils.link>
+                  
 
                 <ul class="c-sidebar-nav-dropdown-items">
+                    
 
                     @if ($logged_in_user->isAdmin())
                         <li class="c-sidebar-nav-item">

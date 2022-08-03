@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
 use App\Models\Order;
+
 use Illuminate\Http\Request;
 use App\Models\OrderApproval;
 use App\Domains\Auth\Models\User;
@@ -93,7 +94,9 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return view('backend.orders.edit', compact('order'));
+        $lecturers=User::where('type','lecturer')->get();
+
+        return view('backend.orders.edit', compact('order','lecturers'));
     }
 
     /**
@@ -115,7 +118,6 @@ class OrderController extends Controller
 
         try {
             $order->update($data);
-            return redirect()->route('admin.orders.index')->with('Success', 'Order was updated !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -143,8 +145,14 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         try {
+          
             $order->delete();
-            return redirect()->route('admin.orders.index')->with('Success', 'Order was deleted !');
+            
+            if(auth()->user()->isAdmin()){
+                return redirect()->route('admin.orders.index')->with('Success', 'Order was deleted !');
+            }
+            else {  return view('frontend.user.cart');}
+           
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -376,9 +384,9 @@ class OrderController extends Controller
                 "body" =>""
             ];
             //Mail::to($order->HOD->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to("e18168@eng.pdn.ac.lk")->send(new OrderMail($details));
             
-            return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in rejected order list.');
+            return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in accepted order list.');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -501,7 +509,7 @@ class OrderController extends Controller
 
      
 
-        $orders = Order::where('status', 'WAITING_TECHNICAL_OFFICER_APPROVAL')->get();
+        $orders = Order::where('status', 'APPROVED')->get();
         //return response()->json($orderApproval, 200);
 
         return view('backend.orders.hod.accepted.index', compact('orders'));
