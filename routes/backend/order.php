@@ -129,7 +129,7 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
 //----------------------H_O_D Routes--------------------------//
 
 
-
+Route::middleware(['permission:lecturer.access.hod'])->group(function () {
 Route::get('/orders/hod', [OrderController::class, 'h_o_d_index'])
 ->name('orders.h_o_d.index')
 ->breadcrumbs(function (Trail $trail) {
@@ -167,7 +167,7 @@ Route::get('/orders/hod/{order}/rejected/', [OrderController::class, 'h_o_d_reje
          ->push(__('Requests'),);
  });
 
-
+});
 
 
 

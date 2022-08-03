@@ -29,7 +29,7 @@ class OrderMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Order request from CE Smart Inventory')
+        return $this->subject('Order request to CE Smart Inventory')
                     ->markdown('frontend.orders.mails.mail_template');
     }
 }

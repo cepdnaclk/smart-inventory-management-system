@@ -1,14 +1,21 @@
 @extends('backend.layouts.app')
 
 @section('title', __('My Order request'))
-@section('content')  
+@section('content') 
+<div>
+  <x-backend.card>
+    <x-slot name="header">
+      Order Request Form
+          
+  </x-slot>
+  <x-slot name="body">
 <div class="container mt-4">
     @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
     </div>
   @endif
-<form method="POST" action="{{route('frontend.user.store.request')}}">
+<form method="POST" action="{{route('frontend.user.store.request')}}" enctype="multipart/form-data">
   @csrf  
     <div class="form-group">
       <label for="name">Name</label>
@@ -24,12 +31,11 @@
         Looks good!
       </div>
     </div>
-
     <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="orderID">OrderID</label>
-          <input  readonly="true" type="text" class="form-control" id="OrderID"  name="OrderID" placeholder={{ $order->id }}  value={{ $order->id }}  >
-        </div>
+      <div class="form-group col-md-6">
+        <label for="orderID">OrderID</label>
+        <input  readonly="true" type="text" class="form-control" id="OrderID"  name="OrderID" placeholder={{ $order->id }}  value={{ $order->id }}  >
+      </div>
         <div class="form-group col-md-6">
           <label for="inputPassword4">Ordered Date</label>
           <input type="text" class="form-control" id="orderedDate" name="orderedDate" placeholder={{ $order->ordered_date }} disabled>
@@ -56,7 +62,10 @@
           <option selected disabled value="">Choose Lecurer</option>
         
           @foreach ( $lecturers as $lecturer)
+          @if (!($lecturer->isHOD()))
           <option>{{$lecturer->name}}</option>
+          @endif
+          
           @endforeach
           
         </select>
@@ -65,7 +74,23 @@
       
       </div>
     
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" style="float: right;" >Submit</button>
+
+  
   </form>
+
+  <div class="d-flex">
+
+    {!! Form::open(['url' => route('admin.orders.destroy', compact('order') ), 'method' => 'delete', 'class' => 'container'  ]  ) !!}
+   
+
+    {!! Form::submit('Back', ['class'=>'btn btn-primary']) !!}
+
+    {!! Form::close() !!}
 </div>
+</div>
+</x-slot>
+</x-backend.card>
+</div>
+
 @endsection

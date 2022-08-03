@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->date("ordered_date");
+            $table->date("ordered_date")->nullable();
             $table->date("picked_date")->nullable();
             $table->date("due_date_to_return")->nullable();
             $table->date("returned_date")->nullable();

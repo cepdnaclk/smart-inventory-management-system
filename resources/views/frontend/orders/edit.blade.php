@@ -34,19 +34,6 @@
                     @enderror
                 </div>
 
-
-                          <!-- Title -->
-                          <div class="form-group row">
-                            {!! Form::label('status', 'Status', ['class' => 'col-md-2 col-form-label']) !!}
-        
-                            <div class="col-md-10">
-                                {!! Form::text('status', $order->status, ['class'=>'form-control', 'required'=>true,'disabled' ]) !!}
-                            </div>
-        
-                            @error('status')
-                            <strong>{{ $message }}</strong>
-                            @enderror
-                        </div>
                 <!-- Subtitle -->
                 <div class="form-group row">
                     {!! Form::label('selectLecturer', 'Choose lecturer', ['class' => 'col-md-2 col-form-label']) !!}
