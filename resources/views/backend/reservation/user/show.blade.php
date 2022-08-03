@@ -83,7 +83,7 @@
                     </tr>
 
                     <tr>
-                        <td>Thumbnail Before Usage</td>
+                        <td>Station Before Usage</td>
                         <td>
                             @if( $reservation->thumb != null )
                                 <img src="{{ $reservation->thumbURL() }}" alt="{{ $reservation->station_id}}"
@@ -95,7 +95,7 @@
                     </tr>
 
                     <tr>
-                        <td>Thumbnail After Usage</td>
+                        <td>Station After Usage</td>
                         <td>
                             @if( $reservation->thumb_after != null )
                                 <img src="{{ $reservation->thumbURL_after() }}" alt="{{ $reservation->station_id}}"

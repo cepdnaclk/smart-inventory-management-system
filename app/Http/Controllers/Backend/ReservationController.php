@@ -117,15 +117,6 @@ class ReservationController extends Controller
             'thumb_after' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:4096' // TODO: Maybe we need to increase the file size
 
         ]);
-
-        if ($request->thumb != null) {
-            $data['thumb'] = $this->uploadThumb($reservation->thumbURL(), $request->thumb, "reservations");
-        }
-
-        if ($request->thumb_after != null) {
-            $data['thumb_after'] = $this->uploadThumb($reservation->thumbURL_after(), $request->thumb_after, "reservations_after");
-        }
-
         
         /*************  Check whether any changes were made to the date ********/
         $dateNew = (new DateTime($data['start_date']))->format('Y-m-d');
@@ -170,7 +161,7 @@ class ReservationController extends Controller
         if($today>$start){
             $minutesDiff = -1;
         }
-        
+         
 
         $data = [
             'station_id' => $request['station_id'],
@@ -178,9 +169,17 @@ class ReservationController extends Controller
             'end_date' => $request['end_date'],
             'E_numbers' => $request['E_numbers'],
             'duration' => $minutes,
-            'thumb' => $request->thumb,
-            'thumb_after' => $request->thumb_after,
         ];
+
+        if ($request->thumb != null) {
+            $thumb = ($reservation->thumb == NULL) ? NULL : $reservation->thumbURL();
+            $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "reservations");
+        }
+
+        if ($request->thumb_after != null) {
+            $thumb = ($reservation->thumb_after == NULL) ? NULL : $reservation->thumbURL_after();
+            $data['thumb_after'] = $this->uploadThumb($thumb, $request->thumb_after, "reservations_after");
+        }
         
 
         if ($userLoggedin['id'] != $reservation->user_id){
