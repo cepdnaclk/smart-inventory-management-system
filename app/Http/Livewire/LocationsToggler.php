@@ -12,6 +12,9 @@ class LocationsToggler extends Component
     public $locationID;
     public $locationTitle;
     public $isAvailableInLocation;
+    public $X = 0;
+    public $Y = 0;
+    public $Z = 0;
 
     public function addLocation()
     {
