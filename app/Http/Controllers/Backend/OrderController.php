@@ -285,12 +285,17 @@ class OrderController extends Controller
         //update technical officer id who ready this oder
         $orderRequest->orderApprovals->technical_officer_id = auth()->user()->id;
         $orderRequest->orderApprovals->save();
-
+        
         // Send an email to the student
         try {
             $details = [
-                "title" => "your order request is ready.",
-                "body"  => "you can collect your order at CE Smart Inventory."
+                "title" => "Your Order Request- ".$orderRequest->id." is READY !",
+                "body"  =>  "Your order is ready to pickup.
+                            Please visit the MakerSpace and collect it.
+                            These are your components",
+                "url"   => route('frontend.user.orders.index'),
+
+                "components" => $orderRequest->componentItems
             ];
             //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
@@ -321,8 +326,13 @@ class OrderController extends Controller
         // Send an email to the student
         try {
             $details = [
-                "title" => "your order request is picked.",
-                "body"  => "your submitted order components are correct."
+                "title" => "Your Order Request- ".$orderRequest->id." is HANDED OVER !",
+                "body"  =>  "You collected your order- ".$orderRequest->id." on ".$orderRequest->picked_date.
+                            " at CE Smart Inventory MakerSpace.
+                            These are the components",
+                "url"   => route('frontend.user.orders.index'),
+    
+                "components" => $orderRequest->componentItems
             ];
             //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
@@ -352,8 +362,13 @@ class OrderController extends Controller
         // Send an email to the student
         try {
             $details = [
-                "title" => "your order request is finished.",
-                "body"  => "your submitted order components are correct."
+                "title" => "Your Order Request- ".$orderRequest->id." is SUMBMITTED !",
+                "body"  =>  "You returned your order- ".$orderRequest->id." on ".$orderRequest->returned_date.
+                            " at CE Smart Inventory MakerSpace.
+                            These are the components",
+                "url"   => route('frontend.user.orders.index'),
+    
+                "components" => $orderRequest->componentItems
             ];
             //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
@@ -376,15 +391,19 @@ class OrderController extends Controller
         $order->status = "WAITING_H_O_D_APPROVAL";
         $order->orderApprovals->save();
         $order->save();
-
+        //dd(route('admin.orders.lecturer.index'));
         // Send an email to the HOD
         try {
             $details = [
-                "title" => "your order request is approved by lecturer",
-                "body" =>""
+                "title" => "Order Request for Head Of The Department Approvel !",
+                "body"  =>  "This team place an order with this components and ".$order->orderApprovals->lecturer['name'].
+                            " approve the request. Can you kindly future give premission to release the request components to user.",
+                "url"   => route('admin.orders.h_o_d.index'),
+    
+                "components" => $order->componentItems
             ];
             //Mail::to($order->HOD->email)->send(new OrderMail($details));
-            Mail::to("e18168@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
             
             return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in accepted order list.');
 
@@ -404,8 +423,13 @@ class OrderController extends Controller
         // Send an email to the student
         try {
             $details = [
-                "title" => "your order request is rejected by lecturer",
-                "body"  => ""
+                "title" => "Order Request rejected by Lecturer",
+                "body"  => "Your order request is rejected by ".$order->orderApprovals->lecturer['name']." These are the components.",
+                
+                "url"   => route('frontend.user.orders.index'),
+    
+                "components" => $order->componentItems
+            
             ];
             //Mail::to($order->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
@@ -462,12 +486,32 @@ class OrderController extends Controller
         
         // Send an email to the student
         try {
-            $details = [
-                "title" => "your order request is approved by Head of the Department",
-                "body" =>""
+            $msgForStudent = [
+                "title" => "Your Order Request is Approved by Head of the Department.",
+                "body" =>  "you will get some update about availability soon",
+                "url"   => route('frontend.user.orders.index'),
+
+                "components" => $order->componentItems
             ];
+
             //Mail::to($order->user->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForStudent));
+
+            $msgForOfficer = [
+                "title" => "New Order Request From CE Smart Inventory",
+                "body"  =>  $order->user->name . " make an order for this components.
+                            Can you please visit the dashboard and prepare and release to them",
+                "url"   => route('admin.orders.officer.approved.index'),
+
+                "components" => $order->componentItems
+            ];
+
+            //send mail to all tech officers
+            $officers = User::where('type', 'tech_officer')->orderBy('id')->get();
+            // foreach ($officers as $officer) {
+            //     Mail::to($officer->email)->send(new OrderMail($msgForOfficer));
+            // }
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForOfficer));
 
             return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have approved the order. you can view the order in accepted order list.');
             
@@ -489,9 +533,15 @@ class OrderController extends Controller
         // Send an email to the student
         try {
             $details = [
-                "title" => "your order request is rejected by Head of the Department",
-                "body" =>""
+                "title" => "Order Request rejected by Head of the Department",
+                "body"  => "These are the components.",
+                
+                "url"   => route('frontend.user.orders.index'),
+    
+                "components" => $order->componentItems
+            
             ];
+            
             //Mail::to($order->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 

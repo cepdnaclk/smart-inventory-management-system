@@ -102,7 +102,7 @@ class OrderController extends Controller
                 "title" => "New Order Request From CE Smart Inventory",
                 "body"  =>  $order->user->name . " make a request to receive this components.
                             Can you please visit the dashboard and approve it.",
-                "url"   => "http://127.0.0.1:8000/login",
+                "url"   => route("admin.orders.lecturer.index"),
 
                 "components" => $order->componentItems
 
@@ -114,7 +114,7 @@ class OrderController extends Controller
                 "title" => "Your Order Request From CE Smart Inventory",
                 "body"  => "You made order request with this components in CE Smart Inventory.
                             your order request is waiting for lecturer approvel.",
-                "url"   => "http://127.0.0.1:8000/login",
+                "url"   => route("frontend.user.orders.index"),
 
                 "components" => $order->componentItems
             ];

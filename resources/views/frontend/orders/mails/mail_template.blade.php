@@ -1,6 +1,5 @@
 @component('mail::message')
- <h2>{{ $details['title'] }}</h2>
-<h4>{{ $details['body'] }}</h4>
+ <h1>{{ $details['title'] }}</h1>
 
 {{ $details['body'] }}
 

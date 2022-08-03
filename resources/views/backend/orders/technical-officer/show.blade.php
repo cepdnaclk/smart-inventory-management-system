@@ -34,10 +34,10 @@
                                     <a href="{{ route('admin.component.items.show', $componentItem) }}">
                                         {{ $componentItem->title }}
                                     </a>
-                                    @if($componentItem->pivot_quantity == null)
+                                    @if($componentItem->pivot->quantity == null)
                                         - 0
                                     @else
-                                        - {{ $componentItem ->pivot_quantity }}
+                                        - {{ $componentItem ->pivot->quantity }}
                                     @endif
                                     <br>
                             @endforeach
@@ -56,7 +56,7 @@
                     <tr>
                         <td>Approved Lecture</td>
                         <td>
-                            @if($orderRequest->orderApprovals != null)
+                            @if($orderRequest->orderApprovals->lecturer_id != null)
                                 {{ $orderRequest->orderApprovals->lecturer['name'] }}
                                 ( {{ $orderRequest->orderApprovals->lecturer['email'] }} )
                             @else
@@ -67,7 +67,7 @@
                     <tr>
                         <td>Approved Technical officer</td>
                         <td>
-                            @if($orderRequest->orderApprovals != null)
+                            @if($orderRequest->orderApprovals->technical_officer_id != null)
                                 {{ $orderRequest->orderApprovals->technicalOfficer['name'] }}
                                 ( {{ $orderRequest->orderApprovals->technicalOfficer['email'] }} )
                             @else
