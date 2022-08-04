@@ -8,7 +8,7 @@ class CreateComponentItemsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     *dgfdgdg
      * @return void
      */
     public function up()
