@@ -50,8 +50,6 @@ class CalendarController extends Controller
         }   
 
         $today = date('Y-m-d H:i:s');
-        // $today = Carbon::now()->addMinutes(330);
-        // dd($today);
         return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin, 'today' => $today]);
     }
 
@@ -72,8 +70,6 @@ class CalendarController extends Controller
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->where('station_id', $station->id)->get();
 
-
-        // $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->get();
 
         // If the user has not made a reservation before
         if ($bookings1->isEmpty()) {
@@ -153,16 +149,6 @@ class CalendarController extends Controller
                 'station_id' => $station->id,
                 'color' => $color ? $color : '',
             ]);
-
-            // return Redirect::back()->response()->json([
-            //     'id' => $booking->id,
-            //     'start' => $booking->start_date,
-            //     'end' => $booking->end_date,
-            //     'title' => $booking->title,
-            //     'station_id' => $station->id,
-            //     'color' => $color ? $color : '',
-
-            // ]);
         } else {
             // Print message
             return response()->json([
@@ -174,10 +160,7 @@ class CalendarController extends Controller
     public function update(Request $request, $id)
     {
 
-        // $station = $request['station_id'];
-        // dd('11');
         $station = Session::get('station');
-        // dd($station->id);
         $userLoggedin = auth()->user();
 
 
@@ -193,11 +176,9 @@ class CalendarController extends Controller
         $result = $date1->eq($date2);
 
         $date = $request->begin;
-        // dd($date);
 
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $date)->where('user_id', $userLoggedin['id'])->where('station_id', $station->id)->get();
-        // dd($bookings1);
 
         if (!$booking) {
             return response()->json([

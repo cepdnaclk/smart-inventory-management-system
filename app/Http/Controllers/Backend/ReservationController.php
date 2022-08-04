@@ -23,17 +23,21 @@ class ReservationController extends Controller
 
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the reservations of all users for the maintainer.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $reservation = Reservation::orderBy('start_date','desc')->paginate(16);
-        // dd($reservation);
         return view('backend.reservation.index', compact('reservation'));
     }
 
+    /**
+     * Display a listing of the reservations of the particular user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index_user()
     {
         $userLoggedin = auth()->user();
@@ -42,6 +46,11 @@ class ReservationController extends Controller
         return view('backend.reservation.user.index', compact('reservation', 'userLoggedin'));
     }
 
+    /**
+     * Redirection to the updating interface.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Reservation $reservation)
     {
 
@@ -66,8 +75,10 @@ class ReservationController extends Controller
         $station = Stations::find($reservation->station_id);
         return view('backend.reservation.edit', compact('reservation', 'stations', 'station'));
     }
+
+
     /**
-     * Display the specified resource.
+     * Display the selected reservation.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -83,6 +94,13 @@ class ReservationController extends Controller
        return view('backend.reservation.user.show', compact('reservation'));
     }
 
+    /**
+     * Redirect to the approving interface for maintainer.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+
     public function confirm(Reservation $reservation)
     {
       
@@ -91,6 +109,13 @@ class ReservationController extends Controller
       return view('backend.reservation.confirm', compact('reservation', 'stations', 'station'));
     }
     
+
+    /**
+     * Approve interface with form for the maintainer.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
 
     public function approve(Request $request, Reservation $reservation)
     {
@@ -108,6 +133,13 @@ class ReservationController extends Controller
     }
 
 
+    /**
+     * Updating the reservation.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+
     public function update(Request $request, Reservation $reservation)
     {
         $userLoggedin = auth()->user();
@@ -115,8 +147,7 @@ class ReservationController extends Controller
         $dateOriginal = (new DateTime($reservation->start_date))->format('Y-m-d');
         $dateOriginal1 = (new DateTime($reservation->start_date))->format('Y-m-d H:i:s');
 
-        
-
+        // Data validation
         $data = request()->validate([
             'station_id' => 'numeric|required',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
@@ -143,7 +174,7 @@ class ReservationController extends Controller
         $diff = $start->diff($end);
         $minutes = ($diff->h * 60) + ($diff->s / 60) + ($diff->i) + ($diff->d * 24 * 60) + ($diff->m * 30 * 24 * 60) + ($diff->y * 365 * 24 * 60);
 
-        //For overlap check
+        //Check for overlap of events 
         $res = Reservation::whereDate('start_date', $start)->where('station_id', $data['station_id'])->get();
         $flag = false;
         foreach ($res as $r) {
@@ -155,15 +186,15 @@ class ReservationController extends Controller
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $start)->where('user_id', $userLoggedin['id'])->where('station_id', $data['station_id'])->get();
 
-        // See whether the reservation is being made too early
+        // See whether the reservation is being made too early (more than a month in advance)
         $todayDate = date('Y-m-d H:i:s');
         $today = new DateTime($todayDate);
         $today->add(new DateInterval('PT5H30M'));
 
-
         $resDiff = $today->diff($start);
         $minutesDiff = ($resDiff->h*60) + ($resDiff->s/60) + ($resDiff->i) + ($resDiff->d*24*60) + ($resDiff->m*30*24*60) + ($resDiff->y*365*24*60);
     
+        // Ensuring a reservation made in the past can not be updated
         if($today>$start){
             $minutesDiff = -1;
         }
@@ -188,6 +219,7 @@ class ReservationController extends Controller
         }
         
 
+        // Test case check
         if ($userLoggedin['id'] != $reservation->user_id){
             return redirect()->route('frontend.reservation.index')->with('Error', 'You can not update this reservation');   
         }elseif($today >= $start ){
@@ -209,6 +241,13 @@ class ReservationController extends Controller
         }
         
     }
+
+    /**
+     * Updating the comments and approval.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
 
     public function update_main(Request $request, Reservation $reservation)
     {
@@ -271,6 +310,13 @@ class ReservationController extends Controller
         
     }
 
+    /**
+     * Delete reservation from the storage.
+     *
+     * @param \App\Models\EquipmentItem $equipmentItem
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+
     public function destroy(Reservation $reservation)
     {
         $userLoggedIn = auth()->user();
@@ -285,12 +331,18 @@ class ReservationController extends Controller
             ], 404);
         }
 
-        if ($userLoggedIn['id'] == $booking->user_id) {
+        $todayDate = date('Y-m-d H:i:s');
+        $today = new DateTime($todayDate);
+        $start = new DateTime($reservation['start_date']);
+
+        if ($userLoggedIn['id'] == $booking->user_id && (($reservation->status != null && $reservation->status == 'approved') || ($start>$today))) {
             $booking->delete();
             return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was deleted !');
-        } else {
+        }elseif(($reservation->status == null || $reservation->status == 'pending' || $reservation->status == 'rejected') && $start>$today ){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not delete this reservation as it has not been approved!');
+        }else {
             return redirect()->route('frontend.reservation.index')->with('Error', 'You can not delete this reservation!');
-        }
+        } 
 
     }
 

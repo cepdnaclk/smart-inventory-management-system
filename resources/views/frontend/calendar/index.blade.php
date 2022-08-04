@@ -32,7 +32,7 @@
                 }
             });
 
-            // TODO: Only load the events from last week to the future. Otherwise this can be a huge list in someday
+            //Only load the events from last week to the future. Otherwise this can be a huge list in someday
             var booking = @json($events);
             var todayDate = @json($today);
 
@@ -98,12 +98,11 @@
 
                             const time_limit = 240;
 
-                            // TODO: Validate the E Numbers
+                            //Validated the E Numbers
 
                             if(moment(dateBegin).isAfter(dateToday)){
                                 if(mins < 43200){
                                     if (m <= time_limit) {  //limit maximum time
-                                        // if(m1 < 43200){
                                         $.ajax({
                                             url: "{{ route('frontend.calendar.store') }}",
                                             type: "POST",
@@ -205,24 +204,21 @@
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
-                                    // refreshPage();
                                 },
                                 error: function (error) {
-                                    // if(error.responseJSON.errors) {
-                                    //     $('#titleError').html(error.responseJSON.errors.title);
-                                    // }
                                     console.log(error)
                                 },
                             });
                         } else {
+                            // Reset the time duration back to the previous value
                             revertFunc();
                             swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
                         }
                     } else {
+                        // Reset the time duration back to the previous value
                         revertFunc();
                         swal("Permission Denied!", "You can not update this event!", "warning");
 
-                        // TODO: Need to reset the time duration back to the previous value
                         //  This is a temporary fix. Find a better way to this
                         refreshPage();
                     }
@@ -233,15 +229,10 @@
                     // https://fullcalendar.io/docs/v3/eventDrop
 
                     var id = event.id;
-                    // console.log(event);
-                    // console.log(delta.asMinutes());
-                    // console.log(event.start.format());
 
                     console.log("Event Drop");
                     var start_date = event.start.format();
                     var end_date = event.end.format()
-
-                    // console.log(start_date, end_date);
 
                     // count hours
                     const date1 = new Date(start_date);
@@ -250,7 +241,7 @@
                     
                     var ms = date2.getTime() - date1.getTime();
                     var d = moment.duration(ms);
-                    var m = d.asMinutes();
+                    var m = d.asMinutes(); // Duration of the reservation in minutes
 
                     var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
                     var loggedIn = @json($userLoggedin);
@@ -261,6 +252,7 @@
                     const dateBegin = new Date(start_date);
                     const dateToday = new Date(todayDate);
 
+                    // Handle the Greenwich time
                     dateToday.setHours( dateToday.getHours() + 5 );
                     dateToday.setMinutes( dateToday.getMinutes() + 30 );
 
@@ -278,28 +270,31 @@
                                     success: function (response) {
                                         $('#calendar').fullCalendar('refetchEvents', response);
                                         swal("Done!", "Event Updated!", "success");
-                                        // refreshPage();
                                     },
                                     error: function (error) {
                                         if (error.responseJSON.errors) {
                                             $('#titleError').html(error.responseJSON.errors.title);
                                         } else {
+                                            // Reset the time duration back to the previous value
                                             revertFunc(); 
                                             swal("Denied!", "Can not make multiple reservations in a day!", "warning");
                                         }
                                     },
                                 });
                             } else {
+                                // Reset the time duration back to the previous value
                                 revertFunc(); 
                                 swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
                             }
                         } else {
+                            // Reset the time duration back to the previous value
                             revertFunc(); 
                             swal("Permission Denied!", "You can not update this event!", "warning");
                         }
                     }else{
                         $('#bookingModal').modal('hide');
                         swal("Permission Denied!", "You can not make a reservation for a date that has passed", "warning");
+                        // Reset the time duration back to the previous value
                         revertFunc(); 
 
                     }
@@ -344,8 +339,6 @@
                 }
             });
 
-
-            // $('#calendar').fullCalendar('gotoDate', '2022-10-12');
 
             $("#bookingModal").on("hidden.bs.modal", function () {
                 $('#saveBtn').unbind();

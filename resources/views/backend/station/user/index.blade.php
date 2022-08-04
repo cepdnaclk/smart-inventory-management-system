@@ -36,7 +36,6 @@
                         <tr>
                             <th>Station Name</th>
                             <th>Description</th>
-                            <!-- <th>Thumbnail</th> -->
                             <th>Capacity</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -45,7 +44,6 @@
                             <tr>
                                 <td>{{ $st->stationName  }}</td>
                                 <td>{{ $st->description }}</td>
-                                <!-- <td>{{ $st->thumb }}</td> -->
                                 <td>{{ $st->capacity }}</td>
                                 <td>
 
