@@ -139,7 +139,7 @@
             {{ config('app.name', 'Laravel') }}
         </div><!--title-->
 
-        <div class="flex row g-3 align-items-center float-right" > 
+        <div class="flex row g-3 align-items-center" >
             {!! Form::open(array('route'=>'frontend.frontSearch.results'),['class' => 'searchBar']) !!}
             {!! Form::text('keywords', '', ['class'=>'searchBar']) !!}   
            {!! Form::submit('Search', ['class'=>'searchBars']) !!} 
