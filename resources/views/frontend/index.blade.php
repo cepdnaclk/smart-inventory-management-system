@@ -12,6 +12,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         html, body {
             background-color: #fff;
@@ -63,6 +64,45 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+
+                body {
+            font-family: Arial;
+            }
+
+            * {
+            box-sizing: border-box;
+            }
+
+            .searchBar {
+            float: center;
+            padding: 10px;
+            font-size: 17px;
+            border: 1px solid grey;
+            float: left;
+            width: 80%;
+            background: #f1f1f1;
+            border-radius : 4px;
+            }
+
+            .searchBars  {
+            float: center;
+            width: 20%;
+            padding: 10px;
+            background: #A8A8A8;
+            color: white;
+            font-size: 17px;
+            border: 1px solid grey;
+            border-left: none;
+            cursor: pointer;
+            border-radius : 4px;
+            }
+
+            .searchBars:hover {
+            background: #888888;
+            }
+
+
+
     </style>
     @stack('after-styles')
 </head>
@@ -90,14 +130,24 @@
         @endauth
     </div><!--top-right-->
 
+    
     <div class="content">
         @include('includes.partials.messages')
+        
 
-        <div class="title m-b-md">
+        <div class="title m-b-md" id='cesmart'>
             {{ config('app.name', 'Laravel') }}
         </div><!--title-->
 
-        <div class="links">
+        <div class="flex row g-3 align-items-center" >
+            {!! Form::open(array('route'=>'frontend.frontSearch.results'),['class' => 'searchBar']) !!}
+            {!! Form::text('keywords', '', ['class'=>'searchBar']) !!}   
+           {!! Form::submit('Search', ['class'=>'searchBars']) !!} 
+            {{ Form::close() }}
+        </div>
+
+
+        <div class="links p-5">
             {{--            <a href="http://laravel-boilerplate.com" target="_blank"><i class="fa fa-book"></i> @lang('Docs')</a>--}}
             <a href="https://github.com/cepdnaclk/smart-inventory-management-system" target="_blank"><i
                         class="fab fa-github"></i>
