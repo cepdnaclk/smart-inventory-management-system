@@ -10,7 +10,7 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Approved Orders - Technical Officer View
+                Picked Orders - Technical Officer View
             </x-slot>
 
             <x-slot name="body">
@@ -32,9 +32,10 @@
                             <th>Order Id</th>
                             <th>Student Name</th>
                             <th>Status</th>
-                            <th>Orderd Date</th>
                             <th>Components</th>
                             <th>Quantity</th>
+                            <th>Due Date</th>
+                            <th>Returned Date</th>
                             <th>&nbsp;</th>
                         </tr>
 
@@ -45,8 +46,7 @@
                                     {{ $orderRequest->user['name'] }}
                                 </td>
                                 <th>{{ $orderRequest->status }}</th>
-                                <td>{{ $orderRequest->ordered_date }}</td>
-
+                                
                                 {{-- SHOW EVERY COMPONENTS AND THEIR QUANTITY --}}
                                 <td>
                                     @foreach($orderRequest->componentItems as $componentItem)
@@ -67,9 +67,25 @@
                                     @endforeach
                                 </td>
 
+                                <td>
+                                    @if( $orderRequest->due_date_to_return != null )
+                                        {{ $orderRequest->due_date_to_return }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+
+                                <td>
+                                    @if( $orderRequest->returned_date != null )
+                                        {{ $orderRequest->returned_date }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+
                                 <td class="d-flex justify-content-end">
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('admin.orders.officer.approved.confirm', $orderRequest)}}"
+                                        <a href="{{ route('admin.orders.officer.picked.confirm', $orderRequest)}}"
                                             class="btn btn-primary btn-xs">
                                             <i class="fa fa-check" title="Approval"></i>
                                         </a>

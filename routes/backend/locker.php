@@ -78,18 +78,4 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
     // Destroy
     Route::delete('locker/details/{lockerDetail}', [LockerController::class, 'destroy'])
         ->name('locker.details.destroy');
-
-
-
-
-    //locker availables --------------------------------------------------------------------
-
-    //Index
-    Route::get('locker/ready_orders', [LockerController::class, 'index_for_ready_orders'])
-    ->name('locker.ready_orders.index')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('admin.dashboard'))
-            ->push(__('Lockers'), route('admin.locker.index'))
-            ->push(__('Ready Orders'));
-    });
 });

@@ -317,11 +317,21 @@
                     @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
                         <li class="c-sidebar-nav-item">
                             <x-utils.link
-                                    :href="route('admin.orders.officer.submitted.index')"
+                                    :href="route('admin.orders.officer.ready.index')"
                                     class="c-sidebar-nav-link"
-                                    :text="__('Submitted - Technical Officer')"></x-utils.link>
+                                    :text="__('Ready - Technical Officer')"></x-utils.link>
                         </li>
                     @endif
+
+                    @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link
+                                    :href="route('admin.orders.officer.picked.index')"
+                                    class="c-sidebar-nav-link"
+                                    :text="__('Picked - Technical Officer')"></x-utils.link>
+                        </li>
+                    @endif
+
                     @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
                         @if ($logged_in_user->isHOD())
                             <li class="c-sidebar-nav-item">
@@ -385,12 +395,6 @@
                             :href="route('admin.locker.details.index')"
                             class="c-sidebar-nav-link"
                             :text="__('Locker Details')"></x-utils.link>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <x-utils.link
-                            :href="route('admin.locker.ready_orders.index')"
-                            class="c-sidebar-nav-link"
-                            :text="__('Ready Orders')"></x-utils.link>
                 </li>
             </ul>
         </li>

@@ -38,7 +38,7 @@
                           @if ($logged_in_user->isAdmin())
                           <th>Lecturer Name</th>
                           @endif
-                            <th>View </th>
+                            <th>&nbsp; </th>
                         </tr>
 
                         @foreach($orderApproval as $order)
@@ -47,8 +47,8 @@
                                    
                                     <td>{{ $order->orders->id }}</td>
                                     <td>{{ $order->orders->user->name }}</td>
-                                    <td>
-                                        {{ $order->orders->status }}</td>
+                                    <td><b> {{ $order->orders->status }}</b></td>
+
 
                                         <td>
                                             {{ $order->orders->ordered_date }}</td>

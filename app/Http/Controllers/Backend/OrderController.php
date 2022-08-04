@@ -14,7 +14,7 @@ use App\Mail\Backend\OrderMail;
 use App\Models\Locker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-
+use phpDocumentor\Reflection\PseudoTypes\True_;
 
 use App\Mail\Orders\OrderRejectMailForHOD;
 use App\Mail\Orders\OrderApproveMailForHOD;
@@ -201,12 +201,10 @@ class OrderController extends Controller
     //index
     public function officer_index()
     {
-        $orderRequests = Order::getApprovedOrders();
-
-        return view('backend.orders.technical-officer.index', compact('orderRequests'));
+        return view('backend.orders.technical-officer.index');
     }
 
-    //approved orders by students
+    //approved orders
     public function officer_index_for_approved_orders()
     {
         $orderRequests = Order::getApprovedOrders();
@@ -214,12 +212,20 @@ class OrderController extends Controller
         return view('backend.orders.technical-officer.approved.index', compact('orderRequests'));
     }
 
-    //submitted orders by students
-    public function officer_submitted_orders_index()
+    //ready orders
+    public function officer_index_for_ready_orders()
     {
-        $orderRequests = Order::getSubmittedOrders();
+        $orderRequests = Order::getReadyOrders();
 
-        return view('backend.orders.technical-officer.submitted.index', compact('orderRequests'));
+        return view('backend.orders.technical-officer.ready.index', compact('orderRequests'));
+    }
+
+    //picked orders
+    public function officer_index_for_picked_orders()
+    {
+        $orderRequests = Order::getPickedOrders();
+
+        return view('backend.orders.technical-officer.picked.index', compact('orderRequests'));
     }
 
     public function officer_show(Order $orderRequest)
@@ -235,17 +241,27 @@ class OrderController extends Controller
             return view('backend.orders.technical-officer.approved.confirm', compact('orderRequest','availableLockers'));
         } else {
             $id = $orderRequest->id;
-            return redirect()->route('admin.orders.officer.index')->with('Success', 'The Order request #' . $id . ' already ready !');
+            return redirect()->route('admin.orders.officer.approved.index')->with('Success', 'The Order request #' . $id . ' already ready !');
         }
     }
 
-    public function officer_confirm_for_submitted_orders(Order $orderRequest)
-    {
-        if ($orderRequest->status == 'SUBMITTED') {
-            return view('backend.orders.technical-officer.submitted.confirm', compact('orderRequest'));
+    public function officer_confirm_for_ready_orders(Order $orderRequest)
+    {   
+        if ($orderRequest->status == 'READY') {
+            return view('backend.orders.technical-officer.ready.confirm', compact('orderRequest'));
         } else {
             $id = $orderRequest->id;
-            return redirect()->route('admin.orders.officer.submitted.index')->with('Success', 'The Order request #' . $id . ' already finished !');
+            return redirect()->route('admin.orders.officer.ready.index')->with('Success', 'The Order request #' . $id . ' already handed over !');
+        }
+    }
+
+    public function officer_confirm_for_picked_orders(Order $orderRequest)
+    {
+        if ($orderRequest->status == 'PICKED') {
+            return view('backend.orders.technical-officer.picked.confirm', compact('orderRequest'));
+        } else {
+            $id = $orderRequest->id;
+            return redirect()->route('admin.orders.officer.picked.index')->with('Success', 'The Order request #' . $id . ' already finished !');
         }
     }
 
@@ -269,12 +285,17 @@ class OrderController extends Controller
         //update technical officer id who ready this oder
         $orderRequest->orderApprovals->technical_officer_id = auth()->user()->id;
         $orderRequest->orderApprovals->save();
-
+        
         // Send an email to the student
         try {
             $details = [
-                "title" => "your order request is ready.",
-                "body"  => "you can collect your order at CE Smart Inventory."
+                "title" => "Your Order Request- ".$orderRequest->id." is READY !",
+                "body"  =>  "Your order is ready to pickup.
+                            Please visit the MakerSpace and collect it.
+                            These are your components",
+                "url"   => route('frontend.user.orders.index'),
+
+                "components" => $orderRequest->componentItems
             ];
             //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
@@ -286,9 +307,51 @@ class OrderController extends Controller
         }
     }
 
+    public function officer_picked(Order $orderRequest)
+    {
+        $data = request()->validate([
+            'picked_date' => 'date|required',
+        ]);
+
+        $orderRequest->update($data);
+
+        // Update the status
+        $orderRequest->status = 'PICKED';
+        $orderRequest->save();
+
+        //Update Locker isAvailable field
+        $orderRequest->locker->is_available = true;
+        $orderRequest->locker->save();
+        
+        // Send an email to the student
+        try {
+            $details = [
+                "title" => "Your Order Request- ".$orderRequest->id." is HANDED OVER !",
+                "body"  =>  "You collected your order- ".$orderRequest->id." on ".$orderRequest->picked_date.
+                            " at CE Smart Inventory MakerSpace.
+                            These are the components",
+                "url"   => route('frontend.user.orders.index'),
+    
+                "components" => $orderRequest->componentItems
+            ];
+            //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+
+            return redirect()->route('admin.orders.officer.ready.index')->with('Success', 'Email has been sent!');
+
+        } catch (\Exception $ex) {
+            return abort(500);
+        }
+    }
+
     public function officer_finish(Order $orderRequest)
     {
-      
+        $data = request()->validate([
+            'returned_date' => 'date|required',
+        ]);
+
+        $orderRequest->update($data);
+
         // Update the status
         $orderRequest->status = 'FINISHED';
         $orderRequest->save();
@@ -299,13 +362,18 @@ class OrderController extends Controller
         // Send an email to the student
         try {
             $details = [
-                "title" => "your order request is finished.",
-                "body"  => "your submitted order components are correct."
+                "title" => "Your Order Request- ".$orderRequest->id." is SUMBMITTED !",
+                "body"  =>  "You returned your order- ".$orderRequest->id." on ".$orderRequest->returned_date.
+                            " at CE Smart Inventory MakerSpace.
+                            These are the components",
+                "url"   => route('frontend.user.orders.index'),
+    
+                "components" => $orderRequest->componentItems
             ];
             //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
-            return redirect()->route('admin.orders.officer.submitted.index')->with('Success', 'Email has been sent!');
+            return redirect()->route('admin.orders.officer.picked.index')->with('Success', 'Email has been sent!');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -323,15 +391,19 @@ class OrderController extends Controller
         $order->status = "WAITING_H_O_D_APPROVAL";
         $order->orderApprovals->save();
         $order->save();
-
+        //dd(route('admin.orders.lecturer.index'));
         // Send an email to the HOD
         try {
             $details = [
-                "title" => "your order request is approved by lecturer",
-                "body" =>""
+                "title" => "Order Request for Head Of The Department Approvel !",
+                "body"  =>  "This team place an order with this components and ".$order->orderApprovals->lecturer['name'].
+                            " approve the request. Can you kindly future give premission to release the request components to user.",
+                "url"   => route('admin.orders.h_o_d.index'),
+    
+                "components" => $order->componentItems
             ];
             //Mail::to($order->HOD->email)->send(new OrderMail($details));
-            Mail::to("e18168@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
             
             return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in accepted order list.');
 
@@ -351,8 +423,13 @@ class OrderController extends Controller
         // Send an email to the student
         try {
             $details = [
-                "title" => "your order request is rejected by lecturer",
-                "body"  => ""
+                "title" => "Order Request rejected by Lecturer",
+                "body"  => "Your order request is rejected by ".$order->orderApprovals->lecturer['name']." These are the components.",
+                
+                "url"   => route('frontend.user.orders.index'),
+    
+                "components" => $order->componentItems
+            
             ];
             //Mail::to($order->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
@@ -409,12 +486,32 @@ class OrderController extends Controller
         
         // Send an email to the student
         try {
-            $details = [
-                "title" => "your order request is approved by Head of the Department",
-                "body" =>""
+            $msgForStudent = [
+                "title" => "Your Order Request is Approved by Head of the Department.",
+                "body" =>  "you will get some update about availability soon",
+                "url"   => route('frontend.user.orders.index'),
+
+                "components" => $order->componentItems
             ];
+
             //Mail::to($order->user->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForStudent));
+
+            $msgForOfficer = [
+                "title" => "New Order Request From CE Smart Inventory",
+                "body"  =>  $order->user->name . " make an order for this components.
+                            Can you please visit the dashboard and prepare and release to them",
+                "url"   => route('admin.orders.officer.approved.index'),
+
+                "components" => $order->componentItems
+            ];
+
+            //send mail to all tech officers
+            $officers = User::where('type', 'tech_officer')->orderBy('id')->get();
+            // foreach ($officers as $officer) {
+            //     Mail::to($officer->email)->send(new OrderMail($msgForOfficer));
+            // }
+            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForOfficer));
 
             return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have approved the order. you can view the order in accepted order list.');
             
@@ -436,9 +533,15 @@ class OrderController extends Controller
         // Send an email to the student
         try {
             $details = [
-                "title" => "your order request is rejected by Head of the Department",
-                "body" =>""
+                "title" => "Order Request rejected by Head of the Department",
+                "body"  => "These are the components.",
+                
+                "url"   => route('frontend.user.orders.index'),
+    
+                "components" => $order->componentItems
+            
             ];
+            
             //Mail::to($order->user->email)->send(new OrderMail($details));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 

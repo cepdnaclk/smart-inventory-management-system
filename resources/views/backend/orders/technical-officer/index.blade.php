@@ -23,7 +23,8 @@
                 @endif
 
                 <a class="btn btn-secondary btn-150" href="{{ route('admin.orders.officer.approved.index') }}">Approved <br> Orders</a>
-                <a class="btn btn-secondary btn-150" href="{{ route('admin.orders.officer.submitted.index') }}">Submitted <br> Orders</a>
+                <a class="btn btn-secondary btn-150" href="{{ route('admin.orders.officer.ready.index') }}">Ready <br> Orders</a>
+                <a class="btn btn-secondary btn-150" href="{{ route('admin.orders.officer.picked.index') }}">Picked <br> Orders</a>
             </x-slot>
         </x-backend.card>
     </div>

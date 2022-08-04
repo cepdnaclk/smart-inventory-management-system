@@ -136,10 +136,4 @@ class LockerController extends Controller
             return abort(500);
         }
     }
-
-    public function index_for_ready_orders()
-    {
-        $orders = Order::getReadyOrders();
-        return view('backend.locker.ready_orders.index', compact('orders'));
-    }
 }
