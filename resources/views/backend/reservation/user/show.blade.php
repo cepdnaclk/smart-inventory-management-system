@@ -2,6 +2,9 @@
 
 @section('title', __('Reservation'))
 
+@section('breadcrumb-links')
+    @include('backend.reservation.user.breadcrumb-links')
+@endsection
 
 @section('content')
     <div>

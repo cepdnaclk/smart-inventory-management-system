@@ -15,7 +15,7 @@ class StationController extends Controller
 
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the stations.
      *
      * @return \Illuminate\Http\Response
      */
@@ -26,7 +26,7 @@ class StationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new station.
      *
      * @return \Illuminate\Http\Response
      */
@@ -38,7 +38,7 @@ class StationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created station in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -69,24 +69,19 @@ class StationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified station.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    /*
-    public function show(Stations $station)
-    {
-        return view('backend.station.show', compact('station'));
-    }
-*/
+    
     public function show(Stations $station)
     {
         return view('backend.station.show', compact('station'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified station.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -98,7 +93,7 @@ class StationController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified station in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
@@ -127,7 +122,7 @@ class StationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified station from storage.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -138,7 +133,7 @@ class StationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified station from storage.
      *
      * @param \App\Models\Station $station
      * @return \Illuminate\Http\RedirectResponse|null

@@ -37,9 +37,6 @@ class StationController extends Controller
         
         $stations = Stations::find($station);
         Session::put('station', $stations);
-
-        // Get the model of the user logged in
-        // $userLoggedin = auth()->user();
         $events = array();
 
         // Get all the reservations for that particular station
@@ -49,11 +46,6 @@ class StationController extends Controller
 
         foreach ($bookings as $booking) {
 
-            // if($booking->user_id != $userLoggedin['id']){
-            //     $color = '#435258';
-            // }else{
-            //     $color = '#3E9CC2';
-            // }
             $userVar = User::find($booking->user_id);
             $events[] = [
                 'id' => $booking->id,
@@ -66,7 +58,6 @@ class StationController extends Controller
             ];
         }
 
-        //return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin]);
         
         return view('frontend.stations.station', compact('stations', 'events'));
     }
