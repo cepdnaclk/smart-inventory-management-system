@@ -66,12 +66,15 @@
                             </td>
                         </tr>
 
-                        <tr>
-                            <td>Product Code</td>
-                            <td>
-                                : <b>{{ $equipmentItem->productCode }}({{ $equipmentItem->brand }})</b>
-                            </td>
-                        </tr>
+                        @if($equipmentItem->productCode != null)
+                            <tr>
+                                <td>Product Code</td>
+                                <td>
+                                    : <b>{{ $equipmentItem->productCode }}({{ $equipmentItem->brand }})</b>
+                                </td>
+                            </tr>
+                        @endif
+
                         <tr>
                             <td>Available Quantity</td>
                             <td>
