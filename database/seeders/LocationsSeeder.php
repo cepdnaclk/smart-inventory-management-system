@@ -42,6 +42,8 @@ class LocationsSeeder extends Seeder
         array('id' => '31', 'location' => 'Half Sockets Board', 'parent_location' => '13', 'x' => NULL, 'y' => NULL, 'z' => NULL, 'created_at' => '2022-07-09 17:58:27', 'updated_at' => '2022-07-09 17:58:27'),
         array('id' => '32', 'location' => 'Screwdriver Rack', 'parent_location' => '6', 'x' => NULL, 'y' => NULL, 'z' => NULL, 'created_at' => '2022-07-09 17:58:27', 'updated_at' => '2022-07-09 17:58:27'),
         array('id' => '33', 'location' => 'Double Open Wrench kit', 'parent_location' => '6', 'x' => NULL, 'y' => NULL, 'z' => NULL, 'created_at' => '2022-07-09 17:58:27', 'updated_at' => '2022-07-09 17:58:27'),
+        array('id' => '34', 'location' => 'Testing Accessories Set', 'parent_location' => '5', 'x' => NULL, 'y' => NULL, 'z' => NULL, 'created_at' => '2022-07-09 17:58:27', 'updated_at' => '2022-07-09 17:58:27'),
+        array('id' => '35', 'location' => 'Power Supply Unit', 'parent_location' => '5', 'x' => NULL, 'y' => NULL, 'z' => NULL, 'created_at' => '2022-07-09 17:58:27', 'updated_at' => '2022-07-09 17:58:27'),
 
     ];
 
