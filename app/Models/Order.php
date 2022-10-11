@@ -12,16 +12,19 @@ class Order extends Model
     use HasFactory;
     protected $guarded = [];
 
+    public const STATUS = ['PENDING', 'PROGRESS', 'READY', 'PICKEDUP'];
+
+
     public function componentItems()
     {
-        return $this->belongsToMany(ComponentItem::class)->withPivot('quantity');   
+        return $this->belongsToMany(ComponentItem::class)->withPivot('quantity');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    
+
 
     public function dueDays()
     {
@@ -30,14 +33,16 @@ class Order extends Model
         return ($end->diffInDays($now));
     }
 
-    public function generateOtp(){
-        $otp = rand(1000,9999);
+    public function generateOtp()
+    {
+        $otp = rand(1000, 9999);
         $this->otp = $otp;
         $this->save();
         return $otp;
     }
 
-    public function checkOtp($otp){
-        return $otp==$this->otp;
+    public function checkOtp($otp)
+    {
+        return $otp == $this->otp;
     }
 }

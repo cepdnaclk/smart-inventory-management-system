@@ -18,9 +18,8 @@ class OrderController extends Controller
     {
         $orders = Order::paginate(12);
         return view('backend.orders.index', compact('orders'));
-
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +28,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-         $types = Order::pluck('title', 'id');
+        $types = Order::pluck('title', 'id');
         return view('backend.orders.create', compact('types'));
     }
 
@@ -42,12 +41,12 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            
+
             'picked_date' => 'string|nullable', // TODO: Validate properly
             'due_date_to_return' => 'string|required',
             'returned_date' => 'string|nullable',
             'status' => 'string|required',
-            
+
         ]);
         try {
             $data['ordered_date'] = Carbon::now()->format('Y-m-d');
@@ -102,7 +101,6 @@ class OrderController extends Controller
         try {
             $order->update($data);
             return redirect()->route('admin.orders.index')->with('Success', 'Order was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -129,10 +127,9 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         try {
-            
+
             $order->delete();
             return redirect()->route('admin.orders.index')->with('Success', 'Order was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
