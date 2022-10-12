@@ -25,7 +25,7 @@
                         @include('includes.partials.lang')
                     </li>
                 @endif
-
+                      
                 @guest
                     <li class="nav-item">
                         <x-utils.link
@@ -65,7 +65,7 @@
                         </x-utils.link>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            @if ($logged_in_user->isAdmin())
+                            @if ($logged_in_user->isAdmin() || $logged_in_user->isLecturer() || $logged_in_user->isTechOfficer() || $logged_in_user->isMaintainer() )
                                 <x-utils.link
                                         :href="route('admin.dashboard')"
                                         :text="__('Admin Dashboard')"
@@ -84,6 +84,13 @@
                                     :href="route('frontend.user.account')"
                                     :active="activeClass(Route::is('frontend.user.account'))"
                                     :text="__('My Account')"
+                                    class="dropdown-item"></x-utils.link>
+
+
+                                    <x-utils.link
+                                    :href="route('frontend.user.show.order')"
+                                    :active="activeClass(Route::is('frontend.user.show.order'))"
+                                    :text="__('My Orders')"
                                     class="dropdown-item"></x-utils.link>
 
                             <x-utils.link

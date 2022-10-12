@@ -72,53 +72,120 @@
             </li>
         @endif
 
+        @if ($logged_in_user->hasInventoryAccess())
+            {{-- Equioment --}}
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link
+                        href="#"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-dropdown-toggle"
+                        :text="__('Equipment')"></x-utils.link>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.equipment.items.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Items')"></x-utils.link>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.equipment.types.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Types')"></x-utils.link>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- Components --}}
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link
+                        href="#"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-dropdown-toggle"
+                        :text="__('Components')"></x-utils.link>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.component.items.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Items')"></x-utils.link>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.component.types.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Types')"></x-utils.link>
+                    </li>
+                </ul>
+            </li>
+        @endif
+
+        {{-- Fabrication Requests --}}
         <li class="c-sidebar-nav-dropdown">
             <x-utils.link
                     href="#"
                     icon="c-sidebar-nav-icon cil-list"
                     class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Equipment')"></x-utils.link>
+                    :text="__('Fabrication Requests')"></x-utils.link>
 
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
-                            :href="route('admin.equipment.items.index')"
+                            :href="route('admin.jobs.student.index')"
                             class="c-sidebar-nav-link"
-                            :text="__('Items')"></x-utils.link>
+                            :text="__('Fabrication - User')"></x-utils.link>
                 </li>
-                <li class="c-sidebar-nav-item">
-                    <x-utils.link
-                            :href="route('admin.equipment.types.index')"
-                            class="c-sidebar-nav-link"
-                            :text="__('Types')"></x-utils.link>
-                </li>
+
+                @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.jobs.supervisor.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Fabrication - Supervisor')"></x-utils.link>
+                    </li>
+                @endif
+
+                @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.jobs.officer.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Fabrication - Technical Officer')"></x-utils.link>
+                    </li>
+                @endif
+
+                @if ($logged_in_user->hasInventoryAccess())
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.machines.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Machines')"></x-utils.link>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                                :href="route('admin.raw_materials.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Raw Materials')"></x-utils.link>
+                    </li>
+                @endif
             </ul>
         </li>
 
         <li class="c-sidebar-nav-dropdown">
-            <x-utils.link
-                    href="#"
-                    icon="c-sidebar-nav-icon cil-list"
-                    class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Components')"></x-utils.link>
-
-            <ul class="c-sidebar-nav-dropdown-items">
-                <li class="c-sidebar-nav-item">
-                    <x-utils.link
-                            :href="route('admin.component.items.index')"
-                            class="c-sidebar-nav-link"
-                            :text="__('Items')"></x-utils.link>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <x-utils.link
-                            :href="route('admin.component.types.index')"
-                            class="c-sidebar-nav-link"
-                            :text="__('Types')"></x-utils.link>
-                </li>
-            </ul>
+                    
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link
+                            icon="c-sidebar-nav-icon cil-list"
+                                    :href="route('admin.orders.index')"
+                                    class="c-sidebar-nav-link"
+                                    :text="__('Orders')"></x-utils.link>
+                        </li>
         </li>
 
         @if ($logged_in_user->hasAllAccess())
+            {{-- Logs and Reports --}}
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
                         href="#"

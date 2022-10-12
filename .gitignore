@@ -6,6 +6,7 @@
 /public/hot
 /public/storage
 /public/img
+/public/files
 /public/mix-manifest.json
 /storage/*.key
 /vendor
@@ -16,7 +17,6 @@ _ide_helper.php
 .DS_Store
 .env
 .env.backup
-.idea
 .php_cs.cache
 .phpunit.result.cache
 .phpstorm.meta.php
@@ -29,14 +29,11 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 output.txt
+routes.txt
 Thumbs.db
 yarn-error.log
-<<<<<<< HEAD
-.idea/
 commands.txt
 composer.lock
 package-lock.json
-=======
-package-lock.json
-composer.lock
->>>>>>> ce0cdd777b877b2209d36d762ffb478910673e02
+yarn.lock
+.idea/*

@@ -26,7 +26,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'type' => $this->faker->randomElement([User::TYPE_ADMIN, User::TYPE_USER]),
+            'type' => $this->faker->randomElement([User::TYPE_ADMIN, User::TYPE_USER, User::TYPE_LECTURER, User::TYPE_TECH_OFFICER, User::TYPE_MAINTAINER]),
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
@@ -57,6 +57,42 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'type' => User::TYPE_USER,
+            ];
+        });
+    }
+
+    /**
+     * @return UserFactory
+     */
+    public function lecturer()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => User::TYPE_LECTURER,
+            ];
+        });
+    }
+
+    /**
+     * @return UserFactory
+     */
+    public function techOfficer()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => User::TYPE_TECH_OFFICER,
+            ];
+        });
+    }
+
+    /**
+     * @return UserFactory
+     */
+    public function maintainer()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => User::TYPE_MAINTAINER,
             ];
         });
     }
