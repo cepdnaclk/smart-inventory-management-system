@@ -76,8 +76,6 @@ class ComponentItemTest extends TestCase
             'location' => '1',
             'specifications' => 'UA741CP OpAmp 1MHz',
             'description' => 'The 741 Op Amp IC is a monolithic integrated circuit, comprising of a general purpose Operational Amplifier.',
-            'instructions' => 'NO INSTRUCTION AVAILABLE',
-            'isAvailable' => '1',
             'price' => '80.00',
             'size' => 'small',
             'thumb' => NULL,
@@ -171,5 +169,4 @@ class ComponentItemTest extends TestCase
         $response->assertSee($locationName1);
         $response->assertSee($locationName2);
     }
-
 }

@@ -3,7 +3,6 @@
         class="c-subheader-nav-link"
         :href="route('admin.reservation.index')"
         :text="__('Reservations')"
-        {{--    permission="admin.access.user.reactivate"--}}
 ></x-utils.link>
 
 

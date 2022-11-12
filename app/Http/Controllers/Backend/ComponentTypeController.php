@@ -30,7 +30,7 @@ class ComponentTypeController extends Controller
      */
     public function create()
     {
-        $types = ComponentType::pluck('title', 'id');
+        $types = ComponentType::getFullTypeList();
         return view('backend.component.types.create', compact('types'));
     }
 
@@ -58,7 +58,6 @@ class ComponentTypeController extends Controller
             $type = new ComponentType($data);
             $type->save();
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was created !');
-
         } catch (\Exception $ex) {
             dd($ex);
             return abort(500, "Error 222");
@@ -84,7 +83,7 @@ class ComponentTypeController extends Controller
      */
     public function edit(ComponentType $componentType)
     {
-        $types = ComponentType::pluck('title', 'id');
+        $types = ComponentType::getFullTypeList();
         return view('backend.component.types.edit', compact('componentType', 'types'));
     }
 
@@ -112,7 +111,6 @@ class ComponentTypeController extends Controller
 
             $componentType->update($data);
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -143,7 +141,6 @@ class ComponentTypeController extends Controller
             $this->deleteThumb($componentType->thumbUrl());
             $componentType->delete();
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }

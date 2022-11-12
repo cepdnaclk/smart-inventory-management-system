@@ -185,7 +185,16 @@ class ItemLocationsSeeder extends Seeder
 
         array('location_id' => '4', 'item_id' => 'EQ/31/1177', 'x' => NULL, 'y' => NULL, 'z' => NULL),
         array('location_id' => '6', 'item_id' => 'EQ/31/1177', 'x' => NULL, 'y' => NULL, 'z' => NULL),
-        array('location_id' => '17', 'item_id' => 'EQ/31/1177', 'x' => NULL, 'y' => NULL, 'z' => NULL)
+        array('location_id' => '17', 'item_id' => 'EQ/31/1177', 'x' => NULL, 'y' => NULL, 'z' => NULL),
+
+        array('location_id' => '6', 'item_id' => 'EQ/13/1122', 'x' => NULL, 'y' => NULL, 'z' => NULL),
+        array('location_id' => '6', 'item_id' => 'EQ/13/1128', 'x' => NULL, 'y' => NULL, 'z' => NULL),
+
+        array('location_id' => '5', 'item_id' => 'EQ/12/1145', 'x' => NULL, 'y' => NULL, 'z' => NULL),
+        array('location_id' => '6', 'item_id' => 'EQ/12/1145', 'x' => NULL, 'y' => NULL, 'z' => NULL),
+
+        array('location_id' => '6', 'item_id' => 'EQ/21/1180', 'x' => NULL, 'y' => NULL, 'z' => NULL),
+        array('location_id' => '4', 'item_id' => 'EQ/13/1123', 'x' => NULL, 'y' => NULL, 'z' => NULL),
     ];
 
     /**

@@ -19,10 +19,6 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
-    {{ $row->size ?? 'N/A' }}
-</x-livewire-tables::table.cell>
-
-<x-livewire-tables::table.cell>
      <div class="d-flex px-0 mt-0 mb-0">
         <div class="btn-group" role="group" aria-label="Basic example">
             <a href="{{ route('admin.component.items.show', $row)}}"

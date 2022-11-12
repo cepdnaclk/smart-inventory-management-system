@@ -13,7 +13,7 @@
                 Machines
             </x-slot>
 
-            @if ($logged_in_user->hasAllAccess())
+            @if ($logged_in_user->hasInventoryAccess())
                 <x-slot name="headerActions">
                     <x-utils.link
                             icon="c-icon cil-plus"
