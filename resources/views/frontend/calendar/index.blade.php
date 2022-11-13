@@ -1,9 +1,9 @@
 @extends('frontend.layouts.app')
 
-@section('title',  appName().' |  '.$station->stationName )
+@section('title', appName() . ' | ' . $station->stationName)
 
 @push('after-styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
     <style>
         .fc-event {
             font-size: 14px;
@@ -25,7 +25,7 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -50,7 +50,7 @@
                 selectable: true,
                 selectHelper: true,
 
-                dayClick: function (date, jsEvent, view) {
+                dayClick: function(date, jsEvent, view) {
                     if (view.name === 'month') {
                         $('#calendar').fullCalendar('gotoDate', date);
                         $('#calendar').fullCalendar('changeView', 'agendaDay');
@@ -58,20 +58,23 @@
                 },
 
                 eventRender: function eventRender(event, element, view) {
-                    $("#calendar .fc-title").each(function (i) {
+                    $("#calendar .fc-title").each(function(i) {
                         $(this).html($(this).text());
                     });
                 },
 
-                select: function (start, end, allDays, view) {
+                select: function(start, end, allDays, view) {
 
-                    if ((view.name === 'agendaDay' || view.name === 'agendaWeek') && (!isAnOverlapEvent(start, end))) {
+                    if ((view.name === 'agendaDay' || view.name === 'agendaWeek') && (!isAnOverlapEvent(
+                            start, end))) {
 
                         $('#bookingModal').modal('toggle');
-                        $('#saveBtn').click(function () {
+                        $('#saveBtn').click(function() {
                             var title = $('#title').val();
-                            var start_date = $.fullCalendar.formatDate(start, "YYYY-MM-DD HH:mm:ss");
-                            var end_date = $.fullCalendar.formatDate(end, "YYYY-MM-DD HH:mm:ss");
+                            var start_date = $.fullCalendar.formatDate(start,
+                                "YYYY-MM-DD HH:mm:ss");
+                            var end_date = $.fullCalendar.formatDate(end,
+                                "YYYY-MM-DD HH:mm:ss");
                             var loggedIn = @json($userLoggedin);
                             var user = loggedIn['email'];
                             var begin = moment(start).format('YYYY-MM-DD');
@@ -94,13 +97,19 @@
                             // TODO: Validate the E Numbers
 
                             //Send to the database
-                            if (m < time_limit) {  //limit maximum time
+                            if (m < time_limit) { //limit maximum time
                                 $.ajax({
                                     url: "{{ route('frontend.calendar.store') }}",
                                     type: "POST",
                                     dataType: 'json',
-                                    data: {title, start_date, end_date, begin, m},
-                                    success: function (response) {
+                                    data: {
+                                        title,
+                                        start_date,
+                                        end_date,
+                                        begin,
+                                        m
+                                    },
+                                    success: function(response) {
 
                                         //fill the calendar when event is entered instantaneously
                                         $('#bookingModal').modal('hide')
@@ -116,18 +125,22 @@
                                         // TODO: This is a temporary fix. Find a better way to this
                                         refreshPage();
                                     },
-                                    error: function (error) {
+                                    error: function(error) {
                                         if (error.responseJSON.errors) {
-                                            $('#titleError').html(error.responseJSON.errors.title);
+                                            $('#titleError').html(error.responseJSON
+                                                .errors.title);
                                         } else {
                                             $('#bookingModal').modal('hide')
-                                            swal("Denied!", "Can not make multiple reservations in a day!", "warning");
+                                            swal("Denied!",
+                                                "Can not make multiple reservations in a day!",
+                                                "warning");
                                         }
                                         console.log(error);
                                     },
                                 });
                             } else {
-                                swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
+                                swal("Permission Denied!", "You can not exceed 4 hours!",
+                                    "warning");
                             }
                         });
                     }
@@ -135,7 +148,7 @@
                 editable: true,
                 eventOverlap: false, //events cant overlap
 
-                eventResize: function (event) {
+                eventResize: function(event) {
 
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
@@ -144,7 +157,8 @@
                     var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
                     var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
 
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date,
+                        "YYYY-MM-DD HH:MM:SS"));
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
 
@@ -160,12 +174,12 @@
                                     start_date,
                                     end_date,
                                 },
-                                success: function (response) {
+                                success: function(response) {
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
                                 },
-                                error: function (error) {
+                                error: function(error) {
                                     // if(error.responseJSON.errors) {
                                     //     $('#titleError').html(error.responseJSON.errors.title);
                                     // }
@@ -185,13 +199,14 @@
                 },
 
                 //editable: true,
-                eventDrop: function (event) {
+                eventDrop: function(event) {
                     var id = event.id;
 
                     // TODO: Update this without moment
                     var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
                     var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
-                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date, "YYYY-MM-DD HH:MM:SS"));
+                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date,
+                        "YYYY-MM-DD HH:MM:SS"));
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
 
@@ -207,14 +222,17 @@
                                 url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
                                 type: "PATCH",
                                 dataType: 'json',
-                                data: {start_date, end_date},
-                                success: function (response) {
+                                data: {
+                                    start_date,
+                                    end_date
+                                },
+                                success: function(response) {
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
 
                                 },
-                                error: function (error) {
+                                error: function(error) {
                                     // if(error.responseJSON.errors) {
                                     //     $('#titleError').html(error.responseJSON.errors.title);
                                     // }
@@ -229,7 +247,7 @@
                     }
 
                 },
-                eventClick: function (event) {
+                eventClick: function(event) {
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
@@ -242,12 +260,12 @@
                                 url: "{{ route('frontend.calendar.destroy', '') }}" + '/' + id,
                                 type: "DELETE",
                                 dataType: 'json',
-                                success: function (response) {
+                                success: function(response) {
                                     $('#calendar').fullCalendar('removeEvents', response);
                                     swal("Done!", "Event Deleted!", "success");
 
                                 },
-                                error: function (error) {
+                                error: function(error) {
                                     // if(error.responseJSON.errors) {
                                     //     $('#titleError').html(error.responseJSON.errors.title);
                                     // }
@@ -262,12 +280,13 @@
 
                 },
                 //Not allowing to choose multiple events
-                selectAllow: function (event) {
-                    return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcOffset(false), 'day');
+                selectAllow: function(event) {
+                    return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1,
+                        'second').utcOffset(false), 'day');
                 }
             });
 
-            $("#bookingModal").on("hidden.bs.modal", function () {
+            $("#bookingModal").on("hidden.bs.modal", function() {
                 $('#saveBtn').unbind();
             });
 
@@ -311,7 +330,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control" id="title">
+                    <input type="text" class="form-control" id="title" placeholder="E/XX/XXX, E/XX/XXX, ...">
                     <span id="titleError" class="text-danger"></span>
                 </div>
                 <div class="modal-footer">
@@ -325,14 +344,16 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3 class="text-center mt-5">Schedule Reservation - {{ $station->stationName }}</h3>
-                <br>
+                <h3 class="text-center mt-5"><b>Schedule Reservation - {{ $station->stationName }} </b><br></h3>
+                <h6 class="text-center">*Click and drag time period as required.<br>Click reservation to delete.
+                    <br>Edit reservation by click and drag.
+                </h6>
 
-                <div class="col-md-11 offset-1 mt-5 mb-5">
-                    <div id="calendar">
-                    </div>
+                <div class="col-md-11 offset-1 mb-3">
+                    <fullcalendar-component :station-id="{{ $station->id }}" :user-id="{{ Auth()->user()->id }}" />
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
