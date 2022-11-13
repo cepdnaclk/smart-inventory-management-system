@@ -23,37 +23,62 @@ class ReservationController extends Controller
 
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the reservations of all users for the maintainer.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $reservation = Reservation::orderBy('station_id')->paginate(16);
-        // dd($reservation);
+        $reservation = Reservation::orderBy('start_date','desc')->paginate(16);
         return view('backend.reservation.index', compact('reservation'));
     }
 
+    /**
+     * Display a listing of the reservations of the particular user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index_user()
     {
         $userLoggedin = auth()->user();
         // dd($userLoggedin);
-        $reservation = Reservation::where('user_id', $userLoggedin['id'])->get();
+        $reservation = Reservation::where('user_id', $userLoggedin['id'])->orderBy('start_date','desc')->paginate(16);
         return view('backend.reservation.user.index', compact('reservation', 'userLoggedin'));
     }
 
+    /**
+     * Redirection to the updating interface.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Reservation $reservation)
     {
-        // $dateOriginal = $reservation->start_date;
-        // dd($dateOriginal);
+
+        $userLoggedin = auth()->user();
+
+
         $stations = Stations::pluck('stationName', 'id');
         $station = Stations::find($reservation->station_id);
-        return view('backend.reservation.user.edit', compact('reservation', 'stations', 'station'));
+
+        if ($userLoggedin['id'] != $reservation->user_id){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not view that reservation for updating!');
+        }else{
+            return view('backend.reservation.user.edit', compact('reservation', 'stations', 'station'));
+        }
+        
+    }
+
+    public function edit_main(Reservation $reservation)
+    {
+       
+        $stations = Stations::pluck('stationName', 'id');
+        $station = Stations::find($reservation->station_id);
+        return view('backend.reservation.edit', compact('reservation', 'stations', 'station'));
     }
 
 
     /**
-     * Display the specified resource.
+     * Display the selected reservation.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -69,12 +94,28 @@ class ReservationController extends Controller
        return view('backend.reservation.user.show', compact('reservation'));
     }
 
+    /**
+     * Redirect to the approving interface for maintainer.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+
     public function confirm(Reservation $reservation)
     {
-      //  dd('Approved');
-      return view('backend.reservation.confirm', compact('reservation'));
+      
+      $stations = Stations::pluck('stationName', 'id');
+      $station = Stations::find($reservation->station_id);
+      return view('backend.reservation.confirm', compact('reservation', 'stations', 'station'));
     }
     
+
+    /**
+     * Approve interface with form for the maintainer.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
 
     public function approve(Request $request, Reservation $reservation)
     {
@@ -92,33 +133,32 @@ class ReservationController extends Controller
     }
 
 
+    /**
+     * Updating the reservation.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+
     public function update(Request $request, Reservation $reservation)
     {
+        $userLoggedin = auth()->user();
+        
         $dateOriginal = (new DateTime($reservation->start_date))->format('Y-m-d');
         $dateOriginal1 = (new DateTime($reservation->start_date))->format('Y-m-d H:i:s');
 
-        $userLoggedin = auth()->user();
-
+        // Data validation
         $data = request()->validate([
             'station_id' => 'numeric|required',
             'start_date' => 'required|date_format:Y-m-d H:i:s',
             'end_date' => 'required|date_format:Y-m-d H:i:s',
-            'E_numbers' => 'required|regex:^E/\d{2}/\d{3}$^', // TODO: Validate E-Numbers
-            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:4096', // TODO: Maybe we need to increase the file size
-            'thumb_after' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:4096' // TODO: Maybe we need to increase the file size
+            'E_numbers' => 'required|regex:^E/\d{2}/\d{3}$^', 
+            'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:5120', 
+            'thumb_after' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:5120' 
+
         ]);
-
-        if ($request->thumb != null) {
-            $data['thumb'] = $this->uploadThumb($reservation->thumbURL(), $request->thumb, "reservations");
-        }
-
-        if ($request->thumb_after != null) {
-            $data['thumb_after'] = $this->uploadThumb($reservation->thumbURL_after(), $request->thumb_after, "reservations_after");
-        }
-
-        // $reservation->update($data);
-        // return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');
-
+        
+        /*************  Check whether any changes were made to the date ********/
         $dateNew = (new DateTime($data['start_date']))->format('Y-m-d');
         $dateNew1 = (new DateTime($data['start_date']))->format('Y-m-d H:i:s');
 
@@ -126,42 +166,39 @@ class ReservationController extends Controller
         $date2 = Carbon::createFromFormat('Y-m-d', $dateNew);
         $result = $date1->eq($date2);
 
-        // dd($result);
+        /*****************************************************************************/
 
+        // Calculate the duration of the reservation in minutes
         $start = new DateTime($request['start_date']);
         $end = new DateTime($request['end_date']);
         $diff = $start->diff($end);
         $minutes = ($diff->h * 60) + ($diff->s / 60) + ($diff->i) + ($diff->d * 24 * 60) + ($diff->m * 30 * 24 * 60) + ($diff->y * 365 * 24 * 60);
 
-        //For overlap check
+        //Check for overlap of events 
         $res = Reservation::whereDate('start_date', $start)->where('station_id', $data['station_id'])->get();
-
         $flag = false;
         foreach ($res as $r) {
             if ($r->user_id != $userLoggedin['id']) {
                 $flag = $this->isAnOverlapEvent($start, $end, $r);
             }
         }
-       
+    
         // See if the user has already made a reservation on that day for this station
         $bookings1 = Reservation::whereDate('start_date', $start)->where('user_id', $userLoggedin['id'])->where('station_id', $data['station_id'])->get();
 
-        // See whether the reservation is being made too early
-
+        // See whether the reservation is being made too early (more than a month in advance)
         $todayDate = date('Y-m-d H:i:s');
         $today = new DateTime($todayDate);
         $today->add(new DateInterval('PT5H30M'));
 
-        $date3 = Carbon::createFromFormat('Y-m-d H:i:s', $dateOriginal1);
-        $date4 = Carbon::createFromFormat('Y-m-d H:i:s', $dateNew1);
-        $result1 = $date3->eq($date4);
-
-        // dd($start);
-
         $resDiff = $today->diff($start);
         $minutesDiff = ($resDiff->h*60) + ($resDiff->s/60) + ($resDiff->i) + ($resDiff->d*24*60) + ($resDiff->m*30*24*60) + ($resDiff->y*365*24*60);
     
-        
+        // Ensuring a reservation made in the past can not be updated
+        if($today>$start){
+            $minutesDiff = -1;
+        }
+         
 
         $data = [
             'station_id' => $request['station_id'],
@@ -169,22 +206,30 @@ class ReservationController extends Controller
             'end_date' => $request['end_date'],
             'E_numbers' => $request['E_numbers'],
             'duration' => $minutes,
-            'thumb' => $request->thumb,
-            'thumb_after' => $request->thumb_after,
-            
         ];
+
+        if ($request->thumb != null) {
+            $thumb = ($reservation->thumb == NULL) ? NULL : $reservation->thumbURL();
+            $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "reservations");
+        }
+
+        if ($request->thumb_after != null) {
+            $thumb = ($reservation->thumb_after == NULL) ? NULL : $reservation->thumbURL_after();
+            $data['thumb_after'] = $this->uploadThumb($thumb, $request->thumb_after, "reservations_after");
+        }
         
 
+        // Test case check
         if ($userLoggedin['id'] != $reservation->user_id){
             return redirect()->route('frontend.reservation.index')->with('Error', 'You can not update this reservation');   
-        }elseif(($minutesDiff > 43200)){
-            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not make a reservation for that date this early');   
+        }elseif($today >= $start ){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! You can not make/edit a reservation for a date that has passed.'); 
+        }elseif(($minutesDiff > 43200) && $start>$today){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not make a reservation for that date this early.');   
         }elseif($data['duration'] > 240){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Reservation can not exceed 4 hours');           
         }elseif($flag){
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Time slot not available');   
-        }elseif($today >= $start && !$result1 ){
-            return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! You can not make a reservation for a date that has passed'); 
         }elseif((count($bookings1) == 1) && $result && !$flag && ($minutesDiff < 43200)){
             $reservation->update($data);
             return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was updated !');            
@@ -194,6 +239,34 @@ class ReservationController extends Controller
         } elseif ((count($bookings1) == 1) && !$result) {
             return redirect()->route('frontend.reservation.index')->with('Error', 'Reservation was not updated! Can not make multiple reservations in one day');
         }
+        
+    }
+
+    /**
+     * Updating the comments and approval.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function update_main(Request $request, Reservation $reservation)
+    {
+        $data = request()->validate([
+            'status' => 'string|nullable',
+            'comments' => 'string|nullable'
+        ]);
+
+        $data = [
+            'status' => $request['status'],
+            'comments' => $request['comments'],
+            
+        ];
+
+            $reservation->update($data);
+            return redirect()->route('admin.reservation.index')->with('Success', 'Reservation status was saved !');            
+     
+
+
     }
 
     public function isAnOverlapEvent(DateTime $eventStartDay, DateTime $eventEndDay, Reservation $res)
@@ -202,24 +275,19 @@ class ReservationController extends Controller
         $resStart = new DateTime($res->start_date);
         $resEnd = new DateTime($res->end_date);
 
-        // dd($eventStartDay, $res->start_date);
         // start-time in between any of the events
         if ($eventStartDay > $resStart && $eventStartDay < $resEnd) {
-            // dd('hi1');
             return true;
         }
         //end-time in between any of the events
         if ($eventEndDay > $resStart && $eventEndDay < $resEnd) {
-            // dd('hi2');
             return true;
         }
         //any of the events in between/on the start-time and end-time
         if ($eventStartDay <= $resStart && $eventEndDay >= $resEnd) {
-            // dd('hi3');
             return true;
         }
 
-        // dd('hi4');
         return false;
     }
 
@@ -231,9 +299,23 @@ class ReservationController extends Controller
      */
     public function delete(Reservation $reservation)
     {
+        $userLoggedIn = auth()->user();
         $station = Stations::find($reservation->station_id);
-        return view('backend.reservation.user.delete', compact('reservation', 'station'));
+
+        if ($userLoggedIn['id'] == $reservation->user_id) {
+            return view('backend.reservation.user.delete', compact('reservation', 'station'));
+        } else {
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not delete this reservation!');
+        }
+        
     }
+
+    /**
+     * Delete reservation from the storage.
+     *
+     * @param \App\Models\EquipmentItem $equipmentItem
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
 
     public function destroy(Reservation $reservation)
     {
@@ -249,12 +331,18 @@ class ReservationController extends Controller
             ], 404);
         }
 
-        if ($userLoggedIn['id'] == $booking->user_id) {
+        $todayDate = date('Y-m-d H:i:s');
+        $today = new DateTime($todayDate);
+        $start = new DateTime($reservation['start_date']);
+
+        if ($userLoggedIn['id'] == $booking->user_id && (($reservation->status != null && $reservation->status == 'approved') || ($start>$today))) {
             $booking->delete();
             return redirect()->route('frontend.reservation.index')->with('Success', 'Reservation was deleted !');
-        } else {
+        }elseif(($reservation->status == null || $reservation->status == 'pending' || $reservation->status == 'rejected') && $start>$today ){
+            return redirect()->route('frontend.reservation.index')->with('Error', 'You can not delete this reservation as it has not been approved!');
+        }else {
             return redirect()->route('frontend.reservation.index')->with('Error', 'You can not delete this reservation!');
-        }
+        } 
 
     }
 
@@ -276,15 +364,11 @@ class ReservationController extends Controller
         $newImage->move(public_path('img/' . $folder), $imageName);
         $imagePath = "/img/$folder/" . $imageName;
 
-        // TODO: Maybe we should not crop the images in here
-        $image = Image::make(public_path($imagePath))->fit(360, 360);
+
+        $image = Image::make(public_path($imagePath));
         $image->save();
 
         return $imageName;
     }
 
- 
-    // TODO: Move the methods related to the admin dashboard into this file such as image upload methods, etc...
-    // It is ok to have frontend related store, update and destroy methods in there,
-    // and smae methods related to backend in here
 }

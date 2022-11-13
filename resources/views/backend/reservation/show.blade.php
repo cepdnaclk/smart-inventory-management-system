@@ -27,7 +27,7 @@
                     </div>
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
                         <div class="btn-group" role="group" aria-label="Modify Buttons">
-                            <a href="{{ route('admin.reservation.confirm', $reservation)}}"
+                            <a href="{{ route('admin.reservation.edit', $reservation)}}"
                                class="btn btn-primary btn-xs me-2"><i class="fa fa-check" title="Approve"></i>
                                 Approve
                             </a>
@@ -104,6 +104,25 @@
                             @endif
                         </td>
                     </tr>
+
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            @if($reservation->status == "approved")
+                                <span class="text-success">Approved</span>
+                            @elseif($reservation->status == "rejected")
+                                <span class="text-danger">Rejected</span>                                        
+                            @else
+                                <span class="text-primary">Pending</span>                                        
+                            @endif
+                        </td>                        
+                    </tr>
+
+                    <tr>
+                        <td>Remarks</td>
+                        <td>{{ $reservation->comments }}</td>
+                    </tr>
+
                 </table>
             </x-slot>
         </x-backend.card>

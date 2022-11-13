@@ -2,7 +2,9 @@
 
 @section('title', __('Reservation'))
 
-
+@section('breadcrumb-links')
+    @include('backend.reservation.user.breadcrumb-links')
+@endsection
 
 @section('content') 
     <div>
@@ -11,8 +13,19 @@
                 Reservations: {{ $userLoggedin['name'] }}
             </x-slot>
 
+            @if ($logged_in_user->hasAllAccess())
+                <x-slot name="headerActions">
+                    <x-utils.link
+                            icon="c-icon cil-plus"
+                            class="card-header-action"
+                            :href="route('frontend.stations.index')"
+                            :text="__('Create Reservation')"></x-utils.link>
+                </x-slot>
+            @endif
+
             <x-slot name="body">
 
+                <!-- Redirection messages according to success or failure -->
                 @if (session('Success'))
                     <div class="alert alert-success">
                         {{ session('Success') }}
@@ -29,6 +42,7 @@
                     </div>
                 @endif
 
+                <!-- Create table -->
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
@@ -40,10 +54,11 @@
                             <th>&nbsp;</th>
                         </tr>
 
+                        <!-- Display all reservations made by the user -->
                         @foreach($reservation as $res)
                             <tr>
                                 
-                                <!-- <td>{{ $res->station_id }}</td> -->
+                                
                                 <td>
                                         @if($res->st_info() != null)
                                             {{ $res->st_info['stationName'] }}
@@ -58,17 +73,17 @@
 
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            {{-- Move this route to the backend folder --}}
+                                            <!-- Show -->
                                             <a href="{{ route('frontend.reservation.show', $res)}}"
                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
-                                            {{-- Move this route to the backend folder --}}
+                                            <!-- Edit -->
                                             <a href="{{ route('frontend.reservation.edit', $res)}}"
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
 
-                                            {{-- Move this route to the backend folder --}}
+                                            <!-- Delete -->
                                             <a href="{{ route('frontend.reservation.delete', $res)}}"
                                                class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                 title="Delete"></i>

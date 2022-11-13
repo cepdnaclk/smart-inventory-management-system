@@ -2,6 +2,9 @@
 
 @section('title', __('Reservation'))
 
+@section('breadcrumb-links')
+    @include('backend.reservation.user.breadcrumb-links')
+@endsection
 
 @section('content')
     <div>
@@ -73,7 +76,7 @@
 
                 <!-- Thumbnail Image before Usage -->
                 <div class="form-group row">
-                    {!! Form::label('thumb', 'Thumbnail Before Usage', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('thumb', 'Station Before Usage', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
                         <img src="{{ $reservation->thumbURL() }}" alt="" width="64">
@@ -87,7 +90,7 @@
 
                 <!-- Thumbnail Image after Usage -->
                 <div class="form-group row">
-                    {!! Form::label('thumb_after', 'Thumbnail After Usage', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('thumb_after', 'Station After Usage', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
                         <img src="{{ $reservation->thumbURL_after() }}" alt="" width="64">

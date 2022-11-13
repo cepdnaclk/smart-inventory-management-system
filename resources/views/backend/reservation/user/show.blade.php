@@ -2,6 +2,9 @@
 
 @section('title', __('Reservation'))
 
+@section('breadcrumb-links')
+    @include('backend.reservation.user.breadcrumb-links')
+@endsection
 
 @section('content')
     <div>
@@ -83,7 +86,7 @@
                     </tr>
 
                     <tr>
-                        <td>Thumbnail Before Usage</td>
+                        <td>Station Before Usage</td>
                         <td>
                             @if( $reservation->thumb != null )
                                 <img src="{{ $reservation->thumbURL() }}" alt="{{ $reservation->station_id}}"
@@ -95,7 +98,7 @@
                     </tr>
 
                     <tr>
-                        <td>Thumbnail After Usage</td>
+                        <td>Station After Usage</td>
                         <td>
                             @if( $reservation->thumb_after != null )
                                 <img src="{{ $reservation->thumbURL_after() }}" alt="{{ $reservation->station_id}}"
@@ -104,7 +107,21 @@
                                 <span>[Not Available]</span>
                             @endif
                         </td>
-                    </tr>                    
+                    </tr>  
+                    
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            @if($reservation->status == "approved")
+                                <span class="text-success">Approved</span>
+                            @elseif($reservation->status == "rejected")
+                                <span class="text-danger">Rejected</span>                                        
+                            @else
+                                <span class="text-primary">Pending</span>                                        
+                            @endif
+                        </td>                        
+                    </tr>
+                                        
                 </table>
             </x-slot>
         </x-backend.card>

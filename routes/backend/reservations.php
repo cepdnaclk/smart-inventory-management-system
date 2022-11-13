@@ -47,5 +47,19 @@ Route::middleware(['editAccess'])->group(function () {
     // Approve
     Route::put('reservation/{reservation}', [ReservationController::class, 'approve'])
         ->name('reservation.approve');
+
+   // Edit
+   Route::get('reservation/edit/{reservation}', [ReservationController::class, 'edit_main'])
+   ->name('reservation.edit')
+   ->breadcrumbs(function (Trail $trail) {
+       $trail->push(__('Home'), route('admin.dashboard'))
+            ->push(__('Reservations'), route('admin.reservation.indexmain'))
+            ->push(__('Maintainer'), route('admin.reservation.index'))
+            ->push(__('Edit'));
+   });
+
+    // Update
+    Route::put('reservation/{reservation}', [ReservationController::class, 'update_main'])
+        ->name('reservation.update');
  
 });
