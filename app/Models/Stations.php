@@ -16,11 +16,6 @@ class Stations extends Model
         return sprintf("ST/%02d", $this->id);
     }
 
-    public function inventoryCode()
-    {
-        return sprintf("ST/%02d",$this->id);
-    }
-
     // Return the relative URL of the thumbnail
     public function thumbURL()
     {
