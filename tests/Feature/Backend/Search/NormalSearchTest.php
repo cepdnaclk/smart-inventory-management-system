@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Search;
+namespace Backend\Search; 
 
 use App\Models\Machines;
 use Illuminate\Foundation\Testing\RefreshDatabase;

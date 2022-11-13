@@ -4,7 +4,7 @@
 
 @section('breadcrumb-links')
     @include('backend.reservation.includes.breadcrumb-links')
-@endsection 
+@endsection
 
 @section('content')
     <div>
@@ -27,37 +27,45 @@
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
-                            <!-- <th>User ID</th> -->
                             <th>User Name</th>
-                            <!-- <th>Station ID</th> -->
                             <th>Station Name</th>
                             <th>Start Date & Time</th>
                             <th>End Date & Time</th>
-                            <th>Duration</th>                           
-                            <th>E numbers</th>                          
+                            <th>Duration<br>(in minutes)</th>
+                            <th>Team</th>
+                            <th>Status</th>
                             <th>&nbsp;</th>
                         </tr>
-                        
+
                         @foreach($reservation as $res)
                             <tr>
-                                <!-- <td>{{ $res->user_id  }}</td> -->
-                                
+                           
+
                                 <td>
-                                        @if($res->res_info() != null)
-                                            {{ $res->res_info['name'] }}
-                                        @endif
+                                    @if($res->res_info() != null)
+                                        {{ $res->res_info['name'] }}
+                                    @endif
                                 </td>
-                                <!-- <td>{{ $res->station_id }}</td> -->
+
                                 <td>
-                                        @if($res->st_info() != null)
-                                            {{ $res->st_info['stationName'] }}
-                                        @endif
+                                    @if($res->st_info() != null)
+                                        {{ $res->st_info['stationName'] }}
+                                    @endif
                                 </td>
                                 <td>{{ $res->start_date }}</td>
                                 <td>{{ $res->end_date }}</td>
                                 <td>{{ $res->duration }}</td>
                                 <td>{{ $res->E_numbers }}</td>
-                               
+                                <td>
+                                    @if($res->status == "approved")
+                                        <span class="text-success">Approved</span>
+                                    @elseif($res->status == "rejected")
+                                        <span class="text-danger">Rejected</span>                                        
+                                    @else
+                                        <span class="text-primary">Pending</span>                                        
+                                    @endif
+                                </td>
+                                
                                 <td>
 
                                     <div class="d-flex px-0 mt-0 mb-0">

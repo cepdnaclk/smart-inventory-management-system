@@ -16,6 +16,7 @@ Route::middleware(['editAccess'])->group(function () {
 
 
     //consumable Items --------------------------------------------------------------------
+    //consumable Items --------------------------------------------------------------------
 
     //Index
     Route::get('consumables/items', [ConsumableItemController::class, 'index'])
@@ -93,6 +94,7 @@ Route::middleware(['editAccess'])->group(function () {
 
     // Index
 
+    // Index
     Route::get('consumables/types', [ConsumableTypeController::class, 'index'])
         ->name('consumable.types.index')
         ->breadcrumbs(function (Trail $trail) {
