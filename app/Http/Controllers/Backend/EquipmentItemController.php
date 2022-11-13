@@ -185,7 +185,7 @@ class EquipmentItemController extends Controller
         } catch (\Exception $ex) {
             return abort(500);
         }
-    }
+    } 
 
     /**
      * Confirm to delete the specified resource from storage.
@@ -207,7 +207,6 @@ class EquipmentItemController extends Controller
      */
     public function destroy(EquipmentItem $equipmentItem)
     {
-
         try {
             // Delete the thumbnail form the file system
             $this->deleteThumb($equipmentItem->thumbURL());

@@ -32,7 +32,7 @@
                 @endif
 
                 <livewire:backend.consumable-item-table />
-
+                
             </x-slot>
         </x-backend.card>
     </div>

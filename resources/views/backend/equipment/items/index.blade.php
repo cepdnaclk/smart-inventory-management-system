@@ -32,6 +32,7 @@
                 @endif
 
                 <livewire:backend.equipment-item-table />
+                
             </x-slot>
 
         </x-backend.card>

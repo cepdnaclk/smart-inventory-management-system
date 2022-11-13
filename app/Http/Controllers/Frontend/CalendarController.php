@@ -30,6 +30,11 @@ class CalendarController extends Controller
         $bookings = Reservation::where('station_id', $station->id)->where('start_date', '>', Carbon::now()->subDays(8))->where('start_date', '>', Carbon::now()->subDays(8))->get();
 
         foreach ($bookings as $booking) {
+            if ($booking->user_id != $userLoggedin['id']) {
+                $color = '#435258';
+            } else {
+                $color = '#3E9CC2';
+            }
             $userVar = User::find($booking->user_id);
             $events[] = [
                 'id' => $booking->id,
@@ -38,8 +43,9 @@ class CalendarController extends Controller
                 'end' => $booking->end_date,
                 'stationId' => $station->id,
                 'auth' => $booking->user_id,
+                'color' => $color,
             ];
-        }
+        }   
 
         $today = date('Y-m-d H:i:s');
         return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin, 'today' => $today]);
@@ -66,6 +72,7 @@ class CalendarController extends Controller
 
     public function store(Request $request)
     {
+
         $station = Session::get('station');
         $userLoggedin = auth()->user();
 
@@ -107,7 +114,6 @@ class CalendarController extends Controller
             // it will be only executed in a web server.
             // Environment can be setup in the .env file
 
-
             if (App::environment(['local', 'staging'])) {
                 // dd('Not sending emails');
             } else {
@@ -145,7 +151,6 @@ class CalendarController extends Controller
                     ], 404);
                 }
             }
-
 
 
             //**********mails****************
@@ -200,6 +205,7 @@ class CalendarController extends Controller
             'end_date' => $request->end_date,
         ]);
         return response()->json('Event updated');
+
         // TODO: If the start end times changed, it will be better to send the users an email
         // saying the time is changed (remind Google Calender events !)
 

@@ -43,9 +43,7 @@ Route::middleware(['auth'])->group(function () {
     // Update
     Route::put('reservation/update/{reservation}', [ReservationController::class, 'update'])
         ->name('reservation.update');
-
-
-
+        
     // Delete
     Route::get('reservation/delete/{reservation}', [ReservationController::class, 'delete'])
         ->name('reservation.delete')

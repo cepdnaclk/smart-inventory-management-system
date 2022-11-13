@@ -34,6 +34,7 @@
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
+                            <th>Code</th>
                             <th>Station Name</th>
                             <th>Description</th>
                             <!-- <th>Thumbnail</th> -->
@@ -44,11 +45,10 @@
                         @foreach ($station as $st)
                             <tr>
                                 <td>{{ $st->stationName }}</td>
+
                                 <td>{{ $st->description }}</td>
-                                <!-- <td>{{ $st->thumb }}</td> -->
                                 <td>{{ $st->capacity }}</td>
                                 <td>
-
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href="{{ route('admin.station.show', $st) }}"
@@ -64,7 +64,6 @@
                                         </div>
                                     </div>
                                 </td>
-
                             </tr>
                         @endforeach
                     </table>

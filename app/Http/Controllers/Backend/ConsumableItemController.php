@@ -128,7 +128,7 @@ class ConsumableItemController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($consumableItem->thumbURL(), $request->thumb, "consumable_items");
             }
-
+            
             $filtered_data = $data;
             unset($filtered_data['location']);
             $consumableItem->update($filtered_data);
@@ -168,7 +168,6 @@ class ConsumableItemController extends Controller
             //            delete location entry
             $this_item_location = ItemLocations::where('item_id', $consumableItem->inventoryCode())->get()[0];
             $this_item_location->delete();
-
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
         } catch (\Exception $ex) {
             return abort(500);

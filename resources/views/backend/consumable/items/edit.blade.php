@@ -49,7 +49,7 @@
                         @enderror
                     </div>
                 </div>
-
+                
                 <!-- Specifications -->
                 <div class="form-group row">
                     {!! Form::label('specifications', 'Specifications', ['class' => 'col-md-2 col-form-label']) !!}
