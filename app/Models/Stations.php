@@ -11,6 +11,11 @@ class Stations extends Model
 
     protected $fillable = ['stationName', 'description', 'thumb','capacity'];
 
+    public function inventoryCode()
+    {
+        return sprintf("ST/%02d",$this->id);
+    }
+
     // Return the relative URL of the thumbnail
     public function thumbURL()
     {

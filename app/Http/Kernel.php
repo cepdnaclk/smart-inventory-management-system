@@ -53,7 +53,7 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class, // <------ ADD THIS
         ],
 
-        'admin' => [
+        'admin' => [ 
             /*
              * This is configurable, disable boilerplate.access.user.admin_requires_2fa instead of removing this
              */

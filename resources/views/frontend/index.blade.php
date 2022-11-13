@@ -13,79 +13,79 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
     <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 200;
-            height: 100vh;
-            margin: 0;
-        }
+    html, body {
+        background-color: #fff;
+        color: #636b6f;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 200;
+        height: 100vh;
+        margin: 0;
+    }
 
-        .full-height {
-            height: 100vh;
-        }
+    .full-height {
+        height: 100vh;
+    }
 
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
+    .flex-center {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
 
-        .position-ref {
-            position: relative;
-        }
+    .position-ref {
+        position: relative;
+    }
 
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
+    .top-right {
+        position: absolute;
+        right: 10px;
+        top: 18px;
+    }
 
-        .content {
-            text-align: center;
-        }
+    .content {
+        text-align: center;
+    }
 
-        .title {
-            font-size: 84px;
-        }
+    .title {
+        font-size: 84px;
+    }
 
-        .links > a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
+    .links > a {
+        color: #636b6f;
+        padding: 0 25px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: .1rem;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
 
-        .m-b-md {
-            margin-bottom: 30px;
-        }
+    .m-b-md {
+        margin-bottom: 30px;
+    }
     </style>
     @stack('after-styles')
 </head>
 <body>
-@include('includes.partials.read-only')
-@include('includes.partials.logged-in-as')
-@include('includes.partials.announcements')
+    @include('includes.partials.read-only')
+    @include('includes.partials.logged-in-as')
+    @include('includes.partials.announcements')
 
-<div id="app" class="flex-center position-ref full-height">
-    <div class="top-right links">
-        @auth
+    <div id="app" class="flex-center position-ref full-height">
+        <div class="top-right links">
+            @auth
             @if ($logged_in_user->isAdminAccess())
-                <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+            <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
             @endif
 
             <a href="{{ route('frontend.user.dashboard') }}">User Dashboard</a>
 
             <a href="{{ route('frontend.user.account') }}">@lang('Account')</a>
-        @else
+            @else
             <a href="{{ route('frontend.auth.login') }}">@lang('Login')</a>
 
             @if (config('boilerplate.access.user.registration'))
-                <a href="{{ route('frontend.auth.register') }}">@lang('Register')</a>
+            <a href="{{ route('frontend.auth.register') }}">@lang('Register')</a>
             @endif
         @endauth
     </div><!--top-right-->
