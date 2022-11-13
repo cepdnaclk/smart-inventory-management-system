@@ -2,7 +2,6 @@
 
 @section('title', appName() . ' | ' . $station->stationName)
 
-
 @section('content')
     <!-- Modal -->
     <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -26,6 +25,16 @@
     </div>
 
     <div class="container">
-        <fullcalendar-component />
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-center mt-2">Schedule Reservation - {{ $station->stationName }}</h3>
+                <br>
+
+                <div class="col-md-11 offset-1 mb-3">
+                    <fullcalendar-component :station-id="{{ $station->id }}" :user-id="{{ Auth()->user()->id }}" />
+                </div>
+            </div>
+        </div>
     </div>
+
 @endsection

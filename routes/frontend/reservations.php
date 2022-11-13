@@ -13,6 +13,18 @@ Route::get('/stations/{station}/reservations/', [CalendarController::class, 'ind
             ->push(__('Reservations'));
     });
 
-Route::post('reservations', [CalendarController::class, 'store'])->name('calendar.store');
-Route::patch('reservations/update/{id}', [CalendarController::class, 'update'])->name('calendar.update');
-Route::delete('reservations/destroy/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
+// Route::post('reservations', [CalendarController::class, 'store'])->name('calendar.store');
+// Route::patch('reservations/update/{id}', [CalendarController::class, 'update'])->name('calendar.update');
+// Route::delete('reservations/destroy/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
+
+
+
+// TODO: Move into /api/ routes
+Route::group(['prefix' => 'reservations'], function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/{station}/', [CalendarController::class, 'list'])->name('calendar.list');
+        Route::post('/', [CalendarController::class, 'store'])->name('calendar.store');
+        Route::patch('/{id}', [CalendarController::class, 'update'])->name('calendar.update');
+        Route::delete('/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
+    });
+});
