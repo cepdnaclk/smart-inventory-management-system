@@ -24,8 +24,8 @@ class StationController extends Controller
      */
     public function index()
     {
-        //$station = Stations::orderBy('id')->paginate(16);
-        return view('backend.station.index');
+        $station = Stations::orderBy('id')->paginate(16);
+        return view('backend.station.index', compact('station'));
     }
 
     /**
@@ -63,12 +63,10 @@ class StationController extends Controller
             $type = new Stations($data);
             $type->save();
             return redirect()->route('admin.station.index')->with('Success', 'Station was created !');
-
         } catch (\Exception $ex) {
             //dd($ex);
             return abort(500);
         }
-
     }
 
     /**
@@ -77,7 +75,7 @@ class StationController extends Controller
      * @param int $id
      * @return Application|Factory|View|\Illuminate\Http\Response
      */
-    
+
     public function show(Stations $station)
     {
         return view('backend.station.show', compact('station'));
@@ -117,11 +115,9 @@ class StationController extends Controller
             }
             $station->update($data);
             return redirect()->route('admin.station.index')->with('Success', 'Station was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
-
     }
 
     /**
@@ -149,7 +145,6 @@ class StationController extends Controller
 
             $station->delete();
             return redirect()->route('admin.station.index')->with('Success', 'Station was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -178,5 +173,4 @@ class StationController extends Controller
 
         return $imageName;
     }
-
 }

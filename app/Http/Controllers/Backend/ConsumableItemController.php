@@ -99,10 +99,8 @@ class ConsumableItemController extends Controller
     public function edit(ConsumableItem $consumableItem)
     {
         $types = ConsumableType::pluck('title', 'id');
-        $this_item_location = ItemLocations::where('item_id', $consumableItem->inventoryCode())->get()[0]['location_id'];
-        //        dd($this_item_location);
         $locations = Locations::pluck('location', 'id');
-        return view('backend.consumable.items.edit', compact('types', 'consumableItem', 'locations', 'this_item_location'));
+        return view('backend.consumable.items.edit', compact('types', 'consumableItem', 'locations'));
     }
 
     /**
@@ -131,17 +129,9 @@ class ConsumableItemController extends Controller
                 $data['thumb'] = $this->uploadThumb($consumableItem->thumbURL(), $request->thumb, "consumable_items");
             }
 
-
             $filtered_data = $data;
             unset($filtered_data['location']);
             $consumableItem->update($filtered_data);
-
-
-            $this_item_location = ItemLocations::where('item_id', $consumableItem->inventoryCode())->get()[0];
-            $new_location_data = [
-                'location_id' => $data['location']
-            ];
-            $this_item_location->update($new_location_data);
 
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was updated !');
         } catch (\Exception $ex) {

@@ -23,8 +23,8 @@ class EquipmentItemController extends Controller
      */
     public function index()
     {
-        //$equipment = EquipmentItem::orderBy('id', 'asc')->paginate(16);
-        return view('backend.equipment.items.index');
+        $equipment = EquipmentItem::orderBy('id', 'asc')->paginate(16);
+        return view('backend.equipment.items.index', compact('equipment'));
     }
 
     /**
