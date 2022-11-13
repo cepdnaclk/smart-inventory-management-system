@@ -55,11 +55,14 @@ Route::middleware(['auth'])->group(function () {
                 ->push(__('Delete'));
         });
 
-    // Destroy
-    Route::delete('reservation/destroy/{reservation}', [ReservationController::class, 'destroy'])
-        ->name('reservation.destroy');
 
-    Route::post('reservations', [CalendarController::class, 'store'])->name('calendar.store');
-    Route::patch('reservations/update/{id}', [CalendarController::class, 'update'])->name('calendar.update');
-    Route::delete('reservations/destroy/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
+    // API Routes
+
+    // TODO: Move into /api/ routes
+    Route::group(['prefix' => 'reservations'], function () {
+        Route::get('/{station}/', [CalendarController::class, 'list'])->name('calendar.list');
+        Route::post('/', [CalendarController::class, 'store'])->name('calendar.store');
+        Route::patch('/{id}', [CalendarController::class, 'update'])->name('calendar.update');
+        Route::delete('/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
+    });
 });
