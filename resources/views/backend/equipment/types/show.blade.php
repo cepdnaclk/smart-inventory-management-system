@@ -39,9 +39,9 @@
                     <tr>
                         <td>Parent Category</td>
                         <td>
-                            @if( $equipmentType->parent() !== null)
-                                <a href="{{ route('admin.equipment.types.show', $equipmentType->parent()->id) }}">
-                                    {{ $equipmentType->parent()->title }}
+                            @if( $equipmentType->parent_id() !== null)
+                                <a href="{{ route('admin.equipment.types.show', $equipmentType->parent_id) }}">
+                                    {{ $equipmentType->parent()->first()->title }}
                                 </a>
                             @else
                                 N/A

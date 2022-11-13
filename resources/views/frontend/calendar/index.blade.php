@@ -1,9 +1,9 @@
 @extends('frontend.layouts.app')
 
-@section('title',  appName().' |  '.$station->stationName )
+@section('title', appName() . ' | ' . $station->stationName)
 
 @push('after-styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
     <style>
         .fc-event {
             font-size: 14px;
@@ -25,19 +25,21 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            //Only load the events from last week to the future. Otherwise this can be a huge list in someday
+            // TODO: Change the color of the other users in different color like Gray
+            // You can do it in the CalendarController
+            // Guide: https://fullcalendar.io/docs/event-source-object
+
+            // TODO: Only load the events from last week to the future. Otherwise this can be a huge list in someday
             var booking = @json($events);
-            var todayDate = @json($today);
 
             $('#calendar').fullCalendar({
-
                 defaultView: 'agendaWeek',
                 header: {
                     left: 'prev, next today',
@@ -48,7 +50,7 @@
                 selectable: true,
                 selectHelper: true,
 
-                dayClick: function (date, jsEvent, view) {
+                dayClick: function(date, jsEvent, view) {
                     if (view.name === 'month') {
                         $('#calendar').fullCalendar('gotoDate', date);
                         $('#calendar').fullCalendar('changeView', 'agendaDay');
@@ -56,36 +58,28 @@
                 },
 
                 eventRender: function eventRender(event, element, view) {
-                    $("#calendar .fc-title").each(function (i) {
+                    $("#calendar .fc-title").each(function(i) {
                         $(this).html($(this).text());
                     });
                 },
 
-                select: function (start, end, allDays, view) {
+                select: function(start, end, allDays, view) {
 
-                    if ((view.name === 'agendaDay' || view.name === 'agendaWeek') && (!isAnOverlapEvent(start, end))) {
+                    if ((view.name === 'agendaDay' || view.name === 'agendaWeek') && (!isAnOverlapEvent(
+                            start, end))) {
 
                         $('#bookingModal').modal('toggle');
-                        $('#saveBtn').click(function () {
+                        $('#saveBtn').click(function() {
                             var title = $('#title').val();
-                            var start_date = $.fullCalendar.formatDate(start, "YYYY-MM-DD HH:mm:ss");
-                            var end_date = $.fullCalendar.formatDate(end, "YYYY-MM-DD HH:mm:ss");
+                            var start_date = $.fullCalendar.formatDate(start,
+                                "YYYY-MM-DD HH:mm:ss");
+                            var end_date = $.fullCalendar.formatDate(end,
+                                "YYYY-MM-DD HH:mm:ss");
                             var loggedIn = @json($userLoggedin);
                             var user = loggedIn['email'];
-                            var begin = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
-                            
-                            const dateBegin = new Date(start_date); 
-                            const dateToday = new Date(todayDate);
+                            var begin = moment(start).format('YYYY-MM-DD');
 
-                            dateToday.setHours( dateToday.getHours() + 5 );
-                            dateToday.setMinutes( dateToday.getMinutes() + 30 );
-
-                            var ms1 = dateBegin.getTime() - dateToday.getTime();
-                            var d1 = moment.duration(ms1);
-                            var mins = d1.asMinutes();
-
-                            console.log("Event Select");
-                            console.log(start, end);
+                            // console.log(start, end);
                             console.log(start_date, end_date);
 
                             // count hours
@@ -96,101 +90,82 @@
                             var d = moment.duration(ms);
                             var m = d.asMinutes();
 
-                            const time_limit = 240;
+                            const time_limit = 300;
 
-                            //Validated the E Numbers
+                            console.log(ms, d, m);
 
-                            if(moment(dateBegin).isAfter(dateToday)){
-                                if(mins < 43200){
-                                    if (m <= time_limit) {  //limit maximum time
-                                        $.ajax({
-                                            url: "{{ route('frontend.calendar.store') }}",
-                                            type: "POST",
-                                            dataType: 'json',
-                                            data: {title, start_date, end_date, begin, m},
-                                            success: function (response) {
+                            // TODO: Validate the E Numbers
 
-                                                //fill the calendar when event is entered instantaneously
-                                                $('#bookingModal').modal('hide')
-                                                $('#calendar').fullCalendar('renderEvent', {
-                                                    'title': response.title,
-                                                    'start': response.start,
-                                                    'end': response.end,
-                                                    'color': response.color,
-                                                    'auth': response.auth,
-                                                });
+                            //Send to the database
+                            if (m < time_limit) { //limit maximum time
+                                $.ajax({
+                                    url: "{{ route('frontend.calendar.store') }}",
+                                    type: "POST",
+                                    dataType: 'json',
+                                    data: {
+                                        title,
+                                        start_date,
+                                        end_date,
+                                        begin,
+                                        m
+                                    },
+                                    success: function(response) {
 
-                                                swal("Done!", "Event Created!", "success");
-                                                refreshPage();
-                                                // TODO: This is a temporary fix. Find a better way to this
-                                                
-                                                
-                                            },
-                                            error: function (error) {
-                                                if (error.responseJSON.errors) {
-                                                    $('#titleError').html('Title required in the format E/xx/xxx, E/xx/xxx, ... where x is a digit');
-                                                } else {
-                                                    $('#bookingModal').modal('hide')
-                                                    swal("Denied!", "Can not make multiple reservations in a day!", "warning");
-                                                    var jsonData = error.responseJSON;
-                                                    var msg = jsonData.error;
-                                                    if(msg=="enumber null"){
-                                                        $('#bookingModal').modal('hide')
-                                                        swal("Denied!", "Enumber does not exist.", "warning");
-                                                    }else{
-                                                        $('#bookingModal').modal('hide')
-                                                        swal("Denied!", "Can not make multiple reservations in a day!", "warning");
-                                                    }
-                                                }
-                                                console.log(error);
-                                            },
+                                        //fill the calendar when event is entered instantaneously
+                                        $('#bookingModal').modal('hide')
+                                        $('#calendar').fullCalendar('renderEvent', {
+                                            'title': response.title,
+                                            'start': response.start,
+                                            'end': response.end,
+                                            'color': response.color,
+                                            'auth': response.auth,
                                         });
-                                        
-                                    } else {
-                                        $('#bookingModal').modal('hide');
-                                        swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
-                                    }
-                                }else{
-                                    $('#bookingModal').modal('hide');
-                                    swal("Permission Denied!", "You can not make a reservation for that date this early", "warning");
-                                }
-                            }else{
-                                $('#bookingModal').modal('hide');
-                                swal("Permission Denied!", "You can not make a reservation for a date that has passed", "warning");
+                                        swal("Done!", "Event Created!", "success");
+
+                                        // TODO: This is a temporary fix. Find a better way to this
+                                        refreshPage();
+                                    },
+                                    error: function(error) {
+                                        if (error.responseJSON.errors) {
+                                            $('#titleError').html(error.responseJSON
+                                                .errors.title);
+                                        } else {
+                                            $('#bookingModal').modal('hide')
+                                            swal("Denied!",
+                                                "Can not make multiple reservations in a day!",
+                                                "warning");
+                                        }
+                                        console.log(error);
+                                    },
+                                });
+                            } else {
+                                swal("Permission Denied!", "You can not exceed 4 hours!",
+                                    "warning");
                             }
                         });
                     }
                 },
                 editable: true,
                 eventOverlap: false, //events cant overlap
-                
 
-                eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
+                eventResize: function(event) {
 
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
 
-                    var start_date = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD HH:mm:ss");
-                    var end_date = $.fullCalendar.formatDate(event.end, "YYYY-MM-DD HH:mm:ss");
+                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
+                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
 
-                    console.log("Event Resize");
-                    console.log(event.start, event.end);
-                    console.log(start_date, end_date);
-
-                    // count hours
-                    const date1 = new Date(start_date);
-                    const date2 = new Date(end_date);
-
-                    var ms = date2.getTime() - date1.getTime();
+                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date,
+                        "YYYY-MM-DD HH:MM:SS"));
                     var d = moment.duration(ms);
                     var m = d.asMinutes();
 
-                    var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
-                    const time_limit = 240;
+                    const time_limit = 300;
 
                     if (event.auth === user) {
-                        if (m <= time_limit) { //limit maximum time
+                        if (m < time_limit) { //limit maximum time
                             $.ajax({
                                 url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
                                 type: "PATCH",
@@ -198,109 +173,81 @@
                                 data: {
                                     start_date,
                                     end_date,
-                                    begin,
                                 },
-                                success: function (response) {
+                                success: function(response) {
 
                                     $('#calendar').fullCalendar('refetchEvents', response);
                                     swal("Done!", "Event Updated!", "success");
                                 },
-                                error: function (error) {
+                                error: function(error) {
+                                    // if(error.responseJSON.errors) {
+                                    //     $('#titleError').html(error.responseJSON.errors.title);
+                                    // }
                                     console.log(error)
                                 },
                             });
                         } else {
-                            // Reset the time duration back to the previous value
-                            revertFunc();
                             swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
                         }
                     } else {
-                        // Reset the time duration back to the previous value
-                        revertFunc();
                         swal("Permission Denied!", "You can not update this event!", "warning");
 
+                        // TODO: Need to reset the time duration back to the previous value
                         //  This is a temporary fix. Find a better way to this
                         refreshPage();
                     }
                 },
 
                 //editable: true,
-                eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
-                    // https://fullcalendar.io/docs/v3/eventDrop
-
+                eventDrop: function(event) {
                     var id = event.id;
 
-                    console.log("Event Drop");
-                    var start_date = event.start.format();
-                    var end_date = event.end.format()
-
-                    // count hours
-                    const date1 = new Date(start_date);
-                    const date2 = new Date(end_date);
-
-                    
-                    var ms = date2.getTime() - date1.getTime();
+                    // TODO: Update this without moment
+                    var start_date = moment(event.start).format('YYYY-MM-DD HH:MM:SS');
+                    var end_date = moment(event.end).format('YYYY-MM-DD HH:MM:SS');
+                    var ms = moment(end_date, "YYYY-MM-DD HH:MM:SS").diff(moment(start_date,
+                        "YYYY-MM-DD HH:MM:SS"));
                     var d = moment.duration(ms);
-                    var m = d.asMinutes(); // Duration of the reservation in minutes
+                    var m = d.asMinutes();
 
-                    var begin = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
 
-                    const time_limit = 240;
+                    const time_limit = 300;
 
-                    const dateBegin = new Date(start_date);
-                    const dateToday = new Date(todayDate);
+                    if (event.auth === user) {
+                        if (m < time_limit) { //limit maximum time
+                            $.ajax({
 
-                    // Handle the Greenwich time
-                    dateToday.setHours( dateToday.getHours() + 5 );
-                    dateToday.setMinutes( dateToday.getMinutes() + 30 );
+                                url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
+                                type: "PATCH",
+                                dataType: 'json',
+                                data: {
+                                    start_date,
+                                    end_date
+                                },
+                                success: function(response) {
 
-                    console.log(dateBegin, dateToday);
+                                    $('#calendar').fullCalendar('refetchEvents', response);
+                                    swal("Done!", "Event Updated!", "success");
 
-                    if(moment(dateBegin).isAfter(dateToday)){
-                        if (event.auth === user) {
-                            if (m <= time_limit) { //limit maximum time
-                                $.ajax({
-
-                                    url: "{{ route('frontend.calendar.update', '') }}" + '/' + id,
-                                    type: "PATCH",
-                                    dataType: 'json',
-                                    data: {start_date, end_date, begin},
-                                    success: function (response) {
-                                        $('#calendar').fullCalendar('refetchEvents', response);
-                                        swal("Done!", "Event Updated!", "success");
-                                    },
-                                    error: function (error) {
-                                        if (error.responseJSON.errors) {
-                                            $('#titleError').html(error.responseJSON.errors.title);
-                                        } else {
-                                            // Reset the time duration back to the previous value
-                                            revertFunc(); 
-                                            swal("Denied!", "Can not make multiple reservations in a day!", "warning");
-                                        }
-                                    },
-                                });
-                            } else {
-                                // Reset the time duration back to the previous value
-                                revertFunc(); 
-                                swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
-                            }
+                                },
+                                error: function(error) {
+                                    // if(error.responseJSON.errors) {
+                                    //     $('#titleError').html(error.responseJSON.errors.title);
+                                    // }
+                                    console.log(error)
+                                },
+                            });
                         } else {
-                            // Reset the time duration back to the previous value
-                            revertFunc(); 
-                            swal("Permission Denied!", "You can not update this event!", "warning");
+                            swal("Permission Denied!", "You can not exceed 4 hours!", "warning");
                         }
-                    }else{
-                        $('#bookingModal').modal('hide');
-                        swal("Permission Denied!", "You can not make a reservation for a date that has passed", "warning");
-                        // Reset the time duration back to the previous value
-                        revertFunc(); 
-
+                    } else {
+                        swal("Permission Denied!", "You can not update this event!", "warning");
                     }
 
                 },
-                eventClick: function (event) {
+                eventClick: function(event) {
                     var id = event.id;
                     var loggedIn = @json($userLoggedin);
                     var user = loggedIn['id'];
@@ -313,13 +260,12 @@
                                 url: "{{ route('frontend.calendar.destroy', '') }}" + '/' + id,
                                 type: "DELETE",
                                 dataType: 'json',
-                                success: function (response) {
+                                success: function(response) {
                                     $('#calendar').fullCalendar('removeEvents', response);
                                     swal("Done!", "Event Deleted!", "success");
-                                    refreshPage();
 
                                 },
-                                error: function (error) {
+                                error: function(error) {
                                     // if(error.responseJSON.errors) {
                                     //     $('#titleError').html(error.responseJSON.errors.title);
                                     // }
@@ -334,13 +280,13 @@
 
                 },
                 //Not allowing to choose multiple events
-                selectAllow: function (event) {
-                    return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcOffset(false), 'day');
+                selectAllow: function(event) {
+                    return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1,
+                        'second').utcOffset(false), 'day');
                 }
             });
 
-
-            $("#bookingModal").on("hidden.bs.modal", function () {
+            $("#bookingModal").on("hidden.bs.modal", function() {
                 $('#saveBtn').unbind();
             });
 
@@ -367,11 +313,9 @@
                     swal("Time Unavailable!", "Please choose another slot", "error");
                     return true;
                 }
-
             }
             return false;
         }
-
     </script>
 @endpush
 
@@ -402,13 +346,14 @@
             <div class="col-12">
                 <h3 class="text-center mt-5"><b>Schedule Reservation - {{ $station->stationName }} </b><br></h3>
                 <h6 class="text-center">*Click and drag time period as required.<br>Click reservation to delete.
-                    <br>Edit reservation by click and drag.</h6>
+                    <br>Edit reservation by click and drag.
+                </h6>
 
-                <div class="col-md-11 offset-1 mt-5 mb-5">
-                    <div id="calendar">
-                    </div>
+                <div class="col-md-11 offset-1 mb-3">
+                    <fullcalendar-component :station-id="{{ $station->id }}" :user-id="{{ Auth()->user()->id }}" />
                 </div>
             </div>
         </div>
     </div>
+
 @endsection

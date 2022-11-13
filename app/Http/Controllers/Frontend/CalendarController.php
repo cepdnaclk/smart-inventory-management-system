@@ -27,16 +27,9 @@ class CalendarController extends Controller
         $events = [];
 
         // Get all the reservations for that particular station
-        $bookings = Reservation::where('station_id', $station->id)->where('start_date', '>', Carbon::now()->subDays(8))->get();
-
-        $color = null;
+        $bookings = Reservation::where('station_id', $station->id)->where('start_date', '>', Carbon::now()->subDays(8))->where('start_date', '>', Carbon::now()->subDays(8))->get();
 
         foreach ($bookings as $booking) {
-            if ($booking->user_id != $userLoggedin['id']) {
-                $color = '#435258';
-            } else {
-                $color = '#3E9CC2';
-            }
             $userVar = User::find($booking->user_id);
             $events[] = [
                 'id' => $booking->id,
@@ -45,12 +38,30 @@ class CalendarController extends Controller
                 'end' => $booking->end_date,
                 'stationId' => $station->id,
                 'auth' => $booking->user_id,
-                'color' => $color,
             ];
-        }   
+        }
 
         $today = date('Y-m-d H:i:s');
         return view('frontend.calendar.index', ['events' => $events, 'station' => $station, 'userLoggedin' => $userLoggedin, 'today' => $today]);
+    }
+
+    public function list(Stations $station)
+    {
+        $events = array();
+        $bookings = Reservation::where('station_id', $station->id)->where('start_date', '>', Carbon::now()->subDays(8))->get();
+
+        foreach ($bookings as $booking) {
+            $userVar = User::find($booking->user_id);
+            $events[] = [
+                'id' => $booking->id,
+                'title' => 'Reservation made by ' . $userVar->email . '  for  ' . $booking->E_numbers,
+                'start' => $booking->start_date,
+                'end' => $booking->end_date,
+                'stationId' => $station->id,
+                'auth' => $booking->user_id,
+            ];
+        }
+        return response()->json($events);
     }
 
     public function store(Request $request)
@@ -95,31 +106,31 @@ class CalendarController extends Controller
             // Nuwan: This part is working. So I added a 'if condition' to this in such a way that
             // it will be only executed in a web server.
             // Environment can be setup in the .env file
-            
-            
+
+
             if (App::environment(['local', 'staging'])) {
                 // dd('Not sending emails');
             } else {
-                
-                try{
-                    $enums = explode(',',$request->title);
 
-                    foreach ($enums as $enum){
+                try {
+                    $enums = explode(',', $request->title);
+
+                    foreach ($enums as $enum) {
 
                         //get enumber
-                        $enum1=explode('/',$enum);
-                        $batch=$enum1[1];
-                        $regnum=$enum1[2];
+                        $enum1 = explode('/', $enum);
+                        $batch = $enum1[1];
+                        $regnum = $enum1[2];
 
                         //set api url
-                        $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E'.''.$batch.'/'.$regnum.'/';
+                        $apiurl = 'https://api.ce.pdn.ac.lk/people/v1/students/E' . '' . $batch . '/' . $regnum . '/';
 
                         //api call
                         $response = Http::withoutVerifying()
-                        ->get($apiurl);
+                            ->get($apiurl);
 
                         //extract email address
-                        $email=($response['emails']['faculty']['name'].'@'.$response['emails']['faculty']['domain']);
+                        $email = ($response['emails']['faculty']['name'] . '@' . $response['emails']['faculty']['domain']);
 
                         //get user
                         $user = auth()->user();
@@ -128,16 +139,14 @@ class CalendarController extends Controller
                         Mail::to($email)
                             ->send(new StationReservationMail(auth()->user(), $station, $booking));
                     }
-
-                    }catch(\Exception $e){
-                        return response()->json([
-                            'error' => 'enumber null'
-                        ], 404);
-                    }
-
+                } catch (\Exception $e) {
+                    return response()->json([
+                        'error' => 'enumber null'
+                    ], 404);
                 }
-            
-                
+            }
+
+
 
             //**********mails****************
 
@@ -186,6 +195,11 @@ class CalendarController extends Controller
             ], 404);
         }
 
+        $booking->update([
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+        ]);
+        return response()->json('Event updated');
         // TODO: If the start end times changed, it will be better to send the users an email
         // saying the time is changed (remind Google Calender events !)
 

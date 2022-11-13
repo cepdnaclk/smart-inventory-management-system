@@ -5,6 +5,7 @@ namespace Tests\Feature\Backend\Component;
 use App\Domains\Auth\Models\User;
 use App\Models\ComponentItem;
 use App\Models\ItemLocations;
+use App\Models\Locations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -75,8 +76,6 @@ class ComponentItemTest extends TestCase
             'location' => '1',
             'specifications' => 'UA741CP OpAmp 1MHz',
             'description' => 'The 741 Op Amp IC is a monolithic integrated circuit, comprising of a general purpose Operational Amplifier.',
-            'instructions' => 'NO INSTRUCTION AVAILABLE',
-            'isAvailable' => '1',
             'price' => '80.00',
             'size' => 'small',
             'thumb' => NULL,
@@ -129,4 +128,45 @@ class ComponentItemTest extends TestCase
         $response->assertStatus(302);
     }
 
+    /** @test */
+    public function single_location_shows_up()
+    {
+        $this->loginAsAdmin();
+        $component = ComponentItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $component->inventoryCode(),
+                'location_id' => 1
+            ]
+        );
+
+        $locationName = Locations::where('id', 1)->first()->location;
+        $response = $this->get('/admin/components/items/' . $component->id);
+        $response->assertSee($locationName);
+    }
+
+    /** @test */
+    public function multiple_locations_show_up()
+    {
+        $this->loginAsAdmin();
+        $component = ComponentItem::factory()->create();
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $component->inventoryCode(),
+                'location_id' => 1
+            ]
+        );
+        ItemLocations::factory()->create(
+            [
+                'item_id' => $component->inventoryCode(),
+                'location_id' => 2
+            ]
+        );
+
+        $locationName1 = Locations::where('id', 1)->first()->location;
+        $locationName2 = Locations::where('id', 2)->first()->location;
+        $response = $this->get('/admin/components/items/' . $component->id);
+        $response->assertSee($locationName1);
+        $response->assertSee($locationName2);
+    }
 }

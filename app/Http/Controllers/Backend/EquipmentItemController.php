@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Torann\GeoIP\Location;
 
-class EquipmentItemController extends Controller 
+class EquipmentItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class EquipmentItemController extends Controller
      */
     public function index()
     {
-        $equipment = EquipmentItem::orderBy('id', 'desc')->paginate(16);
+        $equipment = EquipmentItem::orderBy('id', 'asc')->paginate(16);
         return view('backend.equipment.items.index', compact('equipment'));
     }
 
@@ -36,7 +36,7 @@ class EquipmentItemController extends Controller
     {
         $types = EquipmentType::pluck('title', 'id');
         $locations = Locations::pluck('location', 'id');
-        return view('backend.equipment.items.create', compact('types','locations'));
+        return view('backend.equipment.items.create', compact('types', 'locations'));
     }
 
     /**
@@ -52,7 +52,6 @@ class EquipmentItemController extends Controller
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
-            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -75,26 +74,14 @@ class EquipmentItemController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "equipment_items");
             }
 
-            $filtered_data = $data;
-            unset($filtered_data['location']);
-            $type = new EquipmentItem($filtered_data);
+            $type = new EquipmentItem($data);
 
             // Update checkbox condition
             $type->isElectrical = ($request->isElectrical != null);
 
             //            save first, otherwise the id is not there
             $type->save();
-
-            $data_for_location = [
-                'item_id' => $type->inventoryCode(),
-                'location_id' => $data['location']
-            ];
-            $location = new ItemLocations($data_for_location);
-
-
-            $location->save();
-            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was created !');
-
+            return redirect()->route('admin.equipment.items.edit.location', $type)->with('Success', 'Equipment was created !');
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -108,8 +95,13 @@ class EquipmentItemController extends Controller
      */
     public function show(EquipmentItem $equipmentItem)
     {
-        $locations_array = $this->getLocationOfItem($equipmentItem);
-        return view('backend.equipment.items.show', compact('equipmentItem','locations_array'));
+        $locationCount = $this->getNumberOfLocationsForItem($equipmentItem);
+
+        $locations_array = array();
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locations_array[] = $this->getFullLocationPathAsString($equipmentItem, $i);
+        }
+        return view('backend.equipment.items.show', compact('equipmentItem', 'locations_array'));
     }
 
     /**
@@ -121,10 +113,29 @@ class EquipmentItemController extends Controller
     public function edit(EquipmentItem $equipmentItem)
     {
         $types = EquipmentType::pluck('title', 'id');
-        $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get()[0]['location_id'];
-//        dd($this_item_location);
-        $locations = Locations::pluck('location', 'id');
-        return view('backend.equipment.items.edit', compact('types', 'equipmentItem','this_item_location','locations'));
+        //$this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
+        //if ($this_item_location->count() > 0) {
+        //    $this_item_location = $this_item_location->first()->location_id;
+        //} else {
+        //    $this_item_location = null;
+        //}
+        //        dd($this_item_location);
+        //        $locations = Locations::pluck('location', 'id');
+        return view('backend.equipment.items.edit', compact('types', 'equipmentItem'));
+    }
+
+
+    /**
+     * Edit the locations ot the item
+     *
+     * @param EquipmentItem $equipmentItem
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function editLocation(EquipmentItem $equipmentItem)
+    {
+        $locations = Locations::all()->where('parent_location', 1)->all();
+
+        return view('backend.equipment.items.edit-location', compact('equipmentItem', 'locations'));
     }
 
     /**
@@ -136,14 +147,12 @@ class EquipmentItemController extends Controller
      */
     public function update(Request $request, EquipmentItem $equipmentItem)
     {
-//         dd($request->request);
+        //         dd($request->request);
         $data = request()->validate([
             'title' => 'string|required',
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
-
-            'location' => 'numeric|required',
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -170,22 +179,13 @@ class EquipmentItemController extends Controller
             // Update checkbox condition
             $equipmentItem->isElectrical = ($request->isElectrical != null);
 
-            $filtered_data = $data;
-            unset($filtered_data['location']);
-            $equipmentItem->update($filtered_data);
-
-            $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get()[0];
-            $new_location_data = [
-                'location_id' => $data['location']
-            ];
-            $this_item_location->update($new_location_data);
+            $equipmentItem->update($data);
 
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
-    } 
+    }
 
     /**
      * Confirm to delete the specified resource from storage.
@@ -207,19 +207,18 @@ class EquipmentItemController extends Controller
      */
     public function destroy(EquipmentItem $equipmentItem)
     {
-       
+
         try {
             // Delete the thumbnail form the file system
             $this->deleteThumb($equipmentItem->thumbURL());
 
             $equipmentItem->delete();
 
-            // delete location entry
-            $this_item_location = ItemLocations::where('item_id',$equipmentItem->inventoryCode())->get()[0];
+            //            delete location entry
+            $this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get()[0];
             $this_item_location->delete();
 
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }

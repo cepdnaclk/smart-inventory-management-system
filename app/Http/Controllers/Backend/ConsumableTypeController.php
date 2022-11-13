@@ -16,8 +16,8 @@ class ConsumableTypeController extends Controller
      */
     public function index()
     {
-        $consumableTypes = ConsumableType::paginate(12);
-        return view('backend.consumable.types.index', compact('consumableTypes'));
+        //$consumableTypes = ConsumableType::paginate(12);
+        return view('backend.consumable.types.index');
     }
 
     /**
@@ -54,6 +54,7 @@ class ConsumableTypeController extends Controller
 
             $type = new ConsumableType($data);
             $type->save();
+
             return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was created !');
 
         } catch (\Exception $ex) {

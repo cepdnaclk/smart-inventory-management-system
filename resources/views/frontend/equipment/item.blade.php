@@ -5,7 +5,7 @@
 @push('after-styles')
     <style>
         td {
-        padding: 1px 12px 1px 0;
+            padding: 1px 12px 1px 0;
         }
     </style>
 @endpush
@@ -40,6 +40,9 @@
                             <a target="_blank" href="{{ route('admin.equipment.items.edit', $equipmentItem)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
+                            <a href="{{ route('admin.equipment.items.edit.location', $equipmentItem)}}"
+                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker" title="Edit Location"></i>
+                            </a>
                         @endif
                     </div>
                 </div>
@@ -49,24 +52,28 @@
                         <tr>
                             <td>Category</td>
                             <td>
-                                : @if($equipmentItem->equipment_type->parent() != null)
-                                    <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type->parent() ) }}">
-                                        {{ $equipmentItem->equipment_type->parent()->title }}
-                                    </a> &gt;
+                                : @if($equipmentItem->equipment_type->parent()->first() != null)
+                                    <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type->parent()->first() ) }}">
+                                        {{ $equipmentItem->equipment_type->parent()->first()->title }}
+                                    </a>
                                 @endif
 
                                 <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type) }}">
                                     {{ $equipmentItem->equipment_type['title'] }}
                                 </a>
+
+
                             </td>
                         </tr>
 
-                        <tr>
-                            <td>Product Code</td>
-                            <td>
-                                : <b>{{ $equipmentItem->productCode }}({{ $equipmentItem->brand }})</b>
-                            </td>
-                        </tr>
+                        @if($equipmentItem->productCode != null)
+                            <tr>
+                                <td>Product Code</td>
+                                <td>
+                                    : <b>{{ $equipmentItem->productCode }}({{ $equipmentItem->brand }})</b>
+                                </td>
+                            </tr>
+                        @endif
 
                         <tr>
                             <td>Available Quantity</td>
@@ -101,6 +108,25 @@
                         </tr>
                     </table>
                 </div>
+
+                {{-- Location info --}}
+                @if($locationCount > 1)
+                    <div class="pt-3">
+                        <u>Locations</u>
+                        <ul>
+                            @foreach($locationStringArray as $eachLocation)
+                                <li>{{$eachLocation}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @elseif ($locationCount == 1)
+                    <div class="pt-3">
+                        <u>Location</u>
+                        <ul>
+                            <li>{{$locationStringArray[0]}}</li>
+                        </ul>
+                    </div>
+                @endif
 
                 @if($equipmentItem->isElectrical && $equipmentItem->powerRating != null)
                     <div class="pt-3">
