@@ -177,8 +177,11 @@ class ComponentItemController extends Controller
 
             $componentItem->delete();
 
-            //            delete location entry
-            $this_item_location = ItemLocations::where('item_id', $componentItem->inventoryCode())->delete();
+            // delete location entries
+            $this_item_locations = ItemLocations::where('item_id', $componentItem->inventoryCode())->get();
+            foreach($this_item_locations as $loc){
+                $loc->delete();
+            }
 
             return redirect()->route('admin.component.items.index')->with('Success', 'Component was deleted !');
         } catch (\Exception $ex) {
