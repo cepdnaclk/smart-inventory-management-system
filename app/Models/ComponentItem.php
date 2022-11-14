@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class ComponentItem extends Model
 {
     use HasFactory;
@@ -32,7 +33,9 @@ class ComponentItem extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class);   
+        return $this->belongsToMany(Order::class,ComponentItemOrder::class);   
     }
+
+   
 
 }

@@ -85,6 +85,10 @@ Route::delete('jobs/student/{jobRequests}/', [JobRequestsController::class, 'stu
 
 // Supervisor Routes ----------------------------------------------------------------------------
 Route::middleware(['role:Administrator|Lecturer'])->group(function () {
+
+   
+
+
     // Index.
     Route::get('/jobs/supervisor', [JobRequestsController::class, 'supervisor_index'])
         ->name('jobs.supervisor.index')

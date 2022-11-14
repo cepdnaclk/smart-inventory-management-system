@@ -3,6 +3,7 @@
 namespace App\Domains\Auth\Models\Traits\Method;
 
 use Illuminate\Support\Collection;
+use App\Domains\Auth\Models\Permission;
 
 /**
  * Trait UserMethod.
@@ -15,6 +16,18 @@ trait UserMethod
     public function isMasterAdmin(): bool
     {
         return $this->id === 1;
+    }
+    public function isHOD(): bool
+    {
+        $userCount= $this->permissions->where('name','lecturer.access.hod' )->count();
+        if ($userCount!=0)
+{
+  // object exists
+  return true;
+} else {
+  // object not found
+  return false;
+}
     }
 
     /**
@@ -138,4 +151,7 @@ trait UserMethod
     {
         return 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=' . config('boilerplate.avatar.size', $size) . '&d=mp';
     }
+
+
+  
 }
