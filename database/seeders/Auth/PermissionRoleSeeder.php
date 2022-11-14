@@ -46,6 +46,7 @@ class PermissionRoleSeeder extends Seeder
             'type' => User::TYPE_MAINTAINER,
             'name' => 'Maintainer',
         ]);
+     
 
         // Non Grouped Permissions
         //
@@ -105,6 +106,12 @@ class PermissionRoleSeeder extends Seeder
                 'type' => User::TYPE_LECTURER,
                 'name' => 'lecturer.access.all',
                 'description' => 'Access All',
+            ]),
+            new Permission([
+                'type' => User::TYPE_LECTURER,
+                'name' => 'lecturer.access.hod',
+                'description' => 'Act as HOD',
+                'sort' => 2,
             ])
         ]);
 

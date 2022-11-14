@@ -1,6 +1,8 @@
 <?php
 
+use Tabuna\Breadcrumbs\Trail;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\Backend\OrderController;
 
 /*
  * Global Routes
@@ -14,6 +16,12 @@ Route::get('lang/{lang}', [LocaleController::class, 'change'])->name('locale.cha
 /*
  * Frontend Routes
  */
+
+
+
+
+
+
 Route::group(['as' => 'frontend.'], function () {
     includeRouteFiles(__DIR__ . '/frontend/');
 });
@@ -30,3 +38,10 @@ Route::group(['as' => 'frontend.'], function () {
 Route::prefix('admin')->as('admin.')->middleware(['auth'])->group(function () {
     includeRouteFiles(__DIR__ . '/backend/');
 });
+
+
+
+// Route::view("ordercomp",'frontend/user/ordercomp');
+
+// Route::get("ordercomp",[CartController::class,'compOrder']);
+

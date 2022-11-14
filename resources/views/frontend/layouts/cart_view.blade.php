@@ -9,11 +9,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
-
+    
 </head>
 
-<body>
+<body >
+
     <div id="app">
+
         @include('frontend.includes.nav')
         @include('includes.partials.messages')        
     </div><!--app-->
@@ -85,7 +87,9 @@
         </div> 
     @endif  
 
-    @yield('content')
+  
+        @yield('content')
+   
 
 </div>  
 
