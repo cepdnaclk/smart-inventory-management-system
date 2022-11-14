@@ -1,28 +1,41 @@
-@extends('frontend.layouts.app')
+@extends('backend.layouts.app')
 
 @section('title', __('My Orders'))
 
 @section('content')  
+<div>
+    <x-backend.card>
+        <x-slot name="header">
+        My Orders
+        </x-slot>
 
+        <x-slot name="body">
 
-<div class="container">
+            @if (Session::has('success'))
+<div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="fa fa-times"></i>
+    </button>
+    <strong>Success !</strong> {{ session('success') }}
+</div>
+@endif
+<div class="table-responsive pt-3">
     
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark"> 
+
+        <table class="table table-striped ">
+
+            <thead > 
                 <tr>
                     <th>Id</th>
-                    <th>User</th>
-                    <th>Items</th>
-                    <th>Quantity</th>
+                    
+                    
                     <th>Status</th>
                     <th>Ordered-Date</th>
                     <th>Picked-Date</th>
                     <th>Due-date</th>
                     <th>Remaining days</th>
                     <th>Returned Date</th>
-                  
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,19 +48,10 @@
                 <tr>
                     <td>{{ $order->id  }}</td>
 
-                    <td>{{ $order->user->name  }}</td>
        
-                    <td>
-                        @foreach ($order->componentItems as $item)
-                        <li>{{$item->title}}</li>
-                        @endforeach            
-                    </td>
+                   
 
-                    <td>
-                        @foreach ($order->componentItems as $item)
-                        <li>{{$item->pivot->quantity}}</li>
-                        @endforeach            
-                    </td>
+                 
 
                     <td>{{ $order->status  }}</td>
                     <td>{{ $order->ordered_date  }}</td>
@@ -70,7 +74,18 @@
                     @endif
 
                     
-                    
+                    <td>
+                        <div class="row justify-content-between">
+                        <a  href="{{ route('frontend.user.orders.show', $order)}} " 
+                        class="btn btn-primary"> <i class="fa fa-check" title="Approval"></i>     
+                     </a>
+                     <a href="{{ route('frontend.user.orders.edit', $order)}}"
+                     class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                  </a>
+
+               
+                    </div>
+                    </td>
 
                 </tr>
             @endforeach
@@ -80,10 +95,12 @@
             </tbody>
 
         </table>
+    </x-slot>
+</x-backend.card>
 
-    </div>
 
-</div>
+
+
 
 </div>
 

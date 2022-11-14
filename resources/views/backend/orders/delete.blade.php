@@ -26,6 +26,9 @@
 
                     {!! Form::close() !!}
                 </div>
+
+              
+
             </x-slot>
         </x-backend.card>
     </div>
