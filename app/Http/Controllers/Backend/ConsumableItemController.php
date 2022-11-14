@@ -103,6 +103,20 @@ class ConsumableItemController extends Controller
         return view('backend.consumable.items.edit', compact('types', 'consumableItem', 'locations'));
     }
 
+        /**
+     * Edit the locations ot the item
+     *
+     * @param EquipmentItem $equipmentItem
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function editLocation(ConsumableItem $consumableItem)
+    {
+        $locations = Locations::all()->where('parent_location', 1)->all();
+
+        return view('backend.consumable.items.edit-location', compact('consumableItem', 'locations'));
+    }
+
+
     /**
      * Update the specified resource in storage.
      *
