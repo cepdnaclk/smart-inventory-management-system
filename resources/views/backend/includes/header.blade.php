@@ -30,9 +30,12 @@
         </li>
         @endif
     </ul>
+    
 
-    <ul class="c-header-nav ml-auto mr-4">
+    <ul class="c-header-nav ml-auto mr-3 ">
+        
         <li class="c-header-nav-item dropdown">
+           
             <x-utils.link class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <x-slot name="text">
                     <div class="c-avatar">

@@ -1,4 +1,4 @@
-{{-- @extends('backend.layouts.app')
+ @extends('backend.layouts.app')
 
 @section('title', __('Equipment'))
 
@@ -218,4 +218,4 @@
 
         {!! Form::close() !!}
     </div>
-@endsection --}}
+@endsection 
