@@ -1,6 +1,6 @@
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     <div class="c-sidebar-brand d-lg-down-none">
-    <!-- <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+        <!-- <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
         <use xlink:href="{{ asset('img/brand/coreui.svg#full') }}"></use>
     </svg>
     <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
@@ -9,14 +9,74 @@
     </div><!--c-sidebar-brand-->
 
     <ul class="c-sidebar-nav">
-        <li class="c-sidebar-nav-item">
-            <x-utils.link
-                    class="c-sidebar-nav-link"
-                    :href="route('admin.dashboard')"
-                    :active="activeClass(Route::is('admin.dashboard'), 'c-active')"
-                    icon="c-sidebar-nav-icon cil-speedometer"
-                    :text="__('Dashboard')"></x-utils.link>
-        </li>
+
+        @if ($logged_in_user->isUser())
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.dashboard')"
+                        :active="activeClass(Route::is('frontend.user.dashboard'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-speedometer"
+                        :text="__('Dashboard')"></x-utils.link>
+            </li>
+        
+        @else
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('admin.dashboard')"
+                        :active="activeClass(Route::is('admin.dashboard'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-speedometer"
+                        :text="__('Dashboard')"></x-utils.link>
+            </li>
+
+        @endif
+
+
+        <!-- User  -->
+        @if ($logged_in_user->isUser())
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.account')"
+                        :active="activeClass(Route::is('frontend.user.account'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-user"
+                        :text="__('Account')"></x-utils.link>
+            </li>
+
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.products')"
+                        :active="activeClass(Route::is('frontend.user.products'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-blur"
+                        :text="__('Components')"></x-utils.link>
+            </li>
+
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.cart')"
+                        :active="activeClass(Route::is('frontend.user.cart'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-cart"
+                        :text="__('Cart')"></x-utils.link>
+            </li>
+
+            <li class="c-sidebar-nav-item">
+                <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.user.orders.index')"
+                        :active="activeClass(Route::is('frontend.user.orders.index'), 'c-active')"
+                        icon="c-sidebar-nav-icon cil-description"
+                        :text="__('My orders')"></x-utils.link>
+            </li>
+
+            
+
+        @endif
+
+
+           
 
         @if (
         $logged_in_user->hasAllAccess() ||
@@ -173,16 +233,178 @@
             </ul>
         </li>
 
-        <li class="c-sidebar-nav-dropdown">
+
+        {{-- Order Requests --}}
+        @if ($logged_in_user->isLecturer() || $logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link
+                        href="#"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-dropdown-toggle"
+                        :text="__('Order Requests')"></x-utils.link>
+                  
+
+                <ul class="c-sidebar-nav-dropdown-items">
                     
+
+                    @if ($logged_in_user->isAdmin())
                         <li class="c-sidebar-nav-item">
                             <x-utils.link
-                            icon="c-sidebar-nav-icon cil-list"
+                        
                                     :href="route('admin.orders.index')"
                                     class="c-sidebar-nav-link"
                                     :text="__('Orders')"></x-utils.link>
                         </li>
+                    @endif
+
+                    @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
+                        @if ($logged_in_user->isHOD() )
+                            <li class="c-sidebar-nav-item">
+                                <x-utils.link
+                                :href="route('admin.orders.h_o_d.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Request-Lecturer')"></x-utils.link>
+                    </li>  
+                        @else
+                            <li class="c-sidebar-nav-item">
+                                <x-utils.link
+                                :href="route('admin.orders.lecturer.index')"
+                                class="c-sidebar-nav-link"
+                                :text="__('Request-Lecturer')"></x-utils.link>
+                    </li>
+                        @endif
+                    @endif
+                    
+                    
+
+                    
+                    
+                        @if ($logged_in_user->isHOD()|| $logged_in_user->isAdmin())
+                            <li class="c-sidebar-nav-item">
+                                <x-utils.link
+                             
+                                    :href="route('admin.orders.h_o_d.accepted.index')"
+                    
+                                    class="c-sidebar-nav-link"
+                                    :text="__('Accepted - HOD')"></x-utils.link>
+                            </li> 
+                            @endif
+                            @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
+                            <li class="c-sidebar-nav-item">
+                                <x-utils.link
+                             
+                                    :href="route('admin.orders.lecturer.accepted.index')"
+                    
+                                    class="c-sidebar-nav-link"
+                                    :text="__('Accepted - Lecturer')"></x-utils.link>
+                            </li> 
+                        @endif
+                    
+                   
+
+                 
+
+            
+                    
+                    @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link
+                                    :href="route('admin.orders.officer.approved.index')"
+                                    class="c-sidebar-nav-link"
+                                    :text="__('Approved - Technical Officer')"></x-utils.link>
+                        </li>
+                    @endif
+
+                    @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link
+                                    :href="route('admin.orders.officer.ready.index')"
+                                    class="c-sidebar-nav-link"
+                                    :text="__('Ready - Technical Officer')"></x-utils.link>
+                        </li>
+                    @endif
+
+                    @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link
+                                    :href="route('admin.orders.officer.picked.index')"
+                                    class="c-sidebar-nav-link"
+                                    :text="__('Picked - Technical Officer')"></x-utils.link>
+                        </li>
+                    @endif
+
+                    @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
+                            <li class="c-sidebar-nav-item">
+                                <x-utils.link
+                         
+                                    :href="route('admin.orders.lecturer.rejected.index')"
+                
+                                    class="c-sidebar-nav-link"
+                                    :text="__('Rejected - Lecturer')"></x-utils.link>
+                            </li>
+                    
+                    @endif
+
+                    
+                    @if ($logged_in_user->isHOD() || $logged_in_user->isAdmin())
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link
+                     
+                                :href="route('admin.orders.h_o_d.rejected.index')"
+            
+                                class="c-sidebar-nav-link"
+                                :text="__('Rejected - HOD')"></x-utils.link>
+                        </li>  
+                    
+                    @endif
+
+                </ul>
+            </li>
+        @endif
+
+        <li class="c-sidebar-nav-dropdown">
+            <x-utils.link
+                    href="#"
+                    icon="c-sidebar-nav-icon cil-list"
+                    class="c-sidebar-nav-dropdown-toggle"
+                    :text="__('Consumables')"></x-utils.link>
+
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.consumable.items.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Items')"></x-utils.link>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.consumable.types.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Types')"></x-utils.link>
+                </li>
+            </ul>
         </li>
+        
+        {{-- Lockers --}}
+        @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+        <li class="c-sidebar-nav-dropdown">
+            <x-utils.link
+                    href="#"
+                    icon="c-sidebar-nav-icon cil-list"
+                    class="c-sidebar-nav-dropdown-toggle"
+                    :text="__('Locker')"></x-utils.link>
+
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                            :href="route('admin.locker.details.index')"
+                            class="c-sidebar-nav-link"
+                            :text="__('Locker Details')"></x-utils.link>
+                </li>
+            </ul>
+        </li>
+        @endif
+        
 
         @if ($logged_in_user->hasAllAccess())
             {{-- Logs and Reports --}}
@@ -209,6 +431,8 @@
                 </ul>
             </li>
         @endif
+
+        
     </ul>
 
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"

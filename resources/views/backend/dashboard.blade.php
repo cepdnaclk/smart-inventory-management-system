@@ -40,6 +40,13 @@
             color: #FFF;
         }
 
+        .card-counter.request {
+            background-color: #581845;
+            color: #FFF;
+        }
+
+        
+
         .card-counter i {
             font-size: 5em;
             opacity: 0.2;
@@ -94,6 +101,15 @@
                     </div>
 
                     <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.consumable.items.index') }}">
+                            <div class="card-counter info">
+                                <span class="count-numbers">{{ $consumableCount }}</span>
+                                <span class="count-name">Consumables ({{ $consumableTypeCount }} types)</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
                         @if ($logged_in_user->hasAllAccess())
                             <a class="text-decoration-none" href="{{ route('admin.auth.user.index') }}">
                                 @endif
@@ -101,7 +117,8 @@
                                     <span class="count-numbers">{{ $userCount }}</span>
                                     <span class="count-name">Users</span>
                                 </div>
-                                @if ($logged_in_user->hasAllAccess())</a> @endif
+                                @if ($logged_in_user->hasAllAccess())</a>
+                        @endif
                     </div>
 
 
@@ -125,6 +142,37 @@
                             </div>
                         </a>
                     </div>
+                    @if ($logged_in_user->isLecturer() )
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.orders.lecturer.index') }}">
+                            <div class="card-counter request">
+                                <span class="count-numbers">{{$orderrequest_lecturer}}</span>
+                                <span class="count-name">Order request</span>
+                            </div>
+                        </a>
+                    </div>
+                    @endif
+
+                    @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+                        <div class="col-md-3">
+                            <a class="text-decoration-none" href="{{ route('admin.orders.officer.index') }}">
+                                <div class="card-counter request">
+                                    <span class="count-numbers">Orders</span>
+                                    <span class="count-name">Technical Officer</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a class="text-decoration-none" href="{{ route('admin.locker.index') }}">
+                                <div class="card-counter info">
+                                    <span class="count-numbers">Lockers</span>
+                                    <span class="count-name">Technical Officer</span>
+                                </div>
+                            </a>
+                        </div>
+                    @endif
+                   
                 </div>
             </div>
         </x-slot>

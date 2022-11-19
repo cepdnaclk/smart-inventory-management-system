@@ -9,6 +9,7 @@ use App\Domains\Auth\Models\Traits\Scope\UserScope;
 use App\Domains\Auth\Notifications\Frontend\ResetPasswordNotification;
 use App\Domains\Auth\Notifications\Frontend\VerifyEmail;
 use App\Models\Order;
+use App\Models\OrderApproval;
 use DarkGhostHunter\Laraguard\Contracts\TwoFactorAuthenticatable;
 use DarkGhostHunter\Laraguard\TwoFactorAuthentication;
 use Database\Factories\UserFactory;
@@ -183,10 +184,14 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     {
         return User::where('type', '=', self::TYPE_MAINTAINER)->get();
     }
+    
   
     // Orders
     function orders(){
         return $this->hasMany(Order::class);
     }
 
+    function orderApprovals(){
+        return $this->hasMany(OrderApproval::class); //lecturer has many order Aprrovals
+    }
 }
