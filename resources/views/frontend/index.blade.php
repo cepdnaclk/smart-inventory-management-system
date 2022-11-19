@@ -74,30 +74,6 @@
         * {
             box-sizing: border-box;
         }
-
-        /* .searchBar {
-            float: center;
-            padding: 10px;
-            font-size: 17px;
-            border: 1px solid grey;
-            float: left;
-            width: 80%;
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .searchBars {
-            float: center;
-            width: 20%;
-            padding: 10px;
-            background: #A8A8A8;
-            color: white;
-            font-size: 17px;
-            border: 1px solid grey;
-            border-left: none;
-            cursor: pointer;
-            border-radius: 4px;
-        } */
     </style>
     @stack('after-styles')
 </head>
