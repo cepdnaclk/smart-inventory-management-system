@@ -12,9 +12,11 @@ class LocationsToggler extends Component
     public $locationID;
     public $locationTitle;
     public $isAvailableInLocation;
+    public $isChecked = false;
     public $X = 0;
     public $Y = 0;
     public $Z = 0;
+
 
     public function addLocation()
     {
@@ -27,7 +29,15 @@ class LocationsToggler extends Component
         } else {
             $locations[0]->delete();
         }
+        $isChecked = true;
     }
+
+    // Function to show the X, Y, Z input boxes once the user ticks the checkbox
+public function showXYZ()
+    {
+        $this->emit('showXYZ');
+    }
+
 
     public function mount()
     {
