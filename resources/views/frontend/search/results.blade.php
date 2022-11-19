@@ -39,7 +39,7 @@
                         <div class="container pt-2">
                             <div class="row equal">
                                 @foreach ($modelSearchResults as $searchResult)
-                                    <div class="col-3 col-sm-3 col-md-2 p-1 d-flex">
+                                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-1 d-flex">
                                         @if (get_class($searchResult->searchable) == 'App\Models\RawMaterials')
                                             <img class="img-fluid p-2 mx-auto"
                                                 src="{{ $searchResult->searchable->thumbURL() }}"
