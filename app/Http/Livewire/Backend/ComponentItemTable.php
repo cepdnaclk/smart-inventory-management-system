@@ -11,6 +11,8 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class ComponentItemTable extends DataTableComponent
 {
+    public array $perPageAccepted = [25, 50, 100];
+    public bool $perPageAll = true;
 
     public function columns(): array
     {
@@ -24,7 +26,6 @@ class ComponentItemTable extends DataTableComponent
             Column::make("Category")
                 ->sortable()
                 ->searchable(),
-            Column::make("Size", 'size'),
             Column::make("Actions")
         ];
     }
@@ -32,13 +33,13 @@ class ComponentItemTable extends DataTableComponent
     public function query(): Builder
     {
         return ComponentItem::query()
-            ->when($this->getFilter('category'), fn($query, $category) => $query->where('component_type_id', $category));;
+            ->when($this->getFilter('category'), fn ($query, $category) => $query->where('component_type_id', $category));;
     }
 
     public function filters(): array
     {
         // Category ------------------------------------------------------
-        $categoriesFromDB = ComponentType::pluck('title','id')->toArray();
+        $categoriesFromDB = ComponentType::pluck('title', 'id')->toArray();
 
         // Add '' => "Any" to the beginning of the array
         $categories = array();

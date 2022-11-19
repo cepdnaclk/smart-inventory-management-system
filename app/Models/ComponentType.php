@@ -31,16 +31,44 @@ class ComponentType extends Model
         return null;
     }
 
-     // Return the children item types of this item type
-     public function children()
-     {
-         return ComponentType::where('parent_id', $this->id)->get();
-     }
- 
-     // Return the items listed under this item type
-     public function getItems()
-     {
-         return $this->hasMany(EquipmentItem::class)->get();
-     }
-    
+    // Return the children item types of this item type
+    public function children()
+    {
+        return ComponentType::where('parent_id', $this->id)->get();
+    }
+
+    // Return the items listed under this item type
+    public function getItems()
+    {
+        return $this->hasMany(EquipmentItem::class)->get();
+    }
+
+    /**
+     * Get the parent component type
+     */
+    public function getParent()
+    {
+        return $this->hasOne(ComponentType::class, "id", "parent_id");
+    }
+
+    public function getFullComponentType()
+    {
+        $item = $this;
+        $title = $item->title;
+        while (!($item->getParent()->first() == NULL)) {
+            $item = $item->getParent()->first();
+            $title = $item->title . " > " . $title;
+        }
+        return $title;
+    }
+
+    public static function getFullTypeList()
+    {
+        $typeList = ComponentType::all();
+        $types = array();
+        foreach ($typeList as $type) {
+            $types[$type->id] = $type->getFullComponentType();
+        }
+        return $types;
+    }
 }
