@@ -5,7 +5,9 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\OrderController;
 use App\Http\Controllers\Api\OrderController as ApiOrderController;
 
-
+/**
+ * Api for user
+ */
 Route::group(['prefix' => 'auth'], function () {
     Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/', [AuthController::class, 'getAuthenticatedUser'])->name('auth.user');
