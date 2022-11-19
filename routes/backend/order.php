@@ -6,7 +6,7 @@ use Tabuna\Breadcrumbs\Trail;
 
 //Technical Officer Routes ----------------------------------------------------------------------------
 Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
-    
+
     //index
     Route::get('/orders/officer/index', [OrderController::class, 'officer_index'])
         ->name('orders.officer.index')
@@ -21,29 +21,29 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
         ->name('orders.officer.approved.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-            ->push(__('Orders'), route('admin.orders.index'))
-            ->push(__('Technical Officer'), route('admin.orders.officer.index'))
-            ->push(__('Approved Orders'), route('admin.orders.officer.approved.index'));
+                ->push(__('Orders'), route('admin.orders.index'))
+                ->push(__('Technical Officer'), route('admin.orders.officer.index'))
+                ->push(__('Approved Orders'), route('admin.orders.officer.approved.index'));
         });
 
     // ready orders index
     Route::get('/orders/officer/ready', [OrderController::class, 'officer_index_for_ready_orders'])
-    ->name('orders.officer.ready.index')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('admin.dashboard'))
-        ->push(__('Orders'), route('admin.orders.index'))
-        ->push(__('Technical Officer'), route('admin.orders.officer.index'))
-        ->push(__('Ready Orders'), route('admin.orders.officer.ready.index'));
-    });
+        ->name('orders.officer.ready.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Orders'), route('admin.orders.index'))
+                ->push(__('Technical Officer'), route('admin.orders.officer.index'))
+                ->push(__('Ready Orders'), route('admin.orders.officer.ready.index'));
+        });
 
     // picked orders index
     Route::get('/orders/officer/picked', [OrderController::class, 'officer_index_for_picked_orders'])
         ->name('orders.officer.picked.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-            ->push(__('Orders'), route('admin.orders.index'))
-            ->push(__('Technical Officer'), route('admin.orders.officer.index'))
-            ->push(__('Picked Orders'), route('admin.orders.officer.picked.index'));
+                ->push(__('Orders'), route('admin.orders.index'))
+                ->push(__('Technical Officer'), route('admin.orders.officer.index'))
+                ->push(__('Picked Orders'), route('admin.orders.officer.picked.index'));
         });
 
     // Show
@@ -95,59 +95,57 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
 
     // Picked
     Route::post('/orders/officer/{orderRequest}/picked', [OrderController::class, 'officer_picked'])
-    ->name('orders.officer.picked');
+        ->name('orders.officer.picked');
 
     // Finish
     Route::post('/orders/officer/{orderRequest}/finish', [OrderController::class, 'officer_finish'])
-    ->name('orders.officer.finish');
-
+        ->name('orders.officer.finish');
 });
 //-----------------------------------------------------------------------------------------------------------
 
 // Lecturer Order request  Routes ----------------------------------------------------------------------------
 Route::middleware(['role:Administrator|Lecturer'])->group(function () {
 
- // index
- Route::get('/orders/lecturer', [OrderController::class, 'lecturer_index'])
- ->name('orders.lecturer.index')
- ->breadcrumbs(function (Trail $trail) {
-     $trail->push(__('Home'), route('admin.dashboard'))
-         ->push(__('Requests'),);
- });
+    // index
+    Route::get('/orders/lecturer', [OrderController::class, 'lecturer_index'])
+        ->name('orders.lecturer.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Requests'),);
+        });
 
 
 
- // Show
- Route::get('/orders/lecturer/{order}/view/', [OrderController::class, 'lecturer_show'])
- ->name('orders.lecturer.show')
- ->breadcrumbs(function (Trail $trail) {
-     $trail->push(__('Home'), route('admin.dashboard'))
-         ->push(__('Requests'), route('admin.orders.lecturer.index'))
-         ->push(__('Show'));
- });
+    // Show
+    Route::get('/orders/lecturer/{order}/view/', [OrderController::class, 'lecturer_show'])
+        ->name('orders.lecturer.show')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Requests'), route('admin.orders.lecturer.index'))
+                ->push(__('Show'));
+        });
 
-     // Store the different types of updates
-     Route::get('/orders/lecturer/{order}/approve/', [OrderController::class, 'lecturer_approve'])
-     ->name('orders.lecturer.approve');
-     Route::get('/orders/lecturer/{order}/rejected/', [OrderController::class, 'lecturer_reject'])
-     ->name('orders.lecturer.rejected');
+    // Store the different types of updates
+    Route::get('/orders/lecturer/{order}/approve/', [OrderController::class, 'lecturer_approve'])
+        ->name('orders.lecturer.approve');
+    Route::get('/orders/lecturer/{order}/rejected/', [OrderController::class, 'lecturer_reject'])
+        ->name('orders.lecturer.rejected');
 
-      // accepted index
- Route::get('/orders/lecturer/accepted', [OrderController::class, 'lecturer_accepted_index'])
- ->name('orders.lecturer.accepted.index')
- ->breadcrumbs(function (Trail $trail) {
-     $trail->push(__('Home'), route('admin.dashboard'))
-         ->push(__('Requests'),);
- });
+    // accepted index
+    Route::get('/orders/lecturer/accepted', [OrderController::class, 'lecturer_accepted_index'])
+        ->name('orders.lecturer.accepted.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Requests'),);
+        });
 
- //Rejected index
- Route::get('/orders/lecturer/rejected', [OrderController::class, 'lecturer_rejected_index'])
- ->name('orders.lecturer.rejected.index')
- ->breadcrumbs(function (Trail $trail) {
-     $trail->push(__('Home'), route('admin.dashboard'))
-         ->push(__('Requests'),);
- });
-
+    //Rejected index
+    Route::get('/orders/lecturer/rejected', [OrderController::class, 'lecturer_rejected_index'])
+        ->name('orders.lecturer.rejected.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Requests'),);
+        });
 });
 //----------------------------------------------------------------------------------------------------------------
 
@@ -155,43 +153,42 @@ Route::middleware(['role:Administrator|Lecturer'])->group(function () {
 
 
 Route::middleware(['permission:lecturer.access.hod'])->group(function () {
-Route::get('/orders/hod', [OrderController::class, 'h_o_d_index'])
-->name('orders.h_o_d.index')
-->breadcrumbs(function (Trail $trail) {
-    $trail->push(__('Home'), route('admin.dashboard'))
-        ->push(__('Requests'),);
-});
+    Route::get('/orders/hod', [OrderController::class, 'h_o_d_index'])
+        ->name('orders.h_o_d.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Requests'),);
+        });
 
- // Show
- Route::get('/orders/hod/{order}/view/', [OrderController::class, 'h_o_d_show'])
- ->name('orders.h_o_d.show')
- ->breadcrumbs(function (Trail $trail) {
-     $trail->push(__('Home'), route('admin.dashboard'))
-         ->push(__('Requests'), route('admin.orders.h_o_d.index'))
-         ->push(__('Show'));
- });
-// Store the different types of updates
-Route::get('/orders/hod/{order}/approve/', [OrderController::class, 'h_o_d_approve'])
-->name('orders.h_o_d.approve');
-Route::get('/orders/hod/{order}/rejected/', [OrderController::class, 'h_o_d_reject'])
-->name('orders.h_o_d.rejected');
+    // Show
+    Route::get('/orders/hod/{order}/view/', [OrderController::class, 'h_o_d_show'])
+        ->name('orders.h_o_d.show')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Requests'), route('admin.orders.h_o_d.index'))
+                ->push(__('Show'));
+        });
+    // Store the different types of updates
+    Route::get('/orders/hod/{order}/approve/', [OrderController::class, 'h_o_d_approve'])
+        ->name('orders.h_o_d.approve');
+    Route::get('/orders/hod/{order}/rejected/', [OrderController::class, 'h_o_d_reject'])
+        ->name('orders.h_o_d.rejected');
 
-      // accepted index
-      Route::get('/orders/hod/accepted', [OrderController::class, 'h_o_d_accepted_index'])
-      ->name('orders.h_o_d.accepted.index')
-      ->breadcrumbs(function (Trail $trail) {
-          $trail->push(__('Home'), route('admin.dashboard'))
-              ->push(__('Requests'),);
-      });
+    // accepted index
+    Route::get('/orders/hod/accepted', [OrderController::class, 'h_o_d_accepted_index'])
+        ->name('orders.h_o_d.accepted.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Requests'),);
+        });
 
-       //Rejected index
- Route::get('/orders/hod/rejected', [OrderController::class, 'h_o_d_rejected_index'])
- ->name('orders.h_o_d.rejected.index')
- ->breadcrumbs(function (Trail $trail) {
-     $trail->push(__('Home'), route('admin.dashboard'))
-         ->push(__('Requests'),);
- });
-
+    //Rejected index
+    Route::get('/orders/hod/rejected', [OrderController::class, 'h_o_d_rejected_index'])
+        ->name('orders.h_o_d.rejected.index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Requests'),);
+        });
 });
 
 
@@ -204,11 +201,11 @@ Route::get('/orders/hod/{order}/rejected/', [OrderController::class, 'h_o_d_reje
 
 
 Route::get('/orders', [OrderController::class, 'index'])
-->name('orders.index')
-->breadcrumbs(function (Trail $trail) {
-    $trail->push(__('Home'), route('admin.dashboard'))
-        ->push(__('Orders'), route('admin.orders.index'));
-});
+    ->name('orders.index')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->push(__('Home'), route('admin.dashboard'))
+            ->push(__('Orders'), route('admin.orders.index'));
+    });
 
 // Create
 Route::get('orders/create', [OrderController::class, 'create'])
@@ -231,7 +228,7 @@ Route::get('orders/{order}', [OrderController::class, 'show'])
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Orders'), route('admin.orders.index'))
             ->push(__('Show'));
-});
+    });
 
 // Edit
 Route::get('orders/edit/{order}', [OrderController::class, 'edit'])
@@ -240,12 +237,12 @@ Route::get('orders/edit/{order}', [OrderController::class, 'edit'])
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Orders'), route('admin.orders.index'))
             ->push(__('Edit'));
-});
+    });
 
 
 // Update
 Route::put('orders/{order}', [OrderController::class, 'update'])
-->name('orders.update');
+    ->name('orders.update');
 
 // Delete
 Route::get('orders/delete/{order}', [OrderController::class, 'delete'])
@@ -254,11 +251,8 @@ Route::get('orders/delete/{order}', [OrderController::class, 'delete'])
         $trail->push(__('Home'), route('admin.dashboard'))
             ->push(__('Orders'), route('admin.orders.index'))
             ->push(__('Delete'));
-});
+    });
 
 // Destroy
 Route::delete('orders/{order}', [OrderController::class, 'destroy'])
     ->name('orders.destroy');
-
-
-?>
