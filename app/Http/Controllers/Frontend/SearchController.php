@@ -15,12 +15,11 @@ use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 
 class SearchController extends Controller
-
 {
 
     public function results(Request $request)
     {
-        $keywords = $request->keywords;
+        $keywords = $request->input('keywords');
 
         if (strlen($keywords) == 0) {
             return view('frontend.index')->with('status', 'Search string is empty. Please type something');
@@ -37,22 +36,4 @@ class SearchController extends Controller
         //create a view to show results on frontend and add the view below
         return view('frontend.search.results', compact('searchResults', 'keywords'));
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
