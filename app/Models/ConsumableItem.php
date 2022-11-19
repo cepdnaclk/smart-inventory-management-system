@@ -8,19 +8,20 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 class ConsumableItem extends Model implements Searchable
+
 {
     use HasFactory;
 
     protected $guarded = [];
-    //comment here
+
     // Link the Component Type table
     public function consumable_type()
     {
-        if ($this->consumable_type_id != null) return $this->belongsTo(ConsumableType::class, 'consumable_type_id', 'id');
-        return null;
+        // do not change. Relationships are defined this way. do not return null. causes errors in livewire that are untraceable.
+        return $this->belongsTo(ConsumableType::class, 'consumable_type_id', 'id');
     }
 
-    // reverse search depends on this. Change SearchController.php if you're chaning this
+    // reverse search depends on this. Change SearchController.php if you're changing this
     public function inventoryCode()
     {
         return $this->consumable_type->inventoryCode() . "/" . $this->id;

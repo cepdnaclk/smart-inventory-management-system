@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Stations;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Models\EquipmentItem;
 use App\Http\Controllers\Controller;
-use App\Models\EquipmentItemStation;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 
 
 class StationController extends Controller
 
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the stations.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -29,9 +29,9 @@ class StationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new station.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -41,10 +41,10 @@ class StationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created station in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -63,36 +63,29 @@ class StationController extends Controller
             $type = new Stations($data);
             $type->save();
             return redirect()->route('admin.station.index')->with('Success', 'Station was created !');
-
         } catch (\Exception $ex) {
-            dd($ex);
+            //dd($ex);
             return abort(500);
         }
-
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified station.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
-    /*
-    public function show(Stations $station)
-    {
-        return view('backend.station.show', compact('station'));
-    }
-*/
+
     public function show(Stations $station)
     {
         return view('backend.station.show', compact('station'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified station.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function edit(Stations $station)
     {
@@ -101,11 +94,11 @@ class StationController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified station in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Stations $station)
     {
@@ -122,18 +115,16 @@ class StationController extends Controller
             }
             $station->update($data);
             return redirect()->route('admin.station.index')->with('Success', 'Station was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
-
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified station from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function delete(Stations $station)
     {
@@ -141,7 +132,7 @@ class StationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified station from storage.
      *
      * @param \App\Models\Station $station
      * @return \Illuminate\Http\RedirectResponse|null
@@ -154,7 +145,6 @@ class StationController extends Controller
 
             $station->delete();
             return redirect()->route('admin.station.index')->with('Success', 'Station was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -183,5 +173,4 @@ class StationController extends Controller
 
         return $imageName;
     }
-
 }

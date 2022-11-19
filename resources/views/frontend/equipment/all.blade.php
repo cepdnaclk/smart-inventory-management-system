@@ -19,10 +19,10 @@
                                             <img class="img-fluid p-2 mx-auto" src="{{ $item->thumbURL() }}"
                                                  alt="{{ $item->title }}"/>
                                             <div class="p-1">
-                                                {{ $item->title }}
+                                                {{ $item->title }}<br>({{ $item->inventoryCode() }})
                                             </div>
                                         </a>
-                                        <a href="{{ route('frontend.equipment.category', $item->equipment_type) }}">
+                                        <a href="{{ route('frontend.equipment.category', $item->equipment_type ) }}">
                                             ({{ $item->equipment_type->title }})
                                         </a>
                                     </div>

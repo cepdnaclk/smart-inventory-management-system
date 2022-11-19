@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Backend\ComponentItemController;
 use App\Http\Controllers\Backend\ComponentTypeController;
-use Tabuna\Breadcrumbs\Trail;
+use Tabuna\Breadcrumbs\Trail; 
 
 Route::middleware(['editAccess'])->group(function () {
 
@@ -58,6 +58,16 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Components'), route('admin.component.index'))
                 ->push(__('Items'), route('admin.component.items.index'))
                 ->push(__('Edit'));
+        });
+
+    // Edit location
+    Route::get('components/items/edit/location/{componentItem}', [ComponentItemController::class, 'editLocation'])
+        ->name('component.items.edit.location')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Components'), route('admin.component.index'))
+                ->push(__('Items'), route('admin.component.items.index'))
+                ->push(__('Edit Location'));
         });
 
 

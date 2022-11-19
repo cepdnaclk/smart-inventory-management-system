@@ -44,6 +44,15 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Edit'));
         });
 
+    // Edit location
+    Route::get('raw_materials/edit/{rawMaterials}/location', [RawMaterialsController::class, 'editLocations'])
+        ->name('raw_materials.edit.location')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'))
+                ->push(__('Raw Materials'), route('admin.raw_materials.index'))
+                ->push(__('Edit Location'));
+        });
+
 
     // Update
     Route::put('raw_materials/{rawMaterials}', [RawMaterialsController::class, 'update'])

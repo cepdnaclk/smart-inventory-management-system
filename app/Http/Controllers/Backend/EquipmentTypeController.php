@@ -20,8 +20,8 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
-        $equipmentTypes = EquipmentType::orderBy('id', 'asc')->paginate(16);
-        return view('backend.equipment.types.index', compact('equipmentTypes'));
+        //$equipmentTypes = EquipmentType::orderBy('id', 'asc')->paginate(16);
+        return view('backend.equipment.types.index');
     }
 
     /**
@@ -31,7 +31,9 @@ class EquipmentTypeController extends Controller
      */
     public function create()
     {
+        // TODO: Generate hierarchical list
         $types = EquipmentType::pluck('title', 'id');
+
         return view('backend.equipment.types.create', compact('types'));
     }
 
@@ -84,7 +86,9 @@ class EquipmentTypeController extends Controller
      */
     public function edit(EquipmentType $equipmentType)
     {
+        // TODO: Generate hierarchical list
         $types = EquipmentType::pluck('title', 'id');
+
         return view('backend.equipment.types.edit', compact('equipmentType', 'types'));
     }
 
@@ -139,12 +143,15 @@ class EquipmentTypeController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentType->thumbURL());
+            if ($equipmentType->thumb != null) {
+                $this->deleteThumb($equipmentType->thumbURL());
+            }
 
             $equipmentType->delete();
             return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was deleted !');
 
         } catch (\Exception $ex) {
+            dd($ex);
             return abort(500);
         }
     }

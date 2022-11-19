@@ -40,6 +40,17 @@
                         <td>Parent Category</td>
                         <td>
                             @if( $componentType->parent() !== null)
+                                @if( $componentType->parent()->parent() !== null)
+                                    @if( $componentType->parent()->parent()->parent() !== null)
+                                        <a href="{{ route('admin.component.types.show', $componentType->parent()->parent()->parent()->id) }}">
+                                            {{ $componentType->parent()->parent()->parent()->title }}
+                                        </a>{{ ' > ' }}
+                                    @endif
+                                    <a href="{{ route('admin.component.types.show', $componentType->parent()->parent()->id) }}">
+                                        {{ $componentType->parent()->parent()->title }}
+                                    </a>{{ ' > ' }}
+                                @endif
+
                                 <a href="{{ route('admin.component.types.show', $componentType->parent()->id) }}">
                                     {{ $componentType->parent()->title }}
                                 </a>
@@ -48,10 +59,14 @@
                             @endif
                         </td>
                     </tr>
+                    
+                    @if( $componentType->subtitle != "" )
                     <tr>
                         <td>Subtitle</td>
                         <td>{{ $componentType->subtitle }}</td>
                     </tr>
+                    @endif 
+
                     <tr>
                         <td>Description</td>
                         <td>{{ $componentType->description }}</td>

@@ -34,18 +34,6 @@
                     </div>
                 </div>
 
-                <!-- Location -->
-                <div class="form-group row">
-                    {!! Form::label('location_label', 'Location*', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::select('location', $locations, $this_item_location, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
-                        @error('location')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
                 <!-- Color -->
                 <div class="form-group row">
                     {!! Form::label('color', 'Color', ['class' => 'col-md-2 col-form-label']) !!}

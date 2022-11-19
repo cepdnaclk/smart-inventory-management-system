@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\EquipmentItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,7 +9,12 @@ class Stations extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['stationName', 'description', 'thumb','capacity'];
+    protected $fillable = ['stationName', 'description', 'thumb', 'capacity'];
+
+    public function inventoryCode()
+    {
+        return sprintf("ST/%02d", $this->id);
+    }
 
     // Return the relative URL of the thumbnail
     public function thumbURL()
@@ -18,6 +22,4 @@ class Stations extends Model
         if ($this->thumb != null) return '/img/stations/' . $this->thumb;
         return null;
     }
-
-
 }
