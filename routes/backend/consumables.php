@@ -7,7 +7,7 @@ use Tabuna\Breadcrumbs\Trail;
 
 Route::middleware(['editAccess'])->group(function () {
     Route::get('/consumables', function () {
-        return view('backend.consumables.index');
+        return view('backend.consumable.index');
     })->name('consumable.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
@@ -96,7 +96,7 @@ Route::middleware(['editAccess'])->group(function () {
         ->name('consumable.types.index')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Consumables'), '/')
+                ->push(__('Consumables'),  route('admin.consumable.index'))
                 ->push(__('Types'));
         });
 
@@ -105,7 +105,7 @@ Route::middleware(['editAccess'])->group(function () {
         ->name('consumable.types.create')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Consumables'), '/')
+                ->push(__('Consumables'),  route('admin.consumable.index'))
                 ->push(__('Types'), route('admin.consumable.types.index'))
                 ->push(__('Create'));
         });
@@ -119,7 +119,7 @@ Route::middleware(['editAccess'])->group(function () {
         ->name('consumable.types.show')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Consumables'), '/')
+                ->push(__('Consumables'),  route('admin.consumable.index'))
                 ->push(__('Types'), route('admin.consumable.types.index'))
                 ->push(__('Show'));
         });
@@ -129,7 +129,7 @@ Route::middleware(['editAccess'])->group(function () {
         ->name('consumable.types.edit')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Consumables'), '/')
+                ->push(__('Consumables'),  route('admin.consumable.index'))
                 ->push(__('Types'), route('admin.consumable.types.index'))
                 ->push(__('Edit'));
         });
@@ -143,7 +143,7 @@ Route::middleware(['editAccess'])->group(function () {
         ->name('consumable.types.delete')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Consumables'), '/')
+                ->push(__('Consumables'),  route('admin.consumable.index'))
                 ->push(__('Types'), route('admin.consumable.types.index'))
                 ->push(__('Delete'));
         });

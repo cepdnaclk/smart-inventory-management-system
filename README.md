@@ -137,6 +137,9 @@ php artisan tinker
 // Run the unit tests
 php artisan test
 
+// Run unit tests in parallel
+php artisan test -p
+
 ```
 
 #### Resource Routes
