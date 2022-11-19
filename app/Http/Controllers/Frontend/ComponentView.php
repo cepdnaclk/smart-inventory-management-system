@@ -16,6 +16,13 @@ class ComponentView extends Controller
         return view('frontend.component.index', compact('componentType'));
     }
 
+    // All Components
+    public function index_all()
+    {
+        $items = ComponentItem::paginate(36);
+        return view('frontend.component.all', compact('items'));
+    }
+
     // component Category Page
     public function viewCategory(ComponentType $componentType)
     {
@@ -32,6 +39,6 @@ class ComponentView extends Controller
             $locationStringArray[] = $this->getFullLocationPathAsString($componentItem, $i);
         }
 
-        return view('frontend.component.item', compact('componentItem','locationCount','locationStringArray'));
+        return view('frontend.component.item', compact('componentItem', 'locationCount', 'locationStringArray'));
     }
 }

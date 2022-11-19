@@ -14,6 +14,14 @@ Route::prefix('components')->group(function () {
                 ->push(__('Components'), route('frontend.component.index'));
         });
 
+    Route::get('/all', [ComponentView::class, 'index_all'])
+        ->name('component.index.all')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('frontend.index')
+                ->push(__('component'),  route('frontend.component.index'))
+                ->push(__('All'), route('frontend.component.index.all'));
+        });
+
     Route::get('/category/{componentType}', [ComponentView::class, 'viewCategory'])
         ->name('component.category')
         ->breadcrumbs(function (Trail $trail, ComponentType $componentType) {
@@ -24,12 +32,16 @@ Route::prefix('components')->group(function () {
                 // Only look upto two parents for now
 
                 if ($componentType->parent()->parent() != null) {
-                    $trail->push($componentType->parent()->parent()->title, route('frontend.component.category',
-                        $componentType->parent()->parent()));
+                    $trail->push($componentType->parent()->parent()->title, route(
+                        'frontend.component.category',
+                        $componentType->parent()->parent()
+                    ));
                 }
 
-                $trail->push($componentType->parent()->title, route('frontend.component.category',
-                    $componentType->parent()));
+                $trail->push($componentType->parent()->title, route(
+                    'frontend.component.category',
+                    $componentType->parent()
+                ));
             }
             $trail->push($componentType->title);
         });
@@ -45,15 +57,18 @@ Route::prefix('components')->group(function () {
                 $type = $componentItem->component_type;
 
                 if ($type->parent() != null) {
-                    $trail->push($type->parent()->title, route('frontend.component.category',
-                        $type->parent()));
+                    $trail->push($type->parent()->title, route(
+                        'frontend.component.category',
+                        $type->parent()
+                    ));
                 }
 
-                $trail->push($type->title, route('frontend.component.category',
-                    $type));
+                $trail->push($type->title, route(
+                    'frontend.component.category',
+                    $type
+                ));
             }
 
             $trail->push($componentItem->title);
         });
-
 });

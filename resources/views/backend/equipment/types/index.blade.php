@@ -13,7 +13,7 @@
                 Equipment Types
             </x-slot>
 
-            {{--            @if ($logged_in_user->hasAllAccess())--}}
+            @if ($logged_in_user->hasInventoryAccess())
             <x-slot name="headerActions">
                 <x-utils.link
                         icon="c-icon cil-plus"
@@ -21,7 +21,7 @@
                         :href="route('admin.equipment.types.create')"
                         :text="__('Create Equipment Type')"></x-utils.link>
             </x-slot>
-            {{--            @endif--}}
+            @endif
 
             <x-slot name="body">
 

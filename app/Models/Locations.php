@@ -50,5 +50,4 @@ class Locations extends Model
     {
         return Locations::where('parent_location', $this->id)->get();
     }
-
 }

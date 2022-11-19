@@ -24,6 +24,7 @@ class FabricationsTechOfficerTable extends DataTableComponent
                 ->sortable(),
             Column::make("Supervisor", "supervisor")
                 ->sortable(),
+            Column::make("Actions")
         ];
     }
 

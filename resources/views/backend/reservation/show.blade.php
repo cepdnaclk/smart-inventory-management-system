@@ -4,27 +4,35 @@
 
 @section('breadcrumb-links')
     @include('backend.reservation.includes.breadcrumb-links')
-@endsection 
+@endsection
 
 @section('content')
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Reservation : Show |    @if($reservation->res_info() != null)
-                                            {{ $reservation->res_info['name'] }}
-                                        @endif
+                Reservation : Show |
+                @if($reservation->res_info() != null)
+                    {{ $reservation->res_info['name'] }}
+                @endif
             </x-slot>
 
             <x-slot name="body">
                 <div class="container pb-2 d-inline-flex">
                     <div class="d-flex">
-                        <h4>                   
+                        <h4>
                             @if($reservation->res_info() != null)
                                 {{ $reservation->res_info['name'] }}
                             @endif
                         </h4>
                     </div>
-                   
+                    <div class="d-flex px-0 mt-0 mb-0 ml-auto">
+                        <div class="btn-group" role="group" aria-label="Modify Buttons">
+                            <a href="{{ route('admin.reservation.edit', $reservation)}}"
+                               class="btn btn-primary btn-xs me-2"><i class="fa fa-check" title="Approve"></i>
+                                Approve
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <table class="table">
 
@@ -36,13 +44,13 @@
                     <tr>
                         <td>User Email</td>
                         <td>
-                        @if($reservation->res_info() != null)
-                            {{ $reservation->res_info['email'] }} 
-                        @endif
+                            @if($reservation->res_info() != null)
+                                {{ $reservation->res_info['email'] }}
+                            @endif
                         </td>
-                        
+
                     </tr>
-                    
+
                     <tr>
                         <td>Start Date</td>
                         <td>{{ $reservation->start_date }}</td>
@@ -55,22 +63,64 @@
 
                     <tr>
                         <td>Duration</td>
-                        <td>{{ $reservation->duration }} minutes </td>
+                        <td>{{ $reservation->duration }} minutes</td>
                     </tr>
 
                     <tr>
                         <td>Station Name</td>
                         <td>
-                        @if($reservation->st_info() != null)
-                            {{ $reservation->st_info['stationName'] }} 
-                            (ID = {{ $reservation->st_info['id'] }})
-                        @endif
+                            @if($reservation->st_info() != null)
+                                {{ $reservation->st_info['stationName'] }}
+                                (ID = {{ $reservation->st_info['id'] }})
+                            @endif
                         </td>
                     </tr>
 
                     <tr>
                         <td>E numbers</td>
                         <td>{{ $reservation->E_numbers }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Thumbnail Before Usage</td>
+                        <td>
+                            @if( $reservation->thumb != null )
+                                <img src="{{ $reservation->thumbURL() }}" alt="{{ $reservation->station_id}}"
+                                     class="img img-thumbnail">
+                            @else
+                                <span>[Not Available]</span>
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Thumbnail After Usage</td>
+                        <td>
+                            @if( $reservation->thumb_after != null )
+                                <img src="{{ $reservation->thumbURL_after() }}" alt="{{ $reservation->station_id}}"
+                                     class="img img-thumbnail">
+                            @else
+                                <span>[Not Available]</span>
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            @if($reservation->status == "approved")
+                                <span class="text-success">Approved</span>
+                            @elseif($reservation->status == "rejected")
+                                <span class="text-danger">Rejected</span>                                        
+                            @else
+                                <span class="text-primary">Pending</span>                                        
+                            @endif
+                        </td>                        
+                    </tr>
+
+                    <tr>
+                        <td>Remarks</td>
+                        <td>{{ $reservation->comments }}</td>
                     </tr>
 
                 </table>

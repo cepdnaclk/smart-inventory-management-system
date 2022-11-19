@@ -100,32 +100,29 @@
             .searchBars:hover {
             background: #888888;
             }
-
-
-
     </style>
     @stack('after-styles')
 </head>
 <body>
-@include('includes.partials.read-only')
-@include('includes.partials.logged-in-as')
-@include('includes.partials.announcements')
+    @include('includes.partials.read-only')
+    @include('includes.partials.logged-in-as')
+    @include('includes.partials.announcements')
 
-<div id="app" class="flex-center position-ref full-height">
-    <div class="top-right links">
-        @auth
+    <div id="app" class="flex-center position-ref full-height">
+        <div class="top-right links">
+            @auth
             @if ($logged_in_user->isAdminAccess())
-                <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+            <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
             @endif
 
             <a href="{{ route('frontend.user.dashboard') }}">User Dashboard</a>
 
             <a href="{{ route('frontend.user.account') }}">@lang('Account')</a>
-        @else
+            @else
             <a href="{{ route('frontend.auth.login') }}">@lang('Login')</a>
 
             @if (config('boilerplate.access.user.registration'))
-                <a href="{{ route('frontend.auth.register') }}">@lang('Register')</a>
+            <a href="{{ route('frontend.auth.register') }}">@lang('Register')</a>
             @endif
         @endauth
     </div><!--top-right-->

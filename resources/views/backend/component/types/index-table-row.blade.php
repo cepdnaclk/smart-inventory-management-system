@@ -17,7 +17,7 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
-    @if ($row->description == ' ')
+    @if ($row->description == '')
         N/A
     @else
         {{ $row->description }}

@@ -113,7 +113,7 @@
                     <tr>
                         <td>Thumbnail</td>
                         <td>
-                            @if ($consumableItem->thumb != null)
+                            @if ($consumableItem->thumbURL() != null)
                                 <img
                                     src="{{ $consumableItem->thumbURL() }}"
                                     alt="{{ $consumableItem->title }}"

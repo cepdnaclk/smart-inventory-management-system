@@ -29,14 +29,10 @@ class ComponentItemFactory extends Factory
             'quantity' => rand(100, 1000),
             'specifications' => $this->faker->text(),
             'description' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
-            'isAvailable' => '1',
-            'isElectrical' => '1',
-            'powerRating' => rand(100, 1000),
+            'datasheet' => $this->faker->url(),
             'price' => rand(100, 1000),
-            'size' => $this->faker->randomElement(['very small', 'small',  'medium','regular', 'large', 'very large']),
             'thumb' => NULL,
-            'component_type_id' => $this->faker->randomElement(['11','12'])
+            'component_type_id' => $this->faker->randomElement(['10', '11', '12', '13', '14', '15'])
 
         ];
     }

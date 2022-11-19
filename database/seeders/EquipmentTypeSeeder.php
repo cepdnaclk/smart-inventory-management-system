@@ -25,7 +25,9 @@ class EquipmentTypeSeeder extends Seeder
         array('id' => '26', 'code' => '', 'parent_id' => '27', 'title' => 'Double Open Wrenches', 'subtitle' => NULL, 'description' => 'A wrench or spanner is a tool used to provide grip and mechanical advantage in applying torque to turn objects', 'thumb' => '1655880526.jpg', 'created_at' => '2021-08-15 05:47:05', 'updated_at' => '2022-06-22 06:58:08'),
         array('id' => '27', 'code' => '', 'parent_id' => '11', 'title' => 'Wrenches', 'subtitle' => NULL, 'description' => 'A wrench or spanner is a tool used to provide grip and mechanical advantage in applying torque to turn objects', 'thumb' => '1655880945.jpg', 'created_at' => '2022-06-22 06:55:45', 'updated_at' => '2022-06-22 06:55:45'),
         array('id' => '28', 'code' => '', 'parent_id' => '11', 'title' => 'Sockets', 'subtitle' => NULL, 'description' => 'Sockets are tools used to tighten mechanical fasteners. They fit over the head of the fastener to provide torque.', 'thumb' => '1655881186.jpg', 'created_at' => '2022-06-22 06:59:46', 'updated_at' => '2022-06-22 07:00:48'),
-        array('id' => '29', 'code' => '', 'parent_id' => '12', 'title' => 'Tool Accessories', 'subtitle' => NULL, 'description' => NULL, 'thumb' => NULL, 'created_at' => '2022-06-25 12:51:37', 'updated_at' => '2022-06-25 12:51:37')
+        array('id' => '29', 'code' => '', 'parent_id' => '12', 'title' => 'Tool Accessories', 'subtitle' => NULL, 'description' => NULL, 'thumb' => NULL, 'created_at' => '2022-06-25 12:51:37', 'updated_at' => '2022-06-25 12:51:37'),
+        array('id' => '30', 'code' => '', 'parent_id' => NULL, 'title' => 'Custom Made Equipment', 'subtitle' => NULL, 'description' => NULL, 'thumb' => NULL, 'created_at' => '2022-09-22 18:28:59', 'updated_at' => '2022-09-22 18:28:59'),
+        array('id' => '31', 'code' => '', 'parent_id' => NULL, 'title' => 'Other', 'subtitle' => NULL, 'description' => NULL, 'thumb' => NULL, 'created_at' => '2022-09-22 18:29:55', 'updated_at' => '2022-09-22 18:29:55')
     ];
 
     /**

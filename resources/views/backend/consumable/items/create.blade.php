@@ -50,41 +50,6 @@
                     </div>
                 </div>
 
-
-                {{-- <div class="form-group row"> --}}
-                {{-- <!-- Brand --> --}}
-                {{-- {!! Form::label('brand', 'Brand', ['class' => 'col-md-2 col-form-label']) !!} --}}
-
-                {{-- <div class="col-md-4"> --}}
-                {{-- {!! Form::text('brand', '', ['class'=>'form-control']) !!} --}}
-                {{-- @error('brand') --}}
-                {{-- <strong>{{ $message }}</strong> --}}
-                {{-- @enderror --}}
-                {{-- </div> --}}
-
-                {{-- <!-- Product Code --> --}}
-                {{-- {!! Form::label('productCode', 'Product Code', ['class' => 'col-md-2 col-form-label']) !!} --}}
-
-                {{-- <div class="col-md-4"> --}}
-                {{-- {!! Form::text('productCode', '', ['class'=>'form-control']) !!} --}}
-                {{-- @error('productCode') --}}
-                {{-- <strong>{{ $message }}</strong> --}}
-                {{-- @enderror --}}
-                {{-- </div> --}}
-                {{-- </div> --}}
-
-                {{-- <!-- Description --> --}}
-                {{-- <div class="form-group row"> --}}
-                {{-- {!! Form::label('description', 'Description', ['class' => 'col-md-2 col-form-label']) !!} --}}
-
-                {{-- <div class="col-md-10"> --}}
-                {{-- {!! Form::textarea('description', '', ['class'=>'form-control', 'rows'=>3 ]) !!} --}}
-                {{-- @error('description') --}}
-                {{-- <strong>{{ $message }}</strong> --}}
-                {{-- @enderror --}}
-                {{-- </div> --}}
-                {{-- </div> --}}
-
                 <!-- Specifications -->
                 <div class="form-group row">
                     {!! Form::label('specifications', 'Specifications', ['class' => 'col-md-2 col-form-label']) !!}

@@ -23,8 +23,8 @@ class EquipmentItemController extends Controller
      */
     public function index()
     {
-        //$equipment = EquipmentItem::orderBy('id', 'asc')->paginate(16);
-        return view('backend.equipment.items.index');
+        $equipment = EquipmentItem::orderBy('id', 'asc')->paginate(16);
+        return view('backend.equipment.items.index', compact('equipment'));
     }
 
     /**
@@ -82,7 +82,6 @@ class EquipmentItemController extends Controller
             //            save first, otherwise the id is not there
             $type->save();
             return redirect()->route('admin.equipment.items.edit.location', $type)->with('Success', 'Equipment was created !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -120,8 +119,8 @@ class EquipmentItemController extends Controller
         //} else {
         //    $this_item_location = null;
         //}
-//        dd($this_item_location);
-//        $locations = Locations::pluck('location', 'id');
+        //        dd($this_item_location);
+        //        $locations = Locations::pluck('location', 'id');
         return view('backend.equipment.items.edit', compact('types', 'equipmentItem'));
     }
 
@@ -148,7 +147,7 @@ class EquipmentItemController extends Controller
      */
     public function update(Request $request, EquipmentItem $equipmentItem)
     {
-//         dd($request->request);
+        //         dd($request->request);
         $data = request()->validate([
             'title' => 'string|required',
             'brand' => 'string|nullable',
@@ -183,11 +182,10 @@ class EquipmentItemController extends Controller
             $equipmentItem->update($data);
 
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
-    }
+    } 
 
     /**
      * Confirm to delete the specified resource from storage.
@@ -215,11 +213,13 @@ class EquipmentItemController extends Controller
 
             $equipmentItem->delete();
 
-            //            delete all location entries
-            $this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->delete();
-
+            // delete location entries
+            $this_item_locations = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
+            foreach($this_item_locations as $loc){
+                $loc->delete();
+            }
+            
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }

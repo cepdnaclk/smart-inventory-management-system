@@ -14,7 +14,6 @@ Route::middleware(['editAccess'])->group(function () {
                 ->push(__('Consumables'), route('admin.consumable.index'));
         });
 
-
     //consumable Items --------------------------------------------------------------------
 
     //Index
