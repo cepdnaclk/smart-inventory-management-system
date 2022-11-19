@@ -13,13 +13,10 @@
 @section('content')
     <div class="container py-4">
         <div class="row">
-            <div class="col-md-4 col-sm-12 col-12 d-flex mb-4">
+            <div class="col-md-4 col-sm-12 col-12 mb-4">
                 @if ($componentItem->thumb != null)
-                    <img
-                        src="{{ $componentItem->thumbURL() }}"
-                        alt="{{ $componentItem->title }}"
-                        class="img img-thumbnail img-fluid mx-auto p-3"
-                    >
+                    <img src="{{ $componentItem->thumbURL() }}" alt="{{ $componentItem->title }}"
+                        class="img img-thumbnail img-fluid mx-auto p-3">
                 @else
                     {{-- TODO: Add a default image --}}
                     <span>[Not Available]</span>

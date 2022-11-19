@@ -13,13 +13,10 @@
 @section('content')
     <div class="container py-4">
         <div class="row">
-            <div class="col-md-4 col-sm-12 col-12 d-flex mb-4">
+            <div class="col-md-4 col-sm-12 col-12 mb-4">
                 @if ($consumableItem->thumbURL() != null)
-                    <img
-                        src="{{ $consumableItem->thumbURL() }}"
-                        alt="{{ $consumableItem->title }}"
-                        class="img img-thumbnail img-fluid mx-auto p-3"
-                    >
+                    <img src="{{ $consumableItem->thumbURL() }}" alt="{{ $consumableItem->title }}"
+                        class="img img-thumbnail img-fluid mx-auto p-3">
                 @else
                     {{-- TODO: Add a default image --}}
                     <span>[Not Available]</span>
@@ -37,15 +34,13 @@
                         </h3>
                     </div>
                     <div class="col-2">
-                        @if ($logged_in_user != null && ($logged_in_user->isAdmin() || $logged_in_user->isLecturer() || $logged_in_user->isTechOfficer() || $logged_in_user->isMaintainer()))
-                            <a
-                                target="_blank"
-                                href="{{ route('admin.consumable.items.edit', $consumableItem) }}"
-                                class="btn btn-info btn-xs"
-                            ><i
-                                    class="fa fa-pencil"
-                                    title="Edit"
-                                ></i>
+                        @if ($logged_in_user != null &&
+                            ($logged_in_user->isAdmin() ||
+                                $logged_in_user->isLecturer() ||
+                                $logged_in_user->isTechOfficer() ||
+                                $logged_in_user->isMaintainer()))
+                            <a target="_blank" href="{{ route('admin.consumable.items.edit', $consumableItem) }}"
+                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
                         @endif
                     </div>
@@ -108,10 +103,7 @@
                             <td>
                                 : <b>
                                     @if ($consumableItem->datasheetUrl != null)
-                                        <a
-                                            href="{{ $consumableItem->datasheetUrl }}"
-                                            target="_blank"
-                                        >
+                                        <a href="{{ $consumableItem->datasheetUrl }}" target="_blank">
                                             {{ $consumableItem->datasheetUrl }}
                                         @else
                                             <span>[Not Available]</span>
