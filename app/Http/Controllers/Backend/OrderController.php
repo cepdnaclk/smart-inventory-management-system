@@ -174,6 +174,7 @@ class OrderController extends Controller
 
 
         $orderApproval = OrderApproval::where('is_approved_by_lecturer', '=', 1)->get();
+        // $orderApproval = OrderApproval::where('lecturer_id', \Auth::user()->id)->where('is_approved_by_lecturer', '=', 1)->get();
         //return response()->json($orderApproval, 200);
 
         return view('backend.orders.hod.request.index', compact('orderApproval'));
@@ -291,8 +292,8 @@ class OrderController extends Controller
 
                 "components" => $orderRequest->componentItems
             ];
-            //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to($orderRequest->user->email)->send(new OrderMail($details));
+            // Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
             return redirect()->route('admin.orders.officer.approved.index')->with('Success', 'Email has been sent!');
         } catch (\Exception $ex) {
@@ -327,8 +328,8 @@ class OrderController extends Controller
 
                 "components" => $orderRequest->componentItems
             ];
-            //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to($orderRequest->user->email)->send(new OrderMail($details));
+            // Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
             return redirect()->route('admin.orders.officer.ready.index')->with('Success', 'Email has been sent!');
         } catch (\Exception $ex) {
@@ -362,8 +363,8 @@ class OrderController extends Controller
 
                 "components" => $orderRequest->componentItems
             ];
-            //Mail::to($orderRequest->user->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to($orderRequest->user->email)->send(new OrderMail($details));
+            // Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
             return redirect()->route('admin.orders.officer.picked.index')->with('Success', 'Email has been sent!');
         } catch (\Exception $ex) {
@@ -382,7 +383,6 @@ class OrderController extends Controller
         $order->status = "WAITING_H_O_D_APPROVAL";
         $order->orderApprovals->save();
         $order->save();
-        //dd(route('admin.orders.lecturer.index'));
         // Send an email to the HOD
         try {
             $details = [
@@ -393,11 +393,12 @@ class OrderController extends Controller
 
                 "components" => $order->componentItems
             ];
-            //Mail::to($order->HOD->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to($order->HOD->email)->send(new OrderMail($details));
+            // Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
             return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in accepted order list.');
         } catch (\Exception $ex) {
+            dd($ex);
             return abort(500);
         }
     }
@@ -421,8 +422,8 @@ class OrderController extends Controller
                 "components" => $order->componentItems
 
             ];
-            //Mail::to($order->user->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to($order->user->email)->send(new OrderMail($details));
+            // Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
             return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have rejected the order.you can view the order in rejected order list.');
         } catch (\Exception $ex) {
@@ -478,8 +479,8 @@ class OrderController extends Controller
                 "components" => $order->componentItems
             ];
 
-            //Mail::to($order->user->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForStudent));
+            Mail::to($order->user->email)->send(new OrderMail($msgForStudent));
+            // Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForStudent));
 
             $msgForOfficer = [
                 "title" => "New Order Request From CE Smart Inventory",
@@ -492,10 +493,10 @@ class OrderController extends Controller
 
             //send mail to all tech officers
             $officers = User::where('type', 'tech_officer')->orderBy('id')->get();
-            // foreach ($officers as $officer) {
-            //     Mail::to($officer->email)->send(new OrderMail($msgForOfficer));
-            // }
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForOfficer));
+            foreach ($officers as $officer) {
+                Mail::to($officer->email)->send(new OrderMail($msgForOfficer));
+            }
+            // Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForOfficer));
 
             return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have approved the order. you can view the order in accepted order list.');
         } catch (\Exception $ex) {
@@ -525,8 +526,8 @@ class OrderController extends Controller
 
             ];
 
-            //Mail::to($order->user->email)->send(new OrderMail($details));
-            Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
+            Mail::to($order->user->email)->send(new OrderMail($details));
+            // Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
             return redirect()->route('admin.orders.h_o_d.index')->with('success', 'you have rejected the order.you can view the order in rejected order list.');
         } catch (\Exception $ex) {

@@ -278,17 +278,18 @@
                     
 
                     
-                    @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
-                        @if ($logged_in_user->isHOD())
+                    
+                        @if ($logged_in_user->isHOD()|| $logged_in_user->isAdmin())
                             <li class="c-sidebar-nav-item">
                                 <x-utils.link
                              
                                     :href="route('admin.orders.h_o_d.accepted.index')"
                     
                                     class="c-sidebar-nav-link"
-                                    :text="__('Accepted - Lecturer')"></x-utils.link>
+                                    :text="__('Accepted - HOD')"></x-utils.link>
                             </li> 
-                        @else
+                            @endif
+                            @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
                             <li class="c-sidebar-nav-item">
                                 <x-utils.link
                              
@@ -299,7 +300,7 @@
                             </li> 
                         @endif
                     
-                    @endif
+                   
 
                  
 
@@ -333,16 +334,6 @@
                     @endif
 
                     @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
-                        @if ($logged_in_user->isHOD())
-                            <li class="c-sidebar-nav-item">
-                                <x-utils.link
-                         
-                                    :href="route('admin.orders.h_o_d.rejected.index')"
-                
-                                    class="c-sidebar-nav-link"
-                                    :text="__('Rejected - Lecturer')"></x-utils.link>
-                            </li>  
-                        @else
                             <li class="c-sidebar-nav-item">
                                 <x-utils.link
                          
@@ -351,8 +342,22 @@
                                     class="c-sidebar-nav-link"
                                     :text="__('Rejected - Lecturer')"></x-utils.link>
                             </li>
-                        @endif
+                    
                     @endif
+
+                    
+                    @if ($logged_in_user->isHOD() || $logged_in_user->isAdmin())
+                        <li class="c-sidebar-nav-item">
+                            <x-utils.link
+                     
+                                :href="route('admin.orders.h_o_d.rejected.index')"
+            
+                                class="c-sidebar-nav-link"
+                                :text="__('Rejected - HOD')"></x-utils.link>
+                        </li>  
+                    
+                    @endif
+
                 </ul>
             </li>
         @endif

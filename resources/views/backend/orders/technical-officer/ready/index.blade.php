@@ -43,7 +43,7 @@
                             <tr>
                                 <td>{{ $orderRequest->id }}</td>
                                 <td>
-                                    {{ $orderRequest->user['name'] }}
+                                    {{ $orderRequest->user['name'] ?? "[Not Found]"}}
                                 </td>
                                 <th>{{ $orderRequest->status }}</th>
                                 

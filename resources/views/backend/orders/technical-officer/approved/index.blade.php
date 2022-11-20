@@ -37,12 +37,12 @@
                             <th>Quantity</th>
                             <th>&nbsp;</th>
                         </tr>
-
                         @foreach($orderRequests as $orderRequest)
                             <tr>
+                               
                                 <td>{{ $orderRequest->id }}</td>
                                 <td>
-                                    {{ $orderRequest->user['name'] }}
+                                    {{ $orderRequest->user['name'] ?? "[Not Found]"}}
                                 </td>
                                 <th>{{ $orderRequest->status }}</th>
                                 <td>{{ $orderRequest->ordered_date }}</td>
