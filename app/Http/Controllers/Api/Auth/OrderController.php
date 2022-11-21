@@ -58,9 +58,8 @@ class OrderController extends Controller
 
                 $details = [
                     "title" => "Otp Request for unlock the item !",
-                    "body"  =>  "Your Otp is  " . $otp .
-                        " Now you can unlock your locker with this otp to collect your order" . $order->id,
-                    "url"   => route('')
+                    "body"  => " Now you can unlock your locker with this otp to collect your order" . $order->id,
+                    "otp"   => $otp
                 ];
                 Mail::to(auth('api')->user()->email)->send(new OtpMail($details));
                 return response()->json($otp, 200);

@@ -30,6 +30,6 @@ class OtpMail extends Mailable
     public function build()
     {
         return $this->subject('Mail from CE Smart Inventory')
-            ->markdown('backend.orders.mails.mail_template');
+            ->markdown('backend.orders.mails.mail_otp_template');
     }
 }
