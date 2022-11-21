@@ -31,14 +31,14 @@
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-permission": "^3.11",
-        "tabuna/breadcrumbs": "^2.2"
+        "tabuna/breadcrumbs": "^2.2",
+        "fakerphp/faker": "^1.9.1",
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "^2.6",
         "brianium/paratest": "^6.2",
         "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^2.18",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
