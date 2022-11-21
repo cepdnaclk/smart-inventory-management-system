@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             'active' => true,
         ]);
 
-        if (app()->environment(['local', 'testing'])) {
+        if (app()->environment(['local', 'testing','production'])) {
            User::create([
                 'type' => User::TYPE_USER,
                 'name' => 'Test User',
