@@ -14,6 +14,7 @@ use App\Models\Cart;
  * All route names are prefixed with 'frontend.'
  * These routes can not be hit if the user has not confirmed their email
  */
+
 Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', config('boilerplate.access.middleware.verified')]], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])
         ->middleware('is_user')
@@ -35,48 +36,43 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
     Route::get('products', [CartController::class, 'index'])->name('products');
     Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
     Route::get('cart', [CartController::class, 'cart'])->name('cart');
-    Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remove.from.cart');  
+    Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remove.from.cart');
     Route::patch('update-cart', [CartController::class, 'update'])->name('update.cart');
     Route::post('place-order', [CartController::class, 'placeOrder'])->name('place.order');
 
-  
-   
-    Route::put('orders/{order}', [OrderController::class, 'change_status'])->name('orders.change.staus')
-    ;
 
-    Route::get('show-my-order',[OrderController::class, 'index'])->name('orders.index')  ->breadcrumbs(function (Trail $trail) {
+
+    Route::put('orders/{order}', [OrderController::class, 'change_status'])->name('orders.change.staus');
+
+    Route::get('show-my-order', [OrderController::class, 'index'])->name('orders.index')->breadcrumbs(function (Trail $trail) {
         $trail->parent('frontend.index')
             ->push(__('My Orders'), route('frontend.user.account'));
     });
-// Show
-Route::get('orders/{order}', [OrderController::class, 'show'])
-    ->name('orders.show')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('frontend.user.dashboard'))
-            ->push(__('My Orders'),route('frontend.user.orders.index'))
-            ->push(__('Show'));
+
+    // Show
+    Route::get('orders/{order}', [OrderController::class, 'show'])
+        ->name('orders.show')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('frontend.user.dashboard'))
+                ->push(__('My Orders'), route('frontend.user.orders.index'))
+                ->push(__('Show'));
+        });
+
+
+    // edit
+    Route::get('orders/edit/{order}', [OrderController::class, 'edit'])
+        ->name('orders.edit')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('frontend.user.dashboard'))
+                ->push(__('My Orders'), route('frontend.user.orders.index'))
+                ->push(__('Edit'));
+        });
+
+    // Update
+
+    Route::put('orders/{order}', [OrderController::class, 'update'])
+        ->name('orders.update');
+    Route::post('store-request', [OrderController::class, 'store'])->name('store.request');
+
+    Route::get("users/{componentItem}/ordercomp", [OrderCompController::class, 'orderComponent'])->name('ordercomp');
 });
-
-// edit
-Route::get('orders/edit/{order}', [OrderController::class, 'edit'])
-    ->name('orders.edit')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('frontend.user.dashboard'))
-            ->push(__('My Orders'),route('frontend.user.orders.index'))
-            ->push(__('Edit'));
-});
-
-
-// Update
-
-Route::put('orders/{order}', [OrderController::class, 'update'])
-->name('orders.update');
-Route::post('store-request', [OrderController::class, 'store'])->name('store.request');
-
-    Route::get("users/{componentItem}/ordercomp",[OrderCompController::class,'orderComponent'])->name('ordercomp');
-    
-
-});
-
-
-
