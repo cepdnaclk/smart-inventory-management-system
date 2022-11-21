@@ -393,12 +393,11 @@ class OrderController extends Controller
 
                 "components" => $order->componentItems
             ];
-            Mail::to($order->HOD->email)->send(new OrderMail($details));
+            Mail::to(User::where("name", "HOD User")->first()->email)->send(new OrderMail($details));
             // Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($details));
 
             return redirect()->route('admin.orders.lecturer.index')->with('success', 'you have approved the order.you can view the order in accepted order list.');
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500);
         }
     }
