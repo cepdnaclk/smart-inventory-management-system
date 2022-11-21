@@ -26,9 +26,5 @@ routes.txt
 Thumbs.db
 yarn-error.log
 commands.txt
-composer.lock
-package-lock.json
-yarn.lock
+
 .idea/*
-composer.lock
-yarn.lock
