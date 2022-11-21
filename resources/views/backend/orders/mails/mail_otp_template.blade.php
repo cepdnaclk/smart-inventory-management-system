@@ -4,8 +4,8 @@
 {{ $details['body'] }}
 
 
-@component('mail::button', ['url' => $details['#']])
-$details['otp']
+@component('mail::button', ['url' => $details['otp']])
+{{$details['otp']}}
 @endcomponent
 
 Thanks,<br>
