@@ -33,5 +33,8 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
+        if ($this->app->environment('production')) {
+            \URL::forceSchema('https');
+        }
     }
 }
