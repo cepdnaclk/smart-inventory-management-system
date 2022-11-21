@@ -235,7 +235,7 @@
 
 
         {{-- Order Requests --}}
-        @if ($logged_in_user->isLecturer() || $logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+        @if ($logged_in_user->isHOD() || $logged_in_user->isLecturer() || $logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
                         href="#"
@@ -257,25 +257,28 @@
                         </li>
                     @endif
 
-                    @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
-                        @if ($logged_in_user->isHOD() )
-                            <li class="c-sidebar-nav-item">
-                                <x-utils.link
-                                :href="route('admin.orders.h_o_d.index')"
-                                class="c-sidebar-nav-link"
-                                :text="__('Request-Lecturer')"></x-utils.link>
+                    
+                        
+                 
+
+                    @if ($logged_in_user->isHOD() || $logged_in_user->isAdmin())
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link
+                        :href="route('admin.orders.h_o_d.index')"
+                        class="c-sidebar-nav-link"
+                        :text="__('Request-HOD')"></x-utils.link>
                     </li>  
-                        @else
+                    @endif
+                    
+                    @if (($logged_in_user->isLecturer() && (! $logged_in_user->isHOD()))|| $logged_in_user->isAdmin())
+                        
                             <li class="c-sidebar-nav-item">
                                 <x-utils.link
                                 :href="route('admin.orders.lecturer.index')"
                                 class="c-sidebar-nav-link"
                                 :text="__('Request-Lecturer')"></x-utils.link>
                     </li>
-                        @endif
                     @endif
-                    
-                    
 
                     
                     
@@ -289,7 +292,7 @@
                                     :text="__('Accepted - HOD')"></x-utils.link>
                             </li> 
                             @endif
-                            @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
+                            @if (($logged_in_user->isLecturer() && (! $logged_in_user->isHOD()))|| $logged_in_user->isAdmin())
                             <li class="c-sidebar-nav-item">
                                 <x-utils.link
                              
@@ -333,7 +336,7 @@
                         </li>
                     @endif
 
-                    @if ($logged_in_user->isLecturer() || $logged_in_user->isAdmin())
+                    @if (($logged_in_user->isLecturer() && (! $logged_in_user->isHOD())) || $logged_in_user->isAdmin())
                             <li class="c-sidebar-nav-item">
                                 <x-utils.link
                          

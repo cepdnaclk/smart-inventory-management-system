@@ -25,13 +25,13 @@ class OrderFactory extends Factory
     {
         return [
             'ordered_date' =>  $this->faker->date(),
-            'picked_date'=>NULL,
+            'picked_date' => NULL,
             'due_date_to_return' => $this->faker->date(),
-            'returned_date'=>NULL,
-            'user_id' => User::all()->random()->id ,
-            'locker_id' => rand(1, 75),
-            // 'locker_id' => Locker::all()->random()->id ,
-            'status' => $this->faker->randomElement(['WAITING_LECTURER_APPROVAL','WAITING_H_O_D_APPROVAL','APPROVED', 'READY','PICKED','SUBMITTED','FINISHED'])
+            'returned_date' => NULL,
+            'user_id' => User::all()->random()->id,
+            'locker_id' => rand(1, 50),
+            // 'locker_id' => Locker::all()->random()->id,
+            'status' => $this->faker->randomElement(['WAITING_LECTURER_APPROVAL', 'WAITING_H_O_D_APPROVAL', 'APPROVED', 'READY', 'PICKED', 'SUBMITTED', 'FINISHED'])
         ];
     }
 }
