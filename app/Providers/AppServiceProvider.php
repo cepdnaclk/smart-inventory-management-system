@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 
@@ -34,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
         if ($this->app->environment('production')) {
-            \URL::forceSchema('https');
+            URL::forceScheme('https');
         }
     }
 }
