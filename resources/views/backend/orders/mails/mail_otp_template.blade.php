@@ -4,8 +4,8 @@
 {{ $details['body'] }}
 
 
-@component('mail::button', ['url' => $details['url']])
-CE Smart Inventory
+@component('mail::button', ['url' => $details['#']])
+$details['otp']
 @endcomponent
 
 Thanks,<br>
