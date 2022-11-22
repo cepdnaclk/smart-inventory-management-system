@@ -4,7 +4,7 @@
 {{ $details['body'] }}
 
 
-@component('mail::button', ['url' => "#"]])
+@component('mail::button', ['url' => "#"])
 {{$details['otp']}}
 @endcomponent
 
