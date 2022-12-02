@@ -37,7 +37,7 @@ class OrderTest extends TestCase
         $this->loginAsAdmin();
         $order = Order::factory()->create();
 
-        $this->put("/admin/orders/{$order->id}", ['status' => 'WAITING_LECTURER_APPROVAL', 'ordered date' => Carbon::now(), "due date to return" => Carbon::now()])->assertOk();
+        $this->put("/admin/orders/{$order->id}", ['status' => 'WAITING_LECTURER_APPROVAL', 'ordered_date' => Carbon::now(), "due_date_to_return" => Carbon::now()])->assertOk();
     }
 
     /** @test */
@@ -83,54 +83,4 @@ class OrderTest extends TestCase
         $response = $this->delete('/admin/orders/' . $component->id);
         $response->assertStatus(302);
     }
-
-
-
-
-    // /** @test */
-    // public function anyone_can_access_component_reserve_home()
-    // {
-
-    //     $componentItem = ComponentItem::factory()->create();
-    //     //dd($componentItem);
-    //     $response = $this->get('/products' . $componentItem->id);
-    //     $response->assertStatus(200);
-    // }
-    /** @test */
-    public function an_order_cannot_be_created_by_unauthorized_user()
-    {
-        $response = $this->post('store-request', [
-            'Name' => 'Tharmapalan Thanujan',
-            'ENumber' => 'e17342',
-            'OrderID' => '83',
-            'Ordered Date' => '2022-08-23',
-            'Describtion For Ordering' => 'frgtgtgt',
-            'Expected Date To get' => '2022-08-23',
-            'Select Lecturer' => 'Lecturer User'
-
-        ]);
-        $response->assertRedirect('/login');
-    }
-
-
-
-
-
-
-
-    // /** @test */
-    // public function unauthorized_user_cannot_delete_order_as_user()
-    // {
-    //     $component = Order::factory()->create();
-    //     $response = $this->delete('user/orders/' . $component->id);
-    //     $response->assertStatus(302);
-    // }
-
-    // /** @test */
-    // public function user_cannot_delete_order_once_placed()
-    // {
-    //     $component = Order::factory()->create();
-    //     $response = $this->delete('user/orders/' . $component->id);
-    //     $response->assertStatus(302);
-    // }
 }
