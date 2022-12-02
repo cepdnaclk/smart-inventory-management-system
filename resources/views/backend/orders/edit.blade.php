@@ -4,7 +4,6 @@
 
 
 
-
 @section('content')
     <div>
         {!! Form::open(['url' => route('frontend.user.orders.update',
