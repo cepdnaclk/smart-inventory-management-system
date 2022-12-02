@@ -101,6 +101,8 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
     Route::post('/orders/officer/{orderRequest}/finish', [OrderController::class, 'officer_finish'])
         ->name('orders.officer.finish');
 });
+
+
 //-----------------------------------------------------------------------------------------------------------
 
 // Lecturer Order request  Routes ----------------------------------------------------------------------------

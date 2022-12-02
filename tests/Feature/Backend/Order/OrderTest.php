@@ -43,13 +43,13 @@ class OrderTest extends TestCase
     }
 
     /** @test */
-    public function update_order_requires_validation()
+    public function an_admin_update_order_requires_validation()
     {
         $this->loginAsAdmin();
         $order = Order::factory()->create();
 
         $response = $this->put("/admin/orders/{$order->id}", []);
-        $response->assertSessionHasErrors(['locker_id', 'user_id', 'status']);
+        $response->assertSessionHasErrors(['status']);
     }
 
 
@@ -62,22 +62,24 @@ class OrderTest extends TestCase
     //     $response = $this->get('/products' . $componentItem->id);
     //     $response->assertStatus(200);
     // }
-    // /** @test */
-    // public function an_order_can_be_created()
-    // {
+    /** @test */
+    public function an_order_cannot_be_created_by_unauthorized_user()
+    {
+        $response = $this->post('store-request', [
+            'Name' => 'Tharmapalan Thanujan',
+            'ENumber' => 'e17342',
+            'OrderID' => '83',
+            'Ordered Date' => '2022-08-23',
+            'Describtion For Ordering' => 'frgtgtgt',
+            'Expected Date To get' => '2022-08-23',
+            'Select Lecturer' => 'Lecturer User'
 
-    //     $response = $this->post('store-request', [
-    //         'Name' => 'Tharmapalan Thanujan',
-    //         'ENumber' => 'e17342',
-    //         'OrderID' => '83',
-    //         'Ordered Date' => '2022-08-23',
-    //         'Describtion For Ordering' => 'frgtgtgt',
-    //         'Expected Date To get' => '2022-08-23',
-    //         'Select Lecturer' => 'Lecturer User'
+        ]);
+        $response->assertRedirect('/login');
+    }
 
-    //     ]);
-    //     $response->assertRedirect('/products');
-    // }
+
+
 
 
     // /** @test */
