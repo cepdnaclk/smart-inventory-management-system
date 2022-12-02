@@ -52,6 +52,14 @@ class OrderTest extends TestCase
         $response->assertSessionHasErrors(['status']);
     }
 
+    /** @test */
+    public function unauthorized_user_cannot_delete_order_as_admin()
+    {
+        $component = Order::factory()->create();
+        $response = $this->delete('/admin/orders/' . $component->id);
+        $response->assertStatus(302);
+    }
+
 
     // /** @test */
     // public function anyone_can_access_component_reserve_home()
@@ -82,13 +90,7 @@ class OrderTest extends TestCase
 
 
 
-    // /** @test */
-    // public function unauthorized_user_cannot_delete_order_as_admin()
-    // {
-    //     $component = Order::factory()->create();
-    //     $response = $this->delete('/admin/orders/' . $component->id);
-    //     $response->assertStatus(302);
-    // }
+
 
     // /** @test */
     // public function unauthorized_user_cannot_delete_order_as_user()
