@@ -26,8 +26,6 @@ class OrderSeeder extends Seeder
             ->count(75)
             ->hasComponentItems(5)
             ->create();
-        
-
             $this->enableForeignKeys();
         
 

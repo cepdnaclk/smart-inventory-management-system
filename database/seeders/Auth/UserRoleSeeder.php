@@ -22,15 +22,18 @@ class UserRoleSeeder extends Seeder
 
         User::find(1)->assignRole(config('boilerplate.access.role.admin'));
 
-        // Assign permissions for the s
-        User::where('type', User::TYPE_LECTURER)->first()->assignRole('Lecturer');
+        //no need in production
+        if (app()->environment(['local', 'testing'])) {
+            // Assign permissions for the s
+            User::where('type', User::TYPE_LECTURER)->first()->assignRole('Lecturer');
 
-        // Assign permissions for the technicalOfficer users
-        User::where('type', User::TYPE_TECH_OFFICER)->first()->assignRole('Technical Officer');
+            // Assign permissions for the technicalOfficer users
+            User::where('type', User::TYPE_TECH_OFFICER)->first()->assignRole('Technical Officer');
 
-        // Assign permissions for the maintainer users
-        User::where('type', User::TYPE_MAINTAINER)->first()->assignRole('Maintainer');
+            // Assign permissions for the maintainer users
+            User::where('type', User::TYPE_MAINTAINER)->first()->assignRole('Maintainer');
 
-        $this->enableForeignKeys();
+            $this->enableForeignKeys();
+        }
     }
 }

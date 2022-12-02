@@ -124,7 +124,7 @@ class OrderController extends Controller
 
             return redirect()->route('frontend.user.products')->with('success', 'Order Request mail has been sent sucessfully.');
         } catch (\Exception $ex) {
-            dd($ex);
+            //dd($ex);
             return abort(500);
         }
     }

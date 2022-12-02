@@ -1,13 +1,6 @@
 /coverage
 /node_modules
-/public/css
-/public/js
-/public/fonts
-/public/hot
-/public/storage
-/public/img
-/public/files
-/public/mix-manifest.json
+
 /storage/*.key
 /vendor
 /.vscode
@@ -33,9 +26,5 @@ routes.txt
 Thumbs.db
 yarn-error.log
 commands.txt
-composer.lock
-package-lock.json
-yarn.lock
+
 .idea/*
-composer.lock
-yarn.lock

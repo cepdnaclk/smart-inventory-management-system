@@ -68,7 +68,7 @@ class JobRequestsController extends Controller
 
             return redirect()->route('admin.jobs.student.confirm', $jobReq);
         } catch (\Exception $ex) {
-//            dd($ex);
+            //            dd($ex);
             return abort(500);
         }
     }
@@ -99,7 +99,6 @@ class JobRequestsController extends Controller
             $jobRequests->save();
             $id = $jobRequests->id;
             return redirect()->route('admin.jobs.student.index')->with('Success', 'The fabrication request #' . $id . ' was placed successfully !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -119,7 +118,6 @@ class JobRequestsController extends Controller
 
             $jobRequests->delete();
             return redirect()->route('admin.jobs.student.index')->with('Success', 'Job request was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -140,7 +138,7 @@ class JobRequestsController extends Controller
 
     public function supervisor_approve(JobRequests $jobRequests)
     {
-        dd('Approved');
+        //dd('Approved');
         // TODO: The logic to be implemented
         // Send an email to the student
         // Send an email to the TO
@@ -151,7 +149,7 @@ class JobRequestsController extends Controller
 
     public function supervisor_reject(JobRequests $jobRequests)
     {
-        dd('Rejected');
+        //dd('Rejected');
         // TODO: The logic to be implemented
         // Send an email to the student
         // Update the status into 'NOT_APPROVED'
@@ -179,7 +177,7 @@ class JobRequestsController extends Controller
 
     public function officer_update(JobRequests $jobRequests)
     {
-        dd($jobRequests);
+        //dd($jobRequests);
         // TODO: To be implemented
         // Store the additional parameters
         // Send an Email to the student (about scheduled time and additional notes)
@@ -188,7 +186,7 @@ class JobRequestsController extends Controller
 
     public function officer_finish(JobRequests $jobRequests)
     {
-        dd("Finished");
+        //dd("Finished");
         // TODO: Finish the job
         // Send emails to Student and Lecturer about the finish notice
         // Update machine timed, material usage, etc...

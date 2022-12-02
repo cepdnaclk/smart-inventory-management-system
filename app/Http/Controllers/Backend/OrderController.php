@@ -88,11 +88,15 @@ class OrderController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Order $order
+     * @param \App\Models\User $user
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Order $order)
     {
+
         $lecturers = User::where('type', 'lecturer')->get();
+
+
 
         return view('backend.orders.edit', compact('order', 'lecturers'));
     }
@@ -145,7 +149,7 @@ class OrderController extends Controller
 
             $order->delete();
 
-            if (auth()->user()->isAdmin()) {
+            if (auth()->user->isAdmin()) {
                 return redirect()->route('admin.orders.index')->with('Success', 'Order was deleted !');
             } else {
                 return view('frontend.user.cart');
@@ -159,7 +163,7 @@ class OrderController extends Controller
     {
         $id = auth()->user()->id;
         $user = User::where('id', $id);
-        if (auth()->user()->isAdmin()) {
+        if (auth()->user->isAdmin()) {
             $orderApproval = OrderApproval::where('is_approved_by_lecturer', '=', null)->get();
         } else {
             $orderApproval = OrderApproval::where('lecturer_id', \Auth::user()->id)->where('is_approved_by_lecturer', '=', null)->get();
@@ -434,7 +438,7 @@ class OrderController extends Controller
     {
 
         $id = auth()->user()->id;
-        if (auth()->user()->isAdmin()) {
+        if (auth()->user->isAdmin()) {
             $orderApproval = OrderApproval::where('is_approved_by_lecturer', '=', 1)->get();
         } else {
             $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', 1)->get();
@@ -448,7 +452,7 @@ class OrderController extends Controller
     {
 
         $id = auth()->user()->id;
-        if (auth()->user()->isAdmin()) {
+        if (auth()->user->isAdmin()) {
             $orderApproval = OrderApproval::where('is_approved_by_lecturer', '=', 0)->get();
         } else {
             $orderApproval = OrderApproval::where('lecturer_id', $id)->where('is_approved_by_lecturer', '=', 0)->get();
