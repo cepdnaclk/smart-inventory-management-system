@@ -51,7 +51,7 @@
                     {!! Form::label('selectLecturer', 'Choose lecturer', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-2">
-                        {{dd($order)}}
+                        
                      <select class="form-select is-invalid" id="selectLecturer" name="selectLecturer" aria-describedby="validationServer04Feedback" value={{$order->orderApprovals->lecturer->name}} required>
                         <option selected ="selected">{{$order->orderApprovals->lecturer->name}}</option>
                       
