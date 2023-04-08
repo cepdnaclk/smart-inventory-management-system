@@ -185,7 +185,7 @@ class EquipmentItemController extends Controller
         } catch (\Exception $ex) {
             return abort(500);
         }
-    } 
+    }
 
     /**
      * Confirm to delete the specified resource from storage.
@@ -207,6 +207,7 @@ class EquipmentItemController extends Controller
      */
     public function destroy(EquipmentItem $equipmentItem)
     {
+
         try {
             // Delete the thumbnail form the file system
             $this->deleteThumb($equipmentItem->thumbURL());
@@ -215,10 +216,10 @@ class EquipmentItemController extends Controller
 
             // delete location entries
             $this_item_locations = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
-            foreach($this_item_locations as $loc){
+            foreach ($this_item_locations as $loc) {
                 $loc->delete();
             }
-            
+
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
         } catch (\Exception $ex) {
             return abort(500);
