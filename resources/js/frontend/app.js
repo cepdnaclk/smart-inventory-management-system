@@ -4,10 +4,12 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require("../bootstrap");
-require("../plugins");
+require('../bootstrap')
+require('../plugins')
 
-import Vue from "vue";
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import BootstrapVue from 'bootstrap-vue'
+import Vue from 'vue'
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,15 +22,17 @@ import Vue from "vue";
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component(
-  "example-component",
-  require("./components/ExampleComponent.vue").default
-);
+Vue.use(BootstrapVue)
 
 Vue.component(
-  "fullcalendar-component",
-  require("./components/ScheduleCalendar.vue").default
-);
+    'example-component',
+    require('./components/ExampleComponent.vue').default
+)
+
+Vue.component(
+    'fullcalendar-component',
+    require('./components/ScheduleCalendar.vue').default
+)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -37,5 +41,5 @@ Vue.component(
  */
 
 const app = new Vue({
-  el: "#app",
-});
+    el: '#app',
+})
