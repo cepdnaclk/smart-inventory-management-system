@@ -3,14 +3,12 @@
         class="c-subheader-nav-link"
         :href="route('admin.equipment.items.index')"
         :text="__('Equipment Items')"
-        {{--    permission="admin.access.user.reactivate"--}}
 ></x-utils.link>
 
 <x-utils.link
         class="c-subheader-nav-link"
         :href="route('admin.equipment.types.index')"
         :text="__('Equipment Types')"
-        {{--    permission="admin.access.user.reactivate"--}}
 ></x-utils.link>
 
 

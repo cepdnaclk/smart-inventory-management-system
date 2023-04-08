@@ -38,11 +38,9 @@
 
                 <!-- Start Date -->
                 <div class="form-group row">
-
                     {!! Form::label('start_date', 'Start date*', ['class' => 'col-md-2 col-form-label']) !!}
-
                     <div class="col-md-3">
-                        {!! Form::text('start_date', $reservation->start_date, ['type' => 'datetime-local', 'class'=>'form-control datepicker', 'required'=>true, 'placeholder' => 'Date']) !!}
+                        {{-- {!! Form::text('start_date', $reservation->start_date, ['type' => 'datetime-local', 'class'=>'form-control datepicker', 'required'=>true, 'placeholder' => 'Date']) !!} --}}
                         @error('start_date')
                         <strong>{{ $message }}</strong>
                         @enderror
@@ -51,11 +49,9 @@
 
                 <!-- End Date -->
                 <div class="form-group row">
-
                     {!! Form::label('end_date', 'End date*', ['class' => 'col-md-2 col-form-label']) !!}
-
                     <div class="col-md-3">
-                        {!! Form::text('end_date', $reservation->end_date, ['class'=>'form-control datepicker', 'required'=>true, 'placeholder' => 'Date']) !!}
+                        {{-- {!! Form::text('end_date', $reservation->end_date, ['class'=>'form-control datepicker', 'required'=>true, 'placeholder' => 'Date']) !!} --}}
                         @error('end_date')
                         <strong>{{ $message }}</strong>
                         @enderror

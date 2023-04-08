@@ -16,7 +16,7 @@
         "@popperjs/core": "^2.11.5",
         "alpinejs": "^2.3.5",
         "axios": "^0.21.1",
-        "bootstrap": "^5.0.1",
+        "bootstrap": "^5.0.2",
         "cross-env": "^7.0",
         "jquery": "^3.5.1",
         "laravel-mix": "^6.0.28",
@@ -28,17 +28,24 @@
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
         "sweetalert2": "^9.8.2",
-        "vue": "^2.5.17",
+        "vue": "^2.7.14",
         "vue-loader": "^15.9.5",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.12.1",
-        "font-awesome": "^4.7.0",
-        "bootstrap": "^5.0.1",
         "@coreui/coreui": "^3.0.0",
         "@coreui/icons": "^1.0.1",
+        "@fortawesome/fontawesome-free": "^5.12.1",
+        "@fullcalendar/core": "^5.11.3",
+        "@fullcalendar/daygrid": "^5.11.3",
+        "@fullcalendar/interaction": "^5.11.3",
+        "@fullcalendar/timegrid": "^5.11.3",
+        "@fullcalendar/vue": "^5.11.2",
+        "bootstrap-vue": "^2.23.1",
+        "bootstrap": "5.0.2",
+        "font-awesome": "^4.7.0",
         "mix": "^0.0.1",
+        "moment": "^2.29.4",
         "urix": "^0.1.0"
     }
 }

@@ -2,14 +2,12 @@
         class="c-subheader-nav-link"
         :href="route('admin.consumable.items.index')"
         :text="__('Consumable Items')"
-        {{--    permission="admin.access.user.reactivate"--}}
 ></x-utils.link>
 
 <x-utils.link
         class="c-subheader-nav-link"
         :href="route('admin.consumable.types.index')"
         :text="__('Consumable Types')"
-        {{--    permission="admin.access.user.reactivate"--}}
 ></x-utils.link>
 
 

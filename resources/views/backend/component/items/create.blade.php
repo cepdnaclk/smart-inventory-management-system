@@ -37,21 +37,9 @@
                 <div class="form-group row">
                     {!! Form::label('component_type_id', 'Category*', ['class' => 'col-md-2 col-form-label']) !!}
 
-                    <div class="col-md-4">
+                    <div class="col-md-10">
                         {!! Form::select('component_type_id', $types, null, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
                         @error('component_type_id')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Location -->
-                <div class="form-group row">
-                    {!! Form::label('location_label', 'Location*', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::select('location', $locations, null, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
-                        @error('location')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
@@ -104,26 +92,13 @@
                     </div>
                 </div>
 
-                <!-- Usage Instructions -->
+                <!-- Datasheet -->
                 <div class="form-group row">
-                    {!! Form::label('instructions', 'Usage Instructions', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('datasheet', 'Datasheet URL', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::textarea('instructions', '', ['class'=>'form-control', 'rows'=>3 ]) !!}
-                        @error('instructions')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Dimensions -->
-                <!-- TODO: Review this -->
-                <div class="form-group row">
-                    {!! Form::label('size', 'Size', ['class' => 'col-sm-2 form-label']) !!}
-
-                    <div class="col-md-10">
-                        {!! Form::select('size',['very small'=>'very small', 'small'=> 'small', 'medium'=> 'medium','regular'=>'regular', 'large'=>'large','very large'=> 'very large'] ,'very small', ['class'=>'form-control']) !!}
-                        @error('size')
+                        {!! Form::text('datasheet', '', ['class'=>'form-control', 'rows'=>3 ]) !!}
+                        @error('datasheet')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
@@ -140,7 +115,7 @@
                         @enderror
                     </div>
                 </div>
-                
+
                 <!-- Price -->
                 <div class="form-group row">
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
@@ -148,41 +123,6 @@
                     <div class="col-md-4">
                         {!! Form::number('price', '', ['class'=>'form-control']) !!}
                         @error('price')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-
-                <!-- isAvailable -->
-                <div class="form-group row">
-                    {!! Form::label('Available?', '', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4 d-flex align-items-center">
-                        {!!Form::checkbox('isAvailable','',  true); !!}
-                        @error('isAvailable')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <!-- Is Electrical -->
-                    {!! Form::label('isElectrical', 'Electrical?', ['class' => 'col-md-2 form-check-label']) !!}
-
-                    <div class="col-md-4 d-flex align-items-center">
-                        {!! Form::checkbox('isElectrical', '1', ['class'=>'form-check-input']) !!}
-                        @error('isElectrical')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-
-                    <!-- Power Rating -->
-                    {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::number('powerRating', '', ['class'=>'form-control']) !!}
-                        @error('powerRating')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>

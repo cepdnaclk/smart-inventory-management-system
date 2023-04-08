@@ -53,6 +53,9 @@ class JobRequests extends Model
 
     public static function jobsForTechOfficer()
     {
+        // The same thing is written at app/Http/Livewire/Backend/FabricationsTechOfficerTable.php in querybuilder function.
+        // Change that too if youre changing this.
+
         // Waiting for approval
         $jobs_approval = JobRequests::where('status', 'WAITING_TO_APPROVAL')->get();
 

@@ -10,22 +10,43 @@
     <div>
         <x-backend.card>
             <x-slot name="header">
-                Consumable : Show | {{ $consumableItem->title  }}
+                Consumable : Show | {{ $consumableItem->title }}
             </x-slot>
 
             <x-slot name="body">
-                <div class="container pb-2 d-inline-flex">
+                <div class="d-inline-flex container pb-2">
                     <div class="d-flex">
                         <h4>{{ $consumableItem->title }}</h4>
                     </div>
-                    <div class="d-flex px-0 mt-0 mb-0 ml-auto">
-                        <div class="btn-group" role="group" aria-label="Modify Buttons">
-                            <a href="{{ route('admin.consumable.items.edit', $consumableItem)}}"
-                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                    <div class="d-flex mt-0 mb-0 ml-auto px-0">
+                        <div
+                            class="btn-group"
+                            role="group"
+                            aria-label="Modify Buttons"
+                        >
+                            <a
+                                href="{{ route('admin.consumable.items.edit', $consumableItem) }}"
+                                class="btn btn-info btn-xs"
+                            ><i
+                                    class="fa fa-pencil"
+                                    title="Edit"
+                                ></i>
                             </a>
-                            <a href="{{ route('admin.consumable.items.delete', $consumableItem)}}"
-                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
-                                                                title="Delete"></i>
+                            <a
+                                href="{{ route('admin.consumable.items.edit.location', $consumableItem) }}"
+                                class="btn btn-warning btn-xs"
+                            ><i
+                                    class="fa fa-map-marker"
+                                    title="Edit Location"
+                                ></i>
+                            </a>
+                            <a
+                                href="{{ route('admin.consumable.items.delete', $consumableItem) }}"
+                                class="btn btn-danger btn-xs"
+                            ><i
+                                    class="fa fa-trash"
+                                    title="Delete"
+                                ></i>
                             </a>
                         </div>
                     </div>
@@ -35,25 +56,27 @@
                         <td>Code (to be finalized)</td>
                         <td>{{ $consumableItem->inventoryCode() }}</td>
                     </tr>
-                    <tr>
-                        <td>Location</td>
-                        <td>
-                            @if(count($locations_array) > 0)
-                                @foreach(array_reverse($locations_array) as $eachLocation)
-                                    {{ $eachLocation }}
-                                    @if(!($loop->last))
-                                        ->
-                                    @endif
+
+                    @if (count($locations_array) > 0)
+                        <tr>
+                            <td>Locations</td>
+                            <td>
+                                @foreach ($locations_array as $eachLocation)
+                                    {{ $eachLocation }}<br>
                                 @endforeach
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>Location</td>
+                            <td>Not Available</td>
+                        </tr>
+                    @endif
+
                     <tr>
                         <td>Type</td>
                         <td>
-                            @if($consumableItem->consumable_type != null)
+                            @if ($consumableItem->consumable_type != null)
                                 <a href="{{ route('admin.consumable.types.show', $consumableItem->consumable_type) }}">
                                     {{ $consumableItem->consumable_type['title'] }}
                                 </a>
@@ -64,7 +87,7 @@
                     <tr>
                         <td>Price</td>
                         <td>
-                            @if($consumableItem->price != null)
+                            @if ($consumableItem->price != null)
                                 Rs. {{ $consumableItem->price }}
                             @else
                                 N/A
@@ -84,15 +107,18 @@
 
                     <tr>
                         <td>Specification</td>
-                        <td>{!! str_replace("\n", "<br>", $consumableItem->specifications) !!}</td>
+                        <td>{!! str_replace("\n", '<br>', $consumableItem->specifications) !!}</td>
                     </tr>
 
                     <tr>
                         <td>Thumbnail</td>
                         <td>
-                            @if( $consumableItem->thumb != null )
-                                <img src="{{ $consumableItem->thumbURL() }}" alt="{{ $consumableItem->title }}"
-                                     class="img img-thumbnail">
+                            @if ($consumableItem->thumbURL() != null)
+                                <img
+                                    src="{{ $consumableItem->thumbURL() }}"
+                                    alt="{{ $consumableItem->title }}"
+                                    class="img img-thumbnail"
+                                >
                             @else
                                 <span>[Not Available]</span>
                             @endif
