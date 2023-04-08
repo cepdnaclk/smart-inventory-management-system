@@ -42,6 +42,7 @@
         "@fullcalendar/timegrid": "^5.11.3",
         "@fullcalendar/vue": "^5.11.2",
         "bootstrap-vue": "^2.23.1",
+        "bootstrap": "5.0.2",
         "font-awesome": "^4.7.0",
         "mix": "^0.0.1",
         "moment": "^2.29.4",

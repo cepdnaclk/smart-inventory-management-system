@@ -7,8 +7,6 @@
 require('../bootstrap')
 require('../plugins')
 
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import BootstrapVue from 'bootstrap-vue'
 import Vue from 'vue'
 
 /**
@@ -22,16 +20,9 @@ import Vue from 'vue'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.use(BootstrapVue)
-
 Vue.component(
     'example-component',
     require('./components/ExampleComponent.vue').default
-)
-
-Vue.component(
-    'fullcalendar-component',
-    require('./components/ScheduleCalendar.vue').default
 )
 
 /**

@@ -214,9 +214,11 @@ class EquipmentItemController extends Controller
 
             $equipmentItem->delete();
 
-            //            delete location entry
-            $this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get()[0];
-            $this_item_location->delete();
+            // delete location entries
+            $this_item_locations = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
+            foreach ($this_item_locations as $loc) {
+                $loc->delete();
+            }
 
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
         } catch (\Exception $ex) {

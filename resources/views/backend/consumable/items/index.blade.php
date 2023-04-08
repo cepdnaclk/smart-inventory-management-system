@@ -17,6 +17,8 @@
                 <x-slot name="headerActions">
                     <x-utils.link icon="c-icon cil-plus" class="card-header-action" :href="route('admin.consumable.items.create')" :text="__('Create Consumable')">
                     </x-utils.link>
+                    <x-utils.link icon="c-icon cil-plus" class="card-header-action" :href="route('admin.consumable.items.create')" :text="__('Create Consumable')">
+                    </x-utils.link>
                 </x-slot>
             @endif
 
@@ -32,7 +34,6 @@
                 @endif
 
                 <livewire:backend.consumable-item-table />
-
             </x-slot>
         </x-backend.card>
     </div>

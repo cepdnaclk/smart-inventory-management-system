@@ -27,6 +27,7 @@ class CalendarController extends Controller
         $events = [];
 
         // Get all the reservations for that particular station
+
         $bookings = Reservation::where('station_id', $station->id)->where('start_date', '>', Carbon::now()->subDays(8))->where('start_date', '>', Carbon::now()->subDays(8))->get();
 
         foreach ($bookings as $booking) {

@@ -104,6 +104,20 @@ class ConsumableItemController extends Controller
     }
 
     /**
+     * Edit the locations ot the item
+     *
+     * @param EquipmentItem $equipmentItem
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function editLocation(ConsumableItem $consumableItem)
+    {
+        $locations = Locations::all()->where('parent_location', 1)->all();
+
+        return view('backend.consumable.items.edit-location', compact('consumableItem', 'locations'));
+    }
+
+
+    /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -165,10 +179,11 @@ class ConsumableItemController extends Controller
 
             $consumableItem->delete();
 
-            //            delete location entry
-            $this_item_location = ItemLocations::where('item_id', $consumableItem->inventoryCode())->get()[0];
-            $this_item_location->delete();
-
+            // Delete location entries
+            $this_item_locations = ItemLocations::where('item_id', $consumableItem->inventoryCode())->get();
+            foreach ($this_item_locations as $loc) {
+                $loc->delete();
+            }
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
         } catch (\Exception $ex) {
             return abort(500);
