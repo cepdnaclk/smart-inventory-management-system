@@ -16,7 +16,6 @@ Route::middleware(['editAccess'])->group(function () {
 
 
     //consumable Items --------------------------------------------------------------------
-    //consumable Items --------------------------------------------------------------------
 
     //Index
     Route::get('consumables/items', [ConsumableItemController::class, 'index'])
@@ -91,8 +90,6 @@ Route::middleware(['editAccess'])->group(function () {
         ->name('consumable.items.destroy');
 
     // Consumable Types -------------------------------------------------------------
-
-    // Index
 
     // Index
     Route::get('consumables/types', [ConsumableTypeController::class, 'index'])
