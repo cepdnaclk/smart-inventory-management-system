@@ -1,0 +1,3 @@
+echo "Git hook executing: pre-commit actions"
+
+php artisan test -p
