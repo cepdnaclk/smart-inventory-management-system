@@ -1,6 +1,6 @@
-name: Laravel
+name: Laravel Push Test
 
-on: [pull_request]
+on: [push]
 
 jobs:
   laravel-tests:
@@ -28,4 +28,4 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: |
-        php artisan test --colors --debug
+        php artisan test -p --colors --debug

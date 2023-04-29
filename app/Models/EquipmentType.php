@@ -25,7 +25,7 @@ class EquipmentType extends Model
         else if ($this->parent()->first() != null) {
             return $this->parent()->first()->thumbURL();
         } else {
-            return null;
+            return config('constants.frontend.dummy_thumb');
         }
     }
 

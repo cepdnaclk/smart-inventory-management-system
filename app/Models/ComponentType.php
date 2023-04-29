@@ -21,14 +21,17 @@ class ComponentType extends Model
     public function thumbURL()
     {
         if ($this->thumb != null) return '/img/component_types/' . $this->thumb;
-        return null;
+        else if ($this->parent()->first() != null) {
+            return $this->parent()->first()->thumbURL();
+        } else {
+            return config('constants.frontend.dummy_thumb');
+        }
     }
 
     // Return the parent item of the current type or null
     public function parent()
     {
-        if ($this->parent_id !== null) return ComponentType::find($this->parent_id);
-        return null;
+        return $this->hasOne(ComponentType::class, "id", "parent_id");
     }
 
     // Return the children item types of this item type
@@ -40,7 +43,7 @@ class ComponentType extends Model
     // Return the items listed under this item type
     public function getItems()
     {
-        return $this->hasMany(EquipmentItem::class)->get();
+        return $this->hasMany(ComponentItem::class)->get();
     }
 
     /**
