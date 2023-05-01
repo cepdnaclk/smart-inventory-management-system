@@ -24,7 +24,7 @@ class UpdateRoleTest extends TestCase
 
         $this->loginAsAdmin();
 
-        $response = $this->patch("/admin/auth/role/{$role->id}");
+        $response = $this->patch("/dashboard/auth/role/{$role->id}");
 
         $response->assertSessionHasErrors('name');
     }
@@ -38,7 +38,7 @@ class UpdateRoleTest extends TestCase
 
         $this->loginAsAdmin();
 
-        $this->patch("/admin/auth/role/{$role->id}", [
+        $this->patch("/dashboard/auth/role/{$role->id}", [
             'type' => User::TYPE_ADMIN,
             'name' => 'new name',
             'permissions' => [
@@ -66,7 +66,7 @@ class UpdateRoleTest extends TestCase
 
         $role = Role::whereName(config('boilerplate.access.role.admin'))->first();
 
-        $response = $this->patch("/admin/auth/role/{$role->id}", [
+        $response = $this->patch("/dashboard/auth/role/{$role->id}", [
             'name' => 'new name',
         ]);
 
@@ -84,7 +84,7 @@ class UpdateRoleTest extends TestCase
 
         $role = Role::factory()->create(['name' => 'current name']);
 
-        $this->get("/admin/auth/role/{$role->id}/edit")->assertOk();
+        $this->get("/dashboard/auth/role/{$role->id}/edit")->assertOk();
     }
 
     /** @test */
@@ -94,7 +94,7 @@ class UpdateRoleTest extends TestCase
 
         $role = Role::whereName(config('boilerplate.access.role.admin'))->first();
 
-        $response = $this->get("/admin/auth/role/{$role->id}/edit");
+        $response = $this->get("/dashboard/auth/role/{$role->id}/edit");
 
         $response->assertSessionHas(['flash_danger' => __('You can not edit the Administrator role.')]);
     }
@@ -106,7 +106,7 @@ class UpdateRoleTest extends TestCase
 
         $role = Role::factory()->create(['name' => 'current name']);
 
-        $response = $this->get("/admin/auth/role/{$role->id}/edit");
+        $response = $this->get("/dashboard/auth/role/{$role->id}/edit");
 
         $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
     }
@@ -118,7 +118,7 @@ class UpdateRoleTest extends TestCase
 
         $role = Role::factory()->create(['name' => 'current name']);
 
-        $response = $this->patch("/admin/auth/role/{$role->id}", [
+        $response = $this->patch("/dashboard/auth/role/{$role->id}", [
             'name' => 'new name',
         ]);
 
