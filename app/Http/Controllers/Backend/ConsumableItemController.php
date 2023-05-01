@@ -34,7 +34,7 @@ class ConsumableItemController extends Controller
      */
     public function create()
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types = ConsumableType::getFullTypeList();
         $locations = Locations::pluck('location', 'id');
         return view('backend.consumable.items.create', compact('types', 'locations'));
     }
@@ -98,7 +98,7 @@ class ConsumableItemController extends Controller
      */
     public function edit(ConsumableItem $consumableItem)
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types = ConsumableType::getFullTypeList();
         $locations = Locations::pluck('location', 'id');
         return view('backend.consumable.items.edit', compact('types', 'consumableItem', 'locations'));
     }

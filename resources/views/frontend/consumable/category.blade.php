@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', $consumableType->title )
+@section('title', $consumableType->title)
 
 @section('content')
     <div class="container py-4">
@@ -8,32 +8,47 @@
             <div class="col-md-12">
                 <h3>{{ $consumableType->title }}</h3>
 
-                @if($consumableType->children()->count() != 0)
+                @if ($consumableType->children()->count() != 0)
                     <div class="container pt-2">Sub-Categories</div>
                     <div class="container pt-2">
-                        @foreach($consumableType->children() as $category)
-                            <a class="btn btn-secondary byn-200 mx-1 mb-2"
-                               href="{{ route('frontend.consumable.category', $category) }}">{{ $category->title }}</a>
-                        @endforeach
-                        <hr/>
-                    </div>
-                @else
-                    {{-- No sub categories available--}}
-                @endif
-
-                @if($items->count() != 0)
-                    <div class="container pt-2">
                         <div class="row equal">
-                            @foreach($items as $item)
+                            @foreach ($consumableType->children() as $category)
                                 <div class="col-6 col-sm-3 col-md-2 p-1 d-flex">
                                     <div class="text-center card">
                                         <a class="text-decoration-none"
-                                           href="{{ route('frontend.consumable.item', $item) }}">
+                                            href="{{ route('frontend.consumable.category', $category) }}">
+                                            <img class="img-fluid p-2 mx-auto" src="{{ $category->thumbURL() }}"
+                                                alt="{{ $category->title }}" />
+                                            <div class="p-1">
+                                                {{ $category->title }}<br>({{ $category->inventoryCode() }})
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    @if ($items->count() != 0)
+                        <hr />
+                    @endif
+                @else
+                    {{-- No sub categories available --}}
+                @endif
+
+                @if ($items->count() != 0)
+                    <div class="container pt-2">
+                        <div class="row equal">
+                            @foreach ($items as $item)
+                                <div class="col-6 col-sm-3 col-md-2 p-1 d-flex">
+                                    <div class="text-center card">
+                                        <a class="text-decoration-none"
+                                            href="{{ route('frontend.consumable.item', $item) }}">
                                             <img class="img-fluid p-2 mx-auto" src="{{ $item->thumbURL() }}"
-                                                 alt="{{ $item->title }}"/>
+                                                alt="{{ $item->title }}" />
                                             <div class="p-1">
                                                 {{ $item->title }}
-                                                @if($item->quantity==0)
+                                                @if ($item->quantity == 0)
                                                     <br>(Out of Stock)
                                                 @endif
                                             </div>
@@ -46,14 +61,13 @@
                         <div class="container pt-4">
                             {{ $items->links() }}
                         </div>
+                    @elseif ($items->count() == 0 && $consumableType->children()->count() == 0)
+                        <p>No items listed under this category yet</p>
+                    @else
+                        {{-- No items available --}}
+                @endif
 
-                        @elseif ($items->count() == 0 && $consumableType->children()->count() == 0)
-                            <p>No items listed under this category yet</p>
-                        @else
-                            {{-- No items available--}}
-                        @endif
-
-                    </div>
             </div>
         </div>
+    </div>
 @endsection

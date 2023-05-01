@@ -14,32 +14,25 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-md-4 col-sm-12 col-12 mb-4">
-                @if ($equipmentItem->thumbURL() != null)
-                    <img src="{{ $equipmentItem->thumbURL() }}" alt="{{ $equipmentItem->title }}"
-                        class="img img-thumbnail img-fluid p-3 mx-auto">
-                @else
-                    {{-- TODO: Add a default image --}}
-                    <span>[Not Available]</span>
-                @endif
-
+                <img src="{{ $equipmentItem->thumbURL() }}" alt="{{ $equipmentItem->title }}"
+                    class="img img-thumbnail img-fluid p-3 mx-auto">
             </div>
             <div class="col-md-8 col-sm-12 col-12 mb-4">
-
-                <div class="container pb-2 d-inline-flex">
-                    <div class="col-10">
+                <div class="container-fluid row d-inline-flex">
+                    <div class="col-10 p-0">
                         <h3>{{ $equipmentItem->title }} <br>
                             <small class="text-muted">
                                 {{ $equipmentItem->inventoryCode() }}
-                                <hr>
                             </small>
                         </h3>
                     </div>
                     <div class="col-2">
-                        @if ($logged_in_user != null &&
-                            ($logged_in_user->isAdmin() ||
-                                $logged_in_user->isLecturer() ||
-                                $logged_in_user->isTechOfficer() ||
-                                $logged_in_user->isMaintainer()))
+                        @if (
+                            $logged_in_user != null &&
+                                ($logged_in_user->isAdmin() ||
+                                    $logged_in_user->isLecturer() ||
+                                    $logged_in_user->isTechOfficer() ||
+                                    $logged_in_user->isMaintainer()))
                             <a target="_blank" href="{{ route('admin.equipment.items.edit', $equipmentItem) }}"
                                 class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
@@ -49,8 +42,8 @@
                         @endif
                     </div>
                 </div>
-
-                <div>
+                <hr>
+                <div class="pt-2">
                     <table>
                         <tr>
                             <td>Category</td>
@@ -59,7 +52,7 @@
                                     <a
                                         href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type->parent()->first()) }}">
                                         {{ $equipmentItem->equipment_type->parent()->first()->title }}
-                                    </a>
+                                    </a> &gt;
                                 @endif
 
                                 <a href="{{ route('frontend.equipment.category', $equipmentItem->equipment_type) }}">
