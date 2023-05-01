@@ -34,7 +34,7 @@ class EquipmentItemController extends Controller
      */
     public function create()
     {
-        $types = EquipmentType::pluck('title', 'id');
+        $types = EquipmentType::getFullTypeList();
         $locations = Locations::pluck('location', 'id');
         return view('backend.equipment.items.create', compact('types', 'locations'));
     }
@@ -112,7 +112,7 @@ class EquipmentItemController extends Controller
      */
     public function edit(EquipmentItem $equipmentItem)
     {
-        $types = EquipmentType::pluck('title', 'id');
+        $types = EquipmentType::getFullTypeList();
         //$this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
         //if ($this_item_location->count() > 0) {
         //    $this_item_location = $this_item_location->first()->location_id;

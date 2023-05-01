@@ -46,20 +46,12 @@ class ComponentType extends Model
         return $this->hasMany(ComponentItem::class)->get();
     }
 
-    /**
-     * Get the parent component type
-     */
-    public function getParent()
-    {
-        return $this->hasOne(ComponentType::class, "id", "parent_id");
-    }
-
     public function getFullComponentType()
     {
         $item = $this;
         $title = $item->title;
-        while (!($item->getParent()->first() == NULL)) {
-            $item = $item->getParent()->first();
+        while (!($item->parent()->first() == NULL)) {
+            $item = $item->parent()->first();
             $title = $item->title . " > " . $title;
         }
         return $title;

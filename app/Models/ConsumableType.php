@@ -51,4 +51,25 @@ class ConsumableType extends Model
     {
         return $this->hasMany(ConsumableType::class)->get();
     }
+
+    public function getFullConsumableType()
+    {
+        $item = $this;
+        $title = $item->title;
+        while (!($item->parent()->first() == NULL)) {
+            $item = $item->parent()->first();
+            $title = $item->title . " > " . $title;
+        }
+        return $title;
+    }
+
+    public static function getFullTypeList()
+    {
+        $typeList = ConsumableType::all();
+        $types = array();
+        foreach ($typeList as $type) {
+            $types[$type->id] = $type->getFullConsumableType();
+        }
+        return $types;
+    }
 }
