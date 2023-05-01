@@ -25,7 +25,7 @@ class EquipmentType extends Model
         else if ($this->parent()->first() != null) {
             return $this->parent()->first()->thumbURL();
         } else {
-            return null;
+            return config('constants.frontend.dummy_thumb');
         }
     }
 
@@ -48,7 +48,17 @@ class EquipmentType extends Model
         return EquipmentType::where('parent_id', $this->id)->get();
     }
 
-    public function getFullCategoryType()
+    public static function getFullTypeList()
+    {
+        $typeList = EquipmentType::all();
+        $types = array();
+        foreach ($typeList as $type) {
+            $types[$type->id] = $type->getFullEquipmentType();
+        }
+        return $types;
+    }
+
+    public function getFullEquipmentType()
     {
         $item = $this;
         $fullTitle = $this->title;
