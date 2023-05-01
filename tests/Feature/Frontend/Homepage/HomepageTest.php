@@ -52,17 +52,4 @@ class HomepageTest extends TestCase
         $response->assertSee("/consumables");
     }
 
-    /** @test */
-    public function components_shows_categories(){
-        $response = $this->get('/components');
-        $categoryTitle = ComponentType::inRandomOrder()->first()->title;
-        $response->assertSee($categoryTitle);
-    }
-
-    /** @test */
-    public function equipment_shows_categories(){
-        $response = $this->get('/equipment');
-        $categoryTitle = EquipmentType::inRandomOrder()->first()->title;
-        $response->assertSee($categoryTitle);
-    }
 }

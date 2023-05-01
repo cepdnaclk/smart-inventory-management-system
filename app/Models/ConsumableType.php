@@ -27,18 +27,17 @@ class ConsumableType extends Model
     public function thumbURL()
     {
         if ($this->thumb != null) return '/img/consumable_types/' . $this->thumb;
-        else if ($this->parent() != null) {
-            return $this->parent()->thumbURL();
+        else if ($this->parent()->first() != null) {
+            return $this->parent()->first()->thumbURL();
         } else {
-            return null;
+            return config('constants.frontend.dummy_thumb');
         }
     }
 
     // Return the parent item of the current type or null
     public function parent()
     {
-        if ($this->parent_id !== null) return ConsumableType::find($this->parent_id);
-        return null;
+        return $this->hasOne(ConsumableType::class, "id", "parent_id");
     }
 
     // Return the children item types of this item type
@@ -51,5 +50,26 @@ class ConsumableType extends Model
     public function getItems()
     {
         return $this->hasMany(ConsumableType::class)->get();
+    }
+
+    public function getFullConsumableType()
+    {
+        $item = $this;
+        $title = $item->title;
+        while (!($item->parent()->first() == NULL)) {
+            $item = $item->parent()->first();
+            $title = $item->title . " > " . $title;
+        }
+        return $title;
+    }
+
+    public static function getFullTypeList()
+    {
+        $typeList = ConsumableType::all();
+        $types = array();
+        foreach ($typeList as $type) {
+            $types[$type->id] = $type->getFullConsumableType();
+        }
+        return $types;
     }
 }
