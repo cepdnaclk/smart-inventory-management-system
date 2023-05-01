@@ -2,6 +2,6 @@
 
 return [
     'frontend' => [
-        'dummy_thumb' => '/dummy/thumb.jpg',
+        'dummy_thumb' => '/dummy/item_thumbnail.jpg',
     ]
 ];
