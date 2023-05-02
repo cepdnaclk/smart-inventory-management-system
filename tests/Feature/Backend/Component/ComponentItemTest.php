@@ -20,14 +20,14 @@ class ComponentItemTest extends TestCase
     public function an_admin_can_access_the_list_component_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/components/items/')->assertOk();
+        $this->get('/dashboard/components/items/')->assertOk();
     }
 
     /** @test */
     public function an_admin_can_access_the_create_component_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/components/items/create')->assertOk();
+        $this->get('/dashboard/components/items/create')->assertOk();
     }
 
     /** @test */
@@ -35,7 +35,7 @@ class ComponentItemTest extends TestCase
     {
         $this->loginAsAdmin();
         $component = ComponentItem::factory()->create();
-        $this->get('/admin/components/items/' . $component->id)->assertOk();
+        $this->get('/dashboard/components/items/' . $component->id)->assertOk();
     }
 
     /** @test */
@@ -43,14 +43,14 @@ class ComponentItemTest extends TestCase
     {
         $this->loginAsAdmin();
         $component = ComponentItem::factory()->create();
-        $this->get('/admin/components/items/delete/' . $component->id)->assertOk();
+        $this->get('/dashboard/components/items/delete/' . $component->id)->assertOk();
     }
 
     /** @test */
     public function create_component_requires_validation()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/components/items/');
+        $response = $this->post('/dashboard/components/items/');
         $response->assertSessionHasErrors(['title', 'component_type_id']);
     }
 
@@ -60,7 +60,7 @@ class ComponentItemTest extends TestCase
         $this->loginAsAdmin();
         $component = ComponentItem::factory()->create();
 
-        $response = $this->put("/admin/components/items/{$component->id}", []);
+        $response = $this->put("/dashboard/components/items/{$component->id}", []);
         $response->assertSessionHasErrors(['title', 'component_type_id']);
     }
 
@@ -68,7 +68,7 @@ class ComponentItemTest extends TestCase
     public function an_component_can_be_created()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/components/items', [
+        $response = $this->post('/dashboard/components/items', [
 
             'title' => 'Sample Component',
             'brand' => NULL,
@@ -104,7 +104,7 @@ class ComponentItemTest extends TestCase
         $component->title = 'New Component Title';
         $component_array = $component->toArray();
         $component_array['location'] = 2;
-        $response = $this->put("/admin/components/items/{$component->id}", $component_array);
+        $response = $this->put("/dashboard/components/items/{$component->id}", $component_array);
         $response->assertStatus(302);
         $this->assertDatabaseHas('component_items', [
             'title' => 'New Component Title',
@@ -116,7 +116,7 @@ class ComponentItemTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $component = ComponentItem::factory()->create();
-        $this->delete('/admin/components/items/' . $component->id);
+        $this->delete('/dashboard/components/items/' . $component->id);
         $this->assertDatabaseMissing('component_items', ['id' => $component->id]);
     }
 
@@ -124,7 +124,7 @@ class ComponentItemTest extends TestCase
     public function unauthorized_user_cannot_delete_component_item()
     {
         $component = ComponentItem::factory()->create();
-        $response = $this->delete('/admin/components/items/' . $component->id);
+        $response = $this->delete('/dashboard/components/items/' . $component->id);
         $response->assertStatus(302);
     }
 
@@ -141,7 +141,7 @@ class ComponentItemTest extends TestCase
         );
 
         $locationName = Locations::where('id', 1)->first()->location;
-        $response = $this->get('/admin/components/items/' . $component->id);
+        $response = $this->get('/dashboard/components/items/' . $component->id);
         $response->assertSee($locationName);
     }
 
@@ -165,7 +165,7 @@ class ComponentItemTest extends TestCase
 
         $locationName1 = Locations::where('id', 1)->first()->location;
         $locationName2 = Locations::where('id', 2)->first()->location;
-        $response = $this->get('/admin/components/items/' . $component->id);
+        $response = $this->get('/dashboard/components/items/' . $component->id);
         $response->assertSee($locationName1);
         $response->assertSee($locationName2);
     }

@@ -20,14 +20,14 @@ class ConsumableItemTest extends TestCase
     public function an_admin_can_access_the_list_consumable_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/consumables/items/')->assertOk();
+        $this->get('/dashboard/consumables/items/')->assertOk();
     }
 
     /** @test */
     public function an_admin_can_access_the_create_consumable_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/consumables/items/create')->assertOk();
+        $this->get('/dashboard/consumables/items/create')->assertOk();
     }
 
     /** @test */
@@ -35,7 +35,7 @@ class ConsumableItemTest extends TestCase
     {
         $this->loginAsAdmin();
         $consumable = ConsumableItem::factory()->create();
-        $this->get('/admin/consumables/items/' . $consumable->id)->assertOk();
+        $this->get('/dashboard/consumables/items/' . $consumable->id)->assertOk();
     }
 
     /** @test */
@@ -43,14 +43,14 @@ class ConsumableItemTest extends TestCase
     {
         $this->loginAsAdmin();
         $consumable = ConsumableItem::factory()->create();
-        $this->get('/admin/consumables/items/delete/' . $consumable->id)->assertOk();
+        $this->get('/dashboard/consumables/items/delete/' . $consumable->id)->assertOk();
     }
 
     /** @test */
     public function create_consumable_requires_validation()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/consumables/items/');
+        $response = $this->post('/dashboard/consumables/items/');
         $response->assertSessionHasErrors(['title', 'consumable_type_id']);
     }
 
@@ -60,7 +60,7 @@ class ConsumableItemTest extends TestCase
         $this->loginAsAdmin();
         $consumable = ConsumableItem::factory()->create();
 
-        $response = $this->put("/admin/consumables/items/{$consumable->id}", []);
+        $response = $this->put("/dashboard/consumables/items/{$consumable->id}", []);
         $response->assertSessionHasErrors(['title', 'consumable_type_id']);
     }
 
@@ -68,7 +68,7 @@ class ConsumableItemTest extends TestCase
     public function an_consumable_can_be_created()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/consumables/items', [
+        $response = $this->post('/dashboard/consumables/items', [
 
             'title' => 'Sample consumable',
             'specifications' => 'UA741CP OpAmp 1MHz',
@@ -105,7 +105,7 @@ class ConsumableItemTest extends TestCase
         $consumable->title = 'New consumable Title';
         $consumable_array = $consumable->toArray();
         $consumable_array['location'] = 2;
-        $response = $this->put("/admin/consumables/items/{$consumable->id}", $consumable_array);
+        $response = $this->put("/dashboard/consumables/items/{$consumable->id}", $consumable_array);
         $response->assertStatus(302);
 
         $this->assertDatabaseHas('consumable_items', [
@@ -118,7 +118,7 @@ class ConsumableItemTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $consumable = ConsumableItem::factory()->create();
-//        create item locations for this item
+        //        create item locations for this item
         ItemLocations::factory()->create(
             [
                 'item_id' => $consumable->inventoryCode(),
@@ -126,8 +126,8 @@ class ConsumableItemTest extends TestCase
             ]
         );
 
-        $response = $this->delete('/admin/consumables/items/' . $consumable->id);
-//        dd($response->getContent());
+        $response = $this->delete('/dashboard/consumables/items/' . $consumable->id);
+        //        dd($response->getContent());
         $this->assertDatabaseMissing('consumable_items', ['id' => $consumable->id]);
     }
 
@@ -135,7 +135,7 @@ class ConsumableItemTest extends TestCase
     public function unauthorized_user_cannot_delete_consumable_item()
     {
         $consumable = ConsumableItem::factory()->create();
-        $response = $this->delete('/admin/consumables/items/' . $consumable->id);
+        $response = $this->delete('/dashboard/consumables/items/' . $consumable->id);
         $response->assertStatus(302);
     }
 
@@ -152,7 +152,7 @@ class ConsumableItemTest extends TestCase
         );
 
         $locationName = Locations::where('id', 1)->first()->location;
-        $response = $this->get('/admin/consumables/items/' . $consumable->id);
+        $response = $this->get('/dashboard/consumables/items/' . $consumable->id);
         $response->assertSee($locationName);
     }
 
@@ -175,10 +175,9 @@ class ConsumableItemTest extends TestCase
         );
 
         $locationName = Locations::where('id', 1)->first()->location;
-        $response = $this->get('/admin/consumables/items/' . $consumable->id);
+        $response = $this->get('/dashboard/consumables/items/' . $consumable->id);
         $response->assertSee($locationName);
         $locationName = Locations::where('id', 2)->first()->location;
         $response->assertSee($locationName);
     }
-
 }

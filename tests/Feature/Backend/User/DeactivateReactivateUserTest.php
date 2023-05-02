@@ -22,11 +22,11 @@ class DeactivateReactivateUserTest extends TestCase
 
         $user->syncPermissions(['admin.access.user.reactivate']);
 
-        $this->get('/admin/auth/user/deactivated')->assertOk();
+        $this->get('/dashboard/auth/user/deactivated')->assertOk();
 
         $user->syncPermissions([]);
 
-        $response = $this->get('/admin/auth/user/deactivated');
+        $response = $this->get('/dashboard/auth/user/deactivated');
 
         $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
     }
@@ -47,7 +47,7 @@ class DeactivateReactivateUserTest extends TestCase
             'active' => false,
         ]);
 
-        $this->patch('/admin/auth/user/'.$deactivatedUser->id.'/mark/1');
+        $this->patch('/dashboard/auth/user/' . $deactivatedUser->id . '/mark/1');
 
         $this->assertDatabaseHas('users', [
             'id' => $deactivatedUser->id,
@@ -69,7 +69,7 @@ class DeactivateReactivateUserTest extends TestCase
             'active' => false,
         ]);
 
-        $response = $this->patch('/admin/auth/user/'.$deactivatedUser->id.'/mark/1');
+        $response = $this->patch('/dashboard/auth/user/' . $deactivatedUser->id . '/mark/1');
 
         $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
 
@@ -95,7 +95,7 @@ class DeactivateReactivateUserTest extends TestCase
             'active' => true,
         ]);
 
-        $this->patch('/admin/auth/user/'.$activeUser->id.'/mark/0');
+        $this->patch('/dashboard/auth/user/' . $activeUser->id . '/mark/0');
 
         $this->assertDatabaseHas('users', [
             'id' => $activeUser->id,
@@ -117,7 +117,7 @@ class DeactivateReactivateUserTest extends TestCase
             'active' => true,
         ]);
 
-        $response = $this->patch('/admin/auth/user/'.$activeUser->id.'/mark/0');
+        $response = $this->patch('/dashboard/auth/user/' . $activeUser->id . '/mark/0');
 
         $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
 
@@ -134,7 +134,7 @@ class DeactivateReactivateUserTest extends TestCase
 
         $user->syncPermissions(['admin.access.user.deactivate']);
 
-        $response = $this->patch('/admin/auth/user/'.$user->id.'/mark/0');
+        $response = $this->patch('/dashboard/auth/user/' . $user->id . '/mark/0');
 
         $response->assertSessionHas('flash_danger', __('You can not do that to yourself.'));
     }
@@ -146,7 +146,7 @@ class DeactivateReactivateUserTest extends TestCase
 
         $user->syncPermissions(['admin.access.user.deactivate']);
 
-        $response = $this->patch('/admin/auth/user/'.$this->getMasterAdmin()->id.'/mark/0');
+        $response = $this->patch('/dashboard/auth/user/' . $this->getMasterAdmin()->id . '/mark/0');
 
         $response->assertSessionHas('flash_danger', __('You can not deactivate the administrator account.'));
     }

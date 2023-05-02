@@ -23,7 +23,7 @@ class CreateUserTest extends TestCase
     {
         $this->loginAsAdmin();
 
-        $response = $this->get('/admin/auth/user/create');
+        $response = $this->get('/dashboard/auth/user/create');
 
         $response->assertOk();
     }
@@ -33,7 +33,7 @@ class CreateUserTest extends TestCase
     {
         $this->loginAsAdmin();
 
-        $response = $this->post('/admin/auth/user');
+        $response = $this->post('/dashboard/auth/user');
 
         $response->assertSessionHasErrors(['type', 'name', 'email', 'password']);
     }
@@ -45,7 +45,7 @@ class CreateUserTest extends TestCase
 
         User::factory()->create(['email' => 'john@example.com']);
 
-        $response = $this->post('/admin/auth/user', [
+        $response = $this->post('/dashboard/auth/user', [
             'email' => 'john@example.com',
         ]);
 
@@ -59,7 +59,7 @@ class CreateUserTest extends TestCase
 
         $this->loginAsAdmin();
 
-        $response = $this->post('/admin/auth/user', [
+        $response = $this->post('/dashboard/auth/user', [
             'type' => User::TYPE_ADMIN,
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -99,7 +99,7 @@ class CreateUserTest extends TestCase
 
         $this->loginAsAdmin();
 
-        $response = $this->post('/admin/auth/user', [
+        $response = $this->post('/dashboard/auth/user', [
             'type' => User::TYPE_ADMIN,
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -123,7 +123,7 @@ class CreateUserTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
 
-        $response = $this->get('/admin/auth/user/create');
+        $response = $this->get('/dashboard/auth/user/create');
 
         $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
     }
