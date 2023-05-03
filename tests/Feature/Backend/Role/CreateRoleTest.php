@@ -22,7 +22,7 @@ class CreateRoleTest extends TestCase
     {
         $this->loginAsAdmin();
 
-        $this->get('/admin/auth/role/create')->assertOk();
+        $this->get('/dashboard/auth/role/create')->assertOk();
     }
 
     /** @test */
@@ -30,7 +30,7 @@ class CreateRoleTest extends TestCase
     {
         $this->loginAsAdmin();
 
-        $response = $this->post('/admin/auth/role');
+        $response = $this->post('/dashboard/auth/role');
 
         $response->assertSessionHasErrors('type', 'name');
     }
@@ -40,7 +40,7 @@ class CreateRoleTest extends TestCase
     {
         $this->loginAsAdmin();
 
-        $response = $this->post('/admin/auth/role', ['name' => config('boilerplate.access.role.admin')]);
+        $response = $this->post('/dashboard/auth/role', ['name' => config('boilerplate.access.role.admin')]);
 
         $response->assertSessionHasErrors('name');
     }
@@ -52,7 +52,7 @@ class CreateRoleTest extends TestCase
 
         $this->loginAsAdmin();
 
-        $this->post('/admin/auth/role', [
+        $this->post('/dashboard/auth/role', [
             'type' => User::TYPE_ADMIN,
             'name' => 'new role',
             'permissions' => [
@@ -78,7 +78,7 @@ class CreateRoleTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
 
-        $response = $this->get('/admin/auth/role/create');
+        $response = $this->get('/dashboard/auth/role/create');
 
         $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
     }

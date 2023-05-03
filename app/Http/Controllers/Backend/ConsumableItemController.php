@@ -34,7 +34,7 @@ class ConsumableItemController extends Controller
      */
     public function create()
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types = ConsumableType::getFullTypeList();
         $locations = Locations::pluck('location', 'id');
         return view('backend.consumable.items.create', compact('types', 'locations'));
     }
@@ -98,12 +98,12 @@ class ConsumableItemController extends Controller
      */
     public function edit(ConsumableItem $consumableItem)
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types = ConsumableType::getFullTypeList();
         $locations = Locations::pluck('location', 'id');
         return view('backend.consumable.items.edit', compact('types', 'consumableItem', 'locations'));
     }
 
-        /**
+    /**
      * Edit the locations ot the item
      *
      * @param EquipmentItem $equipmentItem
@@ -142,7 +142,7 @@ class ConsumableItemController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($consumableItem->thumbURL(), $request->thumb, "consumable_items");
             }
-            
+
             $filtered_data = $data;
             unset($filtered_data['location']);
             $consumableItem->update($filtered_data);
@@ -181,7 +181,7 @@ class ConsumableItemController extends Controller
 
             // Delete location entries
             $this_item_locations = ItemLocations::where('item_id', $consumableItem->inventoryCode())->get();
-            foreach($this_item_locations as $loc){
+            foreach ($this_item_locations as $loc) {
                 $loc->delete();
             }
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');

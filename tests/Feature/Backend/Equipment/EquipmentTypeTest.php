@@ -18,14 +18,14 @@ class EquipmentTypeTest extends TestCase
     public function an_admin_can_access_the_list_equipment_type_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/equipment/types/')->assertOk();
+        $this->get('/dashboard/equipment/types/')->assertOk();
     }
 
     /** @test */
     public function an_admin_can_access_the_create_equipment_type_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/equipment/types/create')->assertOk();
+        $this->get('/dashboard/equipment/types/create')->assertOk();
     }
 
     /** @test */
@@ -33,7 +33,7 @@ class EquipmentTypeTest extends TestCase
     {
         $this->loginAsAdmin();
         $equipmentType = EquipmentType::factory()->create();
-        $this->get('/admin/equipment/types/' . $equipmentType->id)->assertOk();
+        $this->get('/dashboard/equipment/types/' . $equipmentType->id)->assertOk();
     }
 
     /** @test */
@@ -41,14 +41,14 @@ class EquipmentTypeTest extends TestCase
     {
         $this->loginAsAdmin();
         $equipmentType = EquipmentType::factory()->create();
-        $this->get('/admin/equipment/types/delete/' . $equipmentType->id)->assertOk();
+        $this->get('/dashboard/equipment/types/delete/' . $equipmentType->id)->assertOk();
     }
 
     /** @test */
     public function create_equipment_type_requires_validation()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/equipment/types/');
+        $response = $this->post('/dashboard/equipment/types/');
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -57,7 +57,7 @@ class EquipmentTypeTest extends TestCase
     {
         $this->loginAsAdmin();
         $equipmentType = EquipmentType::factory()->create();
-        $response = $this->put("/admin/equipment/types/{$equipmentType->id}", []);
+        $response = $this->put("/dashboard/equipment/types/{$equipmentType->id}", []);
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -66,7 +66,7 @@ class EquipmentTypeTest extends TestCase
     {
         $this->loginAsAdmin();
 
-        $response = $this->post('/admin/equipment/types', [
+        $response = $this->post('/dashboard/equipment/types', [
             'title' => 'Sample Equipment Type',
             'parent_id' => NULL,
             'subtitle' => 'Sample Subtitle',
@@ -88,7 +88,7 @@ class EquipmentTypeTest extends TestCase
         $equipmentType = EquipmentType::factory()->create();
 
         $equipmentType->title = 'New Equipment Type Title';
-        $response = $this->put("/admin/equipment/types/{$equipmentType->id}", $equipmentType->toArray());
+        $response = $this->put("/dashboard/equipment/types/{$equipmentType->id}", $equipmentType->toArray());
 
         $this->assertDatabaseHas('equipment_types', [
             'title' => 'New Equipment Type Title',
@@ -100,7 +100,7 @@ class EquipmentTypeTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $equipmentType = EquipmentType::factory()->create();
-        $this->delete('/admin/equipment/types/' . $equipmentType->id);
+        $this->delete('/dashboard/equipment/types/' . $equipmentType->id);
         $this->assertDatabaseMissing('equipment_types', ['id' => $equipmentType->id]);
     }
 
@@ -108,8 +108,7 @@ class EquipmentTypeTest extends TestCase
     public function unauthorized_user_cannot_delete_equipment_type_item()
     {
         $equipmentType = EquipmentType::factory()->create();
-        $response = $this->delete('/admin/equipment/types/' . $equipmentType->id);
+        $response = $this->delete('/dashboard/equipment/types/' . $equipmentType->id);
         $response->assertStatus(302);
     }
-
 }

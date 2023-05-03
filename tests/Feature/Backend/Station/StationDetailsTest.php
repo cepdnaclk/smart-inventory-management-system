@@ -10,12 +10,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class StationDetailsTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /** @test */
     public function an_admin_can_access_the_list_stations_page_on_admin_dashboard()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/station/')->assertOk();
+        $this->get('/dashboard/station/')->assertOk();
     }
 
     /** @test */
@@ -23,7 +23,7 @@ class StationDetailsTest extends TestCase
     {
         $station = Stations::factory()->create();
         $this->loginAsAdmin();
-        $this->get('/admin/station/'. $station->id)->assertOk();
+        $this->get('/dashboard/station/' . $station->id)->assertOk();
     }
 
     /** @test */
@@ -31,7 +31,7 @@ class StationDetailsTest extends TestCase
     {
         $station = Stations::factory()->create();
         $this->loginAsAdmin();
-        $this->get('/admin/station/edit/'. $station->id)->assertOk();
+        $this->get('/dashboard/station/edit/' . $station->id)->assertOk();
     }
 
     /** @test */
@@ -39,13 +39,13 @@ class StationDetailsTest extends TestCase
     {
         $station = Stations::factory()->create();
         $this->loginAsAdmin();
-        $this->get('/admin/station/delete/'. $station->id)->assertOk();
+        $this->get('/dashboard/station/delete/' . $station->id)->assertOk();
     }
 
     /** @test */
     public function an_admin_can_view_a_station_as_a_regular_user()
     {
-      
+
         $this->loginAsAdmin();
         $this->get('/stations')->assertOk();
     }
@@ -55,7 +55,7 @@ class StationDetailsTest extends TestCase
     {
         $station = Stations::factory()->create();
         $this->loginAsAdmin();
-        $this->get('/stations/'. $station->id)->assertOk();
+        $this->get('/stations/' . $station->id)->assertOk();
     }
 
     /** @test */
@@ -63,7 +63,6 @@ class StationDetailsTest extends TestCase
     {
         $station = Stations::factory()->create();
         $this->loginAsAdmin();
-        $this->get('/stations/'.$station->id. '/reservations/')->assertOk();
+        $this->get('/stations/' . $station->id . '/reservations/')->assertOk();
     }
-
 }

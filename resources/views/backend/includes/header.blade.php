@@ -43,9 +43,9 @@
                     </strong>
                 </div>
 
-                <x-utils.link class="dropdown-item" href="{{ route('frontend.user.dashboard' )}}" icon="c-icon mr-2 cil-gear">
+                <x-utils.link class="dropdown-item" href="{{ route('frontend.user.overview' )}}" icon="c-icon mr-2 cil-gear">
                     <x-slot name="text">
-                        User Dashboard
+                        User Overview
                     </x-slot>
                 </x-utils.link>
 

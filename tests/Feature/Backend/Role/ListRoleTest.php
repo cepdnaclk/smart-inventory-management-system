@@ -18,7 +18,7 @@ class ListRoleTest extends TestCase
     {
         $this->loginAsAdmin();
 
-        $this->get('/admin/auth/role')->assertOk();
+        $this->get('/dashboard/auth/role')->assertOk();
     }
 
     /** @test */
@@ -26,7 +26,7 @@ class ListRoleTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
 
-        $response = $this->get('/admin/auth/role');
+        $response = $this->get('/dashboard/auth/role');
 
         $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
     }

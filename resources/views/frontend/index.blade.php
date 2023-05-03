@@ -87,10 +87,10 @@
         <div class="top-right links">
             @auth
                 @if ($logged_in_user->isAdminAccess())
-                    <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                    <a href="{{ route('admin.dashboard') }}">Dashboard</a>
                 @endif
 
-                <a href="{{ route('frontend.user.dashboard') }}">User Dashboard</a>
+                <a href="{{ route('frontend.user.overview') }}">User Overview</a>
 
                 <a href="{{ route('frontend.user.account') }}">@lang('Account')</a>
             @else
