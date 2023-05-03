@@ -41,7 +41,7 @@ class LocationServiceTest extends TestCase
             'location_id' => 2,
         ]);
         $locationName = Locations::where('id', 2)->first()->location;
-        $response = $this->get('/admin/equipment/items/'.$thisItem->id);
+        $response = $this->get('/dashboard/equipment/items/' . $thisItem->id);
         // change this if the location name is changed
         $response->assertSee($locationName);
     }
@@ -56,7 +56,7 @@ class LocationServiceTest extends TestCase
             'location_id' => 2,
         ]);
         $locationName = Locations::where('id', 2)->first()->location;
-        $response = $this->get('/admin/components/items/'.$thisItem->id);
+        $response = $this->get('/dashboard/components/items/' . $thisItem->id);
         // change this if the location name is changed
         $response->assertSee($locationName);
     }
@@ -71,7 +71,7 @@ class LocationServiceTest extends TestCase
             'location_id' => 2,
         ]);
         $locationName = Locations::where('id', 2)->first()->location;
-        $response = $this->get('/admin/consumables/items/'.$thisItem->id);
+        $response = $this->get('/dashboard/consumables/items/' . $thisItem->id);
         // change this if the location name is changed
         $response->assertSee($locationName);
     }
@@ -86,7 +86,7 @@ class LocationServiceTest extends TestCase
             'location_id' => 2,
         ]);
         $locationName = Locations::where('id', 2)->first()->location;
-        $response = $this->get('/admin/machines/'.$thisItem->id);
+        $response = $this->get('/dashboard/machines/' . $thisItem->id);
         // change this if the location name is changed
         $response->assertSee($locationName);
     }
@@ -101,7 +101,7 @@ class LocationServiceTest extends TestCase
             'location_id' => 2,
         ]);
         $locationName = Locations::where('id', 2)->first()->location;
-        $response = $this->get('/admin/raw_materials/'.$thisItem->id);
+        $response = $this->get('/dashboard/raw_materials/' . $thisItem->id);
         // change this if the location name is changed
         $response->assertSee($locationName);
     }
@@ -115,7 +115,7 @@ class LocationServiceTest extends TestCase
             'item_id' => $thisItem->inventoryCode(),
             'location_id' => 2,
         ]);
-        $request =  $this->delete("admin/components/items/".$thisItem->id);
+        $request =  $this->delete("/dashboard/components/items/" . $thisItem->id);
         $this->assertDatabaseMissing("item_locations", [
             'item_id' => $thisItem->inventoryCode(),
         ]);
@@ -130,7 +130,7 @@ class LocationServiceTest extends TestCase
             'item_id' => $thisItem->inventoryCode(),
             'location_id' => 2,
         ]);
-        $request =  $this->delete("admin/equipment/items/".$thisItem->id);
+        $request =  $this->delete("/dashboard/equipment/items/" . $thisItem->id);
         $this->assertDatabaseMissing("item_locations", [
             'item_id' => $thisItem->inventoryCode(),
         ]);
@@ -145,7 +145,7 @@ class LocationServiceTest extends TestCase
             'item_id' => $thisItem->inventoryCode(),
             'location_id' => 2,
         ]);
-        $request =  $this->delete("admin/consumables/items/".$thisItem->id);
+        $request =  $this->delete("/dashboard/consumables/items/" . $thisItem->id);
         $this->assertDatabaseMissing("item_locations", [
             'item_id' => $thisItem->inventoryCode(),
         ]);
@@ -160,7 +160,7 @@ class LocationServiceTest extends TestCase
             'item_id' => $thisItem->inventoryCode(),
             'location_id' => 2,
         ]);
-        $request =  $this->delete("admin/machines/".$thisItem->id);
+        $request =  $this->delete("/dashboard/machines/" . $thisItem->id);
         $this->assertDatabaseMissing("item_locations", [
             'item_id' => $thisItem->inventoryCode(),
         ]);
@@ -175,12 +175,9 @@ class LocationServiceTest extends TestCase
             'item_id' => $thisItem->inventoryCode(),
             'location_id' => 2,
         ]);
-        $request =  $this->delete("admin/raw_materials/".$thisItem->id);
+        $request =  $this->delete("/dashboard/raw_materials/" . $thisItem->id);
         $this->assertDatabaseMissing("item_locations", [
             'item_id' => $thisItem->inventoryCode(),
         ]);
     }
-
-
 }
-

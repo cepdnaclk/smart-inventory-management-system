@@ -16,14 +16,14 @@ class MachineTest extends TestCase
     public function an_admin_can_access_the_list_machine_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/machines/')->assertOk();
+        $this->get('/dashboard/machines/')->assertOk();
     }
 
     /** @test */
     public function an_admin_can_access_the_create_machine_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/machines/create')->assertOk();
+        $this->get('/dashboard/machines/create')->assertOk();
     }
 
     /** @test */
@@ -31,7 +31,7 @@ class MachineTest extends TestCase
     {
         $this->loginAsAdmin();
         $machine = Machines::factory()->create();
-        $this->get('/admin/machines/' . $machine->id)->assertOk();
+        $this->get('/dashboard/machines/' . $machine->id)->assertOk();
     }
 
     /** @test */
@@ -39,14 +39,14 @@ class MachineTest extends TestCase
     {
         $this->loginAsAdmin();
         $machine = Machines::factory()->create();
-        $this->get('/admin/machines/delete/' . $machine->id)->assertOk();
+        $this->get('/dashboard/machines/delete/' . $machine->id)->assertOk();
     }
 
     /** @test */
     public function create_machine_requires_validation()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/machines/');
+        $response = $this->post('/dashboard/machines/');
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -55,7 +55,7 @@ class MachineTest extends TestCase
     {
         $this->loginAsAdmin();
         $machine = Machines::factory()->create();
-        $response = $this->put("/admin/machines/{$machine->id}", []);
+        $response = $this->put("/dashboard/machines/{$machine->id}", []);
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -63,7 +63,7 @@ class MachineTest extends TestCase
     public function a_machine_can_be_created()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/machines', [
+        $response = $this->post('/dashboard/machines', [
             'title' => 'Sample Machine',
             'type' => array_rand(Machines::types()),
             'build_width' => 30,
@@ -78,7 +78,7 @@ class MachineTest extends TestCase
             'lifespan' => rand(10, 3000)
         ]);
 
-        $response = $this->post('/admin/machines/')->assertStatus(302);
+        $response = $this->post('/dashboard/machines/')->assertStatus(302);
 
         $this->assertDatabaseHas('machines', [
             'title' => 'Sample Machine',
@@ -99,7 +99,7 @@ class MachineTest extends TestCase
         $machineArray = $machine->toArray();
         $machineArray['location'] = 2;
 
-        $response = $this->put("/admin/machines/{$machine->id}", $machineArray);
+        $response = $this->put("/dashboard/machines/{$machine->id}", $machineArray);
         $response->assertStatus(302);
         $this->assertDatabaseHas('machines', [
             'title' => 'New Machine Title',
@@ -111,7 +111,7 @@ class MachineTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $machine = Machines::factory()->create();
-        $this->delete('/admin/machines/' . $machine->id);
+        $this->delete('/dashboard/machines/' . $machine->id);
         $this->assertDatabaseMissing('machines', ['id' => $machine->id]);
     }
 
@@ -119,7 +119,7 @@ class MachineTest extends TestCase
     public function unauthorized_user_cannot_delete_machine_item()
     {
         $machine = Machines::factory()->create();
-        $response = $this->delete('/admin/machines/' . $machine->id);
+        $response = $this->delete('/dashboard/machines/' . $machine->id);
         $response->assertStatus(302);
     }
 }

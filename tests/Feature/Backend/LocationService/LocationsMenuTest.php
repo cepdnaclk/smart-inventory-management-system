@@ -15,7 +15,7 @@ class LocationsMenuTest extends TestCase
     public function admin_can_see_locations_menu()
     {
         $this->loginAsAdmin();
-        $response = $this->get('/admin/locations');
+        $response = $this->get('/dashboard/locations');
         $response->assertStatus(200);
     }
 
@@ -23,7 +23,7 @@ class LocationsMenuTest extends TestCase
     public function menu_shows_all_locations()
     {
         $this->loginAsAdmin();
-        $response = $this->get('/admin/locations');
+        $response = $this->get('/dashboard/locations');
 
         $allLocations = Locations::all();
         $count = 0;
@@ -31,7 +31,7 @@ class LocationsMenuTest extends TestCase
             $response->assertSee($location->location);
 
             //pagination only shows 10 items at page 1
-            if ($count >9) {
+            if ($count > 9) {
                 break;
             }
             $count++;
@@ -92,8 +92,8 @@ class LocationsMenuTest extends TestCase
 
         $response = $this->delete(route('admin.locations.destroy', $createdLocation->id));
         $response->assertStatus(302);
-        
-        $response = $this->get('/admin/locations');
+
+        $response = $this->get('/dashboard/locations');
         $this->assertDatabaseMissing('locations', [
             'id' => $createdLocation->id,
             'location' => $createdLocation->location,
@@ -101,6 +101,4 @@ class LocationsMenuTest extends TestCase
         // TODO: check if location is missing on index page. not on the database
 
     }
-
-
 }

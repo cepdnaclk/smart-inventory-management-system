@@ -29,7 +29,7 @@ class PasswordExpirationTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->get('/dashboard')->assertRedirect('/password/expired');
+        $response = $this->get('/account/overview')->assertRedirect('/password/expired');
 
         $response->assertSessionHas('flash_warning', __('Your password has expired. We require you to change your password every :days days for security purposes.', [
             'days' => config('boilerplate.access.user.password_expires_days'),

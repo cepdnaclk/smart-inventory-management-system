@@ -20,7 +20,7 @@ class ReverseSearchTest extends TestCase
     public function admin_can_load_reverse_search()
     {
         $this->loginAsAdmin();
-        $response = $this->get('/admin/reverseSearch');
+        $response = $this->get('/dashboard/reverseSearch');
         $response->assertStatus(200);
     }
 
@@ -28,7 +28,7 @@ class ReverseSearchTest extends TestCase
     public function admin_can_search_for_items()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => 1]);
+        $response = $this->post('/dashboard/reverseSearch/reverseResults', ['location' => 1]);
         //        dd($response->content());
         $locationName = Locations::where('id', '1')->first()->name;
         $response->assertStatus(200);
@@ -39,21 +39,21 @@ class ReverseSearchTest extends TestCase
     public function search_results_has_href()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
+        $response = $this->post('/dashboard/reverseSearch/reverseResults', ['location' => '1']);
         $flag = false;
-        if (str_contains($response->content(), '/admin/equipment/')) {
+        if (str_contains($response->content(), '/dashboard/equipment/')) {
             $flag = true;
         }
-        if (str_contains($response->content(), '/admin/components/items/')) {
+        if (str_contains($response->content(), '/dashboard/components/items/')) {
             $flag = true;
         }
-        if (str_contains($response->content(), '/admin/consumables/items/')) {
+        if (str_contains($response->content(), '/dashboard/consumables/items/')) {
             $flag = true;
         }
-        if (str_contains($response->content(), '/admin/machines/')) {
+        if (str_contains($response->content(), '/dashboard/machines/')) {
             $flag = true;
         }
-        if (str_contains($response->content(), '/admin/raw_materials/')) {
+        if (str_contains($response->content(), '/dashboard/raw_materials/')) {
             $flag = true;
         }
 
@@ -65,7 +65,7 @@ class ReverseSearchTest extends TestCase
     public function new_equipment_will_appear_in_reverse_search()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/equipment/items', [
+        $response = $this->post('/dashboard/equipment/items', [
             'title' => 'Sample Equipment',
             'brand' => 'Brand',
             'productCode' => '100-X',
@@ -88,7 +88,7 @@ class ReverseSearchTest extends TestCase
             'item_id' => $createdItem->inventoryCode(),
             'location_id' => 2
         ]);
-        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '2']);
+        $response = $this->post('/dashboard/reverseSearch/reverseResults', ['location' => '2']);
         $response->assertSee($createdItem->title);
     }
 
@@ -96,7 +96,7 @@ class ReverseSearchTest extends TestCase
     public function new_component_will_appear_in_reverse_search()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/components/items', [
+        $response = $this->post('/dashboard/components/items', [
 
             'title' => 'Sample Component',
             'brand' => NULL,
@@ -116,7 +116,7 @@ class ReverseSearchTest extends TestCase
             'item_id' => $createdItem->inventoryCode(),
             'location_id' => 1
         ]);
-        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
+        $response = $this->post('/dashboard/reverseSearch/reverseResults', ['location' => '1']);
         $response->assertSee($createdItem->title);
     }
 
@@ -124,7 +124,7 @@ class ReverseSearchTest extends TestCase
     public function new_consumable_will_appear_in_reverse_search()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/consumables/items', [
+        $response = $this->post('/dashboard/consumables/items', [
             'title' => 'Sample consumable',
             'specifications' => 'UA741CP OpAmp 1MHz',
             'description' => 'The 741 Op Amp IC is a monolithic integrated circuit, comprising of a general purpose Operational Amplifier.',
@@ -143,7 +143,7 @@ class ReverseSearchTest extends TestCase
             'item_id' => $createdItem->inventoryCode(),
             'location_id' => 2
         ]);
-        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '2']);
+        $response = $this->post('/dashboard/reverseSearch/reverseResults', ['location' => '2']);
         $response->assertSee($createdItem->title);
     }
 
@@ -151,7 +151,7 @@ class ReverseSearchTest extends TestCase
     public function new_machine_will_appear_in_reverse_search()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/machines', [
+        $response = $this->post('/dashboard/machines', [
             'title' => 'Sample Machine',
             'type' => array_rand(Machines::types()),
             'build_width' => 30,
@@ -169,7 +169,7 @@ class ReverseSearchTest extends TestCase
             'item_id' => $createdItem->inventoryCode(),
             'location_id' => 1
         ]);
-        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
+        $response = $this->post('/dashboard/reverseSearch/reverseResults', ['location' => '1']);
         $response->assertSee($createdItem->title);
     }
 
@@ -177,7 +177,7 @@ class ReverseSearchTest extends TestCase
     public function new_raw_material_will_appear_in_reverse_search()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/raw_materials', [
+        $response = $this->post('/dashboard/raw_materials', [
             'title' => 'Sample Raw Material',
             'color' => NULL,
             'description' => 'Sample description',
@@ -192,7 +192,7 @@ class ReverseSearchTest extends TestCase
             'item_id' => $createdItem->inventoryCode(),
             'location_id' => 1
         ]);
-        $response = $this->post('/admin/reverseSearch/reverseResults', ['location' => '1']);
+        $response = $this->post('/dashboard/reverseSearch/reverseResults', ['location' => '1']);
         $response->assertSee($createdItem->title);
     }
 }

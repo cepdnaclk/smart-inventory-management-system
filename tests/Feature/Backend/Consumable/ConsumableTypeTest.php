@@ -18,14 +18,14 @@ class ConsumableTypeTest extends TestCase
     public function an_admin_can_access_the_list_consumable_type_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/consumables/types/')->assertOk();
+        $this->get('/dashboard/consumables/types/')->assertOk();
     }
 
     /** @test */
     public function an_admin_can_access_the_create_consumable_type_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/consumables/types/create')->assertOk();
+        $this->get('/dashboard/consumables/types/create')->assertOk();
     }
 
     /** @test */
@@ -33,7 +33,7 @@ class ConsumableTypeTest extends TestCase
     {
         $this->loginAsAdmin();
         $consumableType = ConsumableType::factory()->create();
-        $this->get('/admin/consumables/types/' . $consumableType->id)->assertOk();
+        $this->get('/dashboard/consumables/types/' . $consumableType->id)->assertOk();
     }
 
     /** @test */
@@ -41,14 +41,14 @@ class ConsumableTypeTest extends TestCase
     {
         $this->loginAsAdmin();
         $consumableType = ConsumableType::factory()->create();
-        $this->get('/admin/consumables/types/delete/' . $consumableType->id)->assertOk();
+        $this->get('/dashboard/consumables/types/delete/' . $consumableType->id)->assertOk();
     }
 
     /** @test */
     public function create_consumable_type_requires_validation()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/consumables/types/');
+        $response = $this->post('/dashboard/consumables/types/');
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -57,7 +57,7 @@ class ConsumableTypeTest extends TestCase
     {
         $this->loginAsAdmin();
         $consumableType = ConsumableType::factory()->create();
-        $response = $this->put("/admin/consumables/types/{$consumableType->id}", []);
+        $response = $this->put("/dashboard/consumables/types/{$consumableType->id}", []);
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -66,7 +66,7 @@ class ConsumableTypeTest extends TestCase
     {
         $this->loginAsAdmin();
 
-        $response = $this->post('/admin/consumables/types', [
+        $response = $this->post('/dashboard/consumables/types', [
             'title' => 'Sample Consumable Type',
             'parent_id' => NULL,
             'subtitle' => '',
@@ -88,7 +88,7 @@ class ConsumableTypeTest extends TestCase
         $consumableType = ConsumableType::factory()->create();
 
         $consumableType->title = 'New Consumable Type Title';
-        $response = $this->put("/admin/consumables/types/{$consumableType->id}", $consumableType->toArray());
+        $response = $this->put("/dashboard/consumables/types/{$consumableType->id}", $consumableType->toArray());
 
         $this->assertDatabaseHas('consumable_types', [
             'title' => 'New Consumable Type Title',
@@ -100,7 +100,7 @@ class ConsumableTypeTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $consumableType = ConsumableType::factory()->create();
-        $this->delete('/admin/consumables/types/' . $consumableType->id);
+        $this->delete('/dashboard/consumables/types/' . $consumableType->id);
         $this->assertDatabaseMissing('consumable_types', ['id' => $consumableType->id]);
     }
 
@@ -108,8 +108,7 @@ class ConsumableTypeTest extends TestCase
     public function unauthorized_user_cannot_delete_consumable_type_item()
     {
         $consumableType = ConsumableType::factory()->create();
-        $response = $this->delete('/admin/consumables/types/' . $consumableType->id);
+        $response = $this->delete('/dashboard/consumables/types/' . $consumableType->id);
         $response->assertStatus(302);
     }
-
 }
