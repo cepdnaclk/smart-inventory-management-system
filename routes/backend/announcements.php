@@ -23,7 +23,7 @@ Route::middleware(['editAccess'])->group(function () {
         });
 
     // Store
-    Route::post('announcement', [AnnouncementController::class, 'store'])
+    Route::post('announcements/', [AnnouncementController::class, 'store'])
         ->name('announcements.store');
 
     // Edit
