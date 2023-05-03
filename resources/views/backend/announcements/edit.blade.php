@@ -60,7 +60,7 @@
 
                     <div class="col-md-4 form-check">
                         <input type="checkbox" name="enabled" value="1"
-                               class="form-check-input0" {{ $announcement->enabled === '1' ? 'checked' :''}} />
+                               class="form-check-input0" {{ $announcement->enabled == 1 ? 'checked' :''}} />
                         @error('enabled')
                         <strong>{{ $message }}</strong>
                         @enderror

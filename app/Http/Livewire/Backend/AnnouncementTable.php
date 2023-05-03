@@ -14,6 +14,9 @@ class AnnouncementTable extends DataTableComponent
     public array $perPageAccepted = [25, 50, 100];
     public bool $perPageAll = true;
 
+    public string $defaultSortColumn = 'starts_at';
+    public string $defaultSortDirection = 'desc';
+
     public function columns(): array
     {
         return [
@@ -25,8 +28,10 @@ class AnnouncementTable extends DataTableComponent
                 ->searchable(),
             Column::make("Enabled", "enabled")
                 ->searchable(),
-            Column::make("Start", "starts_at"),
-            Column::make("End", "ends_at"),
+            Column::make("Start", "starts_at")
+                ->sortable(),
+            Column::make("End", "ends_at")
+                ->sortable(),
             Column::make("Actions")
         ];
     }
