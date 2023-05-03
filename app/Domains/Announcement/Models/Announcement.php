@@ -50,6 +50,24 @@ class Announcement extends Model
         'enabled' => 'boolean',
     ];
 
+    public static function areas()
+    {
+        return [
+            'frontend' => 'Frontend',
+            'backend' => 'Backend'
+        ];
+    }
+
+    public static function types()
+    {
+        return [
+            'info' => 'Info',
+            'danger' => 'Danger',
+            'warning' => 'Warning',
+            'success' => 'Success'
+        ];
+    }
+
     /**
      * Create a new factory instance for the model.
      *
