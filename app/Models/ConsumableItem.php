@@ -8,7 +8,6 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 class ConsumableItem extends Model implements Searchable
-
 {
     use HasFactory;
 

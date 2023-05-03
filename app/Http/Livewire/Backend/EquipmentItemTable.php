@@ -57,11 +57,11 @@ class EquipmentItemTable extends DataTableComponent
             // Level 2
             if ($value->children()->count() > 0) {
                 foreach ($value->children() as $l) {
-                    $categories[$l->id] = $l->getFullCategoryType();
+                    $categories[$l->id] = $l->getFullEquipmentType();
                     // Level 3
                     if ($l->children()->count() > 0) {
                         foreach ($l->children() as $ll) {
-                            $categories[$ll->id] = $ll->getFullCategoryType();
+                            $categories[$ll->id] = $ll->getFullEquipmentType();
                         }
                     }
                 }

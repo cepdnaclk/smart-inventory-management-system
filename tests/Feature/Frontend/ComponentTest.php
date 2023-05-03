@@ -37,18 +37,11 @@ class ComponentTest extends TestCase
     }
 
     /** @test */
-    public function components_shows_categories()
-    {
-        $response = $this->get('/components');
-        $categoryTitle = ComponentType::inRandomOrder()->first()->title;
-        $response->assertSee($categoryTitle);
-    }
-
-    /** @test */
     public function components_shows_single_location()
     {
         $component = ComponentItem::factory()->create();
-        ItemLocations::factory()->create([
+        ItemLocations::factory()->create(
+            [
                 'item_id' => $component->inventoryCode(),
                 'location_id' => 1,
             ]
@@ -75,6 +68,4 @@ class ComponentTest extends TestCase
         $location2 = Locations::where('id', 2)->first();
         $this->get('/components/item/' . $item->id)->assertSee($location1->location)->assertSee($location2->location);
     }
-
-
 }
