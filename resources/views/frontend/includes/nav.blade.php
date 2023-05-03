@@ -45,7 +45,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             @if ($logged_in_user->isUser())
                                 <x-utils.link :href="route('admin.dashboard')" :text="__('Dashboard')" class="dropdown-item"></x-utils.link>
-                                <x-utils.link :href="route('frontend.user.overview')" :active="activeClass(Route::is('frontend.user.overview'))" :text="__('Dashboard')"
+                                <x-utils.link :href="route('frontend.user.overview')" :active="activeClass(Route::is('frontend.user.overview'))" :text="__('Account Overview')"
                                     class="dropdown-item"></x-utils.link>
                             @endif
 
