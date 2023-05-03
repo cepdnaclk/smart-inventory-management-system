@@ -1,10 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('Component'))
-
-@section('breadcrumb-links')
-    {{-- @include('backend.inventory.includes.breadcrumb-links') --}}
-@endsection
+@section('title', __('Manage'))
 
 @section('content')
     <div>

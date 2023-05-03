@@ -23,21 +23,12 @@ Route::middleware(['editAccess'])->group(function () {
         });
 
     // Store
-    Route::post('announcements', [AnnouncementController::class, 'store'])
-        ->name('annoncements.store');
-
-    // Show
-    Route::get('announcements/{annoucement}', [AnnouncementController::class, 'show'])
-        ->name('annoncements.show')
-        ->breadcrumbs(function (Trail $trail) {
-            $trail->push(__('Home'), route('admin.dashboard'))
-                ->push(__('Announcements'), route('admin.announcements.index'))
-                ->push(__('Show'));
-        });
+    Route::post('announcement', [AnnouncementController::class, 'store'])
+        ->name('announcements.store');
 
     // Edit
-    Route::get('announcements/edit/{annoucement}', [AnnouncementController::class, 'edit'])
-        ->name('annoncements.edit')
+    Route::get('announcements/edit/{announcement}', [AnnouncementController::class, 'edit'])
+        ->name('announcements.edit')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
                 ->push(__('Announcements'), route('admin.announcements.index'))
@@ -45,12 +36,12 @@ Route::middleware(['editAccess'])->group(function () {
         });
 
     // Update
-    Route::put('announcements/{componentItem}', [AnnouncementController::class, 'update'])
-        ->name('annoncements.update');
+    Route::put('announcements/{announcement}', [AnnouncementController::class, 'update'])
+        ->name('announcements.update');
 
     // Delete
-    Route::get('announcements/delete/{componentItem}', [AnnouncementController::class, 'delete'])
-        ->name('annoncements.delete')
+    Route::get('announcements/delete/{announcement}', [AnnouncementController::class, 'delete'])
+        ->name('announcements.delete')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Home'), route('admin.dashboard'))
                 ->push(__('Announcements'), route('admin.component.index'))
@@ -58,6 +49,6 @@ Route::middleware(['editAccess'])->group(function () {
         });
 
     // Destroy
-    Route::delete('announcements/{componentItem}', [ComponentItemController::class, 'destroy'])
-        ->name('annoncements.destroy');
+    Route::delete('announcements/{announcement}', [AnnouncementController::class, 'destroy'])
+        ->name('announcements.destroy');
 });

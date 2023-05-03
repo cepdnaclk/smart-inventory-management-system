@@ -50,18 +50,29 @@
                             <x-utils.link :href="route('admin.auth.role.index')" class="c-sidebar-nav-link" :text="__('Role Management')"
                                 :active="activeClass(Route::is('admin.auth.role.*'), 'c-active')"></x-utils.link>
                         </li>
-
-                        <li class="c-sidebar-nav-item">
-                            <x-utils.link :href="route('admin.announcements.index')" class="c-sidebar-nav-link" :text="__('Announcements')"
-                                :active="activeClass(Route::is('admin.announcements.*'), 'c-active')"></x-utils.link>
-                        </li>
                     @endif
                 </ul>
             </li>
         @endif
 
+
+        @if ($logged_in_user->hasAllAccess())
+            {{-- Annuncements --}}
+            <li class="c-sidebar-nav-dropdown">
+                <x-utils.link href="#" icon="c-sidebar-nav-icon cil-list" class="c-sidebar-nav-dropdown-toggle"
+                    :text="__('Annuncements')"></x-utils.link>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                     <li class="c-sidebar-nav-item">
+                            <x-utils.link :href="route('admin.announcements.index')" class="c-sidebar-nav-link" :text="__('Manage')"
+                                :active="activeClass(Route::is('admin.announcements.*'), 'c-active')"></x-utils.link>
+                        </li>
+                </ul>
+            </li>
+        @endif
+
         @if ($logged_in_user->hasInventoryAccess())
-            {{-- Equioment --}}
+            {{-- Equipment --}}
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link href="#" icon="c-sidebar-nav-icon cil-list" class="c-sidebar-nav-dropdown-toggle"
                     :text="__('Equipment')"></x-utils.link>
