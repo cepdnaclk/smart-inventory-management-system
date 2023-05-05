@@ -20,15 +20,15 @@ class EquipmentItemController extends Controller
     {
         $items = EquipmentItem::all();
         try {
-            return response()->json($items,200);
+            return response()->json($items, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
-   
+
 
     /**
      * Store a newly created resource in storage.
@@ -72,12 +72,11 @@ class EquipmentItemController extends Controller
             $item->isElectrical = ($request->isElectrical != null);
 
             $item->save();
-            return response()->json($item,200);
-
+            return response()->json($item, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
@@ -89,26 +88,21 @@ class EquipmentItemController extends Controller
      */
     public function show($id)
     {
-        try 
-        {
+        try {
             $item = EquipmentItem::find($id);
-            if($item!=null)
-            {
-                return response()->json($item,200);
+            if ($item != null) {
+                return response()->json($item, 200);
+            } else {
+                return response()->json(["message" => "Item is not found!"], 404);
             }
-            else
-            {
-                return response()->json(["message"=>"Item is not found!"],404);
-            }
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
-  
+
     /**
      * Update the specified resource in storage.
      *
@@ -143,8 +137,8 @@ class EquipmentItemController extends Controller
 
         try {
             $equipmentItem  = EquipmentItem::find($id);
-            if($equipmentItem ==null){
-                return response()->json(["message"=>"Item not found!"],404);
+            if ($equipmentItem == null) {
+                return response()->json(["message" => "Item not found!"], 404);
             }
 
             if ($request->thumb != null) {
@@ -155,12 +149,11 @@ class EquipmentItemController extends Controller
             $equipmentItem->isElectrical = ($request->isElectrical != null);
 
             $equipmentItem->update($data);
-            return response()->json($equipmentItem,200);
-
+            return response()->json($equipmentItem, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
@@ -174,21 +167,20 @@ class EquipmentItemController extends Controller
     {
         try {
             $equipmentItem = EquipmentItem::find($id);
-            if($equipmentItem==null){
+            if ($equipmentItem == null) {
                 return response()->json([
-                    "message"=>"Item is not found"
-                ],404);
+                    "message" => "Item is not found"
+                ], 404);
             }
             // Delete the thumbnail form the file system
             $this->deleteThumb($equipmentItem->thumbURL());
 
             $equipmentItem->delete();
-            return response()->json($equipmentItem,200);
-
+            return response()->json($equipmentItem, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
@@ -196,7 +188,7 @@ class EquipmentItemController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }
@@ -217,10 +209,11 @@ class EquipmentItemController extends Controller
         return $imageName;
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         // Get the search value from the request
         $term = $request->query('term');
-    
+
         // search in the title and body columns from the posts table
         $items = EquipmentItem::query()
             ->where('title', 'LIKE', "%{$term}%")
@@ -229,7 +222,7 @@ class EquipmentItemController extends Controller
             ->orWhere('specifications', 'LIKE', "%{$term}%")
             ->orWhere('instructions', 'LIKE', "%{$term}%")
             ->get();
-    
+
         // Return the search view with the resluts compacted
         return $items;
     }

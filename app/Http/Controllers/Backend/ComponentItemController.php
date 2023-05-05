@@ -179,7 +179,7 @@ class ComponentItemController extends Controller
 
             // delete location entries
             $this_item_locations = ItemLocations::where('item_id', $componentItem->inventoryCode())->get();
-            foreach($this_item_locations as $loc){
+            foreach ($this_item_locations as $loc) {
                 $loc->delete();
             }
 
@@ -191,7 +191,7 @@ class ComponentItemController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }
