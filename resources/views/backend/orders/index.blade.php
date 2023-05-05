@@ -13,7 +13,7 @@
                 Orders
             </x-slot>
 {{-- 
-            @if ($logged_in_user->hasAllAccess())
+            @if ($logged_in_user->hasInventoryAccess())
                 <x-slot name="headerActions">
                     <x-utils.link
                             icon="c-icon cil-plus"
@@ -100,7 +100,7 @@
                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
                                             <a href="{{ route('admin.orders.delete', $order)}}"
-                                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                                 title="Delete"></i>
                                             </a>
                                         </div>

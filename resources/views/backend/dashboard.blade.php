@@ -142,6 +142,16 @@
                             </div>
                         </a>
                     </div>
+
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.station.index') }}">
+                            <div class="card-counter custom">
+                                <span class="count-numbers">{{ $stationCount }}</span>
+                                <span class="count-name">Stations </span>
+                            </div>
+                        </a>
+                    </div>
+
                     @if ($logged_in_user->isLecturer() )
                     <div class="col-md-3">
                         <a class="text-decoration-none" href="{{ route('admin.orders.lecturer.index') }}">

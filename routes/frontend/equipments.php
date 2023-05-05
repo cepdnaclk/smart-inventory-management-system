@@ -5,7 +5,6 @@ use App\Models\EquipmentItem;
 use App\Models\EquipmentType;
 use Tabuna\Breadcrumbs\Trail;
 
-
 Route::prefix('equipment')->group(function () {
     Route::get('/', [EquipmentView::class, 'index'])
         ->name('equipment.index')
@@ -24,26 +23,25 @@ Route::prefix('equipment')->group(function () {
 
     Route::get('/category/{equipmentType}', [EquipmentView::class, 'viewCategory'])
         ->name('equipment.category')
-        ->breadcrumbs(function (Trail $trail, EquipmentType $equipmentType) {
-            $trail->parent('frontend.index')
-                ->push(__('Equipment'), route('frontend.equipment.index'));
+        ->breadcrumbs(
+            function (Trail $trail, EquipmentType $equipmentType) {
+                $trail->parent('frontend.index')
+                    ->push(__('Equipment'), route('frontend.equipment.index'));
 
-            if ($equipmentType->parent() != null) {
-                if ($equipmentType->parent()->parent() != null) {
-                    if ($equipmentType->parent()->parent()->parent() != null) {
-                        $trail->push($equipmentType->parent()->parent()->parent()->title, route('frontend.equipment.category',
-                            $equipmentType->parent()->parent()->parent()));
+                if ($equipmentType->parent()->first() != null) {
+                    // Level 1
+                    $level1 = $equipmentType->parent()->first();
+
+                    if ($level1->parent()->first() != null) {
+                        // // Level 2
+                        $level2 = $level1->parent()->first();
+                        $trail->push($level2->title, route('frontend.equipment.category', $level2));
                     }
-                    $trail->push($equipmentType->parent()->parent()->title, route('frontend.equipment.category',
-                        $equipmentType->parent()->parent()));
+                    $trail->push($level1->title, route('frontend.equipment.category', $level1));
                 }
-                $trail->push($equipmentType->parent()->title, route('frontend.equipment.category',
-                    $equipmentType->parent()));
+                $trail->push($equipmentType->title);
             }
-
-            $trail->push($equipmentType->title);
-
-        });
+        );
 
     Route::get('/item/{equipmentItem}', [EquipmentView::class, 'viewItem'])
         ->name('equipment.item')
@@ -51,25 +49,23 @@ Route::prefix('equipment')->group(function () {
             $trail->parent('frontend.index')
                 ->push(__('Equipments'), route('frontend.equipment.index'));
 
-
             if ($equipmentItem->equipment_type() != null) {
-                $type = $equipmentItem->equipment_type;
+                $level0 = $equipmentItem->equipment_type;
 
-                if ($type->parent() != null) {
-                    if ($type->parent()->parent() != null) {
-                        if ($type->parent()->parent()->parent() != null) {
-                            $trail->push($type->parent()->parent()->parent()->title, route('frontend.equipment.category',
-                                $type->parent()->parent()->parent()));
-                        }
-                        $trail->push($type->parent()->parent()->title, route('frontend.equipment.category',
-                            $type->parent()->parent()));
+                if ($level0->parent()->first() != null) {
+                    // Level 1
+                    $level1 = $level0->parent()->first();
+
+                    if ($level1->parent()->first() != null) {
+                        // // Level 2
+                        $level2 = $level1->parent()->first();
+                        $trail->push($level2->title, route('frontend.equipment.category', $level2));
                     }
-                    $trail->push($type->parent()->title, route('frontend.equipment.category',
-                        $type->parent()));
+                    $trail->push($level1->title, route('frontend.equipment.category', $level1));
                 }
+                $trail->push($level0->title, route('frontend.equipment.category', $level0));
             }
 
             $trail->push($equipmentItem->title);
         });
-
 });

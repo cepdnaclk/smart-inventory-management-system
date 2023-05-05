@@ -38,13 +38,14 @@
                 <div class="form-group row">
                     {!! Form::label('component_type_id', 'Category*', ['class' => 'col-md-2 col-form-label']) !!}
 
-                    <div class="col-md-4">
+                    <div class="col-md-10">
                         {!! Form::select('component_type_id', $types, $componentItem->component_type_id, ['class'=>'form-control', 'required'=>true, 'placeholder' => '']) !!}
                         @error('component_type_id')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
                 </div>
+                
 
                 <div class="form-group row">
                     <!-- Brand -->
@@ -93,26 +94,13 @@
                     </div>
                 </div>
 
-                <!-- Usage Instructions -->
+                <!-- Datasheet -->
                 <div class="form-group row">
-                    {!! Form::label('instructions', 'Usage Instructions', ['class' => 'col-md-2 col-form-label']) !!}
+                    {!! Form::label('datasheet', 'Datasheet URL', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-10">
-                        {!! Form::textarea('instructions', $componentItem->instructions, ['class'=>'form-control', 'rows'=>3 ]) !!}
-                        @error('instructions')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Dimensions -->
-                <!-- TODO: Review this -->
-                <div class="form-group row">
-                    {!! Form::label('size', 'Size', ['class' => 'col-sm-2 form-label']) !!}
-
-                    <div class="col-md-10">
-                        {!! Form::select('size', ['very small'=>'very small', 'small'=> 'small', 'medium'=> 'medium','regular'=>'regular', 'large'=>'large','very large'=> 'very large'], $componentItem->size, ['class'=>'form-control']) !!}
-                        @error('size')
+                        {!! Form::text('datasheet', $componentItem->datasheet, ['class'=>'form-control', 'rows'=>3 ]) !!}
+                        @error('datasheet')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
@@ -137,40 +125,6 @@
                     <div class="col-md-4">
                         {!! Form::number('price', $componentItem->price, ['class'=>'form-control']) !!}
                         @error('price')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- isavailable -->
-                <div class="form-group row">
-                    {!! Form::label('Available?', '', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4 d-flex align-items-center">
-                        {!!Form::checkbox('isAvailable',1,  ($componentItem->isAvailable)?true:false); !!}
-                        @error('isAvailable')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Is Electrical -->
-                <div class="form-group row">
-                    {!! Form::label('isElectrical', 'Electrical?', ['class' => 'col-md-2 form-check-label']) !!}
-
-                    <div class="col-md-4 d-flex align-items-center">
-                        {!!Form::checkbox('isElectrical',1,  ($componentItem->isElectrical)?true:false); !!}
-                        @error('isElectrical')
-                        <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-
-                    <!-- Power Rating -->
-                    {!! Form::label('powerRating', 'Power Rating (Watts)', ['class' => 'col-md-2 col-form-label']) !!}
-
-                    <div class="col-md-4">
-                        {!! Form::number('powerRating', $componentItem->powerRating, ['class'=>'form-control']) !!}
-                        @error('powerRating')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>

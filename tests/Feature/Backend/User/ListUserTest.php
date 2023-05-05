@@ -20,11 +20,11 @@ class ListUserTest extends TestCase
 
         $user->syncPermissions(['admin.access.user.list']);
 
-        $this->get('/admin/auth/user')->assertOk();
+        $this->get('/dashboard/auth/user')->assertOk();
 
         $user->syncPermissions([]);
 
-        $response = $this->get('/admin/auth/user');
+        $response = $this->get('/dashboard/auth/user');
 
         $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
     }
@@ -38,11 +38,11 @@ class ListUserTest extends TestCase
 
         $newUser = User::factory()->create();
 
-        $this->get('/admin/auth/user/'.$newUser->id)->assertOk();
+        $this->get('/dashboard/auth/user/' . $newUser->id)->assertOk();
 
         $user->syncPermissions([]);
 
-        $response = $this->get('/admin/auth/user/'.$newUser->id);
+        $response = $this->get('/dashboard/auth/user/' . $newUser->id);
 
         $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
     }

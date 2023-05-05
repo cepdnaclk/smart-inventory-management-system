@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', $componentType->title )
+@section('title', $componentType->title)
 
 @section('content')
 
@@ -10,29 +10,45 @@
             <div class="col-md-12">
                 <h3>{{ $componentType->title }}</h3>
 
-                @if($componentType->children()->count() != 0)
+
+                @if ($componentType->children()->count() != 0)
                     <div class="container pt-2">Sub-Categories</div>
                     <div class="container pt-2">
-                        @foreach($componentType->children() as $category)
-                            <a class="btn btn-secondary byn-200 mx-1 mb-2"
-                               href="{{ route('frontend.component.category', $category) }}">{{ $category->title }}</a>
-                        @endforeach
-                        <hr/>
-                    </div>
-                @else
-                    {{-- No sub categories available--}}
-                @endif
-
-                @if($items->count() != 0)
-                    <div class="container pt-2">
                         <div class="row equal">
-                            @foreach($items as $item)
+                            @foreach ($componentType->children() as $category)
                                 <div class="col-6 col-sm-3 col-md-2 p-1 d-flex">
                                     <div class="text-center card">
                                         <a class="text-decoration-none"
-                                           href="{{ route('frontend.component.item', $item) }}">
+                                            href="{{ route('frontend.component.category', $category) }}">
+                                            <img class="img-fluid p-2 mx-auto" src="{{ $category->thumbURL() }}"
+                                                alt="{{ $category->title }}" />
+                                            <div class="p-1">
+                                                {{ $category->title }}<br>({{ $category->inventoryCode() }})
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    @if ($items->count() != 0)
+                        <hr />
+                    @endif
+                @else
+                    {{-- No sub categories available --}}
+                @endif
+
+                @if ($items->count() != 0)
+                    <div class="container pt-2">
+                        <div class="row equal">
+                            @foreach ($items as $item)
+                                <div class="col-6 col-sm-3 col-md-2 p-1 d-flex">
+                                    <div class="text-center card">
+                                        <a class="text-decoration-none"
+                                            href="{{ route('frontend.component.item', $item) }}">
                                             <img class="img-fluid p-2 mx-auto" src="{{ $item->thumbURL() }}"
-                                                 alt="{{ $item->title }}"/>
+                                                alt="{{ $item->title }}" />
                                             <div class="p-1">
                                                 {{ $item->title }}
                                             </div>
@@ -45,16 +61,15 @@
                         <div class="container pt-4">
                             {{ $items->links() }}
                         </div>
+                    @elseif ($items->count() == 0 && $componentType->children()->count() == 0)
+                        <p>No items listed under this category yet</p>
+                    @else
+                        {{-- No items available --}}
+                @endif
 
-                        @elseif ($items->count() == 0 && $componentType->children()->count() == 0)
-                            <p>No items listed under this category yet</p>
-                        @else
-                            {{-- No items available--}}
-                        @endif
-
-                    </div>
             </div>
             
             
         </div>
+    </div>
 @endsection

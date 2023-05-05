@@ -8,7 +8,7 @@ class CreateComponentItemsTable extends Migration
 {
     /**
      * Run the migrations.
-     *dgfdgdg
+     *
      * @return void
      */
     public function up()
@@ -24,18 +24,10 @@ class CreateComponentItemsTable extends Migration
 
             $table->text("specifications")->nullable();
             $table->text("description")->nullable();
-            $table->text("instructions")->nullable();
-
-            $table->boolean("isAvailable")->nullable();
-            $table->boolean("isElectrical")->nullable();
-            $table->float("powerRating")->nullable() ;
+            $table->text("datasheet")->nullable();
 
             $table->float("price")->nullable(); // in LKR
             $table->string('thumb')->nullable();
-
-            // Physical size in terms of appearance [small, medium, large]
-            // TODO: This should be revised
-            $table->enum('size', ['very small', 'small', 'medium', 'regular', 'large', 'very large']);
 
             $table->timestamps();
 
@@ -44,9 +36,7 @@ class CreateComponentItemsTable extends Migration
                 ->references('id')
                 ->onDelete('cascade')
                 ->on('component_types');
-
         });
-
     }
 
     /**

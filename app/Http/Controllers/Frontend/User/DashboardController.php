@@ -15,6 +15,6 @@ class DashboardController
      */
     public function index()
     {
-        return view('frontend.user.dashboard');
+        return view('frontend.user.overview');
     }
 }

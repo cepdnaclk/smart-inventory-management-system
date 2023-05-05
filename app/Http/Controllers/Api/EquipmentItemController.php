@@ -15,6 +15,7 @@ class EquipmentItemController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -32,7 +33,7 @@ class EquipmentItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -72,7 +73,6 @@ class EquipmentItemController extends Controller
 
             $item->save();
             return response()->json($item, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -150,7 +150,6 @@ class EquipmentItemController extends Controller
 
             $equipmentItem->update($data);
             return response()->json($equipmentItem, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -178,7 +177,6 @@ class EquipmentItemController extends Controller
 
             $equipmentItem->delete();
             return response()->json($equipmentItem, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()

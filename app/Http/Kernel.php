@@ -49,9 +49,11 @@ class Kernel extends HttpKernel
             EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\EncryptCookies::class,          // <------- ADD THIS
+            \Illuminate\Session\Middleware\StartSession::class, // <------ ADD THIS
         ],
 
-        'admin' => [
+        'admin' => [ 
             /*
              * This is configurable, disable boilerplate.access.user.admin_requires_2fa instead of removing this
              */
@@ -59,6 +61,15 @@ class Kernel extends HttpKernel
             'auth',
             'password.expires',
             'is_admin',
+        ],
+
+        'user' => [
+            /*
+             * A prefix for all registered users 
+             */
+            'is_admin',
+            'is_super_admin',
+            'is_user',
         ],
     ];
 

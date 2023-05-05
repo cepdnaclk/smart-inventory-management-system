@@ -183,6 +183,7 @@ return [
         App\Providers\ObserverServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        MarvinLabs\DiscordLogger\ServiceProvider::class
     ],
 
     /*

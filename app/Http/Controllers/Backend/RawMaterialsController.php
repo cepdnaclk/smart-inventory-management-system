@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ItemLocations;
+use App\Models\Locations;
 use App\Models\RawMaterials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -18,26 +20,27 @@ class RawMaterialsController extends Controller
      */
     public function index()
     {
-        $raw_materials = RawMaterials::paginate(16);
-        return view('backend.raw_materials.index', compact('raw_materials'));
+        //$raw_materials = RawMaterials::paginate(16);
+        return view('backend.raw_materials.index');
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
         $availabilityOptions = RawMaterials::availabilityOptions();
-        return view('backend.raw_materials.create', compact('availabilityOptions'));
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.raw_materials.create', compact('availabilityOptions', 'locations'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -49,7 +52,7 @@ class RawMaterialsController extends Controller
             'specifications' => 'string|nullable',
             'quantity' => 'numeric|nullable',
             'unit' => 'string|nullable',
-            'availability' => Rule::in(['AVAILABLE','NOT_AVAILABLE','CONDITIONALLY_AVAILABLE']),
+            'availability' => Rule::in(['AVAILABLE', 'NOT_AVAILABLE', 'CONDITIONALLY_AVAILABLE']),
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
             'notes' => 'string|nullable',
         ]);
@@ -59,10 +62,9 @@ class RawMaterialsController extends Controller
                 $data['thumb'] = $this->uploadThumb(null, $request->thumb, "raw_materials");
             }
 
-            $material = new RawMaterials($data);
-
-            $material->save();
-            return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw Material was created !');
+            $materials = new RawMaterials($data);
+            $materials->save();
+            return redirect()->route('admin.raw_materials.edit.location', $materials)->with('Success', 'Raw Material was created !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -77,7 +79,13 @@ class RawMaterialsController extends Controller
      */
     public function show(RawMaterials $rawMaterials)
     {
-        return view('backend.raw_materials.show', compact('rawMaterials'));
+        $locationCount = $this->getNumberOfLocationsForItem($rawMaterials);
+
+        $locations_array = array();
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locations_array[] = $this->getFullLocationPathAsString($rawMaterials, $i);
+        }
+        return view('backend.raw_materials.show', compact('rawMaterials', 'locations_array'));
     }
 
     /**
@@ -88,8 +96,19 @@ class RawMaterialsController extends Controller
      */
     public function edit(RawMaterials $rawMaterials)
     {
+//        $this_item_location = ItemLocations::where('item_id', $rawMaterials->inventoryCode())->get()[0]['location_id'];
+////        dd($this_item_location);
+//        $locations = Locations::pluck('location', 'id');
         return view('backend.raw_materials.edit', compact('rawMaterials'));
     }
+
+    public function editLocations(RawMaterials $rawMaterials)
+    {
+        $locations = Locations::all()->where('parent_location', 1)->all();
+
+        return view('backend.raw_materials.edit-location', compact('rawMaterials', 'locations'));
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -110,7 +129,7 @@ class RawMaterialsController extends Controller
             'specifications' => 'string|nullable',
             'quantity' => 'numeric|nullable',
             'unit' => 'string|nullable',
-            'availability' => Rule::in(['AVAILABLE','NOT_AVAILABLE','CONDITIONALLY_AVAILABLE']),
+            'availability' => Rule::in(['AVAILABLE', 'NOT_AVAILABLE', 'CONDITIONALLY_AVAILABLE']),
             'thumb' => 'image|nullable|mimes:jpeg,jpg,png,jpg,gif,svg|max:2048',
             'notes' => 'string|nullable',
         ]);
@@ -123,6 +142,8 @@ class RawMaterialsController extends Controller
             }
 
             $rawMaterials->update($data);
+
+
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw Material was updated !');
 
         } catch (\Exception $ex) {
@@ -153,6 +174,10 @@ class RawMaterialsController extends Controller
             $this->deleteThumb($rawMaterials->thumbURL());
 
             $rawMaterials->delete();
+
+            //            delete location entry
+            $this_item_location = ItemLocations::where('item_id', $rawMaterials->inventoryCode())->delete();
+
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw material was deleted !');
 
         } catch (\Exception $ex) {

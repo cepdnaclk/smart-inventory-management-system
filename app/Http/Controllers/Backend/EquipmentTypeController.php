@@ -7,6 +7,9 @@ use App\Models\EquipmentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use App\Models\ItemLocations;
+use App\Models\Locations;
+use Torann\GeoIP\Location;
 
 class EquipmentTypeController extends Controller
 {
@@ -17,6 +20,8 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
+        //$equipmentTypes = EquipmentType::orderBy('id', 'asc')->paginate(16);
+        return view('backend.equipment.types.index');
         $equipmentTypes = EquipmentType::orderBy('id', 'asc')->paginate(16);
         return view('backend.equipment.types.index', compact('equipmentTypes'));
     }
@@ -28,7 +33,7 @@ class EquipmentTypeController extends Controller
      */
     public function create()
     {
-        $types = EquipmentType::pluck('title', 'id');
+        $types =  EquipmentType::getFullTypeList();
         return view('backend.equipment.types.create', compact('types'));
     }
 
@@ -56,7 +61,6 @@ class EquipmentTypeController extends Controller
             $type = new EquipmentType($data);
             $type->save();
             return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was created !');
-
         } catch (\Exception $ex) {
             return abort(500, "Error 222");
         }
@@ -81,7 +85,7 @@ class EquipmentTypeController extends Controller
      */
     public function edit(EquipmentType $equipmentType)
     {
-        $types = EquipmentType::pluck('title', 'id');
+        $types =  EquipmentType::getFullTypeList();
         return view('backend.equipment.types.edit', compact('equipmentType', 'types'));
     }
 
@@ -109,7 +113,6 @@ class EquipmentTypeController extends Controller
 
             $equipmentType->update($data);
             return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -136,12 +139,14 @@ class EquipmentTypeController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentType->thumbURL());
+            if ($equipmentType->thumb != null) {
+                $this->deleteThumb($equipmentType->thumbURL());
+            }
 
             $equipmentType->delete();
             return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was deleted !');
-
         } catch (\Exception $ex) {
+            dd($ex);
             return abort(500);
         }
     }

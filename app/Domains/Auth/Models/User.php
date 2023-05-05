@@ -154,7 +154,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
      */
     public function canBeImpersonated(): bool
     {
-        return ! $this->isMasterAdmin();
+        return !$this->isMasterAdmin();
     }
 
     /**
@@ -184,14 +184,16 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     {
         return User::where('type', '=', self::TYPE_MAINTAINER)->get();
     }
-    
-  
+
+
     // Orders
-    function orders(){
+    function orders()
+    {
         return $this->hasMany(Order::class);
     }
 
-    function orderApprovals(){
+    function orderApprovals()
+    {
         return $this->hasMany(OrderApproval::class); //lecturer has many order Aprrovals
     }
 }

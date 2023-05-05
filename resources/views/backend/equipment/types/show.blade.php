@@ -24,7 +24,7 @@
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
                             <a href="{{ route('admin.equipment.types.delete', $equipmentType)}}"
-                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                 title="Delete"></i>
                             </a>
                         </div>
@@ -39,9 +39,9 @@
                     <tr>
                         <td>Parent Category</td>
                         <td>
-                            @if( $equipmentType->parent() !== null)
-                                <a href="{{ route('admin.equipment.types.show', $equipmentType->parent()->id) }}">
-                                    {{ $equipmentType->parent()->title }}
+                            @if( $equipmentType->parent_id() !== null)
+                                <a href="{{ route('admin.equipment.types.show', $equipmentType->parent_id) }}">
+                                    {{ $equipmentType->parent()->first()->title }}
                                 </a>
                             @else
                                 N/A

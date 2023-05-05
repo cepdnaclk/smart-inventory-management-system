@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\ComponentType;
 use App\Models\ConsumableItem;
 use App\Models\ConsumableType;
+use App\Models\ItemLocations;
+use App\Models\Locations;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -20,8 +23,8 @@ class ConsumableItemController extends Controller
 
     public function index()
     {
-        $consumables = ConsumableItem::paginate(36);
-        return view("backend.consumable.items.index", compact('consumables'));
+        //$consumables = ConsumableItem::paginate(36);
+        return view("backend.consumable.items.index");
     }
 
     /**
@@ -31,8 +34,9 @@ class ConsumableItemController extends Controller
      */
     public function create()
     {
-        $types = ConsumableType::pluck('title', 'id');
-        return view('backend.consumable.items.create', compact('types'));
+        $types = ConsumableType::getFullTypeList();
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.consumable.items.create', compact('types', 'locations'));
     }
 
     /**
@@ -55,19 +59,18 @@ class ConsumableItemController extends Controller
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        try {
-            if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb(null, $request->thumb, "consumable_items");
-            }
-
-            $type = new ConsumableItem($data);
-
-            $type->save();
-            return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was created !');
-
-        } catch (\Exception $ex) {
-            return abort(500);
+        // try {
+        if ($request->thumb != null) {
+            $data['thumb'] = $this->uploadThumb(null, $request->thumb, "consumable_items");
         }
+
+        $consumableItem = new ConsumableItem($data);
+        $consumableItem->save();
+
+        return redirect()->route('admin.consumable.items.edit.location', $consumableItem)->with('Success', 'Consumable was created !');
+        // } catch (\Exception $ex) {
+        //     return abort(500);
+        // }
     }
 
     /**
@@ -78,7 +81,13 @@ class ConsumableItemController extends Controller
      */
     public function show(ConsumableItem $consumableItem)
     {
-        return view('backend.consumable.items.show', compact("consumableItem"));
+        $locationCount = $this->getNumberOfLocationsForItem($consumableItem);
+
+        $locations_array = array();
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locations_array[] = $this->getFullLocationPathAsString($consumableItem, $i);
+        }
+        return view('backend.consumable.items.show', compact("consumableItem", 'locations_array'));
     }
 
     /**
@@ -89,9 +98,24 @@ class ConsumableItemController extends Controller
      */
     public function edit(ConsumableItem $consumableItem)
     {
-        $types = ConsumableType::pluck('title', 'id');
-        return view('backend.consumable.items.edit', compact('types', 'consumableItem'));
+        $types = ConsumableType::getFullTypeList();
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.consumable.items.edit', compact('types', 'consumableItem', 'locations'));
     }
+
+    /**
+     * Edit the locations ot the item
+     *
+     * @param EquipmentItem $equipmentItem
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function editLocation(ConsumableItem $consumableItem)
+    {
+        $locations = Locations::all()->where('parent_location', 1)->all();
+
+        return view('backend.consumable.items.edit-location', compact('consumableItem', 'locations'));
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -116,15 +140,14 @@ class ConsumableItemController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $thumb = ($consumableItem->thumb == NULL) ? NULL : $consumableItem->thumbURL();
-                $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "consumable_items");
+                $data['thumb'] = $this->uploadThumb($consumableItem->thumbURL(), $request->thumb, "consumable_items");
             }
 
-
-            $consumableItem->update($data);
+            $filtered_data = $data;
+            unset($filtered_data['location']);
+            $consumableItem->update($filtered_data);
 
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -155,8 +178,13 @@ class ConsumableItemController extends Controller
             $this->deleteThumb($consumableItem->thumbURL());
 
             $consumableItem->delete();
-            return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
 
+            // Delete location entries
+            $this_item_locations = ItemLocations::where('item_id', $consumableItem->inventoryCode())->get();
+            foreach ($this_item_locations as $loc) {
+                $loc->delete();
+            }
+            return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
         } catch (\Exception $ex) {
             return abort(500);
         }

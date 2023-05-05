@@ -16,8 +16,8 @@ class ConsumableTypeController extends Controller
      */
     public function index()
     {
-        $consumableTypes = ConsumableType::paginate(12);
-        return view('backend.consumable.types.index', compact('consumableTypes'));
+        //$consumableTypes = ConsumableType::paginate(12);
+        return view('backend.consumable.types.index');
     }
 
     /**
@@ -27,7 +27,7 @@ class ConsumableTypeController extends Controller
      */
     public function create()
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types =  ConsumableType::getFullTypeList();
         return view('backend.consumable.types.create', compact('types'));
     }
 
@@ -54,8 +54,8 @@ class ConsumableTypeController extends Controller
 
             $type = new ConsumableType($data);
             $type->save();
-            return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was created !');
 
+            return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was created !');
         } catch (\Exception $ex) {
             return abort(500, "Error 222");
         }
@@ -80,7 +80,7 @@ class ConsumableTypeController extends Controller
      */
     public function edit(ConsumableType $consumableType)
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types = ConsumableType::getFullTypeList();
         return view('backend.consumable.types.edit', compact('consumableType', 'types'));
     }
 
@@ -108,7 +108,6 @@ class ConsumableTypeController extends Controller
 
             $consumableType->update($data);
             return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -139,7 +138,6 @@ class ConsumableTypeController extends Controller
 
             $consumableType->delete();
             return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -168,5 +166,4 @@ class ConsumableTypeController extends Controller
 
         return $imageName;
     }
-
 }

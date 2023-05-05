@@ -23,8 +23,12 @@
                             <a href="{{ route('admin.raw_materials.edit', $rawMaterials)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
+                            <a href="{{ route('admin.raw_materials.edit.location', $rawMaterials)}}"
+                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker"
+                                                                 title="Edit Location"></i>
+                            </a>
                             <a href="{{ route('admin.raw_materials.delete', $rawMaterials)}}"
-                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                 title="Delete"></i>
                             </a>
                         </div>
@@ -35,6 +39,23 @@
                         <td>Code (to be finalized)</td>
                         <td>{{ $rawMaterials->inventoryCode() }}</td>
                     </tr>
+
+                    {{--                    Location--}}
+                    @if(count($locations_array) > 0)
+                        <tr>
+                            <td>Locations</td>
+                            <td>
+                                @foreach($locations_array as $eachLocation)
+                                    {{ $eachLocation }}<br>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>Location</td>
+                            <td>Not Available</td>
+                        </tr>
+                    @endif
 
                     <tr>
                         <td>Color</td>

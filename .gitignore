@@ -32,10 +32,8 @@ output.txt
 routes.txt
 Thumbs.db
 yarn-error.log
-commands.txt
-composer.lock
+s
+notes.txt
 package-lock.json
 yarn.lock
 .idea/*
-composer.lock
-yarn.lock

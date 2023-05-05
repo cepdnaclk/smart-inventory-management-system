@@ -19,7 +19,7 @@ class VerificationTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->get('/dashboard')->assertRedirect('/email/verify');
+        $this->get('/account/overview')->assertRedirect('/email/verify');
     }
 
     /** @test */

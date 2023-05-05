@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ComponentItem;
 use App\Models\ComponentType;
+use App\Models\ItemLocations;
+use App\Models\Locations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Torann\GeoIP\Location;
 
 class ComponentItemController extends Controller
 {
@@ -20,8 +23,8 @@ class ComponentItemController extends Controller
 
     public function index()
     {
-        $components = ComponentItem::paginate(16);
-        return view("backend.component.items.index", compact('components'));
+        //$components = ComponentItem::paginate(16);
+        return view("backend.component.items.index");
     }
 
     /**
@@ -31,8 +34,9 @@ class ComponentItemController extends Controller
      */
     public function create()
     {
-        $types = ComponentType::pluck('title', 'id');
-        return view('backend.component.items.create', compact('types'));
+        $types = ComponentType::getFullTypeList();
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.component.items.create', compact('types', 'locations'));
     }
 
     /**
@@ -51,14 +55,10 @@ class ComponentItemController extends Controller
 
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
-            'instructions' => 'string|nullable',
+            'datasheet' => 'url|nullable',
 
-            'isAvailable' => 'nullable',
-            'isElectrical' => 'nullable',
-            'powerRating' => 'numeric|nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
-            'size' => 'string|nullable',   // [small, medium, large]
 
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
@@ -69,14 +69,9 @@ class ComponentItemController extends Controller
             }
 
             $type = new ComponentItem($data);
-
-            // Update checkbox condition
-            $type->isAvailable = ($request->isAvailable != null);
-            $type->isElectrical = ($request->isElectrical != null);
-
             $type->save();
-            return redirect()->route('admin.component.items.index')->with('Success', 'component was created !');
 
+            return redirect()->route('admin.component.items.edit.location', $type)->with('Success', 'Component was created !');
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -90,7 +85,13 @@ class ComponentItemController extends Controller
      */
     public function show(ComponentItem $componentItem)
     {
-        return view('backend.component.items.show', compact("componentItem"));
+        $locationCount = $this->getNumberOfLocationsForItem($componentItem);
+
+        $locations_array = array();
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locations_array[] = $this->getFullLocationPathAsString($componentItem, $i);
+        }
+        return view('backend.component.items.show', compact("componentItem", 'locations_array'));
     }
 
     /**
@@ -101,8 +102,15 @@ class ComponentItemController extends Controller
      */
     public function edit(ComponentItem $componentItem)
     {
-        $types = ComponentType::pluck('title', 'id');
+        $types = ComponentType::getFullTypeList();
         return view('backend.component.items.edit', compact('types', 'componentItem'));
+    }
+
+    public function editLocation(ComponentItem $componentItem)
+    {
+        $locations = Locations::all()->where('parent_location', 1)->all();
+
+        return view('backend.component.items.edit-location', compact('componentItem', 'locations'));
     }
 
     /**
@@ -122,14 +130,10 @@ class ComponentItemController extends Controller
 
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
-            'instructions' => 'string|nullable',
+            'datasheet' => 'url|nullable',
 
-            'isAvailable' => 'boolean|nullable',
-            'isElectrical' => 'boolean|nullable',
-            'powerRating' => 'numeric|nullable',
             'quantity' => 'numeric|nullable',
             'price' => 'numeric|nullable',
-            'size' => 'string|nullable',   // [small, medium, large]
 
             'thumb' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
@@ -139,14 +143,9 @@ class ComponentItemController extends Controller
                 $data['thumb'] = $this->uploadThumb($componentItem->thumbURL(), $request->thumb, "component_items");
             }
 
-            // Update checkbox condition
-            $componentItem['isAvailable'] = isset($request->isAvailable) ? 1 : 0;
-            $componentItem['isElectrical'] = isset($request->isElectrical) ? 1 : 0;
-
             $componentItem->update($data);
 
             return redirect()->route('admin.component.items.index')->with('Success', 'Component was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -177,8 +176,14 @@ class ComponentItemController extends Controller
             $this->deleteThumb($componentItem->thumbURL());
 
             $componentItem->delete();
-            return redirect()->route('admin.component.items.index')->with('Success', 'Component was deleted !');
 
+            // delete location entries
+            $this_item_locations = ItemLocations::where('item_id', $componentItem->inventoryCode())->get();
+            foreach($this_item_locations as $loc){
+                $loc->delete();
+            }
+
+            return redirect()->route('admin.component.items.index')->with('Success', 'Component was deleted !');
         } catch (\Exception $ex) {
             return abort(500);
         }

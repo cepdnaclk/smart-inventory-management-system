@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ItemLocations;
+use App\Models\Locations;
 use App\Models\Machines;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -18,8 +20,8 @@ class MachinesController extends Controller
      */
     public function index()
     {
-        $machines = Machines:: paginate(16);
-        return view('backend.machines.index', compact('machines'));
+        //$machines = Machines:: paginate(16);
+        return view('backend.machines.index');
     }
 
     /**
@@ -31,14 +33,15 @@ class MachinesController extends Controller
     {
         $typeOptions = Machines::types();
         $availabilityOptions = Machines::availabilityOptions();
-        return view('backend.machines.create', compact('typeOptions', 'availabilityOptions'));
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.machines.create', compact('typeOptions', 'availabilityOptions', 'locations'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse|\never|void
      */
     public function store(Request $request)
     {
@@ -63,7 +66,8 @@ class MachinesController extends Controller
 
             $machine = new Machines($data);
             $machine->save();
-            return redirect()->route('admin.machines.index')->with('Success', 'Machine was created !');
+
+            return redirect()->route('admin.machines.edit.location', $machine)->with('Success', 'Machine was created !');
 
         } catch (\Exception $ex) {
             return abort(500);
@@ -78,7 +82,13 @@ class MachinesController extends Controller
      */
     public function show(Machines $machines)
     {
-        return view('backend.machines.show', compact('machines'));
+        $locationCount = $this->getNumberOfLocationsForItem($machines);
+
+        $locations_array = array();
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locations_array[] = $this->getFullLocationPathAsString($machines, $i);
+        }
+        return view('backend.machines.show', compact('machines', 'locations_array'));
     }
 
     /**
@@ -91,7 +101,15 @@ class MachinesController extends Controller
     {
         $typeOptions = Machines::types();
         $availabilityOptions = Machines::availabilityOptions();
+
         return view('backend.machines.edit', compact('machines', 'typeOptions', 'availabilityOptions'));
+    }
+
+    public function editLocations(Machines $machines)
+    {
+        $locations = Locations::all()->where('parent_location', 1)->all();
+
+        return view('backend.machines.edit-location', compact('machines', 'locations'));
     }
 
     /**
@@ -105,7 +123,7 @@ class MachinesController extends Controller
     {
         $data = request()->validate([
             'code' => 'string|nullable|max:8',
-            'title' => 'string|required',
+            'title' => 'string|required'
 
         ]);
 
@@ -113,7 +131,9 @@ class MachinesController extends Controller
             if ($request->thumb != null) {
                 $data['thumb'] = $this->uploadThumb($machines->thumbURL(), $request->thumb, "machine");
             }
+
             $machines->update($data);
+
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was updated !');
 
         } catch (\Exception $ex) {
@@ -144,6 +164,10 @@ class MachinesController extends Controller
             $this->deleteThumb($machines->thumbURL());
 
             $machines->delete();
+
+            //            delete location entry
+            $this_item_location = ItemLocations::where('item_id', $machines->inventoryCode())->delete();
+
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was deleted !');
 
         } catch (\Exception $ex) {
