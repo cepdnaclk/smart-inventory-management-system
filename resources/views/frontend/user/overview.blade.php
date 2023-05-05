@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', __('Dashboard'))
+@section('title', __('Overview'))
 
 @section('content')
     <div class="container py-4">
@@ -8,18 +8,21 @@
             <div class="col-md-12">
                 <x-frontend.card>
                     <x-slot name="header">
-                        @lang('Dashboard')
+                        @lang('Overview')
                     </x-slot>
 
                     <x-slot name="body">
                         @lang('You are logged in!')
                         <br>
                         <div>
-                           <a href="{{ route('frontend.user.products') }}">Create a cart</a>     
-                        </div>   
+                            <a href="{{ route('frontend.user.products') }}">Create a cart</a>
+                        </div>
                     </x-slot>
                 </x-frontend.card>
-            </div><!--col-md-10-->
-        </div><!--row-->
-    </div><!--container-->
+            </div>
+            <!--col-md-10-->
+        </div>
+        <!--row-->
+    </div>
+    <!--container-->
 @endsection

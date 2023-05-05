@@ -14,32 +14,42 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-md-4 col-sm-12 col-12 mb-4">
-                @if ($componentItem->thumb != null)
-                    <img src="{{ $componentItem->thumbURL() }}" alt="{{ $componentItem->title }}"
-                        class="img img-thumbnail img-fluid mx-auto p-3">
-                @else
-                    {{-- TODO: Add a default image --}}
-                    <span>[Not Available]</span>
-                @endif
-
+                <img src="{{ $componentItem->thumbURL() }}" alt="{{ $componentItem->title }}"
+                    class="img img-thumbnail img-fluid mx-auto p-3">
             </div>
             <div class="col-md-8 col-sm-12 col-12 mb-4">
-                <h3>{{ $componentItem->title }} <br>
-                    <small class="text-muted">
-                        {{ $componentItem->inventoryCode() }}
-                        <hr>
-                    </small>
-                </h3>
+                <div class="container-fluid row d-inline-flex">
+                    <div class="col-10 p-0">
+                        <h3>{{ $componentItem->title }} <br>
+                            <small class="text-muted">
+                                {{ $componentItem->inventoryCode() }}
+                            </small>
+                        </h3>
+                    </div>
+                    <div class="col-2">
+                        @if (
+                            $logged_in_user != null &&
+                                ($logged_in_user->isAdmin() ||
+                                    $logged_in_user->isLecturer() ||
+                                    $logged_in_user->isTechOfficer() ||
+                                    $logged_in_user->isMaintainer()))
+                            <a target="_blank" href="{{ route('admin.component.items.edit', $componentItem) }}"
+                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                            </a>
+                        @endif
+                    </div>
+                </div>
 
-                <div>
+                <hr>
+                <div class="pt-2">
                     <table>
                         <tr>
                             <td>Category</td>
                             <td>
-                                : @if ($componentItem->component_type->parent() != null)
+                                : @if ($componentItem->component_type->parent()->first() != null)
                                     <a
-                                        href="{{ route('frontend.component.category', $componentItem->component_type->parent()) }}">
-                                        {{ $componentItem->component_type->parent()->title }}
+                                        href="{{ route('frontend.component.category', $componentItem->component_type->parent()->first()) }}">
+                                        {{ $componentItem->component_type->parent()->first()->title }}
                                     </a> &gt;
                                 @endif
 

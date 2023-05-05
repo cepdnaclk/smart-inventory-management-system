@@ -21,14 +21,14 @@ class EquipmentItemTest extends TestCase
     public function an_admin_can_access_the_list_equipment_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/equipment/items/')->assertOk();
+        $this->get('/dashboard/equipment/items/')->assertOk();
     }
 
     /** @test */
     public function an_admin_can_access_the_create_equipment_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/equipment/items/create')->assertOk();
+        $this->get('/dashboard/equipment/items/create')->assertOk();
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class EquipmentItemTest extends TestCase
     {
         $this->loginAsAdmin();
         $equipment = EquipmentItem::factory()->create();
-        $this->get('/admin/equipment/items/' . $equipment->id)->assertOk();
+        $this->get('/dashboard/equipment/items/' . $equipment->id)->assertOk();
     }
 
     /** @test */
@@ -44,14 +44,14 @@ class EquipmentItemTest extends TestCase
     {
         $this->loginAsAdmin();
         $equipment = EquipmentItem::factory()->create();
-        $this->get('/admin/equipment/items/delete/' . $equipment->id)->assertOk();
+        $this->get('/dashboard/equipment/items/delete/' . $equipment->id)->assertOk();
     }
 
     /** @test */
     public function create_equipment_requires_validation()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/equipment/items/');
+        $response = $this->post('/dashboard/equipment/items/');
         $response->assertSessionHasErrors(['title', 'equipment_type_id']);
     }
 
@@ -61,7 +61,7 @@ class EquipmentItemTest extends TestCase
         $this->loginAsAdmin();
         $equipment = EquipmentItem::factory()->create();
 
-        $response = $this->put("/admin/equipment/items/{$equipment->id}", []);
+        $response = $this->put("/dashboard/equipment/items/{$equipment->id}", []);
         $response->assertSessionHasErrors(['title', 'equipment_type_id']);
     }
 
@@ -69,7 +69,7 @@ class EquipmentItemTest extends TestCase
     public function an_equipment_can_be_created()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/equipment/items', [
+        $response = $this->post('/dashboard/equipment/items', [
             'title' => 'Sample Equipment',
             'brand' => 'Brand',
             'productCode' => '100-X',
@@ -111,7 +111,7 @@ class EquipmentItemTest extends TestCase
         $equipment->title = 'New Equipment Title';
         $equipment_array = $equipment->toArray();
         $equipment_array['location'] = 1;
-        $response = $this->put("/admin/equipment/items/{$equipment->id}", $equipment_array);
+        $response = $this->put("/dashboard/equipment/items/{$equipment->id}", $equipment_array);
         $response->assertStatus(302);
 
         $this->assertDatabaseHas('equipment_items', [
@@ -124,7 +124,7 @@ class EquipmentItemTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $equipment = EquipmentItem::factory()->create();
-        $this->delete('/admin/equipment/items/' . $equipment->id);
+        $this->delete('/dashboard/equipment/items/' . $equipment->id);
         $this->assertDatabaseMissing('equipment_items', ['id' => $equipment->id]);
     }
 
@@ -132,14 +132,14 @@ class EquipmentItemTest extends TestCase
     public function unauthorized_user_cannot_delete_equipment_item()
     {
         $equipment = EquipmentItem::factory()->create();
-        $response = $this->delete('/admin/equipment/items/' . $equipment->id);
+        $response = $this->delete('/dashboard/equipment/items/' . $equipment->id);
         $response->assertStatus(302);
     }
 
     /** @test */
     public function unauthorized_user_cannot_access_equipment_item_create_page()
     {
-        $response = $this->get('/admin/equipment/items/create');
+        $response = $this->get('/dashboard/equipment/items/create');
         $response->assertStatus(302);
     }
 
@@ -156,7 +156,7 @@ class EquipmentItemTest extends TestCase
         );
 
         $locationName = Locations::where('id', 2)->first()->location;
-        $response = $this->get('/admin/equipment/items/' . $equipment->id);
+        $response = $this->get('/dashboard/equipment/items/' . $equipment->id);
         $response->assertSee($locationName);
     }
 
@@ -179,7 +179,7 @@ class EquipmentItemTest extends TestCase
         );
         $locationName1 = Locations::where('id', 2)->first()->location;
         $locationName2 = Locations::where('id', 3)->first()->location;
-        $response = $this->get('/admin/equipment/items/' . $equipment->id);
+        $response = $this->get('/dashboard/equipment/items/' . $equipment->id);
         $response->assertSee($locationName1);
         $response->assertSee($locationName2);
     }

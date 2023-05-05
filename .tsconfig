@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "system"
+    },
+    "include": [
+        "resources/js/frontend/components/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "vueCompilerOptions": {
+        "target": "2.7"
+    }
+}
