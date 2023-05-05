@@ -46,6 +46,7 @@ class ComponentItem extends Model implements Searchable
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        // TODO: Verify the change
+        return $this->belongsToMany(Order::class, ComponentItemOrder::class);
     }
 }

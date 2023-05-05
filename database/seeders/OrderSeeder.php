@@ -23,13 +23,11 @@ class OrderSeeder extends Seeder
         $this->disableForeignKeys();
 
         Order::factory()
-            ->count(50)
+            ->count(75)
             ->hasComponentItems(5)
             ->create();
-        
 
-            $this->enableForeignKeys();
-        
 
+        $this->enableForeignKeys();
     }
 }

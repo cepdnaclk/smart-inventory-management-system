@@ -13,31 +13,30 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $orders = Order::with('componentItems')->get();
         try {
-            return response()->json($orders,200);
+            return response()->json($orders, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
-
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $data = request()->validate([
-            
+
             'picked_date' => 'string|nullable', // TODO: Validate properly
             'due_date_to_return' => 'string|required',
             'returned_date' => 'string|nullable',
@@ -48,50 +47,43 @@ class OrderController extends Controller
             $data['user_id'] = $request->user()->id;
             $order = new Order($data);
             $order->save();
-            return response()->json($order,200);
-
+            return response()->json($order, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        try 
-        {
+        try {
             $order = Order::with('componentItems')->find($id);
-            if($order!=null)
-            {
-                return response()->json($order,200);
+            if ($order != null) {
+                return response()->json($order, 200);
+            } else {
+                return response()->json(["message" => "Order is not found!"], 404);
             }
-            else
-            {
-                return response()->json(["message"=>"Order is not found!"],404);
-            }
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
-    
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -104,43 +96,41 @@ class OrderController extends Controller
         ]);
 
         try {
-            $order  = Order::find($id);
-            if($order ==null){
-                return response()->json(["message"=>"Order is not found!"],404);
+            $order = Order::find($id);
+            if ($order == null) {
+                return response()->json(["message" => "Order is not found!"], 404);
             }
             $order->update($data);
-            return response()->json($order,200);
-
+            return response()->json($order, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         try {
             $order = Order::find($id);
-            if($order==null){
+            if ($order == null) {
                 return response()->json([
-                    "message"=>"Type is not found"
-                ],404);
+                    "message" => "Type is not found"
+                ], 404);
             }
-            
-            $order->delete();
-            return response()->json($order,200);
 
+            $order->delete();
+            return response()->json($order, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 }

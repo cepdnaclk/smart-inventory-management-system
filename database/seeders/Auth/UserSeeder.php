@@ -49,6 +49,15 @@ class UserSeeder extends Seeder
                 'active' => true,
             ]);
 
+            $hod = User::create([
+                'type' => User::TYPE_LECTURER,
+                'name' => 'HOD User',
+                'email' => env('SEED_HOD_EMAIL', 'hod@example.com'),
+                'password' => env('SEED_HOD_PASSWORD', 'hod_user'),
+                'email_verified_at' => now(),
+                'active' => true,
+            ]);
+
             $techOfficer = User::create([
                 'type' => User::TYPE_TECH_OFFICER,
                 'name' => 'Technical Officer User',

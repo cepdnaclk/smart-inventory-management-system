@@ -18,7 +18,7 @@
                         @include('includes.partials.lang')
                     </li>
                 @endif
-
+                      
                 @guest
                     <li class="nav-item">
                         <x-utils.link :href="route('frontend.auth.login')" :active="activeClass(Route::is('frontend.auth.login'))" :text="__('Login')" class="nav-link"></x-utils.link>
@@ -52,8 +52,17 @@
                             <x-utils.link :href="route('frontend.user.account')" :active="activeClass(Route::is('frontend.user.account'))" :text="__('My Account')" class="dropdown-item">
                             </x-utils.link>
 
-                            <x-utils.link :text="__('Logout')" class="dropdown-item"
-                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+
+                                    <x-utils.link
+                                    :href="route('frontend.user.orders.index')"
+                                    :active="activeClass(Route::is('frontend.user.orders.index'))"
+                                    :text="__('My Orders')"
+                                    class="dropdown-item"></x-utils.link>
+
+                            <x-utils.link
+                                    :text="__('Logout')"
+                                    class="dropdown-item"
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 <x-slot name="text">
                                     @lang('Logout')
                                     <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none"></x-forms.post>

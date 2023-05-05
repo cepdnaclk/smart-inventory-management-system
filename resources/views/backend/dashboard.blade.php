@@ -40,11 +40,12 @@
             color: #FFF;
         }
 
-        .card-counter.custom {
-            background-color: #c55d88;
+        .card-counter.request {
+            background-color: #581845;
             color: #FFF;
         }
 
+        
 
         .card-counter i {
             font-size: 5em;
@@ -151,6 +152,37 @@
                         </a>
                     </div>
 
+                    @if ($logged_in_user->isLecturer() )
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.orders.lecturer.index') }}">
+                            <div class="card-counter request">
+                                <span class="count-numbers">{{$orderrequest_lecturer}}</span>
+                                <span class="count-name">Order request</span>
+                            </div>
+                        </a>
+                    </div>
+                    @endif
+
+                    @if ($logged_in_user->isTechOfficer() || $logged_in_user->isAdmin())
+                        <div class="col-md-3">
+                            <a class="text-decoration-none" href="{{ route('admin.orders.officer.index') }}">
+                                <div class="card-counter request">
+                                    <span class="count-numbers">Orders</span>
+                                    <span class="count-name">Technical Officer</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a class="text-decoration-none" href="{{ route('admin.locker.index') }}">
+                                <div class="card-counter info">
+                                    <span class="count-numbers">Lockers</span>
+                                    <span class="count-name">Technical Officer</span>
+                                </div>
+                            </a>
+                        </div>
+                    @endif
+                   
                 </div>
             </div>
         </x-slot>

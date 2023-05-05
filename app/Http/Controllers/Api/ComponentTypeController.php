@@ -14,28 +14,27 @@ class ComponentTypeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        
+
         try {
             $types = ComponentType::all();
-            return response()->json($types,200);
+            return response()->json($types, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
-    
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -54,50 +53,43 @@ class ComponentTypeController extends Controller
 
             $type = new ComponentType($data);
             $type->save();
-            return response()->json($type,200);
-
+            return response()->json($type, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        try 
-        {
+        try {
             $type = ComponentType::find($id);
-            if($type!=null)
-            {
-                return response()->json($type,200);
+            if ($type != null) {
+                return response()->json($type, 200);
+            } else {
+                return response()->json(["message" => "Type is not found!"], 404);
             }
-            else
-            {
-                return response()->json(["message"=>"Type is not found!"],404);
-            }
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
-    
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -111,8 +103,8 @@ class ComponentTypeController extends Controller
 
         try {
             $componentType = ComponentType::find($id);
-            if($componentType==null){
-                return response()->json(["message"=>"Item not found!"],404);
+            if ($componentType == null) {
+                return response()->json(["message" => "Item not found!"], 404);
             }
 
             if ($request->thumb != null) {
@@ -120,40 +112,38 @@ class ComponentTypeController extends Controller
             }
 
             $componentType->update($data);
-            return response()->json($componentType,200);
-
+            return response()->json($componentType, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         try {
             $componentType = ComponentType::find($id);
-            if($componentType==null){
+            if ($componentType == null) {
                 return response()->json([
-                    "message"=>"Item is not found"
-                ],404);
+                    "message" => "Item is not found"
+                ], 404);
             }
             // Delete the thumbnail form the file system
             $this->deleteThumb($componentType->thumbURL());
 
             $componentType->delete();
-            return response()->json($componentType,200);
-
+            return response()->json($componentType, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
@@ -181,19 +171,19 @@ class ComponentTypeController extends Controller
         return $imageName;
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         // Get the search value from the request
         $term = $request->query('term');
-    
+
         // search in the title and body columns from the posts table
         $types = ComponentType::query()
             ->where('title', 'LIKE', "%{$term}%")
             ->orWhere('subtitle', 'LIKE', "%{$term}%")
             ->orWhere('description', 'LIKE', "%{$term}%")
             ->get();
-    
-        // Return the search view with the resluts compacted
+
+        // Return the search view with the results compacted
         return $types;
     }
-    
 }

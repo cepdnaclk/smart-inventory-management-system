@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Torann\GeoIP\Location;
 use Illuminate\Database\Eloquent\Model;
 use Database\Seeders\Traits\TruncateTable;
 

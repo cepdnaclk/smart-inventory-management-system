@@ -33,7 +33,7 @@
                         </button>
                     </div>
                 @endif
-
+              
                 <div class="container table-responsive pt-3">
                     <table class="table table-striped">
                         <tr>
@@ -53,7 +53,7 @@
                         @foreach($orders as $order)
 
                             <tr>
-                                <td>{{ $order->id  }}</td>
+                                <td>Order #{{ $order->id }}</td>
 
                                 <td>{{ $order->user->name  }}</td>
                    

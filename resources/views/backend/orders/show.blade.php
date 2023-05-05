@@ -1,5 +1,4 @@
 @extends('backend.layouts.app')
-
 @section('title', __('Orders'))
 
 @section('breadcrumb-links')
@@ -18,6 +17,7 @@
                     <div class="d-flex">
                         <h4>{{ $order->user->name }}</h4>
                     </div>
+                    @if ($logged_in_user->isAdmin())
                     <div class="d-flex px-0 mt-0 mb-0 ml-auto">
                         <div class="btn-group" role="group" aria-label="Modify Buttons">
                             <a href="{{ route('admin.orders.edit', $order)}}"
@@ -29,10 +29,18 @@
                             </a>
                         </div>
                     </div>
+                    @endif
+                   
                 </div>
                 <table class="table">
                     <tr>
+                        <td>status </td>
+                        <td><b>{{ $order->status }}</b> 
+                        </td>
+                    </tr>
+                    <tr>
                         <td>
+                      
                             Ordered-Date
                         </td>
                         <td>
@@ -91,11 +99,7 @@
                             <td> Not Returned Yet! </td>
                         @endif
                     </tr>
-                    <tr>
-                        <td>status </td>
-                        <td>{{ $order->status }} 
-                        </td>
-                    </tr>
+                   
                     
                     
                 </table>

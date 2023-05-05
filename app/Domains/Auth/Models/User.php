@@ -9,6 +9,7 @@ use App\Domains\Auth\Models\Traits\Scope\UserScope;
 use App\Domains\Auth\Notifications\Frontend\ResetPasswordNotification;
 use App\Domains\Auth\Notifications\Frontend\VerifyEmail;
 use App\Models\Order;
+use App\Models\OrderApproval;
 use DarkGhostHunter\Laraguard\Contracts\TwoFactorAuthenticatable;
 use DarkGhostHunter\Laraguard\TwoFactorAuthentication;
 use Database\Factories\UserFactory;
@@ -42,9 +43,11 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
 
     public const TYPE_ADMIN = 'admin';
     public const TYPE_USER = 'user';
+
     public const TYPE_LECTURER = 'lecturer';
     public const TYPE_TECH_OFFICER = 'tech_officer';
     public const TYPE_MAINTAINER = 'maintainer';
+
 
     /**
      * The attributes that are mass assignable.
@@ -151,7 +154,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
      */
     public function canBeImpersonated(): bool
     {
-        return ! $this->isMasterAdmin();
+        return !$this->isMasterAdmin();
     }
 
     /**
@@ -164,7 +167,33 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         return UserFactory::new();
     }
 
-    function orders(){
+    // Get the user lists by type -----------------------------------------------------
+    public static function admins()
+    {
+        return User::where('type', '=', self::TYPE_ADMIN)->get();
+    }
+    public static function lecturers()
+    {
+        return User::where('type', '=', self::TYPE_LECTURER)->get();
+    }
+    public static function techOfficers()
+    {
+        return User::where('type', '=', self::TYPE_TECH_OFFICER)->get();
+    }
+    public static function maintainers()
+    {
+        return User::where('type', '=', self::TYPE_MAINTAINER)->get();
+    }
+
+
+    // Orders
+    function orders()
+    {
         return $this->hasMany(Order::class);
+    }
+
+    function orderApprovals()
+    {
+        return $this->hasMany(OrderApproval::class); //lecturer has many order Aprrovals
     }
 }

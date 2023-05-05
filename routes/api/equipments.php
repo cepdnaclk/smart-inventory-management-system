@@ -7,7 +7,7 @@ Route::get('/equipments', function () {
     return response()->json([
         "Equipment Types",
         "Equipment Items"
-    ],200);
+    ], 200);
 });
 
 
@@ -34,34 +34,25 @@ Route::get('equipments/types/{componentType}', [EquipmentTypeController::class, 
 Route::get('equipments/types/search/', [EquipmentTypeController::class, 'search']);
 
 
-      
-
-Route::group(['prefix'=>'admin'],function () {
-    Route::group([ 'middleware' => ['auth:sanctum','role:'.config('boilerplate.access.role.admin')]], function () {
+Route::group(['prefix' => 'admin'], function () {
+    Route::group(['middleware' => ['auth:sanctum', 'role:' . config('boilerplate.access.role.admin')]], function () {
 
         // Store
         Route::post('equipments/items', [EquipmentItemController::class, 'store']);
-    
+
         // Update
         Route::put('equipments/items/{componentItem}', [EquipmentItemController::class, 'update']);
-    
+
         // Destroy
         Route::delete('equipments/items/{componentItem}', [EquipmentItemController::class, 'destroy']);
 
-         // Store
-         Route::post('equipments/types/', [EquipmentTypeController::class, 'store']);
+        // Store
+        Route::post('equipments/types/', [EquipmentTypeController::class, 'store']);
 
-         // Update
-         Route::put('equipments/types/{componentType}', [EquipmentTypeController::class, 'update']);
-     
-         // Destroy
-         Route::delete('equipments/types/{componentType}', [EquipmentTypeController::class, 'destroy']);
+        // Update
+        Route::put('equipments/types/{componentType}', [EquipmentTypeController::class, 'update']);
+
+        // Destroy
+        Route::delete('equipments/types/{componentType}', [EquipmentTypeController::class, 'destroy']);
     });
 });
-
-
-
-
-
- 
-    
