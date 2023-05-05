@@ -3,6 +3,8 @@
 @section('title', $componentType->title)
 
 @section('content')
+
+
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -66,6 +68,8 @@
                 @endif
 
             </div>
+            
+            
         </div>
     </div>
 @endsection

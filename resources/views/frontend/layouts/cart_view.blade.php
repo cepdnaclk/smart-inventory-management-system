@@ -9,11 +9,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
-
+    
 </head>
 
-<body>
+<body >
+
     <div id="app">
+
         @include('frontend.includes.nav')
         @include('includes.partials.messages')        
     </div><!--app-->
@@ -30,11 +32,12 @@
     </nav>
     
     <div class="container">
-    <br>
+  
+<br>
     <div class="row">
         <div class="col-lg-12 col-sm-12 col-12 main-section">
             <div class="dropdown">
-                <button type="button" class="btn btn-info" data-toggle="dropdown">
+                <button type="button " class="btn btn-info" data-toggle="dropdown">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                 </button>
                 <div class="dropdown-menu">
@@ -84,7 +87,9 @@
         </div> 
     @endif  
 
-    @yield('content')
+  
+        @yield('content')
+   
 
 </div>  
 

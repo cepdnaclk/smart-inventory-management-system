@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+
+use App\Models\OrderApproval;
+
 use Illuminate\Database\Seeder;
 use Torann\GeoIP\Location;
 use Illuminate\Database\Eloquent\Model;
@@ -38,10 +41,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RawMaterialsSeeder::class);
         $this->call(MachinesSeeder::class);
         $this->call(JobRequestsSeeder::class);
-        $this->call(LocationsSeeder::class);
-        $this->call(ItemLocationsSeeder::class);
-        $this->call(StationsSeeder::class);
-        $this->call(ReservationsSeeder::class);
 
         Model::reguard();
     }

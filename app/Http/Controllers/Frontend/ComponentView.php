@@ -41,4 +41,9 @@ class ComponentView extends Controller
 
         return view('frontend.component.item', compact('componentItem', 'locationCount', 'locationStringArray'));
     }
+
+    
+    
+
+
 }

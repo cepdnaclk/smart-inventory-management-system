@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LocaleController;
-use App\Http\Controllers\Backend\DashboardController;
 use Tabuna\Breadcrumbs\Trail;
+use App\Http\Controllers\LocaleController;
 
 /*
  * Global Routes
