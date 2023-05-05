@@ -19,84 +19,81 @@ class OrderController extends Controller
     {
         return view('frontend.orders.show', compact('order'));
     }
-    public function index(){
+    public function index()
+    {
         $id = auth()->user()->id; //getting current user id 
-        $orders=Order::where('user_id',$id)->get();
-        $orders=$orders->reverse();
-    
-       return view('frontend.orders.index', compact('orders'));
-    
-     }
-     public function update(Request $request,Order $order){
-        $data =  request()->validate(['description'=>'string','selectLecturer'=>'string']);
+        $orders = Order::where('user_id', $id)->get();
+        $orders = $orders->reverse();
+
+        return view('frontend.orders.index', compact('orders'));
+    }
+    public function update(Request $request, Order $order)
+    {
+        $data =  request()->validate(['description' => 'string', 'selectLecturer' => 'string']);
         try {
+            $select_lecturerId = User::where('type', 'lecturer')->where('name', $request->selectLecturer)->first();
+            $order->orderApprovals->lecturer_id = $select_lecturerId->id;
+            $order->orderApprovals->order_id = $order->id;
 
-
-
-            $select_lecturerId=User::where('type','lecturer')->where('name',$request->selectLecturer)->first();
-            $order->orderApprovals->lecturer_id=$select_lecturerId->id;
-            $order->orderApprovals->order_id=$order->id;
-
-            $order-> description=$request->input('description');
+            $order->description = $request->input('description');
 
             $order->save();
             $order->orderApprovals->save();
             //$order->update();
             $id = auth()->user()->id; //getting current user id 
-            $orders=Order::where('user_id',$id)->get();
-            $orders=$orders->reverse();
+            $orders = Order::where('user_id', $id)->get();
+            $orders = $orders->reverse();
             return view('frontend.orders.index', compact('orders'))->with('success', 'locker was updated !');
 
             //return view('frontend.orders.show', compact('order'));
 
-         // return redirect()->route('frontend.orders.index')->with('Success', 'locker was updated !');
+            // return redirect()->route('frontend.orders.index')->with('Success', 'locker was updated !');
 
         } catch (\Exception $ex) {
             return abort(500);
         }
-      
+    }
 
-    
-     }
+    public function edit(Order $order)
+    {
+        // return response()->json($order->orderApprovals->lecturer, 200);
 
-     public function edit(Order $order){
-       // return response()->json($order->orderApprovals->lecturer, 200);
+        $lecturers = User::where('type', 'lecturer')->get();
 
-        $lecturers=User::where('type','lecturer')->get();
+        return view('frontend.orders.edit', compact('order', 'lecturers'));
+    }
+    public function store(Request $request)
+    {
 
-        return view('frontend.orders.edit', compact('order','lecturers'));
-     }
-     public function store(Request $request){
- 
-     //dd($request->OrderID);
-        $request->validate(['name'=>'required|string','enumber'=>'required','expected_date'=>'required','description'=>'required|string','selectLecturer'=>'required']);
-  
-       $id=$request->OrderID;
-       $order=Order::where('id',$id)->first();
-        $orderApproval=new OrderApproval();
-        
-        
+        //dd($request->OrderID);
+        $request->validate(['name' => 'required|string', 'enumber' => 'required', 'expected_date' => 'required', 'description' => 'required|string', 'selectLecturer' => 'required']);
 
-        
-       
-        $select_lecturerId=User::where('type','lecturer')->where('name',$request->selectLecturer)->first();
-        $orderApproval->lecturer_id=$select_lecturerId->id;
-        $orderApproval->order_id=$order->id;
-     
+        $id = $request->OrderID;
+        $order = Order::where('id', $id)->first();
+        $orderApproval = new OrderApproval();
+
+
+
+
+
+        $select_lecturerId = User::where('type', 'lecturer')->where('name', $request->selectLecturer)->first();
+        $orderApproval->lecturer_id = $select_lecturerId->id;
+        $orderApproval->order_id = $order->id;
+
         $orderApproval->save();
-       
-        $order->description=$request->description;
-        $order->expected_date=$request->expected_date;
-      
-  
-     
-   
+
+        $order->description = $request->description;
+        $order->expected_date = $request->expected_date;
+
+
+
+
         $order->save();
         $cart = session()->get('cart', []);
         if ($cart != null)
-        $cart = [];
+            $cart = [];
         session()->put('cart', $cart);
-        
+
         try {
             $msgForLecture = [
                 "title" => "New Order Request From CE Smart Inventory",
@@ -120,18 +117,17 @@ class OrderController extends Controller
             ];
             //Mail::to($order->user->email)->send(new OrderMail($msgForStudent));
             Mail::to("e18115@eng.pdn.ac.lk")->send(new OrderMail($msgForStudent));
-            
+
             return redirect()->route('frontend.user.products')->with('success', 'Order Request mail has been sent sucessfully.');
-            
         } catch (\Exception $ex) {
             return abort(500);
         }
     }
-    public function change_status(Order $order){
-        $order->status="PICKED";
+    public function change_status(Order $order)
+    {
+        $order->status = "PICKED";
         $order->update();
-       
-               return redirect()->route('frontend.user.orders.index')->with('Success', 'Status was updated !');
 
+        return redirect()->route('frontend.user.orders.index')->with('Success', 'Status was updated !');
     }
 }

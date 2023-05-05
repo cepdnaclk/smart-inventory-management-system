@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LockerFactory extends Factory
 {
-     /**
+    /**
      * The name of the factory's corresponding model.
      *
      * @var string
@@ -23,8 +23,8 @@ class LockerFactory extends Factory
     public function definition()
     {
         return [
-            'notes'=>$this->faker->text(),
-            'is_available'=>rand(0, 1),
+            'notes' => $this->faker->text(),
+            'is_available' => rand(0, 1),
         ];
     }
 }

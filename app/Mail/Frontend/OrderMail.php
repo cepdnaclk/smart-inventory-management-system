@@ -3,7 +3,6 @@
 namespace App\Mail\Frontend;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -30,6 +29,6 @@ class OrderMail extends Mailable
     public function build()
     {
         return $this->subject('Order request to CE Smart Inventory')
-                    ->markdown('frontend.orders.mails.mail_template');
+            ->markdown('frontend.orders.mails.mail_template');
     }
 }

@@ -15,9 +15,7 @@ class OrderApprovalSeeder extends Seeder
     public function run()
     {
         OrderApproval::factory()
-        ->count(10)
-        ->create();
-    
-
+            ->count(10)
+            ->create();
     }
 }

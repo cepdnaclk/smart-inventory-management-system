@@ -54,7 +54,6 @@ class ComponentTypeController extends Controller
             $type = new ComponentType($data);
             $type->save();
             return response()->json($type, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -114,7 +113,6 @@ class ComponentTypeController extends Controller
 
             $componentType->update($data);
             return response()->json($componentType, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -142,7 +140,6 @@ class ComponentTypeController extends Controller
 
             $componentType->delete();
             return response()->json($componentType, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -189,5 +186,4 @@ class ComponentTypeController extends Controller
         // Return the search view with the results compacted
         return $types;
     }
-
 }

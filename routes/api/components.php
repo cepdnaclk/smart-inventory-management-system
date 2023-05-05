@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\ComponentItemController;
 use App\Http\Controllers\Api\ComponentTypeController;
-use Tabuna\Breadcrumbs\Trail;
 
 Route::get('/components', function () {
     return response()->json([
@@ -53,10 +52,5 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Destroy
         Route::delete('components/types/{componentType}', [ComponentTypeController::class, 'destroy']);
-
     });
 });
-
-
-
-

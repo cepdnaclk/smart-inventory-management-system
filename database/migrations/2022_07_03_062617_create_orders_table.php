@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->date("due_date_to_return")->nullable();
             $table->date("returned_date")->nullable();
             $table->integer("otp")->nullable();
-            $table->enum('status', ['WAITING_LECTURER_APPROVAL','WAITING_H_O_D_APPROVAL','WAITING_TECHNICAL_OFFICER_APPROVAL','APPROVED', 'REJECTED','READY','PICKED','SUBMITTED','FINISHED'])->default('WAITING_LECTURER_APPROVAL');
+            $table->enum('status', ['WAITING_LECTURER_APPROVAL', 'WAITING_H_O_D_APPROVAL', 'WAITING_TECHNICAL_OFFICER_APPROVAL', 'APPROVED', 'REJECTED', 'READY', 'PICKED', 'SUBMITTED', 'FINISHED'])->default('WAITING_LECTURER_APPROVAL');
             $table->timestamps();
 
             $table->foreignId('user_id')

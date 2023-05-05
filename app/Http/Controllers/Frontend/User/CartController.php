@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
-
 use App\Models\Order;
 use Carbon\Carbon;
-use id;
 use Illuminate\Http\Request;
-
 use App\Models\ComponentItem;
-
-use App\Domains\Auth\Models\User ;
-
+use App\Domains\Auth\Models\User;
 
 /**
  * Class CartController.
@@ -46,7 +41,7 @@ class CartController
     public function addToCart($id)
     {
         $componentItem = ComponentItem::findOrFail($id);
-        $cart = session()->get('cart', []); 
+        $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
@@ -92,11 +87,11 @@ class CartController
             'product' => 'required|array|min:1', // TODO: Validate properly
             'quantity' => 'required|array|min:1',
         ]);
-       
+
         $data['ordered_date'] = Carbon::now()->format('Y-m-d');
         $data['user_id'] = $request->user()->id;
         $order = new Order($data);
-      $order->save();
+        $order->save();
 
         for ($i = 0; $i < count($web['product']); $i++) {
             $order->componentItems()->attach($web['product'][$i], ['quantity' => $request->quantity[$i]]);
@@ -104,21 +99,17 @@ class CartController
 
 
 
-        $lecturers=User::where('type','lecturer')->get();
+        $lecturers = User::where('type', 'lecturer')->get();
         //return response()->json($lecturers,200);
-        
 
 
-    //    $user_id=$request->user()->id;
-       // $order_date=$data['ordered_date'];
-     // $orders=Order::where('id',$request->user()->id)->get();
-   // return  Order::where('id',$request->user()->id)->get();;
 
-    return view('frontend.orders.request', compact('order','lecturers'));   
-     return response()->json($order,200);
-    } 
-   
+        //    $user_id=$request->user()->id;
+        // $order_date=$data['ordered_date'];
+        // $orders=Order::where('id',$request->user()->id)->get();
+        // return  Order::where('id',$request->user()->id)->get();;
 
-
-    
+        return view('frontend.orders.request', compact('order', 'lecturers'));
+        return response()->json($order, 200);
+    }
 }

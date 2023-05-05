@@ -10,7 +10,6 @@
             <div class="col-md-12">
                 <h3>{{ $componentType->title }}</h3>
 
-
                 @if ($componentType->children()->count() != 0)
                     <div class="container pt-2">Sub-Categories</div>
                     <div class="container pt-2">
@@ -68,8 +67,6 @@
                 @endif
 
             </div>
-            
-            
         </div>
     </div>
 @endsection

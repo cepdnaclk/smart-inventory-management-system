@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+
 use App\Models\Order;
 use App\Models\OrderApproval;
 use App\Domains\Auth\Models\User;
@@ -19,11 +20,12 @@ class OrderApprovalFactory extends Factory
         return [
             //
             'is_approved_by_lecturer' =>  $this->faker->boolean(),
-            'is_approved_by_TO'=>$this->faker->boolean(),
-            'order_id' =>Order::where(['status' => 'WAITING_LECTURER_APPROVAL'||'WAITING_TECHNICAL_OFFICER_APPROVAL',
+            'is_approved_by_TO' => $this->faker->boolean(),
+            'order_id' => Order::where([
+                'status' => 'WAITING_LECTURER_APPROVAL' || 'WAITING_TECHNICAL_OFFICER_APPROVAL',
             ])->get()->random()->id,
-            'lecturer_id'=>User::lecturers()->random()->id ,
-            'technical_officer_id' => User::techOfficers()->random()->id ,
+            'lecturer_id' => User::lecturers()->random()->id,
+            'technical_officer_id' => User::techOfficers()->random()->id,
         ];
     }
 }

@@ -17,22 +17,24 @@ class SearchController extends Controller
      * @return array
      * 
      */
-    public function search(Request $request){
-        
+    public function search(Request $request)
+    {
+
 
         $citems = (new ComponentItemController)->search($request);
         $ctypes = (new ComponentTypeController)->search($request);
         $eitems = (new EquipmentItemController)->search($request);
         $etypes = (new EquipmentTypeController)->search($request);
-    
+
         // search in the title and body columns from the posts table
-        $result = array_merge(["Component Items"=>$citems],
-                              ["Component Types"=>$ctypes],
-                              ["Equipment Items"=>$eitems],
-                              ["Equipment Types"=>$etypes]);
-    
+        $result = array_merge(
+            ["Component Items" => $citems],
+            ["Component Types" => $ctypes],
+            ["Equipment Items" => $eitems],
+            ["Equipment Types" => $etypes]
+        );
+
         // Return the search view with the results compacted
         return $result;
     }
-    
 }

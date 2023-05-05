@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\ComponentItem;
-use App\Models\ComponentType;
 
 class OrderCompController extends Controller
 {

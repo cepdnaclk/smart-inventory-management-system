@@ -69,7 +69,6 @@ class ComponentItemController extends Controller
 
             $type->save();
             return response()->json($type, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -97,7 +96,6 @@ class ComponentItemController extends Controller
                 "message" => $ex->getMessage()
             ], 500);
         }
-
     }
 
 
@@ -148,7 +146,6 @@ class ComponentItemController extends Controller
             $componentItem->update($data);
 
             return response()->json($componentItem, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -176,7 +173,6 @@ class ComponentItemController extends Controller
 
             $componentItem->delete();
             return response()->json($componentItem, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()

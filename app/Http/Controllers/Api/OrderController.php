@@ -48,7 +48,6 @@ class OrderController extends Controller
             $order = new Order($data);
             $order->save();
             return response()->json($order, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -103,7 +102,6 @@ class OrderController extends Controller
             }
             $order->update($data);
             return response()->json($order, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -129,7 +127,6 @@ class OrderController extends Controller
 
             $order->delete();
             return response()->json($order, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()

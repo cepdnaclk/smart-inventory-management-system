@@ -23,7 +23,7 @@ class LockerSeeder extends Seeder
         Locker::factory()
             ->count(50)
             ->create();
-        
-        $this->enableForeignKeys(); 
+
+        $this->enableForeignKeys();
     }
 }

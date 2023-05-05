@@ -1,14 +1,10 @@
 <?php
 
 use Tabuna\Breadcrumbs\Trail;
-use App\Http\Controllers\OrderCompController;
 use App\Http\Controllers\Frontend\User\CartController;
-// use App\Http\Controllers\Frontend\User\UserController;
-use App\Http\Controllers\Frontend\User\OrderController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
-use App\Models\Cart;
 
 /*
  * These frontend controllers require the user to be logged in

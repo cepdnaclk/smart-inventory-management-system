@@ -139,7 +139,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-      
+
 
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,

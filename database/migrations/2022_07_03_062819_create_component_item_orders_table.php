@@ -31,8 +31,6 @@ class CreateComponentItemOrdersTable extends Migration
                 ->references('id')
                 ->onDelete('cascade')
                 ->on('orders');
-
-
         });
     }
 

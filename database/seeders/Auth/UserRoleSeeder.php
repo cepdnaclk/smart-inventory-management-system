@@ -22,7 +22,7 @@ class UserRoleSeeder extends Seeder
 
         User::find(1)->assignRole(config('boilerplate.access.role.admin'));
 
-        // Assign permissions for the s
+        // Assign permissions for the lecturer users
         User::where('type', User::TYPE_LECTURER)->first()->assignRole('Lecturer');
 
         // Assign permissions for the technicalOfficer users

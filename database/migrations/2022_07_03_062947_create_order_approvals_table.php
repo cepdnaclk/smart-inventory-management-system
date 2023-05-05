@@ -20,25 +20,25 @@ class CreateOrderApprovalsTable extends Migration
             $table->boolean('is_approved_by_TO')->nullable();
 
             $table->foreignId('order_id')
-            ->constrained()
-            ->references('id')
-            ->onDelete('cascade')
-            ->on('orders');
-     
+                ->constrained()
+                ->references('id')
+                ->onDelete('cascade')
+                ->on('orders');
+
 
             $table->foreignId('lecturer_id')->nullable()
-            ->constrained()
-            ->references('id')
-            ->onDelete('cascade')
-            ->on('users');
+                ->constrained()
+                ->references('id')
+                ->onDelete('cascade')
+                ->on('users');
 
             $table->foreignId('technical_officer_id')->nullable()
-            ->constrained()
-            ->references('id')
-            ->onDelete('cascade')
-            ->on('users');
+                ->constrained()
+                ->references('id')
+                ->onDelete('cascade')
+                ->on('users');
 
-           //HOD for later part
+            //HOD for later part
 
 
 

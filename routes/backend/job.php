@@ -161,5 +161,3 @@ Route::middleware(['role:Administrator|Technical Officer'])->group(function () {
         ->name('jobs.officer.finish');
 
 });
-
-?>

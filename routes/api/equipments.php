@@ -56,10 +56,3 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('equipments/types/{componentType}', [EquipmentTypeController::class, 'destroy']);
     });
 });
-
-
-
-
-
- 
-    

@@ -7,7 +7,6 @@ use App\Models\OrderApproval;
 use App\Domains\Auth\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Locker;
 
 class Order extends Model
@@ -18,15 +17,14 @@ class Order extends Model
     public function componentItems()
     {
         //return $this->belongsToMany(ComponentItem::class)->withPivot('quantity');   
-        return $this->belongsToMany(ComponentItem::class, ComponentItemOrder::class)->withPivot('quantity'); 
-    
+        return $this->belongsToMany(ComponentItem::class, ComponentItemOrder::class)->withPivot('quantity');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    
+
 
     public function dueDays()
     {
@@ -35,20 +33,23 @@ class Order extends Model
         return ($end->diffInDays($now));
     }
 
-    public function generateOtp(){
-        $otp = rand(1000,9999);
+    public function generateOtp()
+    {
+        $otp = rand(1000, 9999);
         $this->otp = $otp;
         $this->save();
         return $otp;
     }
 
-    public function checkOtp($otp){
-        return $otp==$this->otp;
+    public function checkOtp($otp)
+    {
+        return $otp == $this->otp;
     }
-    public function orderApprovals(){
+    public function orderApprovals()
+    {
         return $this->hasOne(OrderApproval::class);  //Order  has one  order Aprrovals
     }
-   
+
     public function locker()
     {
         return $this->belongsTo(locker::class);
@@ -66,7 +67,7 @@ class Order extends Model
     {
         return Order::where('status', 'READY')->orderBy('id')->paginate(16);
     }
-    
+
     public static function getApprovedOrders()
     {
         return Order::where('status', 'APPROVED')->orderBy('id')->paginate(16);
@@ -76,6 +77,4 @@ class Order extends Model
     {
         return Order::where('status', 'PICKED')->orderBy('id')->paginate(16);
     }
-    
-    
 }

@@ -52,7 +52,6 @@ class EquipmentTypeController extends Controller
             $type = new EquipmentType($data);
             $type->save();
             return response()->json($type, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -110,7 +109,6 @@ class EquipmentTypeController extends Controller
 
             $equipmentType->update($data);
             return response()->json($equipmentType, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()
@@ -138,7 +136,6 @@ class EquipmentTypeController extends Controller
 
             $equipmentType->delete();
             return response()->json($equipmentType, 200);
-
         } catch (\Exception $ex) {
             return response()->json([
                 "message" => $ex->getMessage()

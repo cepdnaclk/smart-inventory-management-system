@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\Backend\DashboardController;
 
 /*
  * Global Routes
