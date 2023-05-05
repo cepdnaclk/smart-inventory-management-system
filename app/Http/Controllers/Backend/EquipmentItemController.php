@@ -210,7 +210,7 @@ class EquipmentItemController extends Controller
 
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentItem->thumbURL());
+            $this->deleteThumb($equipmentItem->thumb);
 
             $equipmentItem->delete();
 

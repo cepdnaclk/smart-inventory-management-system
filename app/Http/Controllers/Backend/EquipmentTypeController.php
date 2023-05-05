@@ -138,7 +138,7 @@ class EquipmentTypeController extends Controller
         try {
             // Delete the thumbnail form the file system
             if ($equipmentType->thumb != null) {
-                $this->deleteThumb($equipmentType->thumbURL());
+                $this->deleteThumb($equipmentType->thumb);
             }
 
             $equipmentType->delete();

@@ -175,7 +175,7 @@ class ConsumableItemController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($consumableItem->thumbURL());
+            $this->deleteThumb($consumableItem->thumb);
 
             $consumableItem->delete();
 

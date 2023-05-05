@@ -141,7 +141,7 @@ class StationController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($station->thumbURL());
+            $this->deleteThumb($station->thumb);
 
             $station->delete();
             return redirect()->route('admin.station.index')->with('Success', 'Station was deleted !');

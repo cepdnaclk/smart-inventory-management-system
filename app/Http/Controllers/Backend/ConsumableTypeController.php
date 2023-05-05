@@ -134,7 +134,7 @@ class ConsumableTypeController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($consumableType->thumbURL());
+            $this->deleteThumb($consumableType->thumb);
 
             $consumableType->delete();
             return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was deleted !');

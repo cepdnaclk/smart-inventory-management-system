@@ -170,7 +170,7 @@ class ComponentItemController extends Controller
                 ], 404);
             }
             // Delete the thumbnail form the file system
-            $this->deleteThumb($componentItem->thumbURL());
+            $this->deleteThumb($componentItem->thumb);
 
             $componentItem->delete();
             return response()->json($componentItem, 200);

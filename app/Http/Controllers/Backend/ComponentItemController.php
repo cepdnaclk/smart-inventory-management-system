@@ -173,7 +173,7 @@ class ComponentItemController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($componentItem->thumbURL());
+            $this->deleteThumb($componentItem->thumb);
 
             $componentItem->delete();
 

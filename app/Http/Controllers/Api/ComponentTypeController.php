@@ -138,7 +138,7 @@ class ComponentTypeController extends Controller
                 ], 404);
             }
             // Delete the thumbnail form the file system
-            $this->deleteThumb($componentType->thumbURL());
+            $this->deleteThumb($componentType->thumb);
 
             $componentType->delete();
             return response()->json($componentType, 200);

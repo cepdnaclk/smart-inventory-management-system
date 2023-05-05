@@ -169,7 +169,7 @@ class RawMaterialsController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($rawMaterials->thumbURL());
+            $this->deleteThumb($rawMaterials->thumb);
 
             $rawMaterials->delete();
 

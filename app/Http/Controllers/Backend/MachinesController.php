@@ -159,7 +159,7 @@ class MachinesController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($machines->thumbURL());
+            $this->deleteThumb($machines->thumb);
 
             $machines->delete();
 

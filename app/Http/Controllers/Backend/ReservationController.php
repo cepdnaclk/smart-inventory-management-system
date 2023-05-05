@@ -316,8 +316,8 @@ class ReservationController extends Controller
         $userLoggedIn = auth()->user();
         $booking = Reservation::find($reservation->id);
 
-        $this->deleteThumb($reservation->thumbURL());
-        $this->deleteThumb($reservation->thumbURL_after());
+        $this->deleteThumb($reservation->thumb);
+        $this->deleteThumb($reservation->thumb_after);
 
         if (!$booking) {
             return response()->json([

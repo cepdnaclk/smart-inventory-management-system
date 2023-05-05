@@ -139,7 +139,7 @@ class EquipmentTypeController extends Controller
                 ], 404);
             }
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentType->thumbURL());
+            $this->deleteThumb($equipmentType->thumb);
 
             $equipmentType->delete();
             return response()->json($equipmentType, 200);
