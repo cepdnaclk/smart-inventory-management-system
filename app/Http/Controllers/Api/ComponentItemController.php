@@ -137,7 +137,7 @@ class ComponentItemController extends Controller
 
             if ($request->thumb != null) {
 
-                $data['thumb'] = $this->uploadThumb($componentItem->thumbURL(), $request->thumb, "component_items");
+                $data['thumb'] = $this->uploadThumb($componentItem->thumb, $request->thumb, "component_items");
             }
 
             // Update checkbox condition

@@ -103,7 +103,7 @@ class ConsumableTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($consumableType->thumbURL(), $request->thumb, "consumable_types");
+                $data['thumb'] = $this->uploadThumb($consumableType->thumb, $request->thumb, "consumable_types");
             }
 
             $consumableType->update($data);

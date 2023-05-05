@@ -110,7 +110,7 @@ class EquipmentTypeController extends Controller
                 return response()->json(["message" => "Item not found!"], 404);
             }
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentType->thumbURL(), $request->thumb, "equipment_items");
+                $data['thumb'] = $this->uploadThumb($equipmentType->thumb, $request->thumb, "equipment_items");
             }
 
 

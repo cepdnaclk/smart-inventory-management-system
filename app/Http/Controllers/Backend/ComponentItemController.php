@@ -140,7 +140,7 @@ class ComponentItemController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($componentItem->thumbURL(), $request->thumb, "component_items");
+                $data['thumb'] = $this->uploadThumb($componentItem->thumb, $request->thumb, "component_items");
             }
 
             $componentItem->update($data);

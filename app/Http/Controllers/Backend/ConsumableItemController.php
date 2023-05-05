@@ -140,7 +140,7 @@ class ConsumableItemController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($consumableItem->thumbURL(), $request->thumb, "consumable_items");
+                $data['thumb'] = $this->uploadThumb($consumableItem->thumb, $request->thumb, "consumable_items");
             }
 
             $filtered_data = $data;

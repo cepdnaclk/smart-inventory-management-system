@@ -111,7 +111,7 @@ class StationController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($station->thumbURL(), $request->thumb, "stations");
+                $data['thumb'] = $this->uploadThumb($station->thumb, $request->thumb, "stations");
             }
             $station->update($data);
             return redirect()->route('admin.station.index')->with('Success', 'Station was updated !');

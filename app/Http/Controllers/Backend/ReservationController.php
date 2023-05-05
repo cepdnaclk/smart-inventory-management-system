@@ -208,8 +208,7 @@ class ReservationController extends Controller
         ];
 
         if ($request->thumb != null) {
-            $thumb = ($reservation->thumb == NULL) ? NULL : $reservation->thumbURL();
-            $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "reservations");
+            $data['thumb'] = $this->uploadThumb($reservation->thumb, $request->thumb, "reservations");
         }
 
         if ($request->thumb_after != null) {

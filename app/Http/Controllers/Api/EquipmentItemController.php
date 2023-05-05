@@ -142,7 +142,7 @@ class EquipmentItemController extends Controller
             }
 
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentItem->thumbURL(), $request->thumb, "equipment_items");
+                $data['thumb'] = $this->uploadThumb($equipmentItem->thumb, $request->thumb, "equipment_items");
             }
 
             // Update checkbox condition

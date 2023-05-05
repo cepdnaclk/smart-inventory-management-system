@@ -137,7 +137,7 @@ class RawMaterialsController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($rawMaterials->thumbURL(), $request->thumb, "raw_materials");
+                $data['thumb'] = $this->uploadThumb($rawMaterials->thumb, $request->thumb, "raw_materials");
             }
 
             $rawMaterials->update($data);

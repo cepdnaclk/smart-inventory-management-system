@@ -110,7 +110,7 @@ class ComponentTypeController extends Controller
             }
 
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($componentType->thumbURL(), $request->thumb, "component_types");
+                $data['thumb'] = $this->uploadThumb($componentType->thumb, $request->thumb, "component_types");
             }
 
             $componentType->update($data);

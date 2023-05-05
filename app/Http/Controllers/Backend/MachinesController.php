@@ -128,7 +128,7 @@ class MachinesController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($machines->thumbURL(), $request->thumb, "machine");
+                $data['thumb'] = $this->uploadThumb($machines->thumb, $request->thumb, "machine");
             }
 
             $machines->update($data);

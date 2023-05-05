@@ -106,7 +106,7 @@ class EquipmentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentType->thumbURL(), $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb($equipmentType->thumb, $request->thumb, "equipment_types");
             }
 
             $equipmentType->update($data);
