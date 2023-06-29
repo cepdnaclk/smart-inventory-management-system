@@ -16,12 +16,9 @@
             <x-slot name="body">
 
                 @if (session('Success'))
-                    <div class="alert alert-success">
+                    <x-utils.alert type="success" class="header-message">
                         {{ session('Success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </x-utils.alert>
                 @endif
 
                 <div class="container table-responsive pt-3">
@@ -37,18 +34,18 @@
                             <th>&nbsp;</th>
                         </tr>
 
-                        @foreach($reservation as $res)
+                        @foreach ($reservation as $res)
                             <tr>
-                           
+
 
                                 <td>
-                                    @if($res->res_info() != null)
+                                    @if ($res->res_info() != null)
                                         {{ $res->res_info['name'] }}
                                     @endif
                                 </td>
 
                                 <td>
-                                    @if($res->st_info() != null)
+                                    @if ($res->st_info() != null)
                                         {{ $res->st_info['stationName'] }}
                                     @endif
                                 </td>
@@ -57,21 +54,21 @@
                                 <td>{{ $res->duration }}</td>
                                 <td>{{ $res->E_numbers }}</td>
                                 <td>
-                                    @if($res->status == "approved")
+                                    @if ($res->status == 'approved')
                                         <span class="text-success">Approved</span>
-                                    @elseif($res->status == "rejected")
-                                        <span class="text-danger">Rejected</span>                                        
+                                    @elseif($res->status == 'rejected')
+                                        <span class="text-danger">Rejected</span>
                                     @else
-                                        <span class="text-primary">Pending</span>                                        
+                                        <span class="text-primary">Pending</span>
                                     @endif
                                 </td>
-                                
+
                                 <td>
 
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('admin.reservation.show', $res)}}"
-                                               class="btn btn-info btn-xs"><i class="fa fa-eye" title="Show"></i>
+                                            <a href="{{ route('admin.reservation.show', $res) }}"
+                                                class="btn btn-info btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
                                         </div>
