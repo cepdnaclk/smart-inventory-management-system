@@ -68,7 +68,6 @@ class MachinesController extends Controller
             $machine->save();
 
             return redirect()->route('admin.machines.edit.location', $machine)->with('Success', 'Machine was created !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -129,13 +128,12 @@ class MachinesController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($machines->thumbURL(), $request->thumb, "machine");
+                $data['thumb'] = $this->uploadThumb($machines->thumb, $request->thumb, "machine");
             }
 
             $machines->update($data);
 
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -161,7 +159,7 @@ class MachinesController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($machines->thumbURL());
+            $this->deleteThumb($machines->thumb);
 
             $machines->delete();
 
@@ -169,7 +167,6 @@ class MachinesController extends Controller
             $this_item_location = ItemLocations::where('item_id', $machines->inventoryCode())->delete();
 
             return redirect()->route('admin.machines.index')->with('Success', 'Machine was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -177,7 +174,7 @@ class MachinesController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

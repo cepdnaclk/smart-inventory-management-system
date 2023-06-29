@@ -65,7 +65,6 @@ class RawMaterialsController extends Controller
             $materials = new RawMaterials($data);
             $materials->save();
             return redirect()->route('admin.raw_materials.edit.location', $materials)->with('Success', 'Raw Material was created !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -96,9 +95,9 @@ class RawMaterialsController extends Controller
      */
     public function edit(RawMaterials $rawMaterials)
     {
-//        $this_item_location = ItemLocations::where('item_id', $rawMaterials->inventoryCode())->get()[0]['location_id'];
-////        dd($this_item_location);
-//        $locations = Locations::pluck('location', 'id');
+        //        $this_item_location = ItemLocations::where('item_id', $rawMaterials->inventoryCode())->get()[0]['location_id'];
+        ////        dd($this_item_location);
+        //        $locations = Locations::pluck('location', 'id');
         return view('backend.raw_materials.edit', compact('rawMaterials'));
     }
 
@@ -119,7 +118,7 @@ class RawMaterialsController extends Controller
      */
     public function update(Request $request, RawMaterials $rawMaterials)
     {
-//        dd($request, $rawMaterials);
+        //        dd($request, $rawMaterials);
 
         $data = request()->validate([
             'code' => 'string|nullable|max:8',
@@ -134,18 +133,17 @@ class RawMaterialsController extends Controller
             'notes' => 'string|nullable',
         ]);
 
-//        dd($data);
+        //        dd($data);
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($rawMaterials->thumbURL(), $request->thumb, "raw_materials");
+                $data['thumb'] = $this->uploadThumb($rawMaterials->thumb, $request->thumb, "raw_materials");
             }
 
             $rawMaterials->update($data);
 
 
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw Material was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -171,7 +169,7 @@ class RawMaterialsController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($rawMaterials->thumbURL());
+            $this->deleteThumb($rawMaterials->thumb);
 
             $rawMaterials->delete();
 
@@ -179,7 +177,6 @@ class RawMaterialsController extends Controller
             $this_item_location = ItemLocations::where('item_id', $rawMaterials->inventoryCode())->delete();
 
             return redirect()->route('admin.raw_materials.index')->with('Success', 'Raw material was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -187,7 +184,7 @@ class RawMaterialsController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

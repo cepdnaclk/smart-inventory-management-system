@@ -106,7 +106,7 @@ class EquipmentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentType->thumbURL(), $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb($equipmentType->thumb, $request->thumb, "equipment_types");
             }
 
             $equipmentType->update($data);
@@ -138,7 +138,7 @@ class EquipmentTypeController extends Controller
         try {
             // Delete the thumbnail form the file system
             if ($equipmentType->thumb != null) {
-                $this->deleteThumb($equipmentType->thumbURL());
+                $this->deleteThumb($equipmentType->thumb);
             }
 
             $equipmentType->delete();
@@ -151,7 +151,7 @@ class EquipmentTypeController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

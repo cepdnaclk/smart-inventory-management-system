@@ -103,7 +103,7 @@ class ConsumableTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($consumableType->thumbURL(), $request->thumb, "consumable_types");
+                $data['thumb'] = $this->uploadThumb($consumableType->thumb, $request->thumb, "consumable_types");
             }
 
             $consumableType->update($data);
@@ -134,7 +134,7 @@ class ConsumableTypeController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($consumableType->thumbURL());
+            $this->deleteThumb($consumableType->thumb);
 
             $consumableType->delete();
             return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was deleted !');
@@ -145,7 +145,7 @@ class ConsumableTypeController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

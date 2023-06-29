@@ -172,8 +172,7 @@ class EquipmentItemController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $thumb = ($equipmentItem->thumb == NULL) ? NULL : $equipmentItem->thumbURL();
-                $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "equipment_items");
+                $data['thumb'] = $this->uploadThumb($equipmentItem->thumb, $request->thumb, "equipment_items");
             }
 
             // Update checkbox condition
@@ -210,7 +209,7 @@ class EquipmentItemController extends Controller
 
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentItem->thumbURL());
+            $this->deleteThumb($equipmentItem->thumb);
 
             $equipmentItem->delete();
 
@@ -228,7 +227,7 @@ class EquipmentItemController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

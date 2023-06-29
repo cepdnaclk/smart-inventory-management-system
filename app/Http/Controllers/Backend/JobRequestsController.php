@@ -68,7 +68,7 @@ class JobRequestsController extends Controller
 
             return redirect()->route('admin.jobs.student.confirm', $jobReq);
         } catch (\Exception $ex) {
-//            dd($ex);
+            //            dd($ex);
             return abort(500);
         }
     }
@@ -99,7 +99,6 @@ class JobRequestsController extends Controller
             $jobRequests->save();
             $id = $jobRequests->id;
             return redirect()->route('admin.jobs.student.index')->with('Success', 'The fabrication request #' . $id . ' was placed successfully !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -119,7 +118,6 @@ class JobRequestsController extends Controller
 
             $jobRequests->delete();
             return redirect()->route('admin.jobs.student.index')->with('Success', 'Job request was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -200,7 +198,7 @@ class JobRequestsController extends Controller
     // Support Functions
     private function deleteFile($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $file = public_path($currentURL);
             if (File::exists($file)) {
                 unlink($file);
