@@ -29,7 +29,7 @@ class ValidateAsInternalEmail implements Rule
         // Skip email validator in unit testing, to save time 
         if (app()->environment() == 'testing') return true;
         $api = new DepartmentDataService();
-        return $api->isUserExists($value);
+        return $api->isInternalEmail($value);
     }
 
     /**

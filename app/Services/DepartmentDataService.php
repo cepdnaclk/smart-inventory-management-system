@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 class DepartmentDataService
 {
-    public function isUserExists($userEmail)
+    public function isInternalEmail($userEmail)
     {
         $emails = Cache::remember(
             'dept_service_user_emails',
