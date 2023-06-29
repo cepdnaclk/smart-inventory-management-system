@@ -14,17 +14,9 @@
             </x-slot>
             <x-slot name="body">
                 @if (session('Success'))
-                    <div class="alert alert-success">
+                    <x-utils.alert type="success" class="header-message">
                         {{ session('Success') }}
-                        <button
-                            type="button"
-                            class="close"
-                            data-dismiss="alert"
-                            aria-label="Close"
-                        >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </x-utils.alert>
                 @endif
                 <p> Change locations for <b>{{ $consumableItem->title }}</b></p>
 
@@ -37,10 +29,7 @@
                     @endforeach
                 </ul>
                 <br>
-                <a
-                    href="{{ route('admin.consumable.items.show', $consumableItem) }}"
-                    class="btn btn-primary"
-                >Back</a>
+                <a href="{{ route('admin.consumable.items.show', $consumableItem) }}" class="btn btn-primary">Back</a>
             </x-slot>
         </x-backend.card>
     </div>
