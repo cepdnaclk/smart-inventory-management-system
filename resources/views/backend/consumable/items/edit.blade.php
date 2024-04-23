@@ -49,7 +49,7 @@
                         @enderror
                     </div>
                 </div>
-                
+
                 <!-- Specifications -->
                 <div class="form-group row">
                     {!! Form::label('specifications', 'Specifications', ['class' => 'col-md-2 col-form-label']) !!}
@@ -79,7 +79,7 @@
                     {!! Form::label('price', 'Price (LKR)', ['class' => 'col-md-2 col-form-label']) !!}
 
                     <div class="col-md-4">
-                        {!! Form::number('price', $consumableItem->price, ['class' => 'form-control']) !!}
+                        {!! Form::number('price', $consumableItem->price, ['class' => 'form-control', 'step' => '0.01']) !!}
                         @error('price')
                             <strong>{{ $message }}</strong>
                         @enderror

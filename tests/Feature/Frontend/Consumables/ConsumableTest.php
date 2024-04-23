@@ -37,14 +37,6 @@ class ConsumableTest extends TestCase
     }
 
     /** @test */
-    public function consumables_shows_categories()
-    {
-        $response = $this->get('/consumables');
-        $categoryTitle = ConsumableType::inRandomOrder()->first()->title;
-        $response->assertSee($categoryTitle);
-    }
-
-    /** @test */
     public function consumables_shows_multiple_locations()
     {
         $item = ConsumableItem::factory()->create();

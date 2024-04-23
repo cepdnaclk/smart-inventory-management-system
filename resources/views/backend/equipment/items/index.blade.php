@@ -23,16 +23,12 @@
             <x-slot name="body">
 
                 @if (session('Success'))
-                    <div class="alert alert-success">
+                    <x-utils.alert type="success" class="header-message">
                         {{ session('Success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </x-utils.alert>
                 @endif
 
                 <livewire:backend.equipment-item-table />
-                
             </x-slot>
 
         </x-backend.card>

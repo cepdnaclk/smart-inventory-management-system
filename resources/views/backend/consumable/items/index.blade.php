@@ -17,22 +17,20 @@
                 <x-slot name="headerActions">
                     <x-utils.link icon="c-icon cil-plus" class="card-header-action" :href="route('admin.consumable.items.create')" :text="__('Create Consumable')">
                     </x-utils.link>
+                    <x-utils.link icon="c-icon cil-plus" class="card-header-action" :href="route('admin.consumable.items.create')" :text="__('Create Consumable')">
+                    </x-utils.link>
                 </x-slot>
             @endif
 
             <x-slot name="body">
 
                 @if (session('Success'))
-                    <div class="alert alert-success">
+                    <x-utils.alert type="success" class="header-message">
                         {{ session('Success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </x-utils.alert>
                 @endif
 
                 <livewire:backend.consumable-item-table />
-                
             </x-slot>
         </x-backend.card>
     </div>

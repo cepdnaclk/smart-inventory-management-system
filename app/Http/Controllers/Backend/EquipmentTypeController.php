@@ -31,9 +31,7 @@ class EquipmentTypeController extends Controller
      */
     public function create()
     {
-        // TODO: Generate hierarchical list
-        $types = EquipmentType::pluck('title', 'id');
-
+        $types =  EquipmentType::getFullTypeList();
         return view('backend.equipment.types.create', compact('types'));
     }
 
@@ -61,7 +59,6 @@ class EquipmentTypeController extends Controller
             $type = new EquipmentType($data);
             $type->save();
             return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was created !');
-
         } catch (\Exception $ex) {
             return abort(500, "Error 222");
         }
@@ -86,9 +83,7 @@ class EquipmentTypeController extends Controller
      */
     public function edit(EquipmentType $equipmentType)
     {
-        // TODO: Generate hierarchical list
-        $types = EquipmentType::pluck('title', 'id');
-
+        $types =  EquipmentType::getFullTypeList();
         return view('backend.equipment.types.edit', compact('equipmentType', 'types'));
     }
 
@@ -111,12 +106,11 @@ class EquipmentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentType->thumbURL(), $request->thumb, "equipment_types");
+                $data['thumb'] = $this->uploadThumb($equipmentType->thumb, $request->thumb, "equipment_types");
             }
 
             $equipmentType->update($data);
             return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -144,12 +138,11 @@ class EquipmentTypeController extends Controller
         try {
             // Delete the thumbnail form the file system
             if ($equipmentType->thumb != null) {
-                $this->deleteThumb($equipmentType->thumbURL());
+                $this->deleteThumb($equipmentType->thumb);
             }
 
             $equipmentType->delete();
             return redirect()->route('admin.equipment.types.index')->with('Success', 'EquipmentType was deleted !');
-
         } catch (\Exception $ex) {
             dd($ex);
             return abort(500);
@@ -158,7 +151,7 @@ class EquipmentTypeController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

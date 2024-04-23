@@ -27,7 +27,7 @@ class ConsumableTypeController extends Controller
      */
     public function create()
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types =  ConsumableType::getFullTypeList();
         return view('backend.consumable.types.create', compact('types'));
     }
 
@@ -56,7 +56,6 @@ class ConsumableTypeController extends Controller
             $type->save();
 
             return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was created !');
-
         } catch (\Exception $ex) {
             return abort(500, "Error 222");
         }
@@ -81,7 +80,7 @@ class ConsumableTypeController extends Controller
      */
     public function edit(ConsumableType $consumableType)
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types = ConsumableType::getFullTypeList();
         return view('backend.consumable.types.edit', compact('consumableType', 'types'));
     }
 
@@ -104,12 +103,11 @@ class ConsumableTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($consumableType->thumbURL(), $request->thumb, "consumable_types");
+                $data['thumb'] = $this->uploadThumb($consumableType->thumb, $request->thumb, "consumable_types");
             }
 
             $consumableType->update($data);
             return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -136,11 +134,10 @@ class ConsumableTypeController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($consumableType->thumbURL());
+            $this->deleteThumb($consumableType->thumb);
 
             $consumableType->delete();
             return redirect()->route('admin.consumable.types.index')->with('Success', 'ConsumableType was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -148,7 +145,7 @@ class ConsumableTypeController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }
@@ -169,5 +166,4 @@ class ConsumableTypeController extends Controller
 
         return $imageName;
     }
-
 }

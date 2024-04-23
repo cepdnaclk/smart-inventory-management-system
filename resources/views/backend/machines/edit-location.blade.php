@@ -14,22 +14,23 @@
             </x-slot>
             <x-slot name="body">
                 @if (session('Success'))
-                    <div class="alert alert-success">
+                    <x-utils.alert type="success" class="header-message">
                         {{ session('Success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </x-utils.alert>
                 @endif
+
                 <p> Change locations for <b>{{ $machines->title }}</b></p>
 
                 <ul>
-                    @foreach($locations as $i => $loc)
-                        @include('backend.partials.location-hierarchy-for-edit-location', ['location' => $loc , 'itemModel' => $machines])
+                    @foreach ($locations as $i => $loc)
+                        @include('backend.partials.location-hierarchy-for-edit-location', [
+                            'location' => $loc,
+                            'itemModel' => $machines,
+                        ])
                     @endforeach
                 </ul>
                 <br>
-                <a href="{{route('admin.machines.show',$machines)}}" class="btn btn-primary">Back</a>
+                <a href="{{ route('admin.machines.show', $machines) }}" class="btn btn-primary">Back</a>
             </x-slot>
         </x-backend.card>
     </div>

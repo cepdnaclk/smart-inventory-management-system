@@ -22,28 +22,32 @@ Laravel Boilerplate provides you with a massive head start on any size web appli
 [Click here for the official documentation](http://laravel-boilerplate.com)
 
 ## Team of Developers
-- [Nuwan Jaliyagoda](http://github.com/NuwanJ)
+
+-   [Nuwan Jaliyagoda](http://github.com/NuwanJ)
 
 ### Sprint 2A
-- [Tharmapalan Thanujan](http://github.com/thanujan96)
-- [Madhushan Ramalingam](https://github.com/DrMadhushan)
-- [Thilini Madushani](http://github.com/Thilini98)
+
+-   [Tharmapalan Thanujan](http://github.com/thanujan96)
+-   [Madhushan Ramalingam](https://github.com/DrMadhushan)
+-   [Thilini Madushani](http://github.com/Thilini98)
 
 ### Sprint 3A
-- [Ishan Fernando](https://github.com/ishanfdo18098)
-- [Adeepa Fernando](https://github.com/NipunFernando)
-- [Ridma Jayasundara ](https://github.com/ridmajayasundara)
+
+-   [Ishan Fernando](https://github.com/ishanfdo18098)
+-   [Adeepa Fernando](https://github.com/NipunFernando)
+-   [Ridma Jayasundara ](https://github.com/ridmajayasundara)
 
 ### Sprint 3B
-- [Sadia Jameel](https://github.com/SaadiaJameel)
-- [Sakuni Nimnadi](https://github.com/SakuniJayasinghe)
-- [Thamish Wanduragala](https://github.com/Thamish99)
+
+-   [Sadia Jameel](https://github.com/SaadiaJameel)
+-   [Sakuni Nimnadi](https://github.com/SakuniJayasinghe)
+-   [Thamish Wanduragala](https://github.com/Thamish99)
 
 ### Sprint 3C
-- [Karan R.](https://github.com/rasathuraikaran)
-- [Gowsigan A.](https://github.com/AnnalingamGowsigan)
-- [Muthuni De Alwis](https://github.com/muthuni-dealwis)
 
+-   [Karan R.](https://github.com/rasathuraikaran)
+-   [Gowsigan A.](https://github.com/AnnalingamGowsigan)
+-   [Muthuni De Alwis](https://github.com/muthuni-dealwis)
 
 ## Useful Commands and Instructions
 
@@ -51,11 +55,12 @@ You need to install Wamp server and run it before following commands.
 Please make sure you already created database user account.
 
 #### Install Dependencies
+
 ```
 // Install PHP dependencies
 composer install
 
-// If you received mmap() error, use this command 
+// If you received mmap() error, use this command
 // php -d memory_limit=-1 /usr/local/bin/composer install
 
 // Update PHP dependencies
@@ -78,6 +83,9 @@ php artisan migrate
 // Reset the database and seed the data
 php artisan migrate:fresh --seed
 
+// Prepare webhook for unit testing
+git config --local core.hooksPath .githooks
+
 ```
 
 #### Serve in the local environment
@@ -92,6 +100,7 @@ php artisan serve --host=0.0.0.0 --port=8000
 // To work with Vue components
 npm run watch
 ```
+
 #### Run all above commands from bash script
 
 ```
@@ -103,6 +112,7 @@ chmod +x Start.sh
 ```
 
 #### Cache and optimization
+
 ```
 // Remove dev dependencies
 composer install --optimize-autoloader --no-dev
@@ -116,7 +126,8 @@ php artisan route:clear
 php artisan view:clear
 ```
 
-#### Maintenance related commands  
+#### Maintenance related commands
+
 ```
 php artisan down --message="{Message}" --retry=60
 php artisan up
@@ -144,12 +155,12 @@ php artisan test -p
 
 #### Resource Routes
 
-| Verb	      | URI	                             | Action	  | Route Name             |
-|:-----------|:---------------------------------|:---------|:-----------------------|
-| GET	       | /photos/{photo}/comments	        | index	   | photos.comments.index  |
-| GET	       | /photos/{photo}/comments/create	 | create	  | photos.comments.create |
-| POST	      | /photos/{photo}/comments	        | store	   | photos.comments.store  |
-| GET	       | /comments/{comment}	             | show	    | comments.show          |
-| GET	       | /comments/{comment}/edit	        | edit	    | comments.edit          |
-| PUT/PATCH	 | /comments/{comment}	             | update	  | comments.update        |
-| DELETE	    | /comments/{comment}	             | destroy	 | comments.destroy       |
+| Verb      | URI                             | Action  | Route Name             |
+| :-------- | :------------------------------ | :------ | :--------------------- |
+| GET       | /photos/{photo}/comments        | index   | photos.comments.index  |
+| GET       | /photos/{photo}/comments/create | create  | photos.comments.create |
+| POST      | /photos/{photo}/comments        | store   | photos.comments.store  |
+| GET       | /comments/{comment}             | show    | comments.show          |
+| GET       | /comments/{comment}/edit        | edit    | comments.edit          |
+| PUT/PATCH | /comments/{comment}             | update  | comments.update        |
+| DELETE    | /comments/{comment}             | destroy | comments.destroy       |

@@ -19,12 +19,9 @@
             <x-slot name="body">
 
                 @if (session('Success'))
-                    <div class="alert alert-success">
+                    <x-utils.alert type="success" class="header-message">
                         {{ session('Success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </x-utils.alert>
                 @endif
 
                 @if (!empty($status))
@@ -35,13 +32,13 @@
 
                 <p>Search for Equipment, Components, Consumables, Machines and Raw Material</p>
 
-                {{ Form::open(array('route' => 'admin.search.results')) }}
+                {{ Form::open(['route' => 'admin.search.results']) }}
                 <div class="row g-3 align-items-center">
                     <div class="col-6">
-                        {!! Form::text('keywords', '', ['class' => 'form-control'] ) !!}
+                        {!! Form::text('keywords', '', ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-auto">
-                        {!! Form::submit('Search', ['class'=>'btn btn-primary float-right btn-150']) !!}
+                        {!! Form::submit('Search', ['class' => 'btn btn-primary float-right btn-150']) !!}
                     </div>
                 </div>
                 {{ Form::close() }}
@@ -50,4 +47,3 @@
         </x-backend.card>
     </div>
 @endsection
-

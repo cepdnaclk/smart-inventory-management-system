@@ -111,7 +111,7 @@ class StationController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($station->thumbURL(), $request->thumb, "stations");
+                $data['thumb'] = $this->uploadThumb($station->thumb, $request->thumb, "stations");
             }
             $station->update($data);
             return redirect()->route('admin.station.index')->with('Success', 'Station was updated !');
@@ -141,7 +141,7 @@ class StationController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($station->thumbURL());
+            $this->deleteThumb($station->thumb);
 
             $station->delete();
             return redirect()->route('admin.station.index')->with('Success', 'Station was deleted !');
@@ -152,7 +152,7 @@ class StationController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

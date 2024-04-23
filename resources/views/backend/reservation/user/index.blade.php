@@ -6,7 +6,7 @@
     @include('backend.reservation.user.breadcrumb-links')
 @endsection
 
-@section('content') 
+@section('content')
     <div>
         <x-backend.card>
             <x-slot name="header">
@@ -15,11 +15,8 @@
 
             @if ($logged_in_user->hasAllAccess())
                 <x-slot name="headerActions">
-                    <x-utils.link
-                            icon="c-icon cil-plus"
-                            class="card-header-action"
-                            :href="route('frontend.stations.index')"
-                            :text="__('Create Reservation')"></x-utils.link>
+                    <x-utils.link icon="c-icon cil-plus" class="card-header-action" :href="route('frontend.stations.index')" :text="__('Create Reservation')">
+                    </x-utils.link>
                 </x-slot>
             @endif
 
@@ -27,19 +24,13 @@
 
                 <!-- Redirection messages according to success or failure -->
                 @if (session('Success'))
-                    <div class="alert alert-success">
+                    <x-utils.alert type="success" class="header-message">
                         {{ session('Success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </x-utils.alert>
                 @elseif(session('Error'))
-                    <div class="alert alert-danger">
+                    <x-utils.alert type="danger" class="header-message">
                         {{ session('Error') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </x-utils.alert>
                 @endif
 
                 <!-- Create table -->
@@ -55,40 +46,39 @@
                         </tr>
 
                         <!-- Display all reservations made by the user -->
-                        @foreach($reservation as $res)
+                        @foreach ($reservation as $res)
                             <tr>
-                                
-                                
+
+
                                 <td>
-                                        @if($res->st_info() != null)
-                                            {{ $res->st_info['stationName'] }}
-                                        @endif
+                                    @if ($res->st_info() != null)
+                                        {{ $res->st_info['stationName'] }}
+                                    @endif
                                 </td>
                                 <td>{{ $res->start_date }}</td>
                                 <td>{{ $res->end_date }}</td>
                                 <td>{{ $res->duration }}</td>
                                 <td>{{ $res->E_numbers }}</td>
-                               
+
                                 <td>
 
                                     <div class="d-flex px-0 mt-0 mb-0">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <!-- Show -->
-                                            <a href="{{ route('frontend.reservation.show', $res)}}"
-                                               class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
+                                            <a href="{{ route('frontend.reservation.show', $res) }}"
+                                                class="btn btn-secondary btn-xs"><i class="fa fa-eye" title="Show"></i>
                                             </a>
 
                                             <!-- Edit -->
-                                            <a href="{{ route('frontend.reservation.edit', $res)}}"
-                                               class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
+                                            <a href="{{ route('frontend.reservation.edit', $res) }}"
+                                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                                             </a>
 
                                             <!-- Delete -->
-                                            <a href="{{ route('frontend.reservation.delete', $res)}}"
-                                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
-                                                                                title="Delete"></i>
+                                            <a href="{{ route('frontend.reservation.delete', $res) }}"
+                                                class="btn btn-danger btn-xs"><i class="fa fa-trash" title="Delete"></i>
                                             </a>
-                                            
+
                                         </div>
                                     </div>
                                 </td>

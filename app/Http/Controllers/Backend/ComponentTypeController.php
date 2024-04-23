@@ -106,7 +106,7 @@ class ComponentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($componentType->thumbURL(), $request->thumb, "component_types");
+                $data['thumb'] = $this->uploadThumb($componentType->thumb, $request->thumb, "component_types");
             }
 
             $componentType->update($data);
@@ -131,14 +131,14 @@ class ComponentTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\CompoenentType $componentType
+     * @param \App\Models\CompoenentType $componentType 
      * @return \Illuminate\Http\RedirectResponse|void
      */
     public function destroy(ComponentType $componentType)
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($componentType->thumbUrl());
+            $this->deleteThumb($componentType->thumb);
             $componentType->delete();
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was deleted !');
         } catch (\Exception $ex) {
@@ -154,7 +154,7 @@ class ComponentTypeController extends Controller
      */
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

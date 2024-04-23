@@ -34,7 +34,7 @@ class ConsumableItemController extends Controller
      */
     public function create()
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types = ConsumableType::getFullTypeList();
         $locations = Locations::pluck('location', 'id');
         return view('backend.consumable.items.create', compact('types', 'locations'));
     }
@@ -98,12 +98,12 @@ class ConsumableItemController extends Controller
      */
     public function edit(ConsumableItem $consumableItem)
     {
-        $types = ConsumableType::pluck('title', 'id');
+        $types = ConsumableType::getFullTypeList();
         $locations = Locations::pluck('location', 'id');
         return view('backend.consumable.items.edit', compact('types', 'consumableItem', 'locations'));
     }
 
-        /**
+    /**
      * Edit the locations ot the item
      *
      * @param EquipmentItem $equipmentItem
@@ -140,9 +140,9 @@ class ConsumableItemController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($consumableItem->thumbURL(), $request->thumb, "consumable_items");
+                $data['thumb'] = $this->uploadThumb($consumableItem->thumb, $request->thumb, "consumable_items");
             }
-            
+
             $filtered_data = $data;
             unset($filtered_data['location']);
             $consumableItem->update($filtered_data);
@@ -175,13 +175,13 @@ class ConsumableItemController extends Controller
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($consumableItem->thumbURL());
+            $this->deleteThumb($consumableItem->thumb);
 
             $consumableItem->delete();
 
             // Delete location entries
             $this_item_locations = ItemLocations::where('item_id', $consumableItem->inventoryCode())->get();
-            foreach($this_item_locations as $loc){
+            foreach ($this_item_locations as $loc) {
                 $loc->delete();
             }
             return redirect()->route('admin.consumable.items.index')->with('Success', 'Consumable was deleted !');
@@ -192,7 +192,7 @@ class ConsumableItemController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

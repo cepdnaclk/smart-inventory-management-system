@@ -29,11 +29,11 @@ class RegistrationTest extends TestCase
     /** @test */
     public function email_must_be_unique()
     {
-        User::factory()->create(['email' => 'john@example.com']);
+        User::factory()->create(['email' => 'johndoe@eng.pdn.ac.lk']);
 
         $response = $this->post('/register', [
             'name' => 'John Doe',
-            'email' => 'john@example.com',
+            'email' => 'johndoe@eng.pdn.ac.lk',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
@@ -46,7 +46,7 @@ class RegistrationTest extends TestCase
     {
         $response = $this->post('/register', [
             'name' => 'John Doe',
-            'email' => 'john@example.com',
+            'email' => 'johndoe@eng.pdn.ac.lk',
             'password' => 'password',
         ]);
 
@@ -58,7 +58,7 @@ class RegistrationTest extends TestCase
     {
         $response = $this->post('/register', [
             'name' => 'John Doe',
-            'email' => 'john@example.com',
+            'email' => 'johndoe@eng.pdn.ac.lk',
             'password' => 'password',
             'password_confirmation' => 'not_the_same',
         ]);
@@ -79,14 +79,14 @@ class RegistrationTest extends TestCase
     {
         $this->post('/register', [
             'name' => 'John Doe',
-            'email' => 'john@example.com',
+            'email' => 'johndoe@eng.pdn.ac.lk',
             'password' => 'OC4Nzu270N!QBVi%U%qX',
             'password_confirmation' => 'OC4Nzu270N!QBVi%U%qX',
             'terms' => '1',
         ])->assertRedirect(route(homeRoute()));
 
         $user = resolve(UserService::class)
-            ->where('email', 'john@example.com')
+            ->where('email', 'johndoe@eng.pdn.ac.lk')
             ->firstOrFail();
 
         $this->assertSame($user->name, 'John Doe');
@@ -98,7 +98,7 @@ class RegistrationTest extends TestCase
     {
         $response = $this->post('/register', [
             'name' => 'John Doe',
-            'email' => 'john@example.com',
+            'email' => 'johndoe@eng.pdn.ac.lk',
             'password' => 'OC4Nzu270N!QBVi%U%qX',
             'password_confirmation' => 'OC4Nzu270N!QBVi%U%qX',
         ]);

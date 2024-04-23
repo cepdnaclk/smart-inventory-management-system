@@ -16,14 +16,14 @@ class RawMaterialItemTest extends TestCase
     public function an_admin_can_access_the_list_raw_materials_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/raw_materials/')->assertOk();
+        $this->get('/dashboard/raw_materials/')->assertOk();
     }
 
     /** @test */
     public function an_admin_can_access_the_create_raw_materials_page()
     {
         $this->loginAsAdmin();
-        $this->get('/admin/raw_materials/create')->assertOk();
+        $this->get('/dashboard/raw_materials/create')->assertOk();
     }
 
     /** @test */
@@ -31,7 +31,7 @@ class RawMaterialItemTest extends TestCase
     {
         $this->loginAsAdmin();
         $raw_material = RawMaterials::factory()->create();
-        $this->get('/admin/raw_materials/' . $raw_material->id)->assertOk();
+        $this->get('/dashboard/raw_materials/' . $raw_material->id)->assertOk();
     }
 
     /** @test */
@@ -39,14 +39,14 @@ class RawMaterialItemTest extends TestCase
     {
         $this->loginAsAdmin();
         $raw_material = RawMaterials::factory()->create();
-        $this->get('/admin/raw_materials/delete/' . $raw_material->id)->assertOk();
+        $this->get('/dashboard/raw_materials/delete/' . $raw_material->id)->assertOk();
     }
 
     /** @test */
     public function create_raw_materials_requires_validation()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/raw_materials/');
+        $response = $this->post('/dashboard/raw_materials/');
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -55,7 +55,7 @@ class RawMaterialItemTest extends TestCase
     {
         $this->loginAsAdmin();
         $raw_material = RawMaterials::factory()->create();
-        $response = $this->put("/admin/raw_materials/{$raw_material->id}", []);
+        $response = $this->put("/dashboard/raw_materials/{$raw_material->id}", []);
         $response->assertSessionHasErrors(['title']);
     }
 
@@ -63,7 +63,7 @@ class RawMaterialItemTest extends TestCase
     public function a_raw_material_can_be_created()
     {
         $this->loginAsAdmin();
-        $response = $this->post('/admin/raw_materials', [
+        $response = $this->post('/dashboard/raw_materials', [
             'title' => 'Sample Raw Material',
             'color' => NULL,
             'description' => 'Sample description',
@@ -75,7 +75,7 @@ class RawMaterialItemTest extends TestCase
             'thumb' => NULL
         ]);
 
-        $response = $this->post('/admin/raw_materials/')->assertStatus(302);
+        $response = $this->post('/dashboard/raw_materials/')->assertStatus(302);
         $this->assertDatabaseHas('raw_materials', [
             'title' => 'Sample Raw Material',
         ]);
@@ -96,8 +96,8 @@ class RawMaterialItemTest extends TestCase
         $raw_material->title = 'New Raw Material Title';
         $raw_material_array = $raw_material->toArray();
         $raw_material_array['location'] = 1;
-//        dd($raw_material_array);
-        $response = $this->put("/admin/raw_materials/{$raw_material->id}", $raw_material_array);
+        //        dd($raw_material_array);
+        $response = $this->put("/dashboard/raw_materials/{$raw_material->id}", $raw_material_array);
         $response->assertStatus(302);
         $this->assertDatabaseHas('raw_materials', [
             'title' => 'New Raw Material Title',
@@ -109,7 +109,7 @@ class RawMaterialItemTest extends TestCase
     {
         $this->actingAs(User::factory()->admin()->create());
         $raw_material = RawMaterials::factory()->create();
-        $this->delete('/admin/raw_materials/' . $raw_material->id);
+        $this->delete('/dashboard/raw_materials/' . $raw_material->id);
         $this->assertDatabaseMissing('raw_materials', ['id' => $raw_material->id]);
     }
 
@@ -117,7 +117,7 @@ class RawMaterialItemTest extends TestCase
     public function unauthorized_user_cannot_delete_raw_material_item()
     {
         $raw_material = RawMaterials::factory()->create();
-        $response = $this->delete('/admin/raw_materials/' . $raw_material->id);
+        $response = $this->delete('/dashboard/raw_materials/' . $raw_material->id);
         $response->assertStatus(302);
     }
 }

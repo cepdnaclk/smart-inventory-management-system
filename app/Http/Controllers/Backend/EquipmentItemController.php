@@ -34,7 +34,7 @@ class EquipmentItemController extends Controller
      */
     public function create()
     {
-        $types = EquipmentType::pluck('title', 'id');
+        $types = EquipmentType::getFullTypeList();
         $locations = Locations::pluck('location', 'id');
         return view('backend.equipment.items.create', compact('types', 'locations'));
     }
@@ -112,7 +112,7 @@ class EquipmentItemController extends Controller
      */
     public function edit(EquipmentItem $equipmentItem)
     {
-        $types = EquipmentType::pluck('title', 'id');
+        $types = EquipmentType::getFullTypeList();
         //$this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
         //if ($this_item_location->count() > 0) {
         //    $this_item_location = $this_item_location->first()->location_id;
@@ -172,8 +172,7 @@ class EquipmentItemController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $thumb = ($equipmentItem->thumb == NULL) ? NULL : $equipmentItem->thumbURL();
-                $data['thumb'] = $this->uploadThumb($thumb, $request->thumb, "equipment_items");
+                $data['thumb'] = $this->uploadThumb($equipmentItem->thumb, $request->thumb, "equipment_items");
             }
 
             // Update checkbox condition
@@ -185,7 +184,7 @@ class EquipmentItemController extends Controller
         } catch (\Exception $ex) {
             return abort(500);
         }
-    } 
+    }
 
     /**
      * Confirm to delete the specified resource from storage.
@@ -207,18 +206,19 @@ class EquipmentItemController extends Controller
      */
     public function destroy(EquipmentItem $equipmentItem)
     {
+
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentItem->thumbURL());
+            $this->deleteThumb($equipmentItem->thumb);
 
             $equipmentItem->delete();
 
             // delete location entries
             $this_item_locations = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
-            foreach($this_item_locations as $loc){
+            foreach ($this_item_locations as $loc) {
                 $loc->delete();
             }
-            
+
             return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
         } catch (\Exception $ex) {
             return abort(500);
@@ -227,7 +227,7 @@ class EquipmentItemController extends Controller
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

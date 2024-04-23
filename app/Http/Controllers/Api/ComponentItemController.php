@@ -19,15 +19,15 @@ class ComponentItemController extends Controller
     {
         $items = ComponentItem::all();
         try {
-            return response()->json($items,200);
+            return response()->json($items, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -68,12 +68,11 @@ class ComponentItemController extends Controller
             $type->isElectrical = ($request->isElectrical != null);
 
             $type->save();
-            return response()->json($type,200);
-
+            return response()->json($type, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
@@ -85,27 +84,21 @@ class ComponentItemController extends Controller
      */
     public function show($id)
     {
-        try 
-        {
+        try {
             $item = ComponentItem::find($id);
-            if($item!=null)
-            {
-                return response()->json($item,200);
+            if ($item != null) {
+                return response()->json($item, 200);
+            } else {
+                return response()->json(["message" => "Item not found!"], 404);
             }
-            else
-            {
-                return response()->json(["message"=>"Item not found!"],404);
-            }
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
-        
     }
 
-   
+
 
     /**
      * Update the specified resource in storage.
@@ -138,13 +131,13 @@ class ComponentItemController extends Controller
 
         try {
             $componentItem = ComponentItem::find($id);
-            if($componentItem==null){
-                return response()->json(["message"=>"Item not found!"],404);
+            if ($componentItem == null) {
+                return response()->json(["message" => "Item not found!"], 404);
             }
 
             if ($request->thumb != null) {
-                
-                $data['thumb'] = $this->uploadThumb($componentItem->thumbURL(), $request->thumb, "component_items");
+
+                $data['thumb'] = $this->uploadThumb($componentItem->thumb, $request->thumb, "component_items");
             }
 
             // Update checkbox condition
@@ -153,12 +146,11 @@ class ComponentItemController extends Controller
 
             $componentItem->update($data);
 
-            return response()->json($componentItem,200);
-
+            return response()->json($componentItem, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
@@ -172,28 +164,27 @@ class ComponentItemController extends Controller
     {
         try {
             $componentItem = ComponentItem::find($id);
-            if($componentItem==null){
+            if ($componentItem == null) {
                 return response()->json([
-                    "message"=>"Item is not found"
-                ],404);
+                    "message" => "Item is not found"
+                ], 404);
             }
             // Delete the thumbnail form the file system
-            $this->deleteThumb($componentItem->thumbURL());
+            $this->deleteThumb($componentItem->thumb);
 
             $componentItem->delete();
-            return response()->json($componentItem,200);
-
+            return response()->json($componentItem, 200);
         } catch (\Exception $ex) {
             return response()->json([
-                "message"=>$ex->getMessage()
-            ],500);
+                "message" => $ex->getMessage()
+            ], 500);
         }
     }
 
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }
@@ -213,10 +204,11 @@ class ComponentItemController extends Controller
 
         return $imageName;
     }
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         // Get the search value from the request
         $term = $request->query('term');
-    
+
         // search in the title and body columns from the posts table
         $items = ComponentItem::query()
             ->where('title', 'LIKE', "%{$term}%")
@@ -224,7 +216,7 @@ class ComponentItemController extends Controller
             ->orWhere('brand', 'LIKE', "%{$term}%")
             ->orWhere('specifications', 'LIKE', "%{$term}%")
             ->get();
-    
+
         // Return the search view with the resluts compacted
         return $items;
     }
