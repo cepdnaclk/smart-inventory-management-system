@@ -57,16 +57,16 @@
 
 
         @if ($logged_in_user->hasAllAccess())
-            {{-- Annuncements --}}
+            {{-- Announcements --}}
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link href="#" icon="c-sidebar-nav-icon cil-list" class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Annuncements')"></x-utils.link>
+                    :text="__('Announcements')"></x-utils.link>
 
                 <ul class="c-sidebar-nav-dropdown-items">
-                     <li class="c-sidebar-nav-item">
-                            <x-utils.link :href="route('admin.announcements.index')" class="c-sidebar-nav-link" :text="__('Manage')"
-                                :active="activeClass(Route::is('admin.announcements.*'), 'c-active')"></x-utils.link>
-                        </li>
+                    <li class="c-sidebar-nav-item">
+                        <x-utils.link :href="route('admin.announcements.index')" class="c-sidebar-nav-link" :text="__('Manage')"
+                            :active="activeClass(Route::is('admin.announcements.*'), 'c-active')"></x-utils.link>
+                    </li>
                 </ul>
             </li>
         @endif
