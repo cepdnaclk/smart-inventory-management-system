@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\ComponentItem;
 use App\Models\EquipmentItem;
 use App\Models\EquipmentType;
 use App\Models\ItemLocations;
 use App\Models\Locations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Torann\GeoIP\Location;
 
 class EquipmentItemController extends Controller
 {
@@ -79,9 +76,9 @@ class EquipmentItemController extends Controller
             // Update checkbox condition
             $type->isElectrical = ($request->isElectrical != null);
 
-            //            save first, otherwise the id is not there
+            // save first, otherwise the id is not there
             $type->save();
-            return redirect()->route('admin.equipment.items.edit.location', $type)->with('Success', 'Equipment was created !');
+            return redirect()->route('backend.equipment.items.index', $type)->with('Success', 'Equipment was created !');
         } catch (\Exception $ex) {
             return abort(500);
         }
