@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\EquipmentItem;
 use App\Models\ItemLocations;
 use Livewire\Component;
 
@@ -33,7 +32,7 @@ class LocationsToggler extends Component
     }
 
     // Function to show the X, Y, Z input boxes once the user ticks the checkbox
-public function showXYZ()
+    public function showXYZ()
     {
         $this->emit('showXYZ');
     }
@@ -46,6 +45,6 @@ public function showXYZ()
     public function render()
     {
         $this->isAvailableInLocation = ItemLocations::where('item_id', $this->itemModel->inventoryCode())->where('location_id', $this->locationID)->exists();
-        return view('livewire.locations-toggler' , ['id'=> $this->locationID, 'location' => $this->locationTitle]);
+        return view('livewire.locations-toggler', ['id' => $this->locationID, 'location' => $this->locationTitle]);
     }
 }

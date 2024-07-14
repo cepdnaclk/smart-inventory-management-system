@@ -71,7 +71,7 @@ class ComponentItemController extends Controller
             $type = new ComponentItem($data);
             $type->save();
 
-            return redirect()->route('admin.component.items.edit.location', $type)->with('Success', 'Component was created !');
+            return redirect()->route('admin.component.items.index', $type)->with('Success', 'Component was created !');
         } catch (\Exception $ex) {
             return abort(500);
         }

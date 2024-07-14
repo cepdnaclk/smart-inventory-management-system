@@ -21,7 +21,7 @@
 
                 <p> Change locations for <b>{{ $machines->title }}</b></p>
 
-                <ul>
+                <ul class="list-unstyled pl-4">
                     @foreach ($locations as $i => $loc)
                         @include('backend.partials.location-hierarchy-for-edit-location', [
                             'location' => $loc,
