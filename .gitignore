@@ -6,6 +6,7 @@
 /public/hot
 /public/storage
 /public/img
+/public/files
 /public/mix-manifest.json
 /storage/*.key
 /vendor
@@ -16,7 +17,6 @@ _ide_helper.php
 .DS_Store
 .env
 .env.backup
-.idea
 .php_cs.cache
 .phpunit.result.cache
 .phpstorm.meta.php
@@ -31,5 +31,9 @@ npm-debug.log
 output.txt
 Thumbs.db
 yarn-error.log
-package-lock.json
+commands.txt
 composer.lock
+notes.txt
+package-lock.json
+yarn.lock
+/.idea

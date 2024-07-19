@@ -23,7 +23,7 @@ class UpdateUserTest extends TestCase
 
         $user = User::factory()->create();
 
-        $response = $this->get('/admin/auth/user/'.$user->id.'/edit');
+        $response = $this->get('/dashboard/auth/user/' . $user->id . '/edit');
 
         $response->assertOk();
     }
@@ -44,7 +44,7 @@ class UpdateUserTest extends TestCase
             'email' => 'john@example.com',
         ]);
 
-        $this->patch("/admin/auth/user/{$user->id}", [
+        $this->patch("/dashboard/auth/user/{$user->id}", [
             'type' => User::TYPE_ADMIN,
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -74,7 +74,7 @@ class UpdateUserTest extends TestCase
     {
         $admin = $this->loginAsAdmin();
 
-        $this->get("/admin/auth/user/{$admin->id}/edit")->assertOk();
+        $this->get("/dashboard/auth/user/{$admin->id}/edit")->assertOk();
 
         $this->logout();
 
@@ -83,7 +83,7 @@ class UpdateUserTest extends TestCase
 
         $this->actingAs($otherAdmin);
 
-        $response = $this->get("/admin/auth/user/{$admin->id}/edit");
+        $response = $this->get("/dashboard/auth/user/{$admin->id}/edit");
 
         $response->assertSessionHas('flash_danger', __('Only the administrator can update this user.'));
     }
@@ -99,7 +99,7 @@ class UpdateUserTest extends TestCase
             'email' => 'john@example.com',
         ]);
 
-        $this->patch("/admin/auth/user/{$admin->id}", [
+        $this->patch("/dashboard/auth/user/{$admin->id}", [
             'name' => 'John Doe',
             'email' => 'john@example.com',
         ]);
@@ -119,7 +119,7 @@ class UpdateUserTest extends TestCase
 
         $this->actingAs($otherAdmin);
 
-        $response = $this->patch("/admin/auth/user/{$admin->id}", [
+        $response = $this->patch("/dashboard/auth/user/{$admin->id}", [
             'id' => $admin->id,
             'name' => 'Changed Name',
             'email' => 'changed@example.com',
@@ -147,7 +147,7 @@ class UpdateUserTest extends TestCase
             'model_id' => $admin->id,
         ]);
 
-        $this->patch("/admin/auth/user/{$admin->id}", [
+        $this->patch("/dashboard/auth/user/{$admin->id}", [
             'name' => $admin->name,
             'email' => $admin->email,
             'roles' => [$role->id],
@@ -167,7 +167,7 @@ class UpdateUserTest extends TestCase
 
         $user = User::factory()->admin()->create(['name' => 'John Doe']);
 
-        $response = $this->patch("/admin/auth/user/{$user->id}", [
+        $response = $this->patch("/dashboard/auth/user/{$user->id}", [
             'type' => User::TYPE_USER,
             'name' => 'Jane Doe',
         ]);

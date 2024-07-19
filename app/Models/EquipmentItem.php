@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class EquipmentItem extends Model
+class EquipmentItem extends Model implements Searchable
 {
     use HasFactory;
 
@@ -14,10 +16,11 @@ class EquipmentItem extends Model
     // Link the Equipment Type table
     public function equipment_type()
     {
-        if ($this->equipment_type_id != null) return $this->belongsTo(EquipmentType::class, 'equipment_type_id', 'id');
-        return null;
+        // Do not change.
+        return $this->belongsTo(EquipmentType::class, 'equipment_type_id', 'id');
     }
 
+    // reverse search depends on this. Change SearchController.php if you're changing this
     public function inventoryCode()
     {
         return $this->equipment_type->inventoryCode() . "/" . $this->id;
@@ -27,7 +30,16 @@ class EquipmentItem extends Model
     public function thumbURL()
     {
         if ($this->thumb != null) return '/img/equipment_items/' . $this->thumb;
-        return null;
+        else return $this->equipment_type->thumbURL();
     }
 
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('admin.equipment.items.show', $this);
+        return new SearchResult(
+            $this,
+            $this->title,
+            $url
+        );
+    }
 }

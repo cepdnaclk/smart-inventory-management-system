@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\Backend\DashboardController;
+use Tabuna\Breadcrumbs\Trail;
 
 /*
  * Global Routes
@@ -15,14 +18,21 @@ Route::get('lang/{lang}', [LocaleController::class, 'change'])->name('locale.cha
  * Frontend Routes
  */
 Route::group(['as' => 'frontend.'], function () {
-    includeRouteFiles(__DIR__.'/frontend/');
+    includeRouteFiles(__DIR__ . '/frontend/');
 });
+
 
 /*
  * Backend Routes
  *
  * These routes can only be accessed by users with type `admin`
  */
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-    includeRouteFiles(__DIR__.'/backend/');
+Route::prefix('dashboard')->as('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('dashboard')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Home'), route('admin.dashboard'));
+        });
+
+    includeRouteFiles(__DIR__ . '/backend/');
 });

@@ -19,8 +19,8 @@ class ComponentTypeController extends Controller
      */
     public function index()
     {
-        $componentTypes = ComponentType::paginate(12);
-        return view('backend.component.types.index', compact('componentTypes'));
+        //$componentTypes = ComponentType::paginate(16);
+        return view('backend.component.types.index');
     }
 
     /**
@@ -30,7 +30,7 @@ class ComponentTypeController extends Controller
      */
     public function create()
     {
-        $types = ComponentType::pluck('title', 'id');
+        $types = ComponentType::getFullTypeList();
         return view('backend.component.types.create', compact('types'));
     }
 
@@ -58,7 +58,6 @@ class ComponentTypeController extends Controller
             $type = new ComponentType($data);
             $type->save();
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was created !');
-
         } catch (\Exception $ex) {
             dd($ex);
             return abort(500, "Error 222");
@@ -84,7 +83,7 @@ class ComponentTypeController extends Controller
      */
     public function edit(ComponentType $componentType)
     {
-        $types = ComponentType::pluck('title', 'id');
+        $types = ComponentType::getFullTypeList();
         return view('backend.component.types.edit', compact('componentType', 'types'));
     }
 
@@ -107,12 +106,11 @@ class ComponentTypeController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($componentType->thumbURL(), $request->thumb, "component_types");
+                $data['thumb'] = $this->uploadThumb($componentType->thumb, $request->thumb, "component_types");
             }
 
             $componentType->update($data);
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was updated !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -133,17 +131,16 @@ class ComponentTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\CompoenentType $componentType
+     * @param \App\Models\CompoenentType $componentType 
      * @return \Illuminate\Http\RedirectResponse|void
      */
     public function destroy(ComponentType $componentType)
     {
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($componentType->thumbUrl());
+            $this->deleteThumb($componentType->thumb);
             $componentType->delete();
             return redirect()->route('admin.component.types.index')->with('Success', 'ComponentType was deleted !');
-
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -157,7 +154,7 @@ class ComponentTypeController extends Controller
      */
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

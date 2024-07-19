@@ -6,7 +6,7 @@
     @include('backend.equipment.includes.breadcrumb-links')
 @endsection
 
-@section('content')
+@section('content') 
     <div>
         <x-backend.card>
             <x-slot name="header">
@@ -23,8 +23,11 @@
                             <a href="{{ route('admin.equipment.items.edit', $equipmentItem)}}"
                                class="btn btn-info btn-xs"><i class="fa fa-pencil" title="Edit"></i>
                             </a>
+                            <a href="{{ route('admin.equipment.items.edit.location', $equipmentItem)}}"
+                               class="btn btn-warning btn-xs"><i class="fa fa-map-marker" title="Edit Location"></i>
+                            </a>
                             <a href="{{ route('admin.equipment.items.delete', $equipmentItem)}}"
-                               class="btn btn-danger btn-xs"><i class="fa fa-trash-o"
+                               class="btn btn-danger btn-xs"><i class="fa fa-trash"
                                                                 title="Delete"></i>
                             </a>
                         </div>
@@ -35,6 +38,23 @@
                         <td>Code (to be finalized)</td>
                         <td>{{ $equipmentItem->inventoryCode() }}</td>
                     </tr>
+
+                    @if(count($locations_array) > 0)
+                        <tr>
+                            <td>Locations</td>
+                            <td>
+                                @foreach($locations_array as $eachLocation)
+                                    {{ $eachLocation }}<br>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>Location</td>
+                            <td>Not Available</td>
+                        </tr>
+                    @endif
+
                     <tr>
                         <td>Type</td>
                         <td>

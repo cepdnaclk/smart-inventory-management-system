@@ -40,6 +40,12 @@
             color: #FFF;
         }
 
+        .card-counter.custom {
+            background-color: #c55d88;
+            color: #FFF;
+        }
+
+
         .card-counter i {
             font-size: 5em;
             opacity: 0.2;
@@ -94,6 +100,15 @@
                     </div>
 
                     <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.consumable.items.index') }}">
+                            <div class="card-counter info">
+                                <span class="count-numbers">{{ $consumableCount }}</span>
+                                <span class="count-name">Consumables ({{ $consumableTypeCount }} types)</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
                         @if ($logged_in_user->hasAllAccess())
                             <a class="text-decoration-none" href="{{ route('admin.auth.user.index') }}">
                                 @endif
@@ -101,17 +116,41 @@
                                     <span class="count-numbers">{{ $userCount }}</span>
                                     <span class="count-name">Users</span>
                                 </div>
-                                @if ($logged_in_user->hasAllAccess())</a> @endif
+                                @if ($logged_in_user->hasAllAccess())</a>
+                        @endif
                     </div>
 
+
+                </div>
+
+                <div class="row">
                     <div class="col-md-3">
-                        <a class="text-decoration-none" href="#">
+                        <a class="text-decoration-none" href="{{ route('admin.jobs.officer.index') }}">
                             <div class="card-counter info">
-                                <span class="count-numbers">###</span>
-                                <span class="count-name">##############</span>
+                                <span class="count-numbers">Fabrication</span>
+                                <span class="count-name">Technical Officer</span>
                             </div>
                         </a>
                     </div>
+
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.jobs.supervisor.index') }}">
+                            <div class="card-counter info">
+                                <span class="count-numbers">Fabrication</span>
+                                <span class="count-name">Supervisor</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3">
+                        <a class="text-decoration-none" href="{{ route('admin.station.index') }}">
+                            <div class="card-counter custom">
+                                <span class="count-numbers">{{ $stationCount }}</span>
+                                <span class="count-name">Stations </span>
+                            </div>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </x-slot>

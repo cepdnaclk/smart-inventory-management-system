@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\EquipmentItem;
 use App\Models\EquipmentType;
+use App\Models\ItemLocations;
+use App\Models\Locations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class EquipmentItemController extends Controller
@@ -19,7 +20,7 @@ class EquipmentItemController extends Controller
      */
     public function index()
     {
-        $equipment = EquipmentItem::orderBy('id', 'desc')->paginate(16);
+        $equipment = EquipmentItem::orderBy('id', 'asc')->paginate(16);
         return view('backend.equipment.items.index', compact('equipment'));
     }
 
@@ -30,8 +31,9 @@ class EquipmentItemController extends Controller
      */
     public function create()
     {
-        $types = EquipmentType::pluck('title', 'id');
-        return view('backend.equipment.items.create', compact('types'));
+        $types = EquipmentType::getFullTypeList();
+        $locations = Locations::pluck('location', 'id');
+        return view('backend.equipment.items.create', compact('types', 'locations'));
     }
 
     /**
@@ -47,7 +49,6 @@ class EquipmentItemController extends Controller
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
-
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -75,9 +76,9 @@ class EquipmentItemController extends Controller
             // Update checkbox condition
             $type->isElectrical = ($request->isElectrical != null);
 
+            // save first, otherwise the id is not there
             $type->save();
-            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was created !');
-
+            return redirect()->route('backend.equipment.items.index', $type)->with('Success', 'Equipment was created !');
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -91,7 +92,13 @@ class EquipmentItemController extends Controller
      */
     public function show(EquipmentItem $equipmentItem)
     {
-        return view('backend.equipment.items.show', compact('equipmentItem'));
+        $locationCount = $this->getNumberOfLocationsForItem($equipmentItem);
+
+        $locations_array = array();
+        for ($i = 0; $i < $locationCount; $i++) {
+            $locations_array[] = $this->getFullLocationPathAsString($equipmentItem, $i);
+        }
+        return view('backend.equipment.items.show', compact('equipmentItem', 'locations_array'));
     }
 
     /**
@@ -102,8 +109,30 @@ class EquipmentItemController extends Controller
      */
     public function edit(EquipmentItem $equipmentItem)
     {
-        $types = EquipmentType::pluck('title', 'id');
+        $types = EquipmentType::getFullTypeList();
+        //$this_item_location = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
+        //if ($this_item_location->count() > 0) {
+        //    $this_item_location = $this_item_location->first()->location_id;
+        //} else {
+        //    $this_item_location = null;
+        //}
+        //        dd($this_item_location);
+        //        $locations = Locations::pluck('location', 'id');
         return view('backend.equipment.items.edit', compact('types', 'equipmentItem'));
+    }
+
+
+    /**
+     * Edit the locations ot the item
+     *
+     * @param EquipmentItem $equipmentItem
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function editLocation(EquipmentItem $equipmentItem)
+    {
+        $locations = Locations::all()->where('parent_location', 1)->all();
+
+        return view('backend.equipment.items.edit-location', compact('equipmentItem', 'locations'));
     }
 
     /**
@@ -115,13 +144,12 @@ class EquipmentItemController extends Controller
      */
     public function update(Request $request, EquipmentItem $equipmentItem)
     {
-//         dd($request->request);
+        //         dd($request->request);
         $data = request()->validate([
             'title' => 'string|required',
             'brand' => 'string|nullable',
             'productCode' => 'string|nullable',
             'equipment_type_id' => 'numeric|required',
-
             'specifications' => 'string|nullable',
             'description' => 'string|nullable',
             'instructions' => 'string|nullable',
@@ -141,15 +169,15 @@ class EquipmentItemController extends Controller
 
         try {
             if ($request->thumb != null) {
-                $data['thumb'] = $this->uploadThumb($equipmentItem->thumbURL(), $request->thumb, "equipment_items");
+                $data['thumb'] = $this->uploadThumb($equipmentItem->thumb, $request->thumb, "equipment_items");
             }
 
             // Update checkbox condition
             $equipmentItem->isElectrical = ($request->isElectrical != null);
 
             $equipmentItem->update($data);
-            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was updated !');
 
+            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was updated !');
         } catch (\Exception $ex) {
             return abort(500);
         }
@@ -175,22 +203,28 @@ class EquipmentItemController extends Controller
      */
     public function destroy(EquipmentItem $equipmentItem)
     {
+
         try {
             // Delete the thumbnail form the file system
-            $this->deleteThumb($equipmentItem->thumbURL());
+            $this->deleteThumb($equipmentItem->thumb);
 
             $equipmentItem->delete();
-            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
 
+            // delete location entries
+            $this_item_locations = ItemLocations::where('item_id', $equipmentItem->inventoryCode())->get();
+            foreach ($this_item_locations as $loc) {
+                $loc->delete();
+            }
+
+            return redirect()->route('admin.equipment.items.index')->with('Success', 'Equipment was deleted !');
         } catch (\Exception $ex) {
-            dd($ex);
             return abort(500);
         }
     }
 
     private function deleteThumb($currentURL)
     {
-        if ($currentURL != null) {
+        if ($currentURL != null && $currentURL != config('constants.frontend.dummy_thumb')) {
             $oldImage = public_path($currentURL);
             if (File::exists($oldImage)) unlink($oldImage);
         }

@@ -20,24 +20,28 @@
         "lab404/laravel-impersonate": "^1.6",
         "langleyfoxall/laravel-nist-password-rules": "^4.1",
         "laravel/framework": "^8.40",
+        "laravel/passport": "^10.1",
+        "laravel/sanctum": "^2.12",
         "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.0",
+        "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.2",
-        "livewire/livewire": "^2.0",
+        "livewire/livewire": "^2.10",
+        "marvinlabs/laravel-discord-logger": "^1.3",
         "rappasoft/laravel-livewire-tables": "^1.0",
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-permission": "^3.11",
+        "spatie/laravel-searchable": "^1.11",
         "tabuna/breadcrumbs": "^2.2"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.2",
+        "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "^2.6",
         "brianium/paratest": "^6.2",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "friendsofphp/php-cs-fixer": "^2.16",
+        "friendsofphp/php-cs-fixer": "^2.18",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
@@ -99,7 +103,11 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "treeware/plant": true,
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
