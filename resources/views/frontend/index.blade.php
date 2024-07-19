@@ -25,32 +25,10 @@
             margin: 0;
         }
 
-        .full-height {
-            height: 100vh;
-        }
-
         .flex-center {
             align-items: center;
             display: flex;
             justify-content: center;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
         }
 
         .links>a {
@@ -63,28 +41,20 @@
             text-transform: uppercase;
         }
 
-        .m-b-md {
-            margin-bottom: 30px;
-        }
-
-        body {
-            font-family: Arial;
-        }
-
-        * {
+        /* * {
             box-sizing: border-box;
-        }
+        } */
     </style>
     @stack('after-styles')
 </head>
 
-<body>
+<body style="font-family: Arial;">
     @include('includes.partials.read-only')
     @include('includes.partials.logged-in-as')
     @include('includes.partials.announcements')
 
-    <div id="app" class="flex-center position-ref full-height">
-        <div class="top-right links">
+    <div id="app" style="position: relative; height: 100vh;" class="flex-center">
+        <div class="links" style="position: absolute; right: 10px; top: 18px;">
             @auth
                 @if ($logged_in_user->isAdminAccess())
                     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
@@ -104,17 +74,17 @@
         <!--top-right-->
 
 
-        <div class="content">
+        <div style="text-align: center;">
             @include('includes.partials.messages')
 
 
-            <div class="title m-b-md" id='cesmart'>
+            <div style="margin-bottom: 30px; font-size: 84px;" id='cesmart'>
                 {{ config('app.name', 'Laravel') }}
             </div>
             <!--title-->
 
-            <div class="flex row g-3 align-items-center">
-                {!! Form::open(['route' => 'frontend.frontSearch.results', 'method' => 'GET'], ['class' => 'searchBar']) !!}
+            <div class="container flex row g-3 align-items-center justify-content-center">
+                {{-- {!! Form::open(['route' => 'frontend.frontSearch.results', 'method' => 'GET'], ['class' => 'searchBar']) !!}
                 <div class="row">
                     <div class="col-md-10 mx-auto">
                         <div class="input-group">
@@ -126,7 +96,21 @@
                         </div>
                     </div>
                 </div>
-                {{ Form::close() }}
+                {{ Form::close() }} --}}
+
+                {!! Form::open(['route' => 'frontend.frontSearch.results', 'method' => 'GET', 'class' => 'w-100']) !!}
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="search" id="keywords" class="form-control form-control-lg"
+                                placeholder="Search" name="keywords" required />
+                            <button id="search-button" type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {!! Form::close() !!}
 
             </div>
 
