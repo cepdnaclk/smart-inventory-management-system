@@ -14,8 +14,15 @@
                     <x-slot name="body">
                         @lang('You are logged in!')
                         <br>
-                        <div>
-                            <a href="{{ route('frontend.user.products') }}">Create a cart</a>
+
+                        <div class="py-3">
+                            This page is under development. However, you can access the following pages.
+                            <ul>
+                                <li><a class="mx-1" href="{{ route('frontend.user.account') }}">@lang('Manage Account')</a></li>
+                                @if ($logged_in_user->isAdminAccess())
+                                    <li><a class="mx-1" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                                @endif
+                            </ul>
                         </div>
                     </x-slot>
                 </x-frontend.card>
